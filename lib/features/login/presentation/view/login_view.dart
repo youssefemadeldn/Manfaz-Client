@@ -22,7 +22,7 @@ class LoginView extends StatelessWidget {
             children: [
               Text(
                 'Login',
-                style: AppStyles.font24Black700,
+                style: AppStyles.font24BlackBold,
               ),
               SizedBox(
                 height: 80.h,
