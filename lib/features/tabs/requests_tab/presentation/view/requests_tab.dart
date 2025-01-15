@@ -12,7 +12,7 @@ class RequestsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 30.h),
+        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -100,7 +100,7 @@ class RequestsTab extends StatelessWidget {
                                     ),
                                     CusTextButton(
                                       buttonText: 'Display Details',
-                                      textStyle: AppStyles.font10BlackBold,
+                                      textStyle: AppStyles.font16BlackBold,
                                       onPressed: () {},
                                       backgroundColor: AppColors.white,
                                       verticalPadding: 5.h,
