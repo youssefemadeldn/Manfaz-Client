@@ -14,37 +14,34 @@ class SuccessVerificationView extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 30.h),
-          child: Expanded(
-            child: Align(
-              alignment: Alignment.center,
-              child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                // mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Spacer(
-                    flex: 2,
+          child: Align(
+            alignment: Alignment.center,
+            child: Column(
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Spacer(
+                  flex: 2,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.cusBottomNavigationBar);
+                  },
+                  child: SvgPicture.asset(
+                    'assets/svg/doneVerification.svg',
                   ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(
-                          context, Routes.cusBottomNavigationBar);
-                    },
-                    child: SvgPicture.asset(
-                      'assets/svg/doneVerification.svg',
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  Text(
-                    'Verified successfully',
-                    style: AppStyles.font20BlackBold,
-                  ),
-                  Spacer(
-                    flex: 3,
-                  )
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Text(
+                  'Verified successfully',
+                  style: AppStyles.font20BlackBold,
+                ),
+                Spacer(
+                  flex: 3,
+                )
+              ],
             ),
           ),
         ),
