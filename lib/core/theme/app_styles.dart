@@ -4,6 +4,16 @@ import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_font_weigth.dart';
 
 class AppStyles {
+  static TextStyle font14BlackBold = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: AppFontWeights.bold,
+    color: AppColors.black,
+  );
+  static TextStyle font18BlackBold = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: AppFontWeights.bold,
+    color: AppColors.black,
+  );
   static TextStyle font12lightGrey400 = TextStyle(
     fontSize: 12.sp,
     fontWeight: FontWeight.w500,
@@ -50,6 +60,11 @@ class AppStyles {
     fontWeight: AppFontWeights.bold,
     color: AppColors.black,
   );
+  static TextStyle font15BlackBold = TextStyle(
+    fontSize: 15.sp,
+    fontWeight: AppFontWeights.bold,
+    color: AppColors.black,
+  );
   static TextStyle font20BlackBold = TextStyle(
     fontSize: 20.sp,
     fontWeight: AppFontWeights.bold,
@@ -92,6 +107,11 @@ class AppStyles {
     fontSize: 14.sp,
     fontWeight: AppFontWeights.regular,
     color: AppColors.lightGrey,
+  );
+  static TextStyle font14BlackMedium = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: AppFontWeights.medium,
+    color: AppColors.black,
   );
   static TextStyle font14DarkBlueMedium = TextStyle(
     fontSize: 14.sp,

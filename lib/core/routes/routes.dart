@@ -7,7 +7,7 @@ class Routes {
   static const String loginView = '/loginView';
   static const String freelancerWithSpecificSkillView =
       '/freelancerWithSpecificSkillView';
-  // static const String homeTab = '/homeTab';
+  static const String freelancerProfileView = '/freelancerProfileView';
   // static const String notificationTab = '/notificationTab';
   // static const String profileTab = '/profileTab';
   // static const String requestsTab = '/requestsTab';

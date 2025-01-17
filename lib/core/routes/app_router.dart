@@ -7,7 +7,8 @@ import 'package:manfaz/features/login/presentation/view/success_verification_vie
 import 'package:manfaz/features/onBoardings/presentation/views/welcome_to_our_app_view.dart';
 import 'package:manfaz/features/onBoardings/presentation/views/your_turn_view.dart';
 
-import '../../features/specific_skill_view/presentation/views/freelancers_with_specific_skill_view.dart';
+import '../../features/freelancer_profile/presentation/views/freelancer_profile_view.dart';
+import '../../features/freelancer_specific_skill_view/presentation/views/freelancers_with_specific_skill_view.dart';
 
 class AppRouter {
   static Route generateRoute(RouteSettings settings) {
@@ -32,6 +33,8 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => FreelancersWithSpecificSkillView());
 
+      case Routes.freelancerProfileView:
+        return MaterialPageRoute(builder: (_) => FreelancerProfileView());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

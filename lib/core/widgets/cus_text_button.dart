@@ -5,6 +5,7 @@ import 'package:manfaz/core/theme/app_colors.dart';
 class CusTextButton extends StatelessWidget {
   final double? borderRadius;
   final Color? backgroundColor;
+  final Color? borderSideColor;
   final double? horizontalPadding;
   final double? verticalPadding;
   final double? buttonWidth;
@@ -24,6 +25,7 @@ class CusTextButton extends StatelessWidget {
     required this.buttonText,
     required this.textStyle,
     required this.onPressed,
+    this.borderSideColor,
   });
 
   @override
@@ -32,7 +34,8 @@ class CusTextButton extends StatelessWidget {
       style: ButtonStyle(
         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
-            side: const BorderSide(color: AppColors.black, width: 1),
+            side:
+                BorderSide(color: borderSideColor ?? AppColors.black, width: 1),
             borderRadius: BorderRadius.circular(borderRadius ?? 16.0),
           ),
         ),
