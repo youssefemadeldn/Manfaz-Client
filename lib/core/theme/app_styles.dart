@@ -4,6 +4,32 @@ import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_font_weigth.dart';
 
 class AppStyles {
+  static TextStyle font12lightGrey400 = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.lightGrey,
+  );
+  static TextStyle font12Black400 = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.black,
+  );
+  static TextStyle font16Black600 = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.black,
+  );
+  static TextStyle font16lightGrey500 = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.lightGrey,
+  );
+  static TextStyle font16White500 = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.white,
+  );
+
   static TextStyle font32Black700 = TextStyle(
     fontSize: 32.sp,
     fontWeight: FontWeight.w700,

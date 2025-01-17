@@ -5,6 +5,8 @@ class Routes {
   static const String successVerificationView = '/successVerificationView';
   static const String cusBottomNavigationBar = '/bottomNavigationBar';
   static const String loginView = '/loginView';
+  static const String freelancerWithSpecificSkillView =
+      '/freelancerWithSpecificSkillView';
   // static const String homeTab = '/homeTab';
   // static const String notificationTab = '/notificationTab';
   // static const String profileTab = '/profileTab';
