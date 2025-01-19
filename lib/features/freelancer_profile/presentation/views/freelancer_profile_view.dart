@@ -4,6 +4,10 @@ import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/core/widgets/cus_text_button.dart';
 
+import '../../../../core/routes/routes.dart';
+import '../widgets/action_dealing_with_freelancers.dart';
+import '../widgets/rate_job_time_experience.dart';
+
 class FreelancerProfileView extends StatelessWidget {
   const FreelancerProfileView({super.key});
 
@@ -17,7 +21,7 @@ class FreelancerProfileView extends StatelessWidget {
             radius: 20.r,
             child: Icon(
               Icons.favorite,
-              color: AppColors.lighterGrey,
+              color: AppColors.secondary,
             ),
           ),
           SizedBox(
@@ -43,14 +47,14 @@ class FreelancerProfileView extends StatelessWidget {
               ),
               Text(
                 'John Doe',
-                style: AppStyles.font24BlackBold,
+                style: AppStyles.bodyText1,
               ),
               SizedBox(
                 height: 10.h,
               ),
               Text(
                 'UX Designer',
-                style: AppStyles.font16BlackBold,
+                style: AppStyles.bodyText2,
               ),
               SizedBox(
                 height: 20.h,
@@ -62,7 +66,7 @@ class FreelancerProfileView extends StatelessWidget {
               // about me details
               Text(
                 'Hi there! I’m John Doe, a passionate UI/UX designer with a knack for turning ideas into beautiful, user-friendly experiences. I thrive on creating designs that don’t just look good but also work effortlessly. With every project, my goal is to bridge the gap between creativity and functionality, making every interaction meaningful and engaging.',
-                style: AppStyles.font14LightGreyRegular,
+                style: AppStyles.caption,
                 // maxLines: 3,
                 // overflow: TextOverflow.ellipsis,
               ),
@@ -110,11 +114,13 @@ class FreelancerProfileView extends StatelessWidget {
                 children: [
                   CusTextButton(
                     buttonText: 'Hire',
-                    textStyle: AppStyles.font14BlackBold,
-                    onPressed: () {},
+                    textStyle: AppStyles.buttonText,
+                    onPressed: () {
+                      Navigator.pushNamed(context, Routes.sendAnOfferView);
+                    },
                     buttonWidth: 100.w,
                     buttonHeight: 30.h,
-                    backgroundColor: AppColors.lemon,
+                    backgroundColor: AppColors.primary,
                     verticalPadding: 5.h,
                     borderSideColor: Colors.transparent,
                   ),
@@ -123,11 +129,11 @@ class FreelancerProfileView extends StatelessWidget {
                   ),
                   CusTextButton(
                     buttonText: 'Contact',
-                    textStyle: AppStyles.font14BlackBold,
+                    textStyle: AppStyles.buttonText,
                     onPressed: () {},
                     buttonWidth: 100.w,
                     buttonHeight: 30.h,
-                    backgroundColor: AppColors.white,
+                    backgroundColor: AppColors.secondary,
                     verticalPadding: 5.h,
                     borderSideColor: Colors.transparent,
                   ),
@@ -140,147 +146,6 @@ class FreelancerProfileView extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class ActionDealingWithFreelancers extends StatelessWidget {
-  final String text;
-  final Icon icon;
-  const ActionDealingWithFreelancers({
-    super.key,
-    required this.text,
-    required this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.r),
-        color: AppColors.lighterGrey,
-      ),
-      child: Row(
-        children: [
-          icon,
-          SizedBox(
-            width: 10.w,
-          ),
-          Text(
-            text,
-            style: AppStyles.font14BlackMedium,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class RateJobTimeExperience extends StatelessWidget {
-  const RateJobTimeExperience({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Card(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.r),
-          ),
-          color: Color(0XFFEDEBE7),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.star_border_rounded,
-                  // color: Colors.yellow,
-                  size: 32.sp,
-                ),
-                SizedBox(
-                  width: 5.w,
-                ),
-                Text(
-                  '4.9',
-                  style: AppStyles.font15BlackBold,
-                ),
-                SizedBox(
-                  width: 5.w,
-                ),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 10.w,
-        ),
-        Card(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.r),
-          ),
-          color: Color(0XFFEDEBE7),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.alarm_sharp,
-                  // color: Colors.yellow,
-                  size: 30.sp,
-                ),
-                SizedBox(
-                  width: 5.w,
-                ),
-                Text(
-                  'Part Time',
-                  style: AppStyles.font15BlackBold,
-                ),
-                SizedBox(
-                  width: 5.w,
-                ),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 10.w,
-        ),
-        Card(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.r),
-          ),
-          color: Color(0XFFEDEBE7),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.work_history_outlined,
-                  // color: Colors.yellow,
-                  size: 30.sp,
-                ),
-                SizedBox(
-                  width: 5.w,
-                ),
-                Text(
-                  '5+years',
-                  style: AppStyles.font15BlackBold,
-                ),
-                SizedBox(
-                  width: 5.w,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

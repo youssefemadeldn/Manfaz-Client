@@ -36,7 +36,7 @@ class SuccessVerificationView extends StatelessWidget {
                 ),
                 Text(
                   'Verified successfully',
-                  style: AppStyles.font20BlackBold,
+                  style: AppStyles.bodyTextBold,
                 ),
                 Spacer(
                   flex: 3,

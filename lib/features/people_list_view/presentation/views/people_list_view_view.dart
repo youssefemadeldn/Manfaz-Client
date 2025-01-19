@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theme/app_styles.dart';
 import '../widgets/freelancer_card_item.dart';
 
-class FreelancersWithSpecificSkillView extends StatelessWidget {
-  const FreelancersWithSpecificSkillView({super.key});
+class PeopleListViewView extends StatelessWidget {
+  const PeopleListViewView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class FreelancersWithSpecificSkillView extends StatelessWidget {
         centerTitle: true,
         title: Text(
           'People',
-          style: AppStyles.font32Black700,
+          style: AppStyles.header1,
         ),
       ),
       body: SafeArea(

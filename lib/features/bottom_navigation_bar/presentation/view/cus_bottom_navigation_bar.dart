@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:manfaz/core/theme/app_colors.dart';
+import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/features/tabs/home_tab/presentation/view/home_tab.dart';
 import 'package:manfaz/features/tabs/notification_tab/presentation/view/notification_tab.dart';
 import 'package:manfaz/features/tabs/profile_tab/presentation/view/profile_tab.dart';
-import 'package:manfaz/features/tabs/requests_tab/presentation/view/requests_tab.dart';
+import 'package:manfaz/features/tabs/orders_tab/presentation/view/orders_tab.dart';
 
 class CusBottomNavigationBar extends StatefulWidget {
   const CusBottomNavigationBar({super.key});
@@ -28,15 +29,23 @@ class _CusBottomNavigationBarState extends State<CusBottomNavigationBar> {
         letIndexChange: (value) {
           return true;
         },
-        backgroundColor: AppColors.black,
+        backgroundColor: AppColors.primary,
         items: [
           CurvedNavigationBarItem(
             child: Icon(Icons.home_outlined),
             label: 'Home',
+            labelStyle: AppStyles.buttonTextPrimary.copyWith(
+              fontSize: 14.sp,
+              color: AppColors.grey,
+            ),
           ),
           CurvedNavigationBarItem(
-            child: Icon(Icons.storefront_outlined),
-            label: 'ٌRequests',
+            child: Icon(Icons.my_library_books),
+            label: 'Orders',
+            labelStyle: AppStyles.buttonTextPrimary.copyWith(
+              fontSize: 12.sp,
+              color: AppColors.grey,
+            ),
           ),
           CurvedNavigationBarItem(
             child: Icon(
@@ -44,6 +53,10 @@ class _CusBottomNavigationBarState extends State<CusBottomNavigationBar> {
               size: 30.sp,
             ),
             label: 'Notification',
+            labelStyle: AppStyles.buttonTextPrimary.copyWith(
+              fontSize: 12.sp,
+              color: AppColors.grey,
+            ),
           ),
           CurvedNavigationBarItem(
             child: Icon(
@@ -51,6 +64,10 @@ class _CusBottomNavigationBarState extends State<CusBottomNavigationBar> {
               size: 30.sp,
             ),
             label: 'profile',
+            labelStyle: AppStyles.buttonTextPrimary.copyWith(
+              fontSize: 12.sp,
+              color: AppColors.grey,
+            ),
           ),
         ],
         onTap: (index) {
@@ -63,7 +80,7 @@ class _CusBottomNavigationBarState extends State<CusBottomNavigationBar> {
 
   List<Widget> tabs = [
     HomeTab(),
-    RequestsTab(),
+    OrdersTab(),
     NotificationTab(),
     ProfileTab(),
   ];

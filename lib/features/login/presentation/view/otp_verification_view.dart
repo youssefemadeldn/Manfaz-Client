@@ -21,20 +21,20 @@ class OtpVerificationView extends StatelessWidget {
             children: [
               Text(
                 "Verify phone number",
-                style: AppStyles.font32Black700,
+                style: AppStyles.header1,
               ),
               SizedBox(
                 height: 5.h,
               ),
               Text(
                 "We have sent a verification code to your phone number. Please enter the code below to verify your account.",
-                style: AppStyles.font20BlackRegular,
+                style: AppStyles.caption,
               ),
               SizedBox(
                 height: 50.h,
               ),
               OtpTextField(
-                focusedBorderColor: AppColors.mainBlue.withBlue(200),
+                focusedBorderColor: AppColors.primary,
                 numberOfFields: 4,
                 borderColor: Colors.pink,
                 //set to true to show as box or false to show as dash
@@ -64,22 +64,22 @@ class OtpVerificationView extends StatelessWidget {
                 children: [
                   Text(
                     "Didn't receive the code? ",
-                    style: AppStyles.font18BlackRegular,
+                    style: AppStyles.bodyText1,
                   ),
                   Text(
                     "Resend",
-                    style: AppStyles.font16BlackBold,
+                    style: AppStyles.bodyText1,
                   ),
                 ],
               ),
               Spacer(),
               CusTextButton(
                 buttonText: 'Continue',
-                textStyle: AppStyles.font24WithRegular,
+                textStyle: AppStyles.buttonText,
                 onPressed: () {
                   Navigator.pushNamed(context, Routes.successVerificationView);
                 },
-                backgroundColor: AppColors.black,
+                backgroundColor: AppColors.primary,
                 verticalPadding: 10.h,
               ),
               SizedBox(

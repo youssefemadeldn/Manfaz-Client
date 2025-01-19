@@ -20,14 +20,14 @@ class YourTurnView extends StatelessWidget {
             children: [
               Text(
                 "How would you like to use the app?",
-                style: AppStyles.font32Black700,
+                style: AppStyles.header1,
               ),
               SizedBox(
                 height: 5.h,
               ),
               Text(
                 "Please choose what suits you for the best experience.",
-                style: AppStyles.font20BlackRegular,
+                style: AppStyles.caption,
               ),
               SizedBox(
                 height: 160.h,
@@ -36,7 +36,7 @@ class YourTurnView extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   'Choose your role',
-                  style: AppStyles.font32Black700,
+                  style: AppStyles.header2,
                 ),
               ),
               SizedBox(
@@ -46,8 +46,8 @@ class YourTurnView extends StatelessWidget {
                 verticalPadding: 10.h,
                 buttonText: 'Service Provider',
                 onPressed: () {},
-                textStyle: AppStyles.font24whiteRegular,
-                backgroundColor: AppColors.brown,
+                textStyle: AppStyles.buttonText,
+                backgroundColor: AppColors.secondary,
               ),
               SizedBox(
                 height: 20.h,
@@ -56,8 +56,8 @@ class YourTurnView extends StatelessWidget {
                 verticalPadding: 10.h,
                 buttonText: 'Service Requester',
                 onPressed: () {},
-                textStyle: AppStyles.font24blackRegular,
-                backgroundColor: AppColors.white,
+                textStyle: AppStyles.buttonText,
+                backgroundColor: AppColors.secondary,
               ),
               Spacer(),
               CusTextButton(
@@ -66,8 +66,8 @@ class YourTurnView extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamed(context, Routes.loginView);
                 },
-                textStyle: AppStyles.font24whiteRegular,
-                backgroundColor: AppColors.black,
+                textStyle: AppStyles.buttonText,
+                backgroundColor: AppColors.primary,
               ),
               SizedBox(
                 height: 20.h,

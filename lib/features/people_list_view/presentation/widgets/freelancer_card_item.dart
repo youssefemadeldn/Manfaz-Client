@@ -20,7 +20,7 @@ class FreelancerCardItem extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
         decoration: BoxDecoration(
           color: AppColors.white,
-          border: Border.all(color: AppColors.lighterGrey),
+          border: Border.all(color: AppColors.info),
           borderRadius: BorderRadius.circular(
             10.r,
           ),
@@ -44,11 +44,11 @@ class FreelancerCardItem extends StatelessWidget {
                   children: [
                     Text(
                       'John Doe',
-                      style: AppStyles.font16Black600,
+                      style: AppStyles.bodyText2,
                     ),
                     Text(
                       'UX Designer',
-                      style: AppStyles.font16lightGrey500,
+                      style: AppStyles.caption,
                     ),
                   ],
                 ),
@@ -58,17 +58,18 @@ class FreelancerCardItem extends StatelessWidget {
                   height: 30.h,
                   width: 80.w,
                   decoration: BoxDecoration(
-                    color: AppColors.lighterGrey,
+                    color: AppColors.primary,
                     borderRadius: BorderRadius.circular(10.r),
                     border: Border.all(
-                      color: AppColors.lemon,
+                      color: AppColors.secondary,
                       width: 2,
                     ),
                   ),
                   child: Center(
                     child: Text(
                       'Online',
-                      style: AppStyles.font16lightGrey500,
+                      style: AppStyles.caption
+                          .copyWith(color: AppColors.secondary),
                     ),
                   ),
                 ),
@@ -79,7 +80,7 @@ class FreelancerCardItem extends StatelessWidget {
             ),
             Text(
               'UX Designer with 5 years of experience in UI/UX design and a strong skilled in creating intuitive, user-centered digital experiences',
-              style: AppStyles.font12Black400,
+              style: AppStyles.smallText,
             ),
             SizedBox(
               height: 10.h,
@@ -106,11 +107,11 @@ class FreelancerCardItem extends StatelessWidget {
                             children: [
                               TextSpan(
                                 text: '\$12',
-                                style: AppStyles.font16White500,
+                                style: AppStyles.smallText,
                               ),
                               TextSpan(
                                 text: ' /hour',
-                                style: AppStyles.font16lightGrey500,
+                                style: AppStyles.smallText,
                               ),
                             ],
                           ),
@@ -122,11 +123,11 @@ class FreelancerCardItem extends StatelessWidget {
                 Spacer(),
                 //  Favorite Icon
                 CircleAvatar(
-                  backgroundColor: AppColors.green,
+                  backgroundColor: AppColors.secondary,
                   radius: 20.r,
                   child: Icon(
                     Icons.favorite,
-                    color: AppColors.lighterGrey,
+                    color: AppColors.secondary,
                   ),
                 ),
               ],
@@ -138,11 +139,11 @@ class FreelancerCardItem extends StatelessWidget {
               children: [
                 Icon(
                   Icons.location_on,
-                  color: AppColors.lighterGrey,
+                  color: AppColors.secondary,
                 ),
                 Text(
                   'New York, USA',
-                  style: AppStyles.font12lightGrey400,
+                  style: AppStyles.caption,
                 ),
               ],
             )

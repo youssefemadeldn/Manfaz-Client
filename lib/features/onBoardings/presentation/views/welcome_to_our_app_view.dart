@@ -20,14 +20,14 @@ class WelcomeToOurAppView extends StatelessWidget {
             children: [
               Text(
                 "Welcome to Our App",
-                style: AppStyles.font32Black700,
+                style: AppStyles.header1,
               ),
               SizedBox(
                 height: 5.h,
               ),
               Text(
                 "Enjoy our many services",
-                style: AppStyles.font20BlackRegular,
+                style: AppStyles.caption,
               ),
               SizedBox(
                 height: 200.h,
@@ -36,7 +36,7 @@ class WelcomeToOurAppView extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   'Choose your language',
-                  style: AppStyles.font32Black700,
+                  style: AppStyles.header2,
                 ),
               ),
               SizedBox(
@@ -46,8 +46,8 @@ class WelcomeToOurAppView extends StatelessWidget {
                 verticalPadding: 10.h,
                 buttonText: 'العربية',
                 onPressed: () {},
-                textStyle: AppStyles.font24whiteRegular,
-                backgroundColor: AppColors.brown,
+                textStyle: AppStyles.buttonTextPrimary,
+                backgroundColor: AppColors.secondary,
               ),
               SizedBox(
                 height: 20.h,
@@ -56,8 +56,8 @@ class WelcomeToOurAppView extends StatelessWidget {
                 verticalPadding: 10.h,
                 buttonText: 'English',
                 onPressed: () {},
-                textStyle: AppStyles.font24blackRegular,
-                backgroundColor: AppColors.white,
+                textStyle: AppStyles.buttonTextPrimary,
+                backgroundColor: AppColors.secondary,
               ),
               Spacer(),
               CusTextButton(
@@ -66,8 +66,8 @@ class WelcomeToOurAppView extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamed(context, Routes.yourTurnView);
                 },
-                textStyle: AppStyles.font24whiteRegular,
-                backgroundColor: AppColors.black,
+                textStyle: AppStyles.buttonTextPrimary,
+                backgroundColor: AppColors.primary,
               ),
               SizedBox(
                 height: 20.h,

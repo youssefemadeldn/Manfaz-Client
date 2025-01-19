@@ -21,8 +21,8 @@ class ManfazApp extends StatelessWidget {
         initialRoute: Routes.welcomeToOurAppView,
         onGenerateRoute: AppRouter.generateRoute,
         theme: ThemeData(
-          appBarTheme: AppBarTheme(backgroundColor: Color(0xFFF3F3F3)),
-          scaffoldBackgroundColor: Color(0xFFF3F3F3),
+          appBarTheme: AppBarTheme(backgroundColor: Color(0xFFFFFFFF)),
+          scaffoldBackgroundColor: Color(0xFFFFFFFF),
         ),
       ),
     );

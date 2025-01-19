@@ -38,7 +38,7 @@ class CusGoogleButton extends StatelessWidget {
           ),
         ),
         backgroundColor: WidgetStatePropertyAll(
-          backgroundColor ?? AppColors.mainBlue,
+          backgroundColor ?? Colors.white,
         ),
         padding: WidgetStateProperty.all<EdgeInsets>(
           EdgeInsets.symmetric(

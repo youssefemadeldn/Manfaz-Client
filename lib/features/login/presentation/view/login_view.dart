@@ -22,14 +22,14 @@ class LoginView extends StatelessWidget {
             children: [
               Text(
                 'Login',
-                style: AppStyles.font24BlackBold,
+                style: AppStyles.buttonText,
               ),
               SizedBox(
                 height: 80.h,
               ),
               Text(
                 'phone number',
-                style: AppStyles.font18BlackRegular,
+                style: AppStyles.bodyText1,
               ),
               SizedBox(
                 height: 10.h,
@@ -64,12 +64,12 @@ class LoginView extends StatelessWidget {
               Spacer(),
               CusTextButton(
                 buttonText: 'login',
-                textStyle: AppStyles.font24WithRegular,
+                textStyle: AppStyles.buttonText,
                 onPressed: () {
                   Navigator.pushNamed(context, Routes.otpVerificationView);
                 },
                 verticalPadding: 10.h,
-                backgroundColor: AppColors.black,
+                backgroundColor: AppColors.primary,
               ),
               SizedBox(
                 height: 5.h,
@@ -77,7 +77,7 @@ class LoginView extends StatelessWidget {
               Center(
                 child: Text(
                   'or',
-                  style: AppStyles.font20BlackBold,
+                  style: AppStyles.smallText,
                 ),
               ),
               SizedBox(
@@ -86,7 +86,7 @@ class LoginView extends StatelessWidget {
               Center(
                 child: Text(
                   'login with',
-                  style: AppStyles.font16BlackRegular,
+                  style: AppStyles.smallText,
                 ),
               ),
               SizedBox(
@@ -94,7 +94,7 @@ class LoginView extends StatelessWidget {
               ),
               CusGoogleButton(
                 buttonText: 'Google',
-                textStyle: AppStyles.font24BlackRegular,
+                textStyle: AppStyles.bodyText1,
                 onPressed: () {
                   Navigator.pushNamed(context, Routes.otpVerificationView);
                 },

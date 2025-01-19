@@ -8,7 +8,8 @@ import 'package:manfaz/features/onBoardings/presentation/views/welcome_to_our_ap
 import 'package:manfaz/features/onBoardings/presentation/views/your_turn_view.dart';
 
 import '../../features/freelancer_profile/presentation/views/freelancer_profile_view.dart';
-import '../../features/freelancer_specific_skill_view/presentation/views/freelancers_with_specific_skill_view.dart';
+import '../../features/people_list_view/presentation/views/people_list_view_view.dart';
+import '../../features/send_an_offer/presentation/views/send_an_offer_view.dart';
 
 class AppRouter {
   static Route generateRoute(RouteSettings settings) {
@@ -29,12 +30,16 @@ class AppRouter {
       case Routes.cusBottomNavigationBar:
         return MaterialPageRoute(builder: (_) => CusBottomNavigationBar());
 
-      case Routes.freelancerWithSpecificSkillView:
-        return MaterialPageRoute(
-            builder: (_) => FreelancersWithSpecificSkillView());
+      case Routes.peopleListViewView:
+        return MaterialPageRoute(builder: (_) => PeopleListViewView());
 
       case Routes.freelancerProfileView:
         return MaterialPageRoute(builder: (_) => FreelancerProfileView());
+
+      case Routes.sendAnOfferView:
+        return MaterialPageRoute(
+          builder: (context) => SendAnOfferView(),
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
