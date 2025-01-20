@@ -36,6 +36,12 @@ class AppStyles {
     color: AppColors.textSecondary,
   );
 
+  static TextStyle bodyText3 = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColors.textSecondary,
+  );
+
   static TextStyle bodyTextBold = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeight.bold,

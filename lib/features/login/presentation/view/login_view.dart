@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:manfaz/core/routes/routes.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
-import 'package:manfaz/core/widgets/cus_text_button.dart';
-import 'package:manfaz/features/login/presentation/widgets/cus_google_button.dart';
-import 'package:phone_form_field/phone_form_field.dart';
+import 'package:manfaz/core/widgets/cus_text_form_field.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -13,98 +11,147 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 30.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Login',
-                style: AppStyles.buttonText,
-              ),
-              SizedBox(
-                height: 80.h,
-              ),
-              Text(
-                'phone number',
-                style: AppStyles.bodyText1,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              PhoneFormField(
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.black,
-                      width: 1.3,
+      backgroundColor: const Color(0xFFF5F5F5),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/background.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+          SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 50.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: 30.h),
+                  Image.asset(
+                    'assets/images/logo.png',
+                    height: 150.h,
+                  ),
+                  SizedBox(height: 30.h),
+                  Text(
+                    'Welcome Back to Manfaz',
+                    style: AppStyles.header1.copyWith(
+                      fontSize: 26.sp,
+                      color: AppColors.primary,
                     ),
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 10.h),
+                  Text(
+                    'Log in to your Manfaz account to continue your job search, manage applications, and stay updated with the latest job opportunities.',
+                    style: AppStyles.caption.copyWith(
+                      fontSize: 14.sp,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 30.h),
+                  CusTextFormField(
+                    hintText: 'Email',
+                    validator: (value) {},
+                  ),
+                  SizedBox(height: 15.h),
+                  CusTextFormField(
+                    hintText: 'Password',
+                    validator: (value) {},
+                    suffixIcon: Icon(Icons.visibility),
+                  ),
+                  SizedBox(height: 10.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Forgot Password',
+                          style: AppStyles.buttonText.copyWith(
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20.h),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      minimumSize: const Size(
+                        double.infinity,
+                        50,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                    ),
+                    child: Text(
+                      'Login',
+                      style: AppStyles.buttonText,
+                    ),
+                  ),
+                  SizedBox(height: 20.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 1.h,
+                        color: AppColors.grey,
+                        width: 117.26.w,
+                      ),
+                      SizedBox(width: 5.w),
+                      Text(
+                        'Or Sign In With',
+                        style: AppStyles.bodyText3,
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(width: 5.w),
+                      Container(
+                        height: 1.h,
+                        color: AppColors.grey,
+                        width: 117.26.w,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 15.h),
+                  CircleAvatar(
+                    radius: 30.r,
+                    backgroundColor: AppColors.lightGrey,
+                    child: IconButton(
+                        onPressed: () {},
+                        icon: SvgPicture.asset('assets/svg/google.svg')),
+                  ),
+                  SizedBox(height: 20.h),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: Container(
+        alignment: Alignment.center,
+        height: 50.h,
+        child: GestureDetector(
+          onTap: () => Navigator.pushNamed(context, '/register'),
+          child: Text.rich(
+            TextSpan(
+              text: "Don't have an account? ",
+              style: AppStyles.bodyText2.copyWith(
+                color: AppColors.darkGrey,
+                fontWeight: FontWeight.w600,
+              ),
+              children: [
+                TextSpan(
+                  text: 'Sign Up now',
+                  style: AppStyles.smallText.copyWith(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                initialValue: PhoneNumber.parse('+33'), // or use the controller
-                validator: PhoneValidator.compose([
-                  PhoneValidator.required(context),
-                  PhoneValidator.validMobile(context)
-                ]),
-                countrySelectorNavigator: const CountrySelectorNavigator.page(),
-                onChanged: (phoneNumber) => print('changed into $phoneNumber'),
-                enabled: true,
-                isCountrySelectionEnabled: true,
-                isCountryButtonPersistent: true,
-                countryButtonStyle: const CountryButtonStyle(
-                  showDialCode: true,
-                  showIsoCode: true,
-                  showFlag: true,
-                  flagSize: 16,
-                ),
-              ),
-              Spacer(),
-              CusTextButton(
-                buttonText: 'login',
-                textStyle: AppStyles.buttonText,
-                onPressed: () {
-                  Navigator.pushNamed(context, Routes.otpVerificationView);
-                },
-                verticalPadding: 10.h,
-                backgroundColor: AppColors.primary,
-              ),
-              SizedBox(
-                height: 5.h,
-              ),
-              Center(
-                child: Text(
-                  'or',
-                  style: AppStyles.smallText,
-                ),
-              ),
-              SizedBox(
-                height: 5.h,
-              ),
-              Center(
-                child: Text(
-                  'login with',
-                  style: AppStyles.smallText,
-                ),
-              ),
-              SizedBox(
-                height: 5.h,
-              ),
-              CusGoogleButton(
-                buttonText: 'Google',
-                textStyle: AppStyles.bodyText1,
-                onPressed: () {
-                  Navigator.pushNamed(context, Routes.otpVerificationView);
-                },
-                verticalPadding: 10.h,
-                backgroundColor: AppColors.white,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

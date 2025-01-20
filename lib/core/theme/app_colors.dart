@@ -40,6 +40,9 @@ class AppColors {
   static const Color warning = Colors.orange;
   static const Color info = Colors.blue;
 
+  // Divider Colors
+  static const Color divider = Color(0xFFE0E0E0);
+
   // MaterialColor for Theming
   static const MaterialColor primarySwatch = MaterialColor(
     0xFF6200EA,
