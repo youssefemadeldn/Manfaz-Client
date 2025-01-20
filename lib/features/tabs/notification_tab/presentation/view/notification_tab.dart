@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
-
-import '../../../orders_tab/presentation/view/orders_tab.dart';
 import '../widgets/ntification_card_item.dart';
 
 class NotificationTab extends StatelessWidget {
