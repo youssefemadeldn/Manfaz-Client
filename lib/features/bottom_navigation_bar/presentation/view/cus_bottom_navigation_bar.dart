@@ -1,10 +1,8 @@
-import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
-import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:manfaz/core/theme/app_colors.dart';
-import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/features/tabs/home_tab/presentation/view/home_tab.dart';
 import 'package:manfaz/features/tabs/notification_tab/presentation/view/notification_tab.dart';
 import 'package:manfaz/features/tabs/profile_tab/presentation/view/profile_tab.dart';
@@ -20,68 +18,83 @@ class CusBottomNavigationBar extends StatefulWidget {
 class _CusBottomNavigationBarState extends State<CusBottomNavigationBar> {
   int selectedIndex = 0;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: tabs[selectedIndex],
-      bottomNavigationBar: CurvedNavigationBar(
-        index: selectedIndex,
-        letIndexChange: (value) {
-          return true;
-        },
-        backgroundColor: AppColors.primary,
-        items: [
-          CurvedNavigationBarItem(
-            child: Icon(Icons.home_outlined),
-            label: 'Home',
-            labelStyle: AppStyles.buttonTextPrimary.copyWith(
-              fontSize: 14.sp,
-              color: AppColors.grey,
-            ),
-          ),
-          CurvedNavigationBarItem(
-            child: Icon(Icons.my_library_books),
-            label: 'Orders',
-            labelStyle: AppStyles.buttonTextPrimary.copyWith(
-              fontSize: 12.sp,
-              color: AppColors.grey,
-            ),
-          ),
-          CurvedNavigationBarItem(
-            child: Icon(
-              Icons.notifications_none_rounded,
-              size: 30.sp,
-            ),
-            label: 'Notification',
-            labelStyle: AppStyles.buttonTextPrimary.copyWith(
-              fontSize: 12.sp,
-              color: AppColors.grey,
-            ),
-          ),
-          CurvedNavigationBarItem(
-            child: Icon(
-              Icons.person_outline_rounded,
-              size: 30.sp,
-            ),
-            label: 'profile',
-            labelStyle: AppStyles.buttonTextPrimary.copyWith(
-              fontSize: 12.sp,
-              color: AppColors.grey,
-            ),
-          ),
-        ],
-        onTap: (index) {
-          selectedIndex = index;
-          setState(() {});
-        },
-      ),
-    );
-  }
-
-  List<Widget> tabs = [
+  final List<Widget> tabs = [
     HomeTab(),
     OrdersTab(),
     NotificationTab(),
     ProfileTab(),
   ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: IndexedStack(
+          index: selectedIndex,
+          children: tabs,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: AppColors.primary,
+          unselectedItemColor: AppColors.darkGrey,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: AppColors.white,
+          elevation: 4.h,
+          currentIndex: selectedIndex,
+          selectedIconTheme: IconThemeData(
+            color: AppColors.primary,
+            size: 28.h,
+          ),
+          unselectedIconTheme: IconThemeData(
+            color: AppColors.darkGrey,
+            size: 24.h,
+          ),
+          onTap: (value) {
+            setState(() {
+              selectedIndex = value;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                'assets/svg/home.svg',
+                height: 24.h,
+                color:
+                    selectedIndex == 0 ? AppColors.primary : AppColors.darkGrey,
+              ),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                'assets/svg/orders.svg',
+                height: 24.h,
+                color: selectedIndex == 1 // Updated to 1 for "Orders" tab
+                    ? AppColors.primary
+                    : AppColors.darkGrey,
+              ),
+              label: 'Orders',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                'assets/svg/Notification.svg',
+                height: 24.h,
+                color: selectedIndex == 2 // Updated to 1 for "Orders" tab
+                    ? AppColors.primary
+                    : AppColors.darkGrey,
+              ),
+              label: 'Notification',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                'assets/svg/profile.svg',
+                height: 24.h,
+                color: selectedIndex == 3 // Updated to 3 for "Profile" tab
+                    ? AppColors.primary
+                    : AppColors.darkGrey,
+              ),
+              label: 'Profile',
+            ),
+          ],
+        ));
+  }
 }

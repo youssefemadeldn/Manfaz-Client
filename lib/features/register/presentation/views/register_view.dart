@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
-import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/core/widgets/cus_text_button.dart';
 import 'package:manfaz/core/widgets/cus_text_form_field.dart';
 
-import '../../../../core/routes/routes.dart';
+import '../../../../core/theme/app_styles.dart';
 
-class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+class RegisterView extends StatelessWidget {
+  const RegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: AppColors.lightGrey,
       body: Stack(
         children: [
           Positioned.fill(
@@ -25,7 +24,7 @@ class LoginView extends StatelessWidget {
           ),
           SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 50.h),
+              padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 50.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -36,7 +35,7 @@ class LoginView extends StatelessWidget {
                   ),
                   SizedBox(height: 30.h),
                   Text(
-                    'Welcome Back to Manfaz',
+                    'Create Your Manfaz Account',
                     style: AppStyles.header1.copyWith(
                       fontSize: 26.sp,
                       color: AppColors.primary,
@@ -45,7 +44,7 @@ class LoginView extends StatelessWidget {
                   ),
                   SizedBox(height: 10.h),
                   Text(
-                    'Log in to your Manfaz account to continue your job search, manage applications, and stay updated with the latest job opportunities.',
+                    'Join Manfaz to find your perfect job. Create an account for personalized matches and career resources.',
                     style: AppStyles.caption.copyWith(
                       fontSize: 14.sp,
                     ),
@@ -53,39 +52,27 @@ class LoginView extends StatelessWidget {
                   ),
                   SizedBox(height: 30.h),
                   CusTextFormField(
+                      hintText: 'Full Name', validator: (value) {}),
+                  SizedBox(height: 15.h),
+                  CusTextFormField(
                     hintText: 'Email',
+                    validator: (value) {},
+                  ),
+                  SizedBox(height: 15.h),
+                  CusTextFormField(
+                    hintText: 'Phone Number',
                     validator: (value) {},
                   ),
                   SizedBox(height: 15.h),
                   CusTextFormField(
                     hintText: 'Password',
                     validator: (value) {},
-                    suffixIcon: Icon(Icons.visibility),
-                  ),
-                  SizedBox(height: 10.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Forgot Password?',
-                          style: AppStyles.buttonText.copyWith(
-                            color: AppColors.primary,
-                            fontSize: 13.sp,
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
                   SizedBox(height: 20.h),
                   CusTextButton(
-                    buttonText: 'Login',
+                    buttonText: 'Sign Up',
                     textStyle: AppStyles.buttonText,
-                    onPressed: () {
-                      Navigator.pushNamed(
-                          context, Routes.cusBottomNavigationBar);
-                    },
+                    onPressed: () {},
                     backgroundColor: AppColors.primary,
                     borderSideColor: AppColors.primary,
                   ),
@@ -120,7 +107,7 @@ class LoginView extends StatelessWidget {
                         onPressed: () {},
                         icon: SvgPicture.asset('assets/svg/google.svg')),
                   ),
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 40.h),
                 ],
               ),
             ),
@@ -131,20 +118,21 @@ class LoginView extends StatelessWidget {
         alignment: Alignment.center,
         height: 50.h,
         child: GestureDetector(
-          onTap: () => Navigator.pushNamed(context, Routes.registerView),
+          onTap: () => Navigator.pop(context),
           child: Text.rich(
             TextSpan(
-              text: "Don't have an account? ",
+              text: 'Already have an account? ',
               style: AppStyles.bodyText2.copyWith(
                 color: AppColors.darkGrey,
                 fontWeight: FontWeight.w600,
               ),
               children: [
                 TextSpan(
-                  text: 'Sign Up now',
+                  text: 'Login here',
                   style: AppStyles.smallText.copyWith(
                     color: AppColors.primary,
                     fontWeight: FontWeight.bold,
+                    fontSize: 11.sp,
                   ),
                 ),
               ],

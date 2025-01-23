@@ -11,68 +11,58 @@ class WelcomeToOurAppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 30.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Welcome to Our App",
-                style: AppStyles.header1,
-              ),
-              SizedBox(
-                height: 5.h,
-              ),
-              Text(
-                "Enjoy our many services",
-                style: AppStyles.caption,
-              ),
-              SizedBox(
-                height: 200.h,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Choose your language',
-                  style: AppStyles.header2,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 80.h,
                 ),
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              CusTextButton(
-                verticalPadding: 10.h,
-                buttonText: 'العربية',
-                onPressed: () {},
-                textStyle: AppStyles.buttonTextPrimary,
-                backgroundColor: AppColors.secondary,
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              CusTextButton(
-                verticalPadding: 10.h,
-                buttonText: 'English',
-                onPressed: () {},
-                textStyle: AppStyles.buttonTextPrimary,
-                backgroundColor: AppColors.secondary,
-              ),
-              Spacer(),
-              CusTextButton(
-                verticalPadding: 10.h,
-                buttonText: 'Next',
-                onPressed: () {
-                  Navigator.pushNamed(context, Routes.yourTurnView);
-                },
-                textStyle: AppStyles.buttonTextPrimary,
-                backgroundColor: AppColors.primary,
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-            ],
+                Image.asset(
+                  'assets/images/get_started_person.png',
+                  width: double.infinity,
+                  // height: 400,
+                  fit: BoxFit.fitWidth,
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                Text(
+                  'Find Interested Services',
+                  // textScaleFactor: 1,
+                  style: AppStyles.header1.copyWith(
+                    color: AppColors.black,
+                  ),
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+                Text(
+                  textAlign: TextAlign.center,
+                  textScaleFactor: 2,
+                  'Discover top talent for every need, and bring your ideas to life!',
+                  style: AppStyles.header3.copyWith(
+                    color: AppColors.grey,
+                    fontSize: 15.sp,
+                  ),
+                ),
+                SizedBox(
+                  height: 170.h,
+                ),
+                CusTextButton(
+                  buttonText: 'Get Started',
+                  textStyle: AppStyles.buttonText,
+                  onPressed: () {
+                    Navigator.pushNamed(context, Routes.loginView);
+                  },
+                  backgroundColor: AppColors.buttonPrimary,
+                  borderSideColor: AppColors.buttonPrimary,
+                ),
+              ],
+            ),
           ),
         ),
       ),
