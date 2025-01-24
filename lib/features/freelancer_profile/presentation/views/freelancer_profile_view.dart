@@ -17,7 +17,7 @@ class FreelancerProfileView extends StatelessWidget {
       appBar: AppBar(
         actions: [
           CircleAvatar(
-            backgroundColor: AppColors.green,
+            backgroundColor: AppColors.primary,
             radius: 20.r,
             child: Icon(
               Icons.favorite,
@@ -40,7 +40,7 @@ class FreelancerProfileView extends StatelessWidget {
                   'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_640.jpg',
                 ),
                 radius: 80.r,
-                backgroundColor: AppColors.green,
+                backgroundColor: AppColors.primary,
               ),
               SizedBox(
                 height: 20.h,

@@ -52,7 +52,10 @@ class HomeCategoryItem extends StatelessWidget {
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             maxLines: 1, // Ensure text fits in one line
-            style: AppStyles.bodyText2.copyWith(color: AppColors.textSecondary),
+            style: AppStyles.bodyText2.copyWith(
+              color: AppColors.textPrimary,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ],
       ),

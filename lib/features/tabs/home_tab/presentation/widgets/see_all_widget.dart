@@ -18,7 +18,7 @@ class SeeAllWidget extends StatelessWidget {
           Text(
             'Services Categories',
             style: AppStyles.header3.copyWith(
-              color: AppColors.textSecondary,
+              color: AppColors.textPrimary,
             ),
           ),
           Text(

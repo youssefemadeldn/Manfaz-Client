@@ -4,7 +4,7 @@ import 'package:manfaz/features/bottom_navigation_bar/presentation/view/cus_bott
 import 'package:manfaz/features/login/presentation/view/login_view.dart';
 import 'package:manfaz/features/login/presentation/view/otp_verification_view.dart';
 import 'package:manfaz/features/login/presentation/view/success_verification_view.dart';
-import 'package:manfaz/features/onBoardings/presentation/views/welcome_to_our_app_view.dart';
+import 'package:manfaz/features/onBoardings/presentation/views/on_boarding_view.dart';
 // import 'package:manfaz/features/onBoardings/presentation/views/your_turn_view.dart';
 
 import '../../features/freelancer_profile/presentation/views/freelancer_profile_view.dart';
@@ -16,7 +16,7 @@ class AppRouter {
   static Route generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.welcomeToOurAppView:
-        return MaterialPageRoute(builder: (_) => const WelcomeToOurAppView());
+        return MaterialPageRoute(builder: (_) => const OnBoardingView());
 
       // case Routes.yourTurnView:
       //   return MaterialPageRoute(builder: (_) => const YourTurnView());
