@@ -1,4 +1,5 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
@@ -17,7 +18,7 @@ class OrdersTab extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Requests',
+              tr('orders_tab.requests'), // Localized "Requests"
               style: AppStyles.header2,
             ),
             SizedBox(
@@ -30,38 +31,41 @@ class OrdersTab extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     ButtonsTabBar(
-                      // Customize the appearance and behavior of the tab bar
                       backgroundColor: AppColors.primary,
                       borderWidth: 2,
-                      // buttonMargin: EdgeInsets.zero,
                       borderColor: AppColors.primary,
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                       unselectedBackgroundColor: AppColors.white,
                       unselectedBorderColor: AppColors.lightGrey,
-                      unselectedLabelStyle: TextStyle(
+                      unselectedLabelStyle: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
-                      // Add your tabs here
                       tabs: [
-                        Tab(text: '  All  '),
-                        Tab(text: 'Previous'),
-                        Tab(text: 'Completed'),
-                        Tab(text: 'Canceled'),
+                        Tab(text: tr('orders_tab.all')), // Localized "All"
+                        Tab(
+                            text: tr(
+                                'orders_tab.previous')), // Localized "Previous"
+                        Tab(
+                            text: tr(
+                                'orders_tab.completed')), // Localized "Completed"
+                        Tab(
+                            text: tr(
+                                'orders_tab.canceled')), // Localized "Canceled"
                       ],
                     ),
                     Expanded(
                       child: TabBarView(
                         children: <Widget>[
                           ListView.builder(
-                            itemBuilder: (context, i) => OrderCardItem(),
+                            itemBuilder: (context, i) => const OrderCardItem(),
                           ),
-                          Center(child: Text('Content for Tab 2')),
-                          Center(child: Text('Content for Tab 3')),
-                          Center(child: Text('Content for Tab 4')),
+                          Center(child: Text(tr('orders_tab.previous'))),
+                          Center(child: Text(tr('orders_tab.completed'))),
+                          Center(child: Text(tr('orders_tab.canceled'))),
                         ],
                       ),
                     ),

@@ -3,11 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class HomeSearchBarWidget extends StatelessWidget {
-  const HomeSearchBarWidget({
-    super.key,
-  });
+  const HomeSearchBarWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +25,12 @@ class HomeSearchBarWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              ' Location ',
+              tr('home.location'),
               style: AppStyles.bodyText1.copyWith(
                 color: AppColors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             Row(
               children: [
                 Icon(
@@ -46,10 +44,11 @@ class HomeSearchBarWidget extends StatelessWidget {
                   width: 1.w,
                 ),
                 Text(
-                  'New York, USA',
+                  tr('home.city_country'),
                   style: AppStyles.bodyText2.copyWith(
                     color: AppColors.white,
                     fontSize: 14.sp,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 IconButton(
@@ -65,7 +64,7 @@ class HomeSearchBarWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Good Morning Ahmed',
+                  tr('home.greeting'),
                   style: AppStyles.header1.copyWith(
                     color: AppColors.white,
                   ),
@@ -90,7 +89,7 @@ class HomeSearchBarWidget extends StatelessWidget {
                   size: 30.h,
                   weight: 400,
                 ),
-                hintText: 'What are you looking for?',
+                hintText: tr('home.search_hint'),
                 hintStyle: AppStyles.bodyText2,
               ),
             ),

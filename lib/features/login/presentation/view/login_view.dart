@@ -161,6 +161,7 @@
 //   }
 // }
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -199,7 +200,7 @@ class LoginView extends StatelessWidget {
                   ),
                   SizedBox(height: 30.h),
                   Text(
-                    'Welcome Back to Manfaz',
+                    'welcome'.tr(),
                     style: AppStyles.header1.copyWith(
                       fontSize: 26.sp,
                       color: AppColors.primary,
@@ -208,22 +209,23 @@ class LoginView extends StatelessWidget {
                   ),
                   SizedBox(height: 10.h),
                   Text(
-                    'Log in to your Manfaz account to continue your job search, manage applications, and stay updated with the latest job opportunities.',
+                    'login_description'.tr(),
                     style: AppStyles.caption.copyWith(
                       fontSize: 14.sp,
+                      color: AppColors.darkGrey,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 30.h),
                   CusTextFormField(
                     fillColor: AppColors.background,
-                    hintText: 'Email',
+                    hintText: 'email'.tr(),
                     validator: (value) {},
                   ),
                   SizedBox(height: 15.h),
                   CusTextFormField(
                     fillColor: AppColors.background,
-                    hintText: 'Password',
+                    hintText: 'password'.tr(),
                     validator: (value) {},
                     suffixIcon: Icon(
                       Icons.visibility,
@@ -236,7 +238,7 @@ class LoginView extends StatelessWidget {
                       TextButton(
                         onPressed: () {},
                         child: Text(
-                          'Forgot Password?',
+                          'forgot_password'.tr(),
                           style: AppStyles.buttonText.copyWith(
                             color: AppColors.primary,
                             fontSize: 13.sp,
@@ -247,7 +249,7 @@ class LoginView extends StatelessWidget {
                   ),
                   SizedBox(height: 20.h),
                   CusTextButton(
-                    buttonText: 'Login',
+                    buttonText: 'login'.tr(),
                     textStyle: AppStyles.buttonText,
                     onPressed: () {
                       Navigator.pushNamed(
@@ -267,7 +269,7 @@ class LoginView extends StatelessWidget {
                       ),
                       SizedBox(width: 5.w),
                       Text(
-                        'Or Sign In With',
+                        'or_sign_in_with'.tr(),
                         style: AppStyles.bodyText3,
                         textAlign: TextAlign.center,
                       ),
@@ -301,14 +303,14 @@ class LoginView extends StatelessWidget {
           onTap: () => Navigator.pushNamed(context, Routes.registerView),
           child: Text.rich(
             TextSpan(
-              text: "Don't have an account? ",
+              text: "no_account".tr(),
               style: AppStyles.bodyText2.copyWith(
                 color: AppColors.darkGrey,
                 fontWeight: FontWeight.w600,
               ),
               children: [
                 TextSpan(
-                  text: 'Sign Up now',
+                  text: 'sign_up_now'.tr(),
                   style: AppStyles.smallText.copyWith(
                     color: AppColors.primary,
                     fontWeight: FontWeight.bold,

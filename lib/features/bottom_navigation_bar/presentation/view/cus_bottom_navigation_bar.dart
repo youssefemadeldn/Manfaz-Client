@@ -8,6 +8,9 @@ import 'package:manfaz/features/tabs/notification_tab/presentation/view/notifica
 import 'package:manfaz/features/tabs/profile_tab/presentation/view/profile_tab.dart';
 import 'package:manfaz/features/tabs/orders_tab/presentation/view/orders_tab.dart';
 
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 class CusBottomNavigationBar extends StatefulWidget {
   const CusBottomNavigationBar({super.key});
 
@@ -28,73 +31,71 @@ class _CusBottomNavigationBarState extends State<CusBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: IndexedStack(
-          index: selectedIndex,
-          children: tabs,
+      body: IndexedStack(
+        index: selectedIndex,
+        children: tabs,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: AppColors.darkGrey,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: AppColors.white,
+        elevation: 4.h,
+        currentIndex: selectedIndex,
+        selectedIconTheme: IconThemeData(
+          color: AppColors.primary,
+          size: 28.h,
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: AppColors.primary,
-          unselectedItemColor: AppColors.darkGrey,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: AppColors.white,
-          elevation: 4.h,
-          currentIndex: selectedIndex,
-          selectedIconTheme: IconThemeData(
-            color: AppColors.primary,
-            size: 28.h,
+        unselectedIconTheme: IconThemeData(
+          color: AppColors.darkGrey,
+          size: 24.h,
+        ),
+        onTap: (value) {
+          setState(() {
+            selectedIndex = value;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'assets/svg/home.svg',
+              height: 24.h,
+              color:
+                  selectedIndex == 0 ? AppColors.primary : AppColors.darkGrey,
+            ),
+            label: tr('bottom_nav.home'),
           ),
-          unselectedIconTheme: IconThemeData(
-            color: AppColors.darkGrey,
-            size: 24.h,
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'assets/svg/orders.svg',
+              height: 24.h,
+              color:
+                  selectedIndex == 1 ? AppColors.primary : AppColors.darkGrey,
+            ),
+            label: tr('bottom_nav.orders'),
           ),
-          onTap: (value) {
-            setState(() {
-              selectedIndex = value;
-            });
-          },
-          items: [
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/svg/home.svg',
-                height: 24.h,
-                color:
-                    selectedIndex == 0 ? AppColors.primary : AppColors.darkGrey,
-              ),
-              label: 'Home',
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'assets/svg/Notification.svg',
+              height: 24.h,
+              color:
+                  selectedIndex == 2 ? AppColors.primary : AppColors.darkGrey,
             ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/svg/orders.svg',
-                height: 24.h,
-                color: selectedIndex == 1 // Updated to 1 for "Orders" tab
-                    ? AppColors.primary
-                    : AppColors.darkGrey,
-              ),
-              label: 'Orders',
+            label: tr('bottom_nav.notification'),
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'assets/svg/profile.svg',
+              height: 24.h,
+              color:
+                  selectedIndex == 3 ? AppColors.primary : AppColors.darkGrey,
             ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/svg/Notification.svg',
-                height: 24.h,
-                color: selectedIndex == 2 // Updated to 1 for "Orders" tab
-                    ? AppColors.primary
-                    : AppColors.darkGrey,
-              ),
-              label: 'Notification',
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/svg/profile.svg',
-                height: 24.h,
-                color: selectedIndex == 3 // Updated to 3 for "Profile" tab
-                    ? AppColors.primary
-                    : AppColors.darkGrey,
-              ),
-              label: 'Profile',
-            ),
-          ],
-        ));
+            label: tr('bottom_nav.profile'),
+          ),
+        ],
+      ),
+    );
   }
 }

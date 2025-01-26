@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/theme/app_colors.dart';
@@ -16,13 +17,14 @@ class SeeAllWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Services Categories',
+            tr('home.all_services_at_your_finger_tips'),
             style: AppStyles.header3.copyWith(
               color: AppColors.textPrimary,
+              fontWeight: FontWeight.w600,
             ),
           ),
           Text(
-            'See All',
+            tr('home.see_all'),
             style: AppStyles.bodyText2.copyWith(
               color: AppColors.primary,
             ),

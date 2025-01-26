@@ -23,7 +23,7 @@ class ServiceCardItem extends StatelessWidget {
       // width: 190.w,
       // height: 200.h,
 
-      margin: EdgeInsets.all(8.r),
+      // margin: EdgeInsets.all(8.r),
       padding: EdgeInsets.symmetric(
         horizontal: 10.w,
       ),

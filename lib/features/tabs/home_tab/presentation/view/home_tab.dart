@@ -8,6 +8,8 @@ import 'package:manfaz/features/tabs/home_tab/presentation/widgets/service_card_
 import '../widgets/home_search_bar_widget.dart';
 import '../widgets/see_all_widget.dart';
 
+import 'package:easy_localization/easy_localization.dart';
+
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
 
@@ -23,6 +25,12 @@ class HomeTab extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    tr('home.daily_solutions'),
+                    style: AppStyles.header1.copyWith(
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
                   SizedBox(
                     height: 10.h,
                   ),
@@ -32,17 +40,20 @@ class HomeTab extends StatelessWidget {
                     ),
                     height: 370.h,
                     child: GridView.builder(
-                      // scrollDirection: Axis.,
                       padding: const EdgeInsets.all(0),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                        // childAspectRatio: 1,
                       ),
                       itemBuilder: (context, index) => ServiceCardItem(
                         image:
                             'assets/images/food_and_drinks-removebg-preview.png',
-                        title: 'Food & Drinks',
-                        supTitle: 'Restaurant - Coffee - Drinks',
-                        price: '\$ 20.00 - \$ 50.00',
+                        title: tr('home.food_and_drinks'),
+                        supTitle: tr('home.restaurant_coffee_drinks'),
+                        price: tr('home.price_range'),
                       ),
                       itemCount: 10,
                     ),
@@ -73,9 +84,9 @@ class HomeTab extends StatelessWidget {
                             itemCount: 14, // Number of categories
                             itemBuilder: (context, index) {
                               return HomeCategoryItem(
-                                title: 'Category $index',
+                                title: '${tr('home.categories')} $index',
                                 image:
-                                    'assets/images/repair_and_installation.png', // Replace with your actual asset path
+                                    'assets/images/repair_and_installation.png',
                               );
                             },
                           ),
@@ -87,14 +98,14 @@ class HomeTab extends StatelessWidget {
                     height: 20.h,
                   ),
                   PostersList(
-                    title: 'Beauty & Health',
+                    title: tr('home.beauty_health'),
                     image: 'assets/images/beauty-banner-.jpg',
                   ),
                   SizedBox(
                     height: 20.h,
                   ),
                   PostersList(
-                    title: 'Best Seller',
+                    title: tr('home.best_seller'),
                     image: 'assets/images/banner-.jpg',
                   ),
                 ],

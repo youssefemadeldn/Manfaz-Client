@@ -4,6 +4,7 @@ import 'package:manfaz/features/bottom_navigation_bar/presentation/view/cus_bott
 import 'package:manfaz/features/login/presentation/view/login_view.dart';
 import 'package:manfaz/features/login/presentation/view/otp_verification_view.dart';
 import 'package:manfaz/features/login/presentation/view/success_verification_view.dart';
+import 'package:manfaz/features/onBoardings/language_switcher_view.dart';
 import 'package:manfaz/features/onBoardings/presentation/views/on_boarding_view.dart';
 // import 'package:manfaz/features/onBoardings/presentation/views/your_turn_view.dart';
 
@@ -15,7 +16,7 @@ import '../../features/send_an_offer/presentation/views/send_an_offer_view.dart'
 class AppRouter {
   static Route generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case Routes.welcomeToOurAppView:
+      case Routes.onBoarding:
         return MaterialPageRoute(builder: (_) => const OnBoardingView());
 
       // case Routes.yourTurnView:
@@ -41,9 +42,9 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => FreelancerProfileView());
 
       case Routes.sendAnOfferView:
-        return MaterialPageRoute(
-          builder: (context) => SendAnOfferView(),
-        );
+        return MaterialPageRoute(builder: (context) => SendAnOfferView());
+      case Routes.languageSwitcherScreen:
+        return MaterialPageRoute(builder: (context) => LanguageSwitcherView());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

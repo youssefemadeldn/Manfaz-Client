@@ -1,0 +1,54 @@
+{
+  "on_boarding_title":"Manfaz \n Your comprehensive services platform",
+  "on_boarding_description":"Discover the best service providers in Saudi Arabia, and start realizing your ideas with ease and professionalism.",
+  "start_now":"Start now",
+  "select_language":"Select Language",
+
+  
+    "welcome": "Welcome Back to Manfaz",
+    "login_description": "Log in to your account to continue your journey.",
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "forgot_password": "Forgot Password?",
+    "or_sign_in_with": "Or Sign In With",
+    "no_account": "Don't have an account?",
+    "sign_up_now": "Sign Up now",
+    "home": {
+      "food_and_drinks": "Food & Drinks",
+      "restaurant_coffee_drinks": "Restaurant - Coffee - Drinks",
+      "price_range": "$ 20.00 - $ 50.00",
+      "categories": "Category",
+      "beauty_health": "Beauty & Health",
+      "best_seller": "Best Seller",
+      "location": "Location",
+      "city_country": "New York, USA",
+      "greeting": "Good Morning Ahmed",
+      "search_hint": "What are you looking for?",
+      "all_services_at_your_finger_tips": "All services at your FingerTips",
+      "see_all": "See All",
+      "daily_solutions": "Daily Solutions"
+    },
+    "bottom_nav": {
+      "home": "Home",
+      "orders": "Orders",
+      "notification": "Notification",
+      "profile": "Profile"
+    },
+
+    "orders_tab":{
+      "requests": "Requests",
+      "all": "  All  ",
+      "previous": "Previous",
+      "completed": "Completed",
+      "canceled": "Canceled",
+      "orderID": "Order ID",
+      "seller": "Seller",
+      "title": "Title",
+      "duration": "Duration",
+      "amount": "Amount",
+      "status": "Status",
+      "active": "Active"
+    }
+  }
+  

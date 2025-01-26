@@ -1,0 +1,52 @@
+{
+  "on_boarding_title":"منفذ - منصة خدماتك الشاملة",
+  "on_boarding_description":"اكتشف أفضل مزودي الخدمات في المملكة العربية السعودية، وابدأ في تحقيق أفكارك بكل سهولة واحترافية.",
+  "start_now":"ابدء الان",
+  "select_language":"اختر اللغة",
+    "welcome": "مرحبًا بك في منفذ",
+    "login_description": "قم بتسجيل الدخول إلى حسابك لمتابعة رحلتك.",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "login": "تسجيل الدخول",
+    "forgot_password": "نسيت كلمة المرور؟",
+    "or_sign_in_with": "أو سجل باستخدام",
+    "no_account": "ليس لديك حساب؟",
+    "sign_up_now": "سجل الآن",
+    "home": {
+      "food_and_drinks": "طعام وشراب",
+      "restaurant_coffee_drinks": "مطاعم - مقاهي - مشروبات",
+      "price_range": "٢٠٫٠٠$ - ٥٠٫٠٠$",
+      "categories": "الفئة",
+      "beauty_health": "الجمال والصحة",
+      "best_seller": "الأكثر مبيعًا", 
+      "location": "الموقع",
+      "city_country": "نيويورك، الولايات المتحدة الأمريكية",
+      "greeting": "صباح الخير أحمد",
+      "search_hint": "ما الذي تبحث عنه؟",
+      "all_services_at_your_finger_tips": "كل الخدمات بين ايديك",
+      "see_all": "عرض الكل",
+      "daily_solutions": "حلولك اليومية"
+    },
+    "bottom_nav": {
+      "home": "الرئيسية",
+      "orders": "الطلبات",
+      "notification": "الإشعارات",
+      "profile": "الحساب"
+    },
+
+    "orders_tab": {
+      "requests": "الطلبات",
+      "all": "  الكل  ",
+      "previous": "السابق",
+      "completed": "المكتملة",
+      "canceled": "الملغية",
+      "orderID": "معرف الطلب",
+      "seller": "البائع",
+      "title": "الوصف",
+      "duration": "المدة",
+      "amount": "المبلغ",
+      "status": "الحالة",
+      "active": "نشط"
+    }
+  }
+  

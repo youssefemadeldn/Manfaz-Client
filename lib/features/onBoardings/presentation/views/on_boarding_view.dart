@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/routes/routes.dart';
@@ -51,7 +52,7 @@ class OnBoardingView extends StatelessWidget {
                     SizedBox(height: 30.h),
                     // Header Text
                     Text(
-                      'Manfaz \n Your comprehensive services platform',
+                      'on_boarding_title'.tr(),
                       // منفذ - منصة خدماتك الشاملة
                       style: AppStyles.header1.copyWith(
                         color: AppColors.white,
@@ -62,7 +63,7 @@ class OnBoardingView extends StatelessWidget {
                     SizedBox(height: 15.h),
                     // Caption Text
                     Text(
-                      'Discover the best service providers in Saudi Arabia, and start realizing your ideas with ease and professionalism.',
+                      'on_boarding_description'.tr(),
                       // اكتشف أفضل مزودي الخدمات في المملكة العربية السعودية، وابدأ في تحقيق أفكارك بكل سهولة واحترافية.
                       textAlign: TextAlign.center,
                       style: AppStyles.bodyText1.copyWith(
@@ -75,7 +76,7 @@ class OnBoardingView extends StatelessWidget {
                     SizedBox(height: 170.h),
                     // Get Started Button
                     CusTextButton(
-                      buttonText: 'Start Now',
+                      buttonText: 'start_now'.tr(),
                       // ابدأ الآن
                       textStyle: AppStyles.buttonText.copyWith(
                         color: AppColors.white,
