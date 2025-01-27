@@ -30,7 +30,7 @@ class HomeCategoryItem extends StatelessWidget {
               alignment: Alignment.center,
               width: 70.w,
               decoration: BoxDecoration(
-                color: AppColors.background,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(10.r),
                 border: Border.all(
                   color: AppColors.background,

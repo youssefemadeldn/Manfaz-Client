@@ -51,9 +51,11 @@ class ServiceCardItem extends StatelessWidget {
           ),
           Text(
             supTitle,
-            style: AppStyles.smallText.copyWith(
+            style: AppStyles.bodyText1.copyWith(
               color: AppColors.darkGrey,
               fontWeight: FontWeight.w600,
+              overflow: TextOverflow.ellipsis,
+              fontSize: 12.sp,
             ),
           ),
           SizedBox(
@@ -69,9 +71,9 @@ class ServiceCardItem extends StatelessWidget {
             child: Text(
               textAlign: TextAlign.center,
               price,
-              style: AppStyles.smallText.copyWith(
+              style: AppStyles.bodyText3.copyWith(
                 color: AppColors.white,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),

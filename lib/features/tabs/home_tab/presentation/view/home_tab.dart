@@ -6,7 +6,6 @@ import 'package:manfaz/features/tabs/home_tab/presentation/widgets/home_category
 import 'package:manfaz/features/tabs/home_tab/presentation/widgets/service_card_item.dart';
 
 import '../widgets/home_search_bar_widget.dart';
-import '../widgets/see_all_widget.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 
@@ -61,38 +60,40 @@ class HomeTab extends StatelessWidget {
                   SizedBox(
                     height: 20.h,
                   ),
-                  Card(
-                    color: AppColors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.r),
-                    ),
-                    child: Column(
-                      children: [
-                        SeeAllWidget(),
-                        SizedBox(
-                          height: 210.h,
-                          child: GridView.builder(
-                            padding: EdgeInsets.all(5.r),
-                            scrollDirection: Axis.horizontal,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 5.h,
-                              crossAxisSpacing: 5.w,
-                              childAspectRatio: 1,
-                            ),
-                            itemCount: 14, // Number of categories
-                            itemBuilder: (context, index) {
-                              return HomeCategoryItem(
-                                title: '${tr('home.categories')} $index',
-                                image:
-                                    'assets/images/repair_and_installation.png',
-                              );
-                            },
-                          ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // SeeAllWidget(),
+                      Text(
+                        " ${tr('home.choose_service')} ",
+                        style: AppStyles.header1.copyWith(
+                          color: AppColors.textPrimary,
+                          // fontWeight: FontWeight.w600,
                         ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(
+                        height: 210.h,
+                        child: GridView.builder(
+                          padding: EdgeInsets.all(5.r),
+                          scrollDirection: Axis.horizontal,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 5.h,
+                            crossAxisSpacing: 5.w,
+                            childAspectRatio: 1,
+                          ),
+                          itemCount: 14, // Number of categories
+                          itemBuilder: (context, index) {
+                            return HomeCategoryItem(
+                              title: '${tr('home.categories')} $index',
+                              image:
+                                  'assets/images/repair_and_installation.png',
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 20.h,
