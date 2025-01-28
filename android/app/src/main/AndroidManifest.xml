@@ -3,6 +3,8 @@
         android:label="manfaz"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyALEA-N5NgRqQEIRQUJwMRoUy0i-UM0rc8"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
