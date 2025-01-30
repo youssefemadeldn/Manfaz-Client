@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:manfaz/core/routes/routes.dart';
 
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
@@ -52,7 +53,10 @@ class HomeSearchBarWidget extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.popAndPushNamed(
+                        context, Routes.getUserLocationView);
+                  },
                   icon: Icon(
                     Icons.arrow_drop_down,
                   ),
