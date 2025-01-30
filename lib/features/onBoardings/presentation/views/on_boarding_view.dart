@@ -26,12 +26,12 @@ class OnBoardingView extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 30.h),
+              padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: 60.h),
+                    SizedBox(height: 30.h),
                     // Main Image with Shadow
                     Container(
                       decoration: BoxDecoration(
@@ -73,20 +73,59 @@ class OnBoardingView extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    SizedBox(height: 170.h),
-                    // Get Started Button
-                    CusTextButton(
-                      buttonText: 'start_now'.tr(),
-                      // ابدأ الآن
-                      textStyle: AppStyles.buttonText.copyWith(
-                        color: AppColors.white,
+                    SizedBox(height: 30.h),
+                    SizedBox(
+                      height: 300.h,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'select_language'.tr(),
+                            // اختر اللغة
+                            style: AppStyles.header1.copyWith(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(height: 10.h),
+                          CusTextButton(
+                              buttonText: 'English',
+                              textStyle: AppStyles.buttonText,
+                              backgroundColor: AppColors.primaryLight,
+                              borderSideColor: Colors.transparent,
+                              onPressed: () {
+                                context.setLocale(const Locale('en'));
+                              }),
+                          SizedBox(height: 12.h),
+                          CusTextButton(
+                              buttonText: 'العربية',
+                              textStyle: AppStyles.buttonText,
+                              backgroundColor: AppColors.primaryLight,
+                              borderSideColor: Colors.transparent,
+                              onPressed: () {
+                                context.setLocale(const Locale('ar'));
+                              }),
+                          SizedBox(height: 20.h),
+                          // Get Started Button
+                          CusTextButton(
+                            buttonText: 'start_now'.tr(),
+                            // ابدأ الآن
+                            textStyle: AppStyles.buttonText.copyWith(
+                              color: AppColors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamed(context, Routes.loginView);
+                            },
+                            backgroundColor: AppColors.buttonPrimary,
+                            borderSideColor: AppColors.buttonPrimary,
+                            borderRadius: 20.r,
+                          ),
+                        ],
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, Routes.loginView);
-                      },
-                      backgroundColor: AppColors.buttonPrimary,
-                      borderSideColor: AppColors.buttonPrimary,
-                      borderRadius: 20.r,
+                    ),
+                    SizedBox(
+                      height: 30.h,
                     ),
                   ],
                 ),
@@ -94,6 +133,66 @@ class OnBoardingView extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ThreeButtons extends StatelessWidget {
+  const ThreeButtons({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 300.h,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'select_language'.tr(),
+            // اختر اللغة
+            style: AppStyles.header1.copyWith(
+              color: AppColors.white,
+              fontWeight: FontWeight.w600,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 10.h),
+          CusTextButton(
+              buttonText: 'English',
+              textStyle: AppStyles.buttonText,
+              backgroundColor: AppColors.primaryLight,
+              borderSideColor: Colors.transparent,
+              onPressed: () {
+                context.setLocale(const Locale('en'));
+              }),
+          SizedBox(height: 12.h),
+          CusTextButton(
+              buttonText: 'العربية',
+              textStyle: AppStyles.buttonText,
+              backgroundColor: AppColors.primaryLight,
+              borderSideColor: Colors.transparent,
+              onPressed: () {
+                context.setLocale(const Locale('ar'));
+              }),
+          SizedBox(height: 20.h),
+          // Get Started Button
+          CusTextButton(
+            buttonText: 'start_now'.tr(),
+            // ابدأ الآن
+            textStyle: AppStyles.buttonText.copyWith(
+              color: AppColors.white,
+            ),
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.loginView);
+            },
+            backgroundColor: AppColors.buttonPrimary,
+            borderSideColor: AppColors.buttonPrimary,
+            borderRadius: 20.r,
+          ),
+        ],
       ),
     );
   }

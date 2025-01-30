@@ -47,6 +47,30 @@
       "amount": "المبلغ",
       "status": "الحالة",
       "active": "نشط"
-    }
+    },
+    "get_user_location_view" :{
+      "confirm_location": "تاكيد موقعك",
+      "choose": "اختر"
+    },
+
+    "profile_tab": {
+    "name": "يوسف",
+    "not_verified": "غير موثق",
+    "wallet": "المحفظة",
+    "balance": "0.0 جنيه",
+    "add": "إضافة",
+    "delivery_balance": "رصيد التوصيل",
+    "new": "جديد",
+    "orders": "عدد الطلبات",
+    "saved_addresses": "العناوين المحفوظة",
+    "ratings": "تقييمات الخدمات",
+    "user_notes": "ملاحظات المستخدمين",
+    "add_coupon": "أضف كوبون",
+    "customer_support": "الدعم للعملاء",
+    "corporate_offers": "العروض للشركات",
+    "settings": "إعدادات",
+    "orders_count": "0 طلب",
+    "less_than": "0 >"
+  }
   }
   
