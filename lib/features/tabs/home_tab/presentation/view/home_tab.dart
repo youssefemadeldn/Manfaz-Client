@@ -9,6 +9,8 @@ import '../widgets/home_search_bar_widget.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 
+import '../widgets/posters_list.dart';
+
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
 
@@ -118,62 +120,3 @@ class HomeTab extends StatelessWidget {
     );
   }
 }
-
-class PostersList extends StatelessWidget {
-  final String title;
-  final String image;
-  const PostersList({
-    super.key,
-    required this.title,
-    required this.image,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: AppStyles.header1.copyWith(
-            color: AppColors.textPrimary,
-          ),
-        ),
-        SizedBox(
-          height: 170.h,
-          child: ListView.builder(
-            padding: const EdgeInsets.all(0),
-            scrollDirection: Axis.horizontal,
-            itemCount: 10,
-            itemBuilder: (context, index) => Container(
-              margin: EdgeInsets.all(10.r),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(20.r),
-              ),
-              child: Column(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(20.r)),
-                    child: Image.asset(
-                      image,
-                      height: 150.h,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-  // ServiceCardItem(
-  //                       image: 'assets/images/cap-mockup-removebg-preview.png',
-  //                       title: 'Delivery',
-  //                       supTitle: 'Shopping - Send - move from anywhere',
-  //                       price: '\$ 20.00 - \$ 50.00',
-  //                     ),
