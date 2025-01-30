@@ -49,6 +49,29 @@
       "amount": "Amount",
       "status": "Status",
       "active": "Active"
+    },
+    "get_user_location_view" :{
+      "confirm_location": "Confirm Location",
+      "choose": "Choose"
+    },
+    "profile_tab": {
+      "name": "Youssef",
+      "not_verified": "Not Verified",
+      "wallet": "Wallet",
+      "balance": "0.0 EGP",
+      "add": "Add",
+      "delivery_balance": "Delivery Balance",
+      "new": "New",
+      "orders": "Orders",
+      "saved_addresses": "Saved Addresses",
+      "ratings": "Service Ratings",
+      "user_notes": "User Notes",
+      "add_coupon": "Add Coupon",
+      "customer_support": "Customer Support",
+      "corporate_offers": "Corporate Offers",
+      "settings": "Settings",
+      "orders_count": "0 Orders",
+      "less_than": "< 0"
     }
   }
   

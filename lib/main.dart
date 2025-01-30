@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/routes/app_router.dart';
 import 'package:manfaz/core/routes/routes.dart';
+import 'package:manfaz/core/theme/app_colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,13 +29,13 @@ class ManfazApp extends StatelessWidget {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         debugShowCheckedModeBanner: false,
-        initialRoute: Routes.languageSwitcherScreen,
+        initialRoute: Routes.onBoarding,
         onGenerateRoute: AppRouter.generateRoute,
         theme: ThemeData(
           appBarTheme: AppBarTheme(
-            backgroundColor: Color(0xFFFFFFFF),
+            backgroundColor: AppColors.background,
           ),
-          scaffoldBackgroundColor: Color(0xFFF2F6FF),
+          scaffoldBackgroundColor: AppColors.background,
         ),
       ),
     );

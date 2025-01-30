@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:manfaz/core/routes/routes.dart';
 
 import '../../../../../core/theme/app_colors.dart';
@@ -57,8 +58,9 @@ class HomeSearchBarWidget extends StatelessWidget {
                     Navigator.popAndPushNamed(
                         context, Routes.getUserLocationView);
                   },
-                  icon: Icon(
-                    Icons.arrow_drop_down,
+                  icon: SvgPicture.asset(
+                    'assets/svg/arrow_down.svg',
+                    color: AppColors.white,
                   ),
                   color: AppColors.white,
                 ),

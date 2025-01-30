@@ -1,74 +1,153 @@
 import 'package:flutter/material.dart';
-import 'package:manfaz/core/theme/app_colors.dart';
-import 'package:manfaz/core/theme/app_styles.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class ProfileTab extends StatelessWidget {
-  const ProfileTab({super.key});
+  final Color primaryColor = Color(0xFF0068FF);
+
+  ProfileTab({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Profile Picture
-            Center(
-              child: Stack(
+            // Profile Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Row(
                 children: [
                   CircleAvatar(
-                    radius: 50,
+                    radius: 30,
                     backgroundColor: Colors.grey[300],
-                    child: Icon(
-                      Icons.person,
-                      size: 50,
-                      color: Colors.grey[600],
-                    ),
+                    child: Icon(Icons.person, color: Colors.white, size: 40),
                   ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Container(
-                      padding: EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        shape: BoxShape.circle,
+                  SizedBox(width: 15),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("profile_tab.name".tr(),
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                      Row(
+                        children: List.generate(
+                            5,
+                            (index) =>
+                                Icon(Icons.star_border, color: Colors.grey)),
                       ),
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                    ),
+                      Text("profile_tab.not_verified".tr(),
+                          style: TextStyle(color: Colors.grey, fontSize: 14)),
+                    ],
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 20),
-            // User Details Fields
-            buildField("User Name", "John Doe"),
-            buildField("Phone Number", "+1 123 2456 789"),
-            buildField("Country", "United States"),
-            buildField("Street Address", "123 Main Street"),
-            // buildField("City", "Los Angeles"),
-            // buildField("State", "California"),
-            // buildField("ZIP/Postal Code", "90001"),
-            buildField("Language", "English"),
-            buildField("Gender", "Male"),
-            SizedBox(height: 20),
-            // Save Button
-            Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-                ),
-                onPressed: () {
-                  // Button pressed action
-                },
-                child: Text("Save Profile",
-                    style: AppStyles.buttonText.copyWith(color: Colors.white)),
+            SizedBox(height: 10),
+
+            // Wallet Section
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("profile_tab.wallet".tr(),
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      Icon(Icons.account_balance_wallet_outlined,
+                          color: Colors.grey),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Text("profile_tab.balance".tr(),
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      Spacer(),
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primaryColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                        ),
+                        onPressed: () {},
+                        icon: Icon(Icons.add, color: Colors.white),
+                        label: Text("profile_tab.add".tr(),
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 15),
+                  Divider(),
+                  ListTile(
+                    title: Text("profile_tab.delivery_balance".tr(),
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    subtitle: Text("profile_tab.balance".tr()),
+                    trailing: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Text("profile_tab.new".tr(),
+                          style: TextStyle(color: Colors.white)),
+                    ),
+                  ),
+                  Divider(),
+                  ListTile(
+                    leading: Icon(Icons.directions_car, color: Colors.grey),
+                    title: Text("profile_tab.orders".tr()),
+                    trailing: Text("profile_tab.orders_count".tr(),
+                        style: TextStyle(color: primaryColor, fontSize: 16)),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.location_on, color: Colors.grey),
+                    title: Text("profile_tab.saved_addresses".tr()),
+                    trailing: Text("profile_tab.less_than".tr(args: ['1']),
+                        style: TextStyle(color: primaryColor)),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.star_border, color: Colors.grey),
+                    title: Text("profile_tab.ratings".tr()),
+                    trailing: Text("profile_tab.less_than".tr(args: ['0']),
+                        style: TextStyle(color: primaryColor)),
+                  ),
+                  ListTile(
+                    leading:
+                        Icon(Icons.chat_bubble_outline, color: Colors.grey),
+                    title: Text("profile_tab.user_notes".tr()),
+                    trailing: Text("profile_tab.less_than".tr(args: ['0']),
+                        style: TextStyle(color: primaryColor)),
+                  ),
+                  SizedBox(height: 10),
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                    ),
+                    onPressed: () {},
+                    icon: Icon(Icons.add, color: Colors.white),
+                    label: Text("profile_tab.add_coupon".tr(),
+                        style: TextStyle(color: Colors.white)),
+                  ),
+                  SizedBox(height: 15),
+                  Divider(),
+                  ListTile(
+                    title: Text("profile_tab.customer_support".tr()),
+                    trailing: Icon(Icons.help_outline, color: Colors.grey),
+                  ),
+                  ListTile(
+                    title: Text("profile_tab.corporate_offers".tr()),
+                    trailing: Icon(Icons.business_center_outlined,
+                        color: Colors.grey),
+                  ),
+                  ListTile(
+                    title: Text("profile_tab.settings".tr()),
+                    trailing: Icon(Icons.settings, color: Colors.grey),
+                  ),
+                ],
               ),
             ),
           ],
@@ -76,309 +155,4 @@ class ProfileTab extends StatelessWidget {
       ),
     );
   }
-
-  // Method to Build Field
-  Widget buildField(String title, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[700],
-            ),
-          ),
-          SizedBox(height: 4),
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey[300]!),
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.grey[100],
-            ),
-            child: Text(
-              value,
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
-/*
-
-import 'package:flutter/material.dart';
-
-class ProfileScreen extends StatefulWidget {
-  @override
-  _ProfileScreenState createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  bool isEditMode = false; // Toggle between display and edit modes
-
-  // Mock data for display state
-  String userName = "John Doe";
-  String phoneNumber = "+1 123 2456 789";
-  String country = "United States";
-  String streetAddress = "123 Main Street";
-  String city = "Los Angeles";
-  String state = "California";
-  String zipCode = "90001";
-  String language = "English";
-  String gender = "Male";
-
-  // Controllers for edit state
-  final TextEditingController userNameController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController streetAddressController = TextEditingController();
-  final TextEditingController cityController = TextEditingController();
-  final TextEditingController stateController = TextEditingController();
-  final TextEditingController zipCodeController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Initialize controllers with existing data
-    userNameController.text = userName;
-    phoneController.text = phoneNumber;
-    streetAddressController.text = streetAddress;
-    cityController.text = city;
-    stateController.text = state;
-    zipCodeController.text = zipCode;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(isEditMode ? "Edit Profile" : "Profile"),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            // Handle back action
-            Navigator.pop(context);
-          },
-        ),
-        actions: [
-          if (!isEditMode)
-            IconButton(
-              icon: Icon(Icons.edit),
-              onPressed: () {
-                setState(() {
-                  isEditMode = true;
-                });
-              },
-            ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Profile Picture
-              Center(
-                child: Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.grey[300],
-                      child: Icon(
-                        Icons.person,
-                        size: 50,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                    if (isEditMode)
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          padding: EdgeInsets.all(6),
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.camera_alt,
-                            color: Colors.white,
-                            size: 20,
-                          ),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              // User Details
-              isEditMode
-                  ? buildEditableField("User Name", userNameController)
-                  : buildDisplayField("User Name", userName),
-              isEditMode
-                  ? buildEditableField("Phone Number", phoneController)
-                  : buildDisplayField("Phone Number", phoneNumber),
-              buildDisplayField("Country", country),
-              isEditMode
-                  ? buildEditableField("Street Address", streetAddressController)
-                  : buildDisplayField("Street Address", streetAddress),
-              isEditMode
-                  ? buildEditableField("City", cityController)
-                  : buildDisplayField("City", city),
-              isEditMode
-                  ? buildEditableField("State", stateController)
-                  : buildDisplayField("State", state),
-              isEditMode
-                  ? buildEditableField("ZIP/Postal Code", zipCodeController)
-                  : buildDisplayField("ZIP/Postal Code", zipCode),
-              isEditMode
-                  ? buildDropdownField("Language", language, ["English", "Spanish", "French"])
-                  : buildDisplayField("Language", language),
-              isEditMode
-                  ? buildDropdownField("Gender", gender, ["Male", "Female", "Other"])
-                  : buildDisplayField("Gender", gender),
-              SizedBox(height: 20),
-              // Save or Edit Button
-              if (isEditMode)
-                Center(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        // Save data
-                        userName = userNameController.text;
-                        phoneNumber = phoneController.text;
-                        streetAddress = streetAddressController.text;
-                        city = cityController.text;
-                        state = stateController.text;
-                        zipCode = zipCodeController.text;
-
-                        isEditMode = false;
-                      });
-                    },
-                    child: Text("Save Profile"),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  // Display field for static data
-  Widget buildDisplayField(String title, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[700],
-            ),
-          ),
-          SizedBox(height: 4),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.black,
-            ),
-          ),
-          Divider(),
-        ],
-      ),
-    );
-  }
-
-  // Editable field for input
-  Widget buildEditableField(String title, TextEditingController controller) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[700],
-            ),
-          ),
-          SizedBox(height: 4),
-          TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Dropdown field for editable state
-  Widget buildDropdownField(String title, String currentValue, List<String> options) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[700],
-            ),
-          ),
-          SizedBox(height: 4),
-          DropdownButtonFormField<String>(
-            value: currentValue,
-            items: options.map((option) {
-              return DropdownMenuItem(
-                value: option,
-                child: Text(option),
-              );
-            }).toList(),
-            onChanged: (value) {
-              setState(() {
-                if (title == "Language") {
-                  language = value!;
-                } else if (title == "Gender") {
-                  gender = value!;
-                }
-              });
-            },
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-*/
