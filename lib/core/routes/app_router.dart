@@ -8,6 +8,7 @@ import 'package:manfaz/features/login/presentation/view/success_verification_vie
 import 'package:manfaz/features/onBoardings/presentation/views/on_boarding_view.dart';
 import '../../features/freelancer_profile/presentation/views/freelancer_profile_view.dart';
 import '../../features/google_maps/presentation/views/get_user_location_view.dart';
+import '../../features/home_service_details/presentation/views/home_service_details_view.dart';
 import '../../features/people_list_view/presentation/views/people_list_view_view.dart';
 import '../../features/register/presentation/views/register_view.dart';
 import '../../features/send_an_offer/presentation/views/send_an_offer_view.dart';
@@ -44,6 +45,11 @@ class AppRouter {
       //
       case Routes.getUserLocationView:
         return CupertinoPageRoute(builder: (context) => GetUserLocationView());
+
+      case Routes.homeServiceDetailsView:
+        return CupertinoPageRoute(
+            builder: (context) => HomeServiceDetailsView());
+
       default:
         return CupertinoPageRoute(
           builder: (_) => CupertinoPageScaffold(
