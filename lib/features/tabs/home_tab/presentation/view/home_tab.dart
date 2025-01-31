@@ -5,6 +5,7 @@ import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/features/tabs/home_tab/presentation/widgets/home_category_item.dart';
 import 'package:manfaz/features/tabs/home_tab/presentation/widgets/service_card_item.dart';
 
+import '../../../../../core/helper/bottom_sheet_helper.dart';
 import '../widgets/home_search_bar_widget.dart';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -88,6 +89,13 @@ class HomeTab extends StatelessWidget {
                           itemCount: 14, // Number of categories
                           itemBuilder: (context, index) {
                             return HomeCategoryItem(
+                              onTap: () {
+                                BottomSheetHelper.show(
+                                  context: context,
+                                  maxHeight: 280.h,
+                                  child: HomeBottomSheetChildWidget(),
+                                );
+                              },
                               title: '${tr('home.categories')} $index',
                               image:
                                   'assets/images/repair_and_installation.png',
@@ -117,6 +125,33 @@ class HomeTab extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class HomeBottomSheetChildWidget extends StatelessWidget {
+  const HomeBottomSheetChildWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10.r),
+      width: double.infinity,
+      child: GridView.builder(
+          itemCount: 5,
+          padding: EdgeInsets.all(5.r),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4,
+          ),
+          itemBuilder: (context, index) {
+            return HomeCategoryItem(
+              title: 'title',
+              image: 'assets/images/repair_and_installation.png',
+              onTap: () {},
+            );
+          }),
     );
   }
 }

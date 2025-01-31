@@ -5,7 +5,7 @@ class DialogHelper {
   static void showCustomDialog({
     required BuildContext context,
     required Widget title,
-    required String content,
+    required Widget content,
     TextStyle? leftActionStyle,
     TextStyle? rightActionStyle,
     TextStyle? contentStyle,
@@ -26,10 +26,7 @@ class DialogHelper {
           //   style: titleStyle ?? const TextStyle(),
           // )
           ,
-          content: Text(
-            content,
-            style: contentStyle ?? const TextStyle(),
-          ),
+          content: content,
           actions: <Widget>[
             TextButton(
               onPressed: () {

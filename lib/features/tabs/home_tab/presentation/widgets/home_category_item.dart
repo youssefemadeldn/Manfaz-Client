@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:manfaz/core/routes/routes.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 
 class HomeCategoryItem extends StatelessWidget {
   final String title;
   final String image;
+  final void Function() onTap;
 
   const HomeCategoryItem({
     super.key,
     required this.title,
     required this.image,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, Routes.peopleListViewView);
-      },
+      onTap: onTap,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,

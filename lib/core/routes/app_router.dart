@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:manfaz/core/routes/routes.dart';
 import 'package:manfaz/features/bottom_navigation_bar/presentation/view/cus_bottom_navigation_bar.dart';
 import 'package:manfaz/features/login/presentation/view/login_view.dart';
@@ -46,8 +47,10 @@ class AppRouter {
       default:
         return CupertinoPageRoute(
           builder: (_) => CupertinoPageScaffold(
-            child: Center(
-              child: Text("No Route defined for ${settings.name}"),
+            child: Scaffold(
+              body: Center(
+                child: Text("No Route defined for ${settings.name}"),
+              ),
             ),
           ),
         );

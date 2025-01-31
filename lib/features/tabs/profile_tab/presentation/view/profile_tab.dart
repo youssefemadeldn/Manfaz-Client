@@ -26,17 +26,29 @@ class ProfileTab extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("profile_tab.name".tr(),
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold)),
+                      Text(
+                        "profile_tab.name".tr(),
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       Row(
                         children: List.generate(
-                            5,
-                            (index) =>
-                                Icon(Icons.star_border, color: Colors.grey)),
+                          5,
+                          (index) => Icon(
+                            Icons.star_border,
+                            color: Colors.grey,
+                          ),
+                        ),
                       ),
-                      Text("profile_tab.not_verified".tr(),
-                          style: TextStyle(color: Colors.grey, fontSize: 14)),
+                      Text(
+                        "profile_tab.not_verified".tr(),
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 14,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -82,9 +94,13 @@ class ProfileTab extends StatelessWidget {
                   SizedBox(height: 15),
                   Divider(),
                   ListTile(
-                    title: Text("profile_tab.delivery_balance".tr(),
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Text("profile_tab.balance".tr()),
+                    title: Text(
+                      "profile_tab.delivery_balance".tr(),
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      "profile_tab.balance".tr(),
+                    ),
                     trailing: Container(
                       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                       decoration: BoxDecoration(
