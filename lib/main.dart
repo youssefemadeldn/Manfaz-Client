@@ -29,7 +29,7 @@ class ManfazApp extends StatelessWidget {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         debugShowCheckedModeBanner: false,
-        initialRoute: Routes.onBoarding,
+        initialRoute: Routes.cusBottomNavigationBar,
         onGenerateRoute: AppRouter.generateRoute,
         theme: ThemeData(
           appBarTheme: AppBarTheme(

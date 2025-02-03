@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:manfaz/core/routes/routes.dart';
@@ -7,11 +8,14 @@ import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/core/widgets/cus_text_button.dart';
 
+import '../controller/google_maps_cubit/google_maps_cubit.dart';
+
 class GetUserLocationView extends StatelessWidget {
   const GetUserLocationView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var viewModel = BlocProvider.of<GoogleMapsCubit>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('get_user_location_view.confirm_location'.tr()),
@@ -21,7 +25,7 @@ class GetUserLocationView extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(context, Routes.cusBottomNavigationBar);
           },
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back_ios),
         ),
       ),
       body: Center(
@@ -30,32 +34,64 @@ class GetUserLocationView extends StatelessWidget {
             borderRadius: BorderRadius.circular(35.r),
           ),
           // height: 600.h,
-          child: Column(
+          child: Stack(
+            alignment: Alignment.bottomCenter,
             children: [
-              Expanded(
+              SizedBox(
+                height: MediaQuery.of(context)
+                    .size
+                    .height, // Adjust height as needed
+                width: double.infinity,
                 child: GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(0, 0),
+                  polylines: viewModel.polylines,
+                  polygons: viewModel.polygons,
+                  // zoomControlsEnabled: false,
+                  markers: viewModel.markers,
+                  onMapCreated: (controller) {
+                    // 1- init google map controller
+                    viewModel.cubitController = controller;
+                    //2- init map style
+                    viewModel.initMapStyle(context);
+                  },
+                  initialCameraPosition: viewModel.initialCameraPosition,
+                ),
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              Positioned(
+                bottom: 30.h,
+                left: 0,
+                right: 0,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  child: CusTextButton(
+                    buttonText: 'get_user_location_view.choose'.tr(),
+                    textStyle: AppStyles.buttonText,
+                    onPressed: () {},
+                    backgroundColor: AppColors.buttonPrimary,
+                    borderSideColor: AppColors.primary,
+                    borderRadius: 30.r,
+                    // buttonWidth: 20.w,
+                    // buttonHeight: 10.h,
                   ),
                 ),
               ),
-              SizedBox(
-                height: 20.h,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                child: CusTextButton(
-                  buttonText: 'get_user_location_view.choose'.tr(),
-                  textStyle: AppStyles.buttonText,
-                  onPressed: () {},
-                  backgroundColor: AppColors.buttonPrimary,
-                  borderSideColor: AppColors.primary,
-                  // buttonWidth: 20.w,
-                  // buttonHeight: 10.h,
+              Positioned(
+                bottom: 100.h,
+                left: 10.w,
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  child: IconButton(
+                    iconSize: 30.sp,
+                    color: AppColors.primarySwatch,
+                    onPressed: () {},
+                    icon: Icon(Icons.gps_fixed_rounded),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 20.h,
               ),
             ],
           ),
