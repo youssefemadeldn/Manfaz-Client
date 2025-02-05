@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:manfaz/core/routes/routes.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/core/widgets/cus_text_button.dart';
@@ -17,19 +16,9 @@ class GetUserLocationView extends StatelessWidget {
   Widget build(BuildContext context) {
     var viewModel = BlocProvider.of<GoogleMapsCubit>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('get_user_location_view.confirm_location'.tr()),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pushNamed(context, Routes.cusBottomNavigationBar);
-          },
-          icon: Icon(Icons.arrow_back_ios),
-        ),
-      ),
       body: Center(
         child: Container(
+          // padding: EdgeInsets.symmetric(horizontal: 15.w),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(35.r),
           ),
@@ -43,17 +32,20 @@ class GetUserLocationView extends StatelessWidget {
                     .height, // Adjust height as needed
                 width: double.infinity,
                 child: GoogleMap(
-                  polylines: viewModel.polylines,
-                  polygons: viewModel.polygons,
+                  // polylines: viewModel.polylines,
+                  // polygons: viewModel.polygons,
                   // zoomControlsEnabled: false,
                   markers: viewModel.markers,
                   onMapCreated: (controller) {
-                    // 1- init google map controller
                     viewModel.cubitController = controller;
-                    //2- init map style
                     viewModel.initMapStyle(context);
+                    viewModel.updateLocation();
                   },
-                  initialCameraPosition: viewModel.initialCameraPosition,
+
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(24.72087070791564, 46.67037450156113),
+                    zoom: 13,
+                  ),
                 ),
               ),
               SizedBox(
@@ -68,7 +60,9 @@ class GetUserLocationView extends StatelessWidget {
                   child: CusTextButton(
                     buttonText: 'get_user_location_view.choose'.tr(),
                     textStyle: AppStyles.buttonText,
-                    onPressed: () {},
+                    onPressed: () async {
+                      await viewModel.updateLocation();
+                    },
                     backgroundColor: AppColors.buttonPrimary,
                     borderSideColor: AppColors.primary,
                     borderRadius: 30.r,

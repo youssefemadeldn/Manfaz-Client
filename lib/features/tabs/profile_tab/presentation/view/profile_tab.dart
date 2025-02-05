@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:manfaz/core/theme/app_styles.dart';
+import 'package:manfaz/core/theme/app_colors.dart';
 
 class ProfileTab extends StatelessWidget {
-  final Color primaryColor = Color(0xFF0068FF);
-
   ProfileTab({super.key});
 
   @override
@@ -14,154 +15,196 @@ class ProfileTab extends StatelessWidget {
           children: [
             // Profile Section
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
               child: Row(
                 children: [
                   CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.grey[300],
-                    child: Icon(Icons.person, color: Colors.white, size: 40),
+                    radius: 30.r,
+                    backgroundColor: AppColors.lightGrey,
+                    child: Icon(Icons.person, color: AppColors.white, size: 40.sp),
                   ),
-                  SizedBox(width: 15),
+                  SizedBox(width: 15.w),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "profile_tab.name".tr(),
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: AppStyles.profileName,
                       ),
                       Row(
                         children: List.generate(
                           5,
                           (index) => Icon(
                             Icons.star_border,
-                            color: Colors.grey,
+                            color: AppColors.grey,
+                            size: 18.sp,
                           ),
                         ),
                       ),
                       Text(
                         "profile_tab.not_verified".tr(),
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14,
-                        ),
+                        style: AppStyles.profileStatus,
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 10.h),
 
             // Wallet Section
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("profile_tab.wallet".tr(),
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
-                      Icon(Icons.account_balance_wallet_outlined,
-                          color: Colors.grey),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Text("profile_tab.balance".tr(),
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
-                      Spacer(),
-                      ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: primaryColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
-                        ),
-                        onPressed: () {},
-                        icon: Icon(Icons.add, color: Colors.white),
-                        label: Text("profile_tab.add".tr(),
-                            style: TextStyle(color: Colors.white)),
+                      Text(
+                        "profile_tab.wallet".tr(),
+                        style: AppStyles.listTileTitle,
+                      ),
+                      Icon(
+                        Icons.account_balance_wallet_outlined,
+                        color: AppColors.grey,
+                        size: 24.sp,
                       ),
                     ],
                   ),
-                  SizedBox(height: 15),
-                  Divider(),
+                  SizedBox(height: 10.h),
+                  Row(
+                    children: [
+                      Text(
+                        "profile_tab.balance".tr(),
+                        style: AppStyles.balanceText,
+                      ),
+                      Spacer(),
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 8.h,
+                          ),
+                        ),
+                        onPressed: () {},
+                        icon: Icon(Icons.add, color: AppColors.white, size: 20.sp),
+                        label: Text(
+                          "profile_tab.add".tr(),
+                          style: AppStyles.buttonText,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 15.h),
+                  Divider(color: AppColors.divider),
                   ListTile(
                     title: Text(
                       "profile_tab.delivery_balance".tr(),
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: AppStyles.listTileTitle,
                     ),
                     subtitle: Text(
                       "profile_tab.balance".tr(),
+                      style: AppStyles.listTileSubtitle,
                     ),
                     trailing: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
                       decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(12)),
+                          color: AppColors.red,
+                          borderRadius: BorderRadius.circular(12.r)),
                       child: Text("profile_tab.new".tr(),
-                          style: TextStyle(color: Colors.white)),
+                          style: AppStyles.badgeText),
                     ),
                   ),
-                  Divider(),
+                  Divider(color: AppColors.divider),
                   ListTile(
-                    leading: Icon(Icons.directions_car, color: Colors.grey),
-                    title: Text("profile_tab.orders".tr()),
-                    trailing: Text("profile_tab.orders_count".tr(),
-                        style: TextStyle(color: primaryColor, fontSize: 16)),
+                    leading: Icon(Icons.directions_car, color: AppColors.grey, size: 24.sp),
+                    title: Text(
+                      "profile_tab.orders".tr(),
+                      style: AppStyles.listTileTitle,
+                    ),
+                    trailing: Text(
+                      "profile_tab.orders_count".tr(),
+                      style: AppStyles.listTileTitle.copyWith(color: AppColors.primary),
+                    ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.location_on, color: Colors.grey),
-                    title: Text("profile_tab.saved_addresses".tr()),
-                    trailing: Text("profile_tab.less_than".tr(args: ['1']),
-                        style: TextStyle(color: primaryColor)),
+                    leading: Icon(Icons.location_on, color: AppColors.grey, size: 24.sp),
+                    title: Text(
+                      "profile_tab.saved_addresses".tr(),
+                      style: AppStyles.listTileTitle,
+                    ),
+                    trailing: Text(
+                      "profile_tab.less_than".tr(args: ['1']),
+                      style: AppStyles.listTileSubtitle.copyWith(color: AppColors.primary),
+                    ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.star_border, color: Colors.grey),
-                    title: Text("profile_tab.ratings".tr()),
-                    trailing: Text("profile_tab.less_than".tr(args: ['0']),
-                        style: TextStyle(color: primaryColor)),
+                    leading: Icon(Icons.star_border, color: AppColors.grey, size: 24.sp),
+                    title: Text(
+                      "profile_tab.ratings".tr(),
+                      style: AppStyles.listTileTitle,
+                    ),
+                    trailing: Text(
+                      "profile_tab.less_than".tr(args: ['0']),
+                      style: AppStyles.listTileSubtitle.copyWith(color: AppColors.primary),
+                    ),
                   ),
                   ListTile(
-                    leading:
-                        Icon(Icons.chat_bubble_outline, color: Colors.grey),
-                    title: Text("profile_tab.user_notes".tr()),
-                    trailing: Text("profile_tab.less_than".tr(args: ['0']),
-                        style: TextStyle(color: primaryColor)),
+                    leading: Icon(Icons.chat_bubble_outline, color: AppColors.grey, size: 24.sp),
+                    title: Text(
+                      "profile_tab.user_notes".tr(),
+                      style: AppStyles.listTileTitle,
+                    ),
+                    trailing: Text(
+                      "profile_tab.less_than".tr(args: ['0']),
+                      style: AppStyles.listTileSubtitle.copyWith(color: AppColors.primary),
+                    ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColor,
+                      backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 8.h,
+                      ),
                     ),
                     onPressed: () {},
-                    icon: Icon(Icons.add, color: Colors.white),
-                    label: Text("profile_tab.add_coupon".tr(),
-                        style: TextStyle(color: Colors.white)),
+                    icon: Icon(Icons.add, color: AppColors.white, size: 20.sp),
+                    label: Text(
+                      "profile_tab.add_coupon".tr(),
+                      style: AppStyles.buttonText,
+                    ),
                   ),
-                  SizedBox(height: 15),
-                  Divider(),
+                  SizedBox(height: 15.h),
+                  Divider(color: AppColors.divider),
                   ListTile(
-                    title: Text("profile_tab.customer_support".tr()),
-                    trailing: Icon(Icons.help_outline, color: Colors.grey),
+                    title: Text(
+                      "profile_tab.customer_support".tr(),
+                      style: AppStyles.listTileTitle,
+                    ),
+                    trailing: Icon(Icons.help_outline, color: AppColors.grey, size: 24.sp),
                   ),
                   ListTile(
-                    title: Text("profile_tab.corporate_offers".tr()),
-                    trailing: Icon(Icons.business_center_outlined,
-                        color: Colors.grey),
+                    title: Text(
+                      "profile_tab.corporate_offers".tr(),
+                      style: AppStyles.listTileTitle,
+                    ),
+                    trailing: Icon(Icons.business_center_outlined, color: AppColors.grey, size: 24.sp),
                   ),
                   ListTile(
-                    title: Text("profile_tab.settings".tr()),
-                    trailing: Icon(Icons.settings, color: Colors.grey),
+                    title: Text(
+                      "profile_tab.settings".tr(),
+                      style: AppStyles.listTileTitle,
+                    ),
+                    trailing: Icon(Icons.settings, color: AppColors.grey, size: 24.sp),
                   ),
                 ],
               ),
