@@ -101,6 +101,10 @@
       "email_validation": "Please enter a valid email",
       "phone_validation": "Please enter a valid phone number",
       "password_validation": "Please enter a valid password",
+      "network_error": "Network Error",
+      "check_internet": "Check Internet",
+      "registration_failed": "Registration Failed",
+      "email_phone_in_use": "Email or phone already in use",
       "register_success": "Registered Successfully",
       "already_have_account": "Already have an account? ",
       "login_here": "Login here"

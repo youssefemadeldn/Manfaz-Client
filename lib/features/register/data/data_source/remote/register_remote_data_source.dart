@@ -5,6 +5,7 @@ import 'package:manfaz/core/error/failure.dart';
 import 'package:manfaz/core/network/api_manager.dart';
 import 'package:manfaz/features/register/data/data_source/remote/base_register_remote_data_source.dart';
 import 'package:manfaz/features/register/data/models/register_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../../core/di/di.dart';
 import '../../../../../core/network/api_constant.dart';
@@ -33,22 +34,25 @@ class RegisterRemoteDataSource implements BaseRegisterRemoteDataSource {
         return right(registerModel);
       } else {
         // Server Error Case:
-        return left(ServerFailure(errorMessage:  registerModel.message!, failureTitle: "Registration Failed"));
+        return left(ServerFailure(
+          errorMessage: registerModel.message!, 
+          failureTitle: "register.registration_failed".tr()
+        ));
       }
     } on DioException {
       // Unexpected DioError (e.g., timeout, internet connection)
       return left(
         NetworkFailure(
-          failureTitle: 'Network Error',
-          errorMessage: 'Check Internet',
+          failureTitle: 'register.network_error'.tr(),
+          errorMessage: 'check_internet'.tr(),
         ),
       );
     } catch (e) {
       // General unexpected error
       return left(
         ServerFailure(
-          errorMessage: 'Email or phone already in use',
-          failureTitle: 'Registration Failed',
+          errorMessage: 'register.email_phone_in_use'.tr(),
+          failureTitle: 'register.registration_failed'.tr(),
         ),
       );
     }

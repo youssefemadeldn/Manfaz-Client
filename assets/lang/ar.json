@@ -101,6 +101,10 @@
     "email_validation": "الرجاء إدخال بريد إلكتروني صحيح",
     "phone_validation": "الرجاء إدخال رقم هاتف صحيح",
     "password_validation": "الرجاء إدخال كلمة مرور صحيحة",
+    "network_error": "خطأ في الشبكة",
+    "check_internet": "تحقق من اتصال الإنترنت",
+    "registration_failed": "فشل التسجيل",
+    "email_phone_in_use": "البريد الإلكتروني أو رقم الهاتف مستخدم بالفعل",
     "register_success": "تم التسجيل بنجاح",
     "already_have_account": "هل لديك حساب بالفعل؟ ",
     "login_here": "سجل دخول هنا"
