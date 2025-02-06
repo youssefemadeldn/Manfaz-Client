@@ -10,7 +10,7 @@ import 'package:manfaz/features/onBoardings/presentation/views/on_boarding_view.
 import '../../features/freelancer_profile/presentation/views/freelancer_profile_view.dart';
 import '../../features/google_maps/presentation/controller/google_maps_cubit/google_maps_cubit.dart';
 import '../../features/google_maps/presentation/views/get_user_location_view.dart';
-import '../../features/home_service_details/presentation/views/home_service_details_view.dart';
+import '../../features/services_list_view_view/presentation/views/services_list_view_view.dart';
 import '../../features/login/presentation/controller/login_cubit/login_cubit.dart';
 import '../../features/people_list_view/presentation/views/people_list_view_view.dart';
 import '../../features/register/presentation/controller/register_cubit/register_cubit.dart';
@@ -66,7 +66,7 @@ class AppRouter {
 
       case Routes.homeServiceDetailsView:
         return CupertinoPageRoute(
-            builder: (context) => HomeServiceDetailsView());
+            builder: (context) => ServicesListViewView());
 
       default:
         return CupertinoPageRoute(

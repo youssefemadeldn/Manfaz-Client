@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:manfaz/features/home_service_details/presentation/widgets/choose_your_service_card_item.dart';
+import 'package:manfaz/features/services_list_view_view/presentation/widgets/choose_your_service_card_item.dart';
 
 class ChooseYourService extends StatelessWidget {
   const ChooseYourService({

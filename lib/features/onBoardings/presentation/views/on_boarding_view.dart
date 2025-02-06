@@ -94,6 +94,7 @@ class OnBoardingView extends StatelessWidget {
                               textStyle: AppStyles.buttonText,
                               backgroundColor: AppColors.primaryLight,
                               borderSideColor: Colors.transparent,
+                              // buttonHeight: 0,
                               onPressed: () {
                                 context.setLocale(const Locale('en'));
                               }),

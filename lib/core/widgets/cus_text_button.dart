@@ -49,7 +49,7 @@ class CusTextButton extends StatelessWidget {
           ),
         ),
         fixedSize: WidgetStateProperty.all(
-          Size(buttonWidth?.w ?? double.maxFinite, buttonHeight ?? 50.h),
+          Size(buttonWidth?.w ?? double.maxFinite, buttonHeight ?? double.infinity),
         ),
       ),
       onPressed: onPressed,

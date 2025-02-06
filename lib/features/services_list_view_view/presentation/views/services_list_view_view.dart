@@ -4,8 +4,8 @@ import '../../../../core/theme/app_colors.dart';
 import '../widgets/choose_your_service.dart';
 import '../widgets/service_poster_details.dart';
 
-class HomeServiceDetailsView extends StatelessWidget {
-  const HomeServiceDetailsView({super.key});
+class ServicesListViewView extends StatelessWidget {
+  const ServicesListViewView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
