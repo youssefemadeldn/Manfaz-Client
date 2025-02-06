@@ -7,11 +7,11 @@ import 'package:manfaz/features/login/presentation/view/login_view.dart';
 import 'package:manfaz/features/login/presentation/view/otp_verification_view.dart';
 import 'package:manfaz/features/login/presentation/view/success_verification_view.dart';
 import 'package:manfaz/features/onBoardings/presentation/views/on_boarding_view.dart';
-import 'package:manfaz/features/register/domain/use_cases/register_use_case.dart';
 import '../../features/freelancer_profile/presentation/views/freelancer_profile_view.dart';
 import '../../features/google_maps/presentation/controller/google_maps_cubit/google_maps_cubit.dart';
 import '../../features/google_maps/presentation/views/get_user_location_view.dart';
 import '../../features/home_service_details/presentation/views/home_service_details_view.dart';
+import '../../features/login/presentation/controller/login_cubit/login_cubit.dart';
 import '../../features/people_list_view/presentation/views/people_list_view_view.dart';
 import '../../features/register/presentation/controller/register_cubit/register_cubit.dart';
 import '../../features/register/presentation/views/register_view.dart';
@@ -25,7 +25,12 @@ class AppRouter {
         return CupertinoPageRoute(builder: (_) => const OnBoardingView());
 
       case Routes.loginView:
-        return CupertinoPageRoute(builder: (_) => const LoginView());
+        return CupertinoPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<LoginCubit>(),
+            child:  LoginView(),
+          ),
+        );
       //
       case Routes.registerView:
         return CupertinoPageRoute(

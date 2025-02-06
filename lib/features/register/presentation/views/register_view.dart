@@ -12,9 +12,17 @@ import '../../../../core/helper/regex_helper.dart';
 import '../../../../core/theme/app_styles.dart';
 import '../controller/register_cubit/register_cubit.dart';
 
-class RegisterView extends StatelessWidget {
-  final formKey = GlobalKey<FormState>();
+class RegisterView extends StatefulWidget {
   RegisterView({super.key});
+
+  @override
+  State<RegisterView> createState() => _RegisterViewState();
+}
+
+class _RegisterViewState extends State<RegisterView> {
+  final formKey = GlobalKey<FormState>();
+
+  bool isPasswordVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +110,8 @@ class RegisterView extends StatelessWidget {
                             return 'register.name_validation'.tr();
                           }
                         },
-                        controller: BlocProvider.of<RegisterCubit>(context).nameController,
+                        controller: BlocProvider.of<RegisterCubit>(context)
+                            .nameController,
                       ),
                       SizedBox(height: 15.h),
                       CusTextFormField(
@@ -115,7 +124,8 @@ class RegisterView extends StatelessWidget {
                             return 'register.email_validation'.tr();
                           }
                         },
-                        controller: BlocProvider.of<RegisterCubit>(context).emailController,
+                        controller: BlocProvider.of<RegisterCubit>(context)
+                            .emailController,
                       ),
                       SizedBox(height: 15.h),
                       CusTextFormField(
@@ -128,10 +138,12 @@ class RegisterView extends StatelessWidget {
                             return 'register.phone_validation'.tr();
                           }
                         },
-                        controller: BlocProvider.of<RegisterCubit>(context).phoneController,
+                        controller: BlocProvider.of<RegisterCubit>(context)
+                            .phoneController,
                       ),
                       SizedBox(height: 15.h),
                       CusTextFormField(
+                        isObscureText: isPasswordVisible,
                         fillColor: AppColors.background,
                         hintText: 'register.password'.tr(),
                         validator: (value) {
@@ -139,7 +151,19 @@ class RegisterView extends StatelessWidget {
                             return 'register.password_validation'.tr();
                           }
                         },
-                        controller: BlocProvider.of<RegisterCubit>(context).passwordController,
+                        controller: BlocProvider.of<RegisterCubit>(context)
+                            .passwordController,
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              isPasswordVisible = !isPasswordVisible;
+                            });
+                            // .togglePasswordVisibility();
+                          },
+                          icon: Icon(
+                            Icons.visibility,
+                          ),
+                        ),
                       ),
                       SizedBox(height: 20.h),
                       CusTextButton(
@@ -147,7 +171,8 @@ class RegisterView extends StatelessWidget {
                         textStyle: AppStyles.buttonText,
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
-                            await BlocProvider.of<RegisterCubit>(context).emitRegisterState();
+                            await BlocProvider.of<RegisterCubit>(context)
+                                .emitRegisterState();
                           }
                         },
                         backgroundColor: AppColors.primary,
