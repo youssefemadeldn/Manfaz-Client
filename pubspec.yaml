@@ -70,6 +70,8 @@ dependencies:
   # flutter_secure_storage: ^9.2.4
   # loading indicator shimmer
   shimmer: ^3.0.0
+  # Pin code input (OTP) 
+  pinput: ^5.0.1
 
   # Flutter phone input integrated with flutter internationalization
   phone_form_field: ^10.0.3

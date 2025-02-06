@@ -45,6 +45,9 @@ class RegisterView extends StatelessWidget {
                           color: AppColors.green,
                           size: 25.r,
                         ),
+                        onConfirm: () {
+                          // Navigator.pushNamed(context, Routes.otpVerificationView);
+                        },
                       );
                     case RegisterError():
                       DialogHelper.hideLoadingDialog(context);
