@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
+import 'package:manfaz/core/theme/app_styles.dart';
 
 class CusTextButton extends StatelessWidget {
   final double? borderRadius;
@@ -11,7 +12,7 @@ class CusTextButton extends StatelessWidget {
   final double? buttonWidth;
   final double? buttonHeight;
   final String buttonText;
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
   final VoidCallback onPressed;
   // final Function(int index) onClick;
   const CusTextButton({
@@ -23,7 +24,7 @@ class CusTextButton extends StatelessWidget {
     this.buttonHeight,
     this.buttonWidth,
     required this.buttonText,
-    required this.textStyle,
+     this.textStyle,
     required this.onPressed,
     this.borderSideColor,
   });
@@ -35,7 +36,7 @@ class CusTextButton extends StatelessWidget {
         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             side:
-                BorderSide(color: borderSideColor ?? AppColors.black, width: 1),
+                BorderSide(color: borderSideColor ?? AppColors.primary, width: 1),
             borderRadius: BorderRadius.circular(borderRadius ?? 16.0),
           ),
         ),
@@ -55,7 +56,13 @@ class CusTextButton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         buttonText,
-        style: textStyle,
+        style: textStyle??TextStyle(
+    fontSize: 15.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.white,
+    height: 1.2,
+    letterSpacing: 0.3,
+  ),
       ),
     );
   }

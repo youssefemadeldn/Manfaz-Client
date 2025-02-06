@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_styles.dart';
+import '../../../../core/widgets/cus_text_button.dart';
 
 class ServicePosterDetails extends StatelessWidget {
   const ServicePosterDetails({super.key});
@@ -85,30 +87,25 @@ class ServicePosterDetails extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.buttonPrimary,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
-                            ),
+                          child: CusTextButton(
+                            backgroundColor: AppColors.buttonPrimary,
+                            borderRadius: 8,
+                            buttonText: tr("ServicesListViewView.order_now"),
+                            // textStyle: TextStyle(color: Colors.white),
                             onPressed: () {},
-                            child: Text(
-                                tr("ServicesListViewView.order_now"),
-                                style: TextStyle(color: Colors.white)),
                           ),
                         ),
                         SizedBox(width: 10),
                         Expanded(
-                          child: OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              foregroundColor: AppColors.buttonPrimary,
-                              side: BorderSide(color: AppColors.buttonPrimary),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
+                          child: CusTextButton(
+                            backgroundColor: Colors.white,
+                            borderRadius: 8,
+                            borderSideColor: AppColors.buttonPrimary,
+                            buttonText: tr("ServicesListViewView.view_details"),
+                            textStyle: AppStyles.buttonText.copyWith(
+                              color: AppColors.buttonPrimary,
                             ),
                             onPressed: () {},
-                            child: Text(
-                                tr("ServicesListViewView.view_details")),
                           ),
                         ),
                       ],
