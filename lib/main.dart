@@ -5,8 +5,11 @@ import 'package:manfaz/core/routes/app_router.dart';
 import 'package:manfaz/core/routes/routes.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 
+import 'core/di/di.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies();
   await EasyLocalization.ensureInitialized();
   runApp(EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],
@@ -29,7 +32,7 @@ class ManfazApp extends StatelessWidget {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         debugShowCheckedModeBanner: false,
-        initialRoute: Routes.cusBottomNavigationBar,
+        initialRoute: Routes.onBoarding,
         onGenerateRoute: AppRouter.generateRoute,
         theme: ThemeData(
           appBarTheme: AppBarTheme(

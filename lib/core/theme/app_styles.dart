@@ -234,6 +234,42 @@ class AppStyles {
     color: AppColors.textSecondary,
   );
 
+  // Dialog Text Styles
+  static TextStyle dialogTitleDark = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 18.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textPrimary,
+  );
+
+  static TextStyle dialogContentDark = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.textPrimary,
+  );
+
+  static TextStyle dialogActionBlue = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.primary,
+  );
+
+  static TextStyle font8DarkBlueMedium = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.textPrimary,
+  );
+
+  static TextStyle font10BlueSemiBold = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.primary,
+  );
+
   // Custom Styles for Your App
   static TextStyle priceTag = TextStyle(
     fontFamily: fontFamily,

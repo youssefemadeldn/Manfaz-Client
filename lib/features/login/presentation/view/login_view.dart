@@ -136,7 +136,7 @@ class LoginView extends StatelessWidget {
       bottomNavigationBar: Container(
         alignment: Alignment.center,
         height: 50.h,
-        child: GestureDetector(
+        child: InkWell(
           onTap: () => Navigator.pushNamed(context, Routes.registerView),
           child: Text.rich(
             TextSpan(

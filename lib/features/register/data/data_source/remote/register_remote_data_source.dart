@@ -1,0 +1,57 @@
+import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
+import 'package:manfaz/core/error/failure.dart';
+import 'package:manfaz/core/network/api_manager.dart';
+import 'package:manfaz/features/register/data/data_source/remote/base_register_remote_data_source.dart';
+import 'package:manfaz/features/register/data/models/register_model.dart';
+
+import '../../../../../core/di/di.dart';
+import '../../../../../core/network/api_constant.dart';
+import '../../../../../core/network/network_helper.dart';
+
+@Injectable(as: BaseRegisterRemoteDataSource)
+class RegisterRemoteDataSource implements BaseRegisterRemoteDataSource {
+  ApiManager apiManager = getIt<ApiManager>();
+  
+  @override
+  Future<Either<Failure, RegisterModel>> register({required String name, required String email, required String password, required String phone}) async{
+    try {
+    var response =   await apiManager.postData(ApiConstant.signUpEP, body: {
+      "name": name,
+      "email": email,
+      "phone": phone,
+      "password": password,
+    });
+      // 
+      RegisterModel registerModel =
+          RegisterModel.fromJson(response.data);
+    
+
+      if (NetworkHelper.isValidResponse(code: response.statusCode)) {
+        // Success Case: 
+        return right(registerModel);
+      } else {
+        // Server Error Case:
+        return left(ServerFailure(errorMessage:  registerModel.message!, failureTitle: "Registration Failed"));
+      }
+    } on DioException {
+      // Unexpected DioError (e.g., timeout, internet connection)
+      return left(
+        NetworkFailure(
+          failureTitle: 'Network Error',
+          errorMessage: 'Check Internet',
+        ),
+      );
+    } catch (e) {
+      // General unexpected error
+      return left(
+        ServerFailure(
+          errorMessage: 'Email or phone already in use',
+          failureTitle: 'Registration Failed',
+        ),
+      );
+    }
+  }
+
+}

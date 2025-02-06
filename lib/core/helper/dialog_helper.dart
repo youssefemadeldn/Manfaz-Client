@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class DialogHelper {
   // Static method to show a dialog with customizable parameters
@@ -9,8 +10,8 @@ class DialogHelper {
     TextStyle? leftActionStyle,
     TextStyle? rightActionStyle,
     TextStyle? contentStyle,
-    String confirmText = 'OK',
-    String cancelText = 'Cancel',
+    String? confirmText,
+    String? cancelText,
     VoidCallback? onConfirm,
     VoidCallback? onCancel,
     bool isDismissible = true,
@@ -20,12 +21,7 @@ class DialogHelper {
       barrierDismissible: isDismissible,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: title
-          // Text(
-          //   title,
-          //   style: titleStyle ?? const TextStyle(),
-          // )
-          ,
+          title: title,
           content: content,
           actions: <Widget>[
             TextButton(
@@ -34,7 +30,7 @@ class DialogHelper {
                 if (onCancel != null) onCancel();
               },
               child: Text(
-                cancelText,
+                cancelText ?? 'dialog.cancel'.tr(),
                 style: leftActionStyle ?? const TextStyle(),
               ),
             ),
@@ -44,7 +40,7 @@ class DialogHelper {
                 if (onConfirm != null) onConfirm();
               },
               child: Text(
-                confirmText,
+                confirmText ?? 'dialog.ok'.tr(),
                 style: rightActionStyle ?? const TextStyle(),
               ),
             ),
@@ -57,7 +53,7 @@ class DialogHelper {
   // Method to show a loading indicator dialog
   static void showLoadingDialog({
     required BuildContext context,
-    String loadingMessage = 'Loading...',
+    String? loadingMessage,
     bool isDismissible = false,
     Color? indicatorColor,
   }) {
@@ -75,7 +71,7 @@ class DialogHelper {
               ),
               const SizedBox(height: 16),
               Text(
-                loadingMessage,
+                loadingMessage ?? 'dialog.loading'.tr(),
                 style: const TextStyle(color: Colors.white),
               ),
             ],
