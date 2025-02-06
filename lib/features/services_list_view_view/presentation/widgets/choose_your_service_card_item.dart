@@ -27,7 +27,7 @@ class ChooseYourServiceCardItem extends StatelessWidget {
                 child: Image.asset('assets/images/ibox_decor.jpg', height: 40)),
           ),
           SizedBox(height: 5),
-          Text(tr('home_service_details_view.title'),
+          Text(tr('ServicesListViewView.title'),
               textAlign: TextAlign.center, style: TextStyle(fontSize: 14)),
         ],
       ),

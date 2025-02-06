@@ -20,7 +20,7 @@ class ChooseYourService extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            tr('home_service_details_view.choose_your_service'),
+            tr('ServicesListViewView.choose_your_service'),
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 10),

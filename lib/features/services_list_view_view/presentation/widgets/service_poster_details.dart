@@ -16,12 +16,12 @@ class ServicePosterDetails extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                tr("home_service_details_view.external_painting"),
+                tr("ServicesListViewView.external_painting"),
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               Spacer(),
               Icon(Icons.star, color: Colors.amber),
-              Text(tr("home_service_details_view.rating"),
+              Text(tr("ServicesListViewView.rating"),
                   style: TextStyle(fontSize: 16)),
             ],
           ),
@@ -47,36 +47,36 @@ class ServicePosterDetails extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      tr("home_service_details_view.gold_warranty"),
+                      tr("ServicesListViewView.gold_warranty"),
                       style: TextStyle(
                           color: Colors.green, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 5),
                     Text(
-                      tr("home_service_details_view.paint_wall"),
+                      tr("ServicesListViewView.paint_wall"),
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 5),
                     Text(
-                      tr("home_service_details_view.paint_service_description"),
+                      tr("ServicesListViewView.paint_service_description"),
                       style: TextStyle(color: Colors.grey),
                     ),
                     SizedBox(height: 10),
                     Text(
-                      tr("home_service_details_view.price_includes_tax"),
+                      tr("ServicesListViewView.price_includes_tax"),
                       style: TextStyle(color: Colors.grey),
                     ),
                     Row(
                       children: [
                         Text(
-                          tr("home_service_details_view.price"),
+                          tr("ServicesListViewView.price"),
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         Spacer(),
                         Text(
-                          tr("home_service_details_view.installments"),
+                          tr("ServicesListViewView.installments"),
                           style: TextStyle(color: Colors.grey),
                         ),
                       ],
@@ -93,7 +93,7 @@ class ServicePosterDetails extends StatelessWidget {
                             ),
                             onPressed: () {},
                             child: Text(
-                                tr("home_service_details_view.order_now"),
+                                tr("ServicesListViewView.order_now"),
                                 style: TextStyle(color: Colors.white)),
                           ),
                         ),
@@ -108,7 +108,7 @@ class ServicePosterDetails extends StatelessWidget {
                             ),
                             onPressed: () {},
                             child: Text(
-                                tr("home_service_details_view.view_details")),
+                                tr("ServicesListViewView.view_details")),
                           ),
                         ),
                       ],

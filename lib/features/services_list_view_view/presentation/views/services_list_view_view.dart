@@ -12,7 +12,7 @@ class ServicesListViewView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.white,
         elevation: 0,
-        title: Text(tr('home_service_details_view.paints'),
+        title: Text(tr('ServicesListViewView.paints'),
             style: TextStyle(color: Colors.black)),
         leading: IconButton(
           icon: IconButton(

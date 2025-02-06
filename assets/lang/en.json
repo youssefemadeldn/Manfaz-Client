@@ -73,7 +73,7 @@
       "orders_count": "0 Orders",
       "less_than": "< 0"
     },
-    "home_service_details_view":{
+    "ServicesListViewView":{
       "title": "Title",
       "paints": "Paints",
       "choose_your_service": "Choose Your Service",
