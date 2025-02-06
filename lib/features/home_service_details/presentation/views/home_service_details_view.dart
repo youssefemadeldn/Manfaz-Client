@@ -32,8 +32,8 @@ class HomeServiceDetailsView extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
           children: [
             Container(
               padding: EdgeInsets.only(bottom: 12),
@@ -46,13 +46,13 @@ class HomeServiceDetailsView extends StatelessWidget {
             ),
             ChooseYourService(),
             SizedBox(height: 20),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return ServicePosterDetails();
-                },
-              ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return ServicePosterDetails();
+              },
             ),
           ],
         ),
