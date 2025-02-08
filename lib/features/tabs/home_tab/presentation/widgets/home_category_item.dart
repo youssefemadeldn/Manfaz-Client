@@ -24,7 +24,7 @@ class HomeCategoryItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: 70.h,
+            height: 65.h,
             child: Container(
               alignment: Alignment.center,
               width: 70.w,

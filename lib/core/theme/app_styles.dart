@@ -10,7 +10,7 @@ class AppStyles {
   // Header Styles
   static TextStyle header1 = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 24.sp,
+    fontSize: 28.sp,
     fontWeight: FontWeight.bold,
     color: AppColors.textPrimary,
     height: 1.2,
@@ -18,7 +18,7 @@ class AppStyles {
 
   static TextStyle header2 = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 20.sp,
+    fontSize: 24.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
     height: 1.2,
@@ -26,7 +26,7 @@ class AppStyles {
 
   static TextStyle header3 = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 18.sp,
+    fontSize: 20.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.textPrimary,
     height: 1.2,
@@ -35,14 +35,14 @@ class AppStyles {
   // Subtitle Styles
   static TextStyle subtitle1 = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 18.sp,
+    fontSize: 20.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.textSecondary,
   );
 
   static TextStyle subtitle2 = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 16.sp,
+    fontSize: 18.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.textSecondary,
   );
@@ -50,7 +50,7 @@ class AppStyles {
   // Body Text Styles
   static TextStyle bodyText1 = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 16.sp,
+    fontSize: 18.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.textPrimary,
     height: 1.4,
@@ -58,7 +58,7 @@ class AppStyles {
 
   static TextStyle bodyText2 = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 14.sp,
+    fontSize: 16.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.textSecondary,
     height: 1.4,
@@ -66,7 +66,7 @@ class AppStyles {
 
   static TextStyle bodyText3 = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 12.sp,
+    fontSize: 14.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.grey,
     height: 1.4,
@@ -74,7 +74,7 @@ class AppStyles {
 
   static TextStyle bodyTextBold = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 14.sp,
+    fontSize: 16.sp,
     fontWeight: FontWeight.bold,
     color: AppColors.textPrimary,
     height: 1.4,
@@ -83,7 +83,7 @@ class AppStyles {
   // Profile Specific Styles
   static TextStyle profileName = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 22.sp,
+    fontSize: 24.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
     height: 1.2,
@@ -92,7 +92,7 @@ class AppStyles {
 
   static TextStyle profileStatus = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 13.sp,
+    fontSize: 15.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.grey,
     height: 1.4,
@@ -100,7 +100,7 @@ class AppStyles {
 
   static TextStyle balanceText = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 20.sp,
+    fontSize: 22.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.textPrimary,
     height: 1.2,
@@ -109,7 +109,7 @@ class AppStyles {
 
   static TextStyle listTileTitle = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 15.sp,
+    fontSize: 17.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.textPrimary,
     height: 1.3,
@@ -117,7 +117,7 @@ class AppStyles {
 
   static TextStyle listTileSubtitle = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 13.sp,
+    fontSize: 15.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.textSecondary,
     height: 1.3,
@@ -126,14 +126,14 @@ class AppStyles {
   // Caption Styles
   static TextStyle caption = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 12.sp,
+    fontSize: 14.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.grey,
   );
 
   static TextStyle smallText = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 10.sp,
+    fontSize: 12.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.lightGrey,
   );
@@ -141,7 +141,7 @@ class AppStyles {
   // Button Text Styles
   static TextStyle buttonText = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 15.sp,
+    fontSize: 17.sp,
     fontWeight: FontWeight.bold,
     color: AppColors.white,
     height: 1.2,
@@ -150,21 +150,21 @@ class AppStyles {
 
   static TextStyle buttonTextPrimary = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 16.sp,
+    fontSize: 18.sp,
     fontWeight: FontWeight.bold,
     color: AppColors.primary,
   );
 
   static TextStyle buttonTextSecondary = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 16.sp,
+    fontSize: 18.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.secondary,
   );
 
   static TextStyle buttonTextSmall = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 13.sp,
+    fontSize: 15.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.white,
     height: 1.2,
@@ -174,7 +174,7 @@ class AppStyles {
   // Badge Text Style
   static TextStyle badgeText = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 11.sp,
+    fontSize: 13.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.white,
     height: 1.2,
@@ -184,7 +184,7 @@ class AppStyles {
   // Link Text Styles
   static TextStyle linkText = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 14.sp,
+    fontSize: 16.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.secondary,
     decoration: TextDecoration.underline,
@@ -193,21 +193,21 @@ class AppStyles {
   // State Text Styles
   static TextStyle errorText = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 14.sp,
+    fontSize: 16.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.error,
   );
 
   static TextStyle successText = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 14.sp,
+    fontSize: 16.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.success,
   );
 
   static TextStyle warningText = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 14.sp,
+    fontSize: 16.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.warning,
   );
@@ -215,21 +215,21 @@ class AppStyles {
   // Title Text Styles
   static TextStyle appBarTitle = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 20.sp,
+    fontSize: 22.sp,
     fontWeight: FontWeight.bold,
     color: AppColors.textPrimary,
   );
 
   static TextStyle cardTitle = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 18.sp,
+    fontSize: 20.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.primaryDark,
   );
 
   static TextStyle cardSubtitle = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 16.sp,
+    fontSize: 18.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.textSecondary,
   );
@@ -237,35 +237,35 @@ class AppStyles {
   // Dialog Text Styles
   static TextStyle dialogTitleDark = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 18.sp,
+    fontSize: 20.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
   );
 
   static TextStyle dialogContentDark = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 14.sp,
+    fontSize: 16.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.textPrimary,
   );
 
   static TextStyle dialogActionBlue = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 16.sp,
+    fontSize: 18.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.primary,
   );
 
   static TextStyle font8DarkBlueMedium = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 14.sp,
+    fontSize: 16.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.textPrimary,
   );
 
   static TextStyle font10BlueSemiBold = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 16.sp,
+    fontSize: 18.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.primary,
   );
@@ -273,7 +273,7 @@ class AppStyles {
   // Custom Styles for Your App
   static TextStyle priceTag = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 16.sp,
+    fontSize: 18.sp,
     fontWeight: FontWeight.bold,
     color: AppColors.success,
   );
