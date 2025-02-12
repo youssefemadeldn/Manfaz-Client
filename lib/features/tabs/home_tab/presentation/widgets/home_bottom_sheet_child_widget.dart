@@ -25,7 +25,7 @@ class HomeBottomSheetChildWidget extends StatelessWidget {
               title: 'title',
               image: 'assets/images/repair_and_installation.png',
               onTap: () {
-                Navigator.pushNamed(context, Routes.homeServiceDetailsView);
+                Navigator.pushNamed(context, Routes.servicesListViewView);
               },
             );
           }),

@@ -151,5 +151,18 @@
     "network_error": "خطأ في الشبكة",
     "check_internet": "تحقق من اتصال الإنترنت",
     "invalid_credentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة"
+  },
+  "delivery": {
+    "search_hint": "البحث في الطعام والمشروبات",
+    "categories": {
+      "all": "الكل",
+      "burger": "برجر",
+      "coffee": "قهوة",
+      "breakfast": "فطور"
+    },
+    "restaurant": {
+      "delivery_fee": "التوصيل {{price}} ريال",
+      "distance": "{{distance}} كم"
+    }
   }
 }

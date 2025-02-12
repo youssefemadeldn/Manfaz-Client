@@ -6,6 +6,7 @@ import 'package:manfaz/features/tabs/home_tab/presentation/widgets/home_category
 import 'package:manfaz/features/tabs/home_tab/presentation/widgets/service_card_item.dart';
 
 import '../../../../../core/helper/bottom_sheet_helper.dart';
+import '../../../../../core/routes/routes.dart';
 import '../widgets/home_bottom_sheet_child_widget.dart';
 import '../widgets/home_search_bar_widget.dart';
 
@@ -117,7 +118,7 @@ class HomeTab extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 16.h),
-                Container(
+                SizedBox(
                   height: 200.h,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
@@ -125,6 +126,9 @@ class HomeTab extends StatelessWidget {
                     itemBuilder: (context, index) => Padding(
                       padding: EdgeInsets.only(right: 16.w),
                       child: ServiceCardItem(
+                        onTap: (){
+                          Navigator.pushNamed(context, Routes.deliveryListViewView);
+                        },
                         image: 'assets/images/food_and_drinks-removebg-preview.png',
                         title: _getPopularServiceTitle(index),
                         supTitle: _getPopularServiceSubtitle(index),

@@ -16,6 +16,7 @@ class Routes {
   static const String languageSwitcherScreen = '/languageSwitcherScreen';
   // get user location
   static const String getUserLocationView = '/getUserLocationView';
-  //
-  static const String homeServiceDetailsView = '/homeServiceDetailsView';
+  // list View View
+  static const String servicesListViewView = '/servicesListViewView';
+  static const String deliveryListViewView = '/deliverListViewView';
 }

@@ -151,5 +151,18 @@
     "network_error": "Network Error",
     "check_internet": "Check Internet Connection",
     "invalid_credentials": "Invalid email or password"
+  },
+  "delivery": {
+    "search_hint": "Search in Food & Beverages",
+    "categories": {
+      "all": "All",
+      "burger": "Burger",
+      "coffee": "Coffee",
+      "breakfast": "Breakfast"
+    },
+    "restaurant": {
+      "delivery_fee": "Delivery {{price}} SAR",
+      "distance": "{{distance}} km"
+    }
   }
 }

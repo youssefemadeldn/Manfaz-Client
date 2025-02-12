@@ -51,7 +51,7 @@ class LoginRemoteDataSource implements BaseLoginRemoteDataSource {
     } catch (e) {
       return left(
         ServerFailure(
-          errorMessage: 'login.invalid_credentials'.tr(),
+          errorMessage: e.toString(),
           failureTitle: 'login.login_failed'.tr(),
         ),
       );

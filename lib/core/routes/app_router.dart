@@ -7,6 +7,7 @@ import 'package:manfaz/features/login/presentation/view/login_view.dart';
 import 'package:manfaz/features/login/presentation/view/otp_verification_view.dart';
 import 'package:manfaz/features/login/presentation/view/success_verification_view.dart';
 import 'package:manfaz/features/onBoardings/presentation/views/on_boarding_view.dart';
+import '../../features/delivery_list_view_view/presentation/view/delivery_list_view_view.dart';
 import '../../features/freelancer_profile/presentation/views/freelancer_profile_view.dart';
 import '../../features/google_maps/presentation/controller/google_maps_cubit/google_maps_cubit.dart';
 import '../../features/google_maps/presentation/views/get_user_location_view.dart';
@@ -64,9 +65,13 @@ class AppRouter {
                   child: GetUserLocationView(),
                 ));
 
-      case Routes.homeServiceDetailsView:
+      case Routes.servicesListViewView:
         return CupertinoPageRoute(
             builder: (context) => ServicesListViewView());
+
+      case Routes.deliveryListViewView:
+        return CupertinoPageRoute(
+            builder: (context) => DeliveryListViewView());
 
       default:
         return CupertinoPageRoute(
