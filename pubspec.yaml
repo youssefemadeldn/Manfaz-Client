@@ -28,71 +28,38 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  bloc: ^8.1.4
+  buttons_tabbar: ^1.3.15
+  cached_network_image: ^3.4.1
+  connectivity_plus: ^6.1.0
+  cupertino_icons: ^1.0.8
+  dartz: ^0.10.1
+  dio: ^5.7.0
+  easy_localization: ^3.0.7
   flutter:
     sdk: flutter
-  flutter_localizations:
-        sdk: flutter
-  #
-  intl: ^0.19.0
-  easy_localization: ^3.0.7
-  # state management
   flutter_bloc: ^8.1.6
-  bloc: ^8.1.4
-  # network
-  dio: ^5.7.0
-  pretty_dio_logger: ^1.4.0
-  # retrofit: ^4.4.1
-  # retrofit_generator: ^9.1.3 # in dev_dependencies
-  # Di
-  get_it: ^8.0.0
-  injectable: ^2.4.4
-  # auto generate code for to and from json by annotation dart
-  json_annotation: ^4.9.0
-  json_serializable: ^6.8.0 # in dev_dependencies
-  # localization
-  # -
-  # -
-  # Native splash screen
+  flutter_localizations:
+    sdk: flutter
   flutter_native_splash: ^2.4.1
-  # flutter svg 
-  flutter_svg: ^2.0.10+1
-  # flutter plugin for adapting screen and font size.
-  flutter_screenutil: ^5.9.3
-  # for check Internet
-  connectivity_plus: ^6.1.0
-  # Functional Programming in Dart allowing you return either <Failure,Success>
-  dartz: ^0.10.1
-  # cached image
-  # cached_network_image: ^3.4.1
-  # local storage
-  shared_preferences: ^2.3.5
-  # provides API to store data in secure storage
-  # flutter_secure_storage: ^9.2.4
-  # loading indicator shimmer
-  shimmer: ^3.0.0
-  # Pin code input (OTP) 
-  pinput: ^5.0.1
-
-  # Flutter phone input integrated with flutter internationalization
-  phone_form_field: ^10.0.3
-
-  # Fully customizable OTP Entry TextField for flutter,
   flutter_otp_text_field: ^1.4.0+2
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.8
-  # google maps
+  flutter_screenutil: ^5.9.3
+  flutter_svg: ^2.0.10+1
+  get_it: ^8.0.0
   google_maps_flutter: ^2.10.0
-  # Flutter package that implements a TabBar where each label is a toggle button
-  buttons_tabbar: ^1.3.15
-  # easy access to device's location in real-time
+  injectable: ^2.4.4
+  intl: ^0.19.0
+  json_annotation: ^4.9.0
+  json_serializable: ^6.8.0
   location: ^8.0.0
   lottie: ^3.3.1
+  phone_form_field: ^10.0.3
+  pinput: ^5.0.1
+  pretty_dio_logger: ^1.4.0
+  shared_preferences: ^2.3.5
+  shimmer: ^3.0.0
 dev_dependencies:
   build_runner: ^2.4.13
-  injectable_generator: null
-  flutter_test:
-    sdk: flutter
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -100,6 +67,9 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
+  injectable_generator: null
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

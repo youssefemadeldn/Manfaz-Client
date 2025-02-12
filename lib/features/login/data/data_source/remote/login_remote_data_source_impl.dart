@@ -12,7 +12,7 @@ import '../../../../../core/network/api_constant.dart';
 import '../../../../../core/network/network_helper.dart';
 
 @Injectable(as: BaseLoginRemoteDataSource)
-class LoginRemoteDataSource implements BaseLoginRemoteDataSource {
+class LoginRemoteDataSourceImpl implements BaseLoginRemoteDataSource {
   ApiManager apiManager = getIt<ApiManager>();
 
   @override
@@ -22,7 +22,7 @@ class LoginRemoteDataSource implements BaseLoginRemoteDataSource {
   }) async {
     try {
       var response = await apiManager.postData(
-        ApiConstant.loginEP,
+        ApiConstant.epLogin,
         body: {
           "email": email,
           "password": password,
@@ -50,7 +50,7 @@ class LoginRemoteDataSource implements BaseLoginRemoteDataSource {
       );
     } catch (e) {
       return left(
-        ServerFailure(
+        Failure(
           errorMessage: e.toString(),
           failureTitle: 'login.login_failed'.tr(),
         ),

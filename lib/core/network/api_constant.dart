@@ -4,7 +4,7 @@ class ApiConstant {
   static const String userToken = '';
 
   // EntPoints
-  static const String loginEP = 'auth/login';
-  static const String signUpEP = 'auth/register';
-  static const String homeEP = '';
+  static const String epLogin = 'auth/login';
+  static const String epSignUp = 'auth/register';
+  static const String epHomeTap = 'categories';
 }

@@ -1,17 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 
+import '../../data/models/home_tab_model.dart';
+
 class HomeCategoryItem extends StatelessWidget {
-  final String title;
-  final String image;
+  final CategoryModel categoryModel;
   final void Function() onTap;
 
   const HomeCategoryItem({
     super.key,
-    required this.title,
-    required this.image,
+    required this.categoryModel,
     required this.onTap,
   });
 
@@ -36,18 +37,24 @@ class HomeCategoryItem extends StatelessWidget {
                   width: 1.w,
                 ),
               ),
-              child: Image.asset(
-                image,
-                height: double.infinity,
-                color: AppColors.primary,
-              ),
+              child:
+              CachedNetworkImage(
+        imageUrl: categoryModel.imageUrl!,
+        placeholder: (context, url) => CircularProgressIndicator(),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+     ), 
+              // Image.asset(
+              //   image,
+              //   height: double.infinity,
+              //   color: AppColors.primary,
+              // ),
             ),
           ),
           SizedBox(
             height: 4.h,
           ),
           Text(
-            title,
+            categoryModel.name!,
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             maxLines: 1, // Ensure text fits in one line
