@@ -16,7 +16,7 @@ class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<HomeTabCubit>()..emitHomeTabStates(),
+      create: (context) => getIt<HomeTabCubit>()..emitHomeTabStates(context),
       child: SingleChildScrollView(
         child: Column(
           children: [

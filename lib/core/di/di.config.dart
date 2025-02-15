@@ -8,6 +8,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:flutter/material.dart' as _i409;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -43,6 +44,7 @@ import '../../features/tabs/home_tab/domain/use_cases/home_tab_use_case.dart'
 import '../../features/tabs/home_tab/presentation/controller/home_tab_cubit/home_tab_cubit.dart'
     as _i600;
 import '../network/api_manager.dart' as _i119;
+import 'di.dart' as _i913;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -55,6 +57,9 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
+    final registerModule = _$RegisterModule();
+    gh.singleton<_i409.GlobalKey<_i409.NavigatorState>>(
+        () => registerModule.navigatorKey);
     gh.singleton<_i119.ApiManager>(() => _i119.ApiManager());
     gh.factory<_i940.BaseLoginRemoteDataSource>(
         () => _i892.LoginRemoteDataSourceImpl());
@@ -83,3 +88,5 @@ extension GetItInjectableX on _i174.GetIt {
     return this;
   }
 }
+
+class _$RegisterModule extends _i913.RegisterModule {}

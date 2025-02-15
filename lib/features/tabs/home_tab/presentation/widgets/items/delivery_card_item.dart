@@ -37,8 +37,10 @@ class DeliveryCardItem extends StatelessWidget {
             CachedNetworkImage(
               imageUrl: categoryModel.imageUrl!,
               width: 140.w,
-              height: 100.h,
-              placeholder: (context, url) => CircularProgressIndicator(),
+              height: 140.h,
+              placeholder: (context, url) => Center(child: CircularProgressIndicator(
+                color: AppColors.primary,
+              )),
               errorWidget: (context, url, error) => Icon(Icons.error),
             ),
             // ,
@@ -66,9 +68,7 @@ class DeliveryCardItem extends StatelessWidget {
                 fontSize: 12.sp,
               ),
             ),
-            SizedBox(
-              height: 4.h,
-            ),
+          
             // Container(
             //   padding: EdgeInsets.all(3.r),
             //   decoration: BoxDecoration(

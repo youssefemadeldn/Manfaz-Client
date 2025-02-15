@@ -7,7 +7,7 @@ final class HomeTabInitialState extends HomeTabState {}
 final class HomeTabLoadingState extends HomeTabState {}
 
 final class HomeTabSuccessState extends HomeTabState {
-  final HomeTapModel homeTapModel;
+  final HomeTabModel homeTapModel;
 
   HomeTabSuccessState({required this.homeTapModel});
 }

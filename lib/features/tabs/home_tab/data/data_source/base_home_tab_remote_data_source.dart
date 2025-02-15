@@ -4,5 +4,6 @@ import '../../../../../core/error/failure.dart';
 import '../../data/models/home_tab_model.dart';
 
 abstract class BaseHomeTabRemoteDataSource {
-  Future<Either<Failure, HomeTapModel>> getHomeTabData(); // or getHomeCategories()
+  Future<Either<Failure, HomeTabModel>>
+      getHomeTabData(); // or getHomeCategories()
 }

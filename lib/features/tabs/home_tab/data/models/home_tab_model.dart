@@ -1,12 +1,12 @@
-class HomeTapModel {
+class HomeTabModel {
   bool? status;
   String? message;
   int? code;
   List<CategoryModel>? data;
 
-  HomeTapModel({this.status, this.message, this.code, this.data});
+  HomeTabModel({this.status, this.message, this.code, this.data});
 
-  HomeTapModel.fromJson(Map<String, dynamic> json) {
+  HomeTabModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     code = json['code'];

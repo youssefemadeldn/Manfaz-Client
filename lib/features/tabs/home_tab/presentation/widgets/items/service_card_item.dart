@@ -4,13 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 
-import '../../data/models/home_tab_model.dart';
+import '../../../data/models/home_tab_model.dart';
 
-class HomeCategoryItem extends StatelessWidget {
+class ServiceCardItem extends StatelessWidget {
   final CategoryModel categoryModel;
   final void Function() onTap;
 
-  const HomeCategoryItem({
+  const ServiceCardItem({
     super.key,
     required this.categoryModel,
     required this.onTap,
@@ -27,6 +27,7 @@ class HomeCategoryItem extends StatelessWidget {
           SizedBox(
             height: 65.h,
             child: Container(
+              padding: EdgeInsets.all(10.r),
               alignment: Alignment.center,
               width: 70.w,
               decoration: BoxDecoration(
@@ -37,12 +38,11 @@ class HomeCategoryItem extends StatelessWidget {
                   width: 1.w,
                 ),
               ),
-              child:
-              CachedNetworkImage(
-        imageUrl: categoryModel.imageUrl!,
-        placeholder: (context, url) => CircularProgressIndicator(),
-        errorWidget: (context, url, error) => Icon(Icons.error),
-     ), 
+              child: CachedNetworkImage(
+                imageUrl: categoryModel.imageUrl ?? '',
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              ),
               // Image.asset(
               //   image,
               //   height: double.infinity,
@@ -54,7 +54,7 @@ class HomeCategoryItem extends StatelessWidget {
             height: 4.h,
           ),
           Text(
-            categoryModel.name!,
+            categoryModel.name ?? 'null',
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             maxLines: 1, // Ensure text fits in one line

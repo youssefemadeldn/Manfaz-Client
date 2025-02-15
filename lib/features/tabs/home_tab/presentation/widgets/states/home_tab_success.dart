@@ -9,8 +9,8 @@ import '../../../../../../core/routes/routes.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_styles.dart';
 import '../home_bottom_sheet_child_widget.dart';
-import '../home_category_item.dart';
-import '../delivery/delivery_card_item.dart';
+import '../items/service_card_item.dart';
+import '../items/delivery_card_item.dart';
 
 class HomeTabSuccess extends StatelessWidget {
   final List<CategoryModel> deliverList;
@@ -117,9 +117,9 @@ class HomeTabSuccess extends StatelessWidget {
             crossAxisSpacing: 16,
             childAspectRatio: 0.8,
           ),
-          itemCount: deliverList.length,
-          itemBuilder: (context, index) => HomeCategoryItem(
-            categoryModel: deliverList[index],
+          itemCount: serviceList.length,
+          itemBuilder: (context, index) => ServiceCardItem(
+            categoryModel: serviceList[index],
             onTap: () {
               BottomSheetHelper.show(
                 context: context,

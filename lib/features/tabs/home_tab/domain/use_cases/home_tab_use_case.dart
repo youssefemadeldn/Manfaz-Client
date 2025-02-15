@@ -10,6 +10,6 @@ class HomeTabUseCase {
 
   HomeTabUseCase(this.baseHomeTabRepo);
 
-  Future<Either<Failure, HomeTapModel>> getHomeTabData() =>
+  Future<Either<Failure, HomeTabModel>> getHomeTabData() =>
       baseHomeTabRepo.getHomeTabData();
 }

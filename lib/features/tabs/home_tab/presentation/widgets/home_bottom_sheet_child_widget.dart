@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/features/tabs/home_tab/data/models/home_tab_model.dart';
-import 'package:manfaz/features/tabs/home_tab/presentation/widgets/home_category_item.dart';
+import 'package:manfaz/features/tabs/home_tab/presentation/widgets/items/service_card_item.dart';
 
 import '../../../../../core/routes/routes.dart';
 
@@ -16,13 +16,13 @@ class HomeBottomSheetChildWidget extends StatelessWidget {
       padding: EdgeInsets.all(10.r),
       width: double.infinity,
       child: GridView.builder(
-          itemCount: 5,
+          itemCount: 4,
           padding: EdgeInsets.all(5.r),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
           ),
           itemBuilder: (context, index) {
-            return HomeCategoryItem(
+            return ServiceCardItem(
               categoryModel: CategoryModel(),
               onTap: () {
                 Navigator.pushNamed(context, Routes.servicesListViewView);
