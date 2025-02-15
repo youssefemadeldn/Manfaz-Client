@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:manfaz/core/di/di.dart';
 import 'package:manfaz/features/tabs/home_tab/data/models/home_tab_model.dart';
 import 'package:manfaz/features/tabs/home_tab/presentation/widgets/quick_action_item.dart';
 
@@ -8,14 +10,18 @@ import '../../../../../../core/helper/bottom_sheet_helper.dart';
 import '../../../../../../core/routes/routes.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_styles.dart';
+import '../../controller/home_tab_cubit/home_tab_cubit.dart';
 import '../home_bottom_sheet_child_widget.dart';
 import '../items/service_card_item.dart';
 import '../items/delivery_card_item.dart';
 
 class HomeTabSuccess extends StatelessWidget {
-  final List<CategoryModel> deliverList;
-  final List<CategoryModel> serviceList;
-  const HomeTabSuccess({super.key, required this.deliverList, required this.serviceList});
+  final List<CategoryModel> categoriesDeliveryList;
+  final List<CategoryModel> categoriesServiceList;
+  const HomeTabSuccess(
+      {super.key,
+      required this.categoriesDeliveryList,
+      required this.categoriesServiceList});
 
   @override
   Widget build(BuildContext context) {
@@ -85,11 +91,11 @@ class HomeTabSuccess extends StatelessWidget {
           height: 200.h,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: deliverList.length,
+            itemCount: categoriesDeliveryList.length,
             itemBuilder: (context, index) => Padding(
               padding: EdgeInsets.only(right: 16.w),
               child: DeliveryCardItem(
-                categoryModel: deliverList[index],
+                categoryModel: categoriesDeliveryList[index],
                 onTap: () {
                   Navigator.pushNamed(context, Routes.deliveryListViewView);
                 },
@@ -117,14 +123,17 @@ class HomeTabSuccess extends StatelessWidget {
             crossAxisSpacing: 16,
             childAspectRatio: 0.8,
           ),
-          itemCount: serviceList.length,
+          itemCount: categoriesServiceList.length,
           itemBuilder: (context, index) => ServiceCardItem(
-            categoryModel: serviceList[index],
+            categoryModel: categoriesServiceList[index],
             onTap: () {
               BottomSheetHelper.show(
                 context: context,
                 maxHeight: 280.h,
-                child: HomeBottomSheetChildWidget(),
+                child: BlocProvider(
+                  create: (context) => getIt<HomeTabCubit>(),
+                  child: HomeBottomSheetChildWidget(),
+                ),
               );
             },
           ),

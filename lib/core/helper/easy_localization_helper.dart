@@ -6,7 +6,8 @@ class EasyLocalizationHelper {
   BuildContext get context =>
       getIt<GlobalKey<NavigatorState>>().currentContext!;
 
-  static String getLocale() {
+//  getLocale() = getCurrentLocale()
+  String getLocale() {
     return EasyLocalization.of(
                 getIt<GlobalKey<NavigatorState>>().currentContext!)
             ?.currentLocale

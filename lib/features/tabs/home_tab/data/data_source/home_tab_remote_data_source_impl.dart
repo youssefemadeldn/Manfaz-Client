@@ -21,8 +21,7 @@ class HomeTabRemoteDataSourceImpl implements BaseHomeTabRemoteDataSource {
   Future<Either<Failure, HomeTabModel>> getHomeTabData() async {
     try {
       // Use provided language or default to 'en'
-      final currentLanguage =
-          EasyLocalizationHelper().getCurrentLocale() ?? 'en';
+      final currentLanguage = EasyLocalizationHelper().getCurrentLocale();
 
       // make request with language parameter
       var response = await apiManager.getData(
@@ -48,13 +47,12 @@ class HomeTabRemoteDataSourceImpl implements BaseHomeTabRemoteDataSource {
         failureTitle: 'Network',
         errorMessage: 'Check your internet connection',
       ));
+    } catch (e) {
+      // General unexpected error
+      return left(Failure(
+        failureTitle: 'Server Failure',
+        errorMessage: e.toString(),
+      ));
     }
-    // catch (e) {
-    //   // General unexpected error
-    //   return left(Failure(
-    //     failureTitle: 'Server Failure',
-    //     errorMessage: e.toString(),
-    //   ));
-    // }
   }
 }

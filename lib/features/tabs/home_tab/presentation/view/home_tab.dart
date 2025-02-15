@@ -57,11 +57,17 @@ class HomeTab extends StatelessWidget {
               child: BlocBuilder<HomeTabCubit, HomeTabState>(
                 builder: (context, state) {
                   if (state is HomeTabSuccessState) {
-                    List<CategoryModel>? allList =state.homeTapModel.data;
-                    var deliverList = allList?.where((element) => element.type == 'delivery').toList();
-                    var serviceList = allList?.where((element) => element.type == 'service').toList();
+                    List<CategoryModel>? allList = state.homeTapModel.data;
+                    var deliverList = allList
+                        ?.where((element) => element.type == 'delivery')
+                        .toList();
+                    var serviceList = allList
+                        ?.where((element) => element.type == 'service')
+                        .toList();
 
-                    return HomeTabSuccess(deliverList: deliverList!, serviceList: serviceList!);
+                    return HomeTabSuccess(
+                        categoriesDeliveryList: deliverList!,
+                        categoriesServiceList: serviceList!);
                   } else if (state is HomeTabErrorState) {
                     return HomeTabError(state: state);
                   } else if (state is HomeTabLoadingState) {
