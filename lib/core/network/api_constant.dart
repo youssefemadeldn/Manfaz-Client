@@ -7,4 +7,5 @@ class ApiConstant {
   static const String epLogin = 'auth/login';
   static const String epSignUp = 'auth/register';
   static const String epHomeTap = 'categories';
+  static const String epGetServicesBasedOnCategory = 'services';
 }

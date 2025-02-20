@@ -69,7 +69,7 @@ class HomeTab extends StatelessWidget {
                         categoriesDeliveryList: deliverList!,
                         categoriesServiceList: serviceList!);
                   } else if (state is HomeTabErrorState) {
-                    return HomeTabError(state: state);
+                    return ErrorMessageWidget(errorMessage: state.failure.errorMessage);
                   } else if (state is HomeTabLoadingState) {
                     return HomeTabShimmerLoading();
                   }

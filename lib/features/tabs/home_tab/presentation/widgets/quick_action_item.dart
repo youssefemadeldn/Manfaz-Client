@@ -21,8 +21,8 @@ class QuickActionItem extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: 150.w,
-        height: 250.h,
+        // width: 150.w,
+        // height: 250.h,
         padding: EdgeInsets.symmetric(
         horizontal: 10.w,
         ),

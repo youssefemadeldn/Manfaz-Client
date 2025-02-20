@@ -40,7 +40,9 @@ class ServiceCardItem extends StatelessWidget {
               ),
               child: CachedNetworkImage(
                 imageUrl: categoryModel.imageUrl ?? '',
-                placeholder: (context, url) => CircularProgressIndicator(),
+                placeholder: (context, url) => CircularProgressIndicator(
+                  color: AppColors.primary,
+                ),
                 errorWidget: (context, url, error) => Icon(Icons.error),
               ),
               // Image.asset(

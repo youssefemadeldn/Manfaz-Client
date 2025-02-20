@@ -1,13 +1,12 @@
 
 import 'package:flutter/material.dart';
 
-import '../../controller/home_tab_cubit/home_tab_cubit.dart';
 
-class HomeTabError extends StatelessWidget {
-  final HomeTabErrorState state;
-   const HomeTabError({
+class ErrorMessageWidget extends StatelessWidget {
+  final String errorMessage;
+   const ErrorMessageWidget({
     super.key,
-    required this.state,
+    required this.errorMessage,
   });
 
   @override
@@ -26,7 +25,7 @@ class HomeTabError extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              state.failure.errorMessage,
+              errorMessage,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 18,
