@@ -5,15 +5,13 @@ import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_styles.dart';
 import '../../../../core/widgets/cus_text_button.dart';
-import '../../../tabs/home_tab/data/models/home_tab_model.dart';
+import '../../../tabs/home_tab/data/models/services_based_on_category_model.dart';
 
 class ServicePosterDetails extends StatelessWidget {
-  final CategoryModel categoryModel;
-  final bool availability;
+  final ServiceModel serviceModel;
   const ServicePosterDetails({
     super.key,
-    required this.categoryModel,
-    required this.availability,
+    required this.serviceModel,
   });
 
   @override
@@ -25,10 +23,10 @@ class ServicePosterDetails extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                categoryModel.name??'null',
+                serviceModel.name??'null',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              if (availability) ...[
+              if (serviceModel.availability!) ...[
                 const Spacer(),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
@@ -58,7 +56,7 @@ class ServicePosterDetails extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
                 child: Image.network(
-                  categoryModel.imageUrl??'null',
+                  serviceModel.imageUrl??'null',
                   height: 120,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -76,7 +74,7 @@ class ServicePosterDetails extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      categoryModel.subName??'null',
+                      serviceModel.name??'null',
                       style: TextStyle(
                         color: Colors.green,
                         fontWeight: FontWeight.bold,
@@ -84,7 +82,7 @@ class ServicePosterDetails extends StatelessWidget {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      categoryModel.description??'null',
+                      serviceModel.description??'null',
                       style: TextStyle(color: Colors.grey),
                     ),
                     SizedBox(height: 10),
@@ -98,7 +96,7 @@ class ServicePosterDetails extends StatelessWidget {
                               style: TextStyle(color: Colors.grey),
                             ),
                             Text(
-                              "\$${categoryModel.price?.toStringAsFixed(2)}",
+                              "\$${serviceModel.price?.toStringAsFixed(2)}",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,

@@ -28,25 +28,29 @@ class HomeBottomSheetChildWidget extends StatelessWidget {
               ),
             );
           } else if (state is ServiceBottomSheetSuccessState) {
-            var list = state.servicesBasedOnCategoryModel.data;
-            if (list?.isEmpty ?? true) {
+            var servicesList = state.servicesBasedOnCategoryModel.data;
+            if (servicesList?.isEmpty ?? true) {
               return const UnAvailableServices();
             }
-            return  GridView.builder(
-                itemCount: list?.length ?? 3,
+            return GridView.builder(
+                itemCount: servicesList?.length ?? 3,
                 padding: EdgeInsets.all(5.r),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
                 ),
                 itemBuilder: (context, index) {
-                  return  ServiceCardItem(
+                  return ServiceCardItem(
                     categoryModel: CategoryModel(
-                      id: list![index].categoryId!,
-                      name: list[index].name,
-                      imageUrl: list[index].imageUrl,
+                      id: servicesList![index].categoryId!,
+                      name: servicesList[index].name,
+                      imageUrl: servicesList[index].imageUrl,
                     ),
                     onTap: () {
-                      Navigator.pushNamed(context, Routes.servicesListViewView);
+                      Navigator.pushNamed(
+                        context,
+                        Routes.servicesListViewView,
+                        arguments: servicesList,
+                      );
                     },
                   );
                 });
@@ -61,4 +65,3 @@ class HomeBottomSheetChildWidget extends StatelessWidget {
     );
   }
 }
-
