@@ -38,6 +38,7 @@ class HomeBottomSheetChildWidget extends StatelessWidget {
               ),
               itemBuilder: (context, index) {
                 return ServiceCardItem(
+                  
                   categoryModel: CategoryModel(
                     id: list![index].categoryId!,
                     name: list[index].name,

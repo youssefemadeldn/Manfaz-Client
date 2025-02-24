@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../tabs/home_tab/data/models/home_tab_model.dart';
 import '../widgets/choose_your_service.dart';
 import '../widgets/service_poster_details.dart';
 
@@ -51,7 +52,23 @@ class ServicesListViewView extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: 10,
               itemBuilder: (context, index) {
-                return ServicePosterDetails();
+                return ServicePosterDetails( 
+                  availability: true,
+                  categoryModel: CategoryModel(
+                    id: index.toString(),  
+                    // availability: true,
+                    imageUrl: 'https://img.freepik.com/free-photo/professional-washer-blue-uniform-washing-luxury-car-with-water-gun-open-air-car-wash_496169-333.jpg?t=st=1740406463~exp=1740410063~hmac=f3f9793ab3c1aa4d3c586cba0f931daea9f9ac8cc67721b40ea96bd3b12a044e&w=1380',
+                    description: 'anxjks sbcjlkc nkaxsc aclalknc ',
+                    price: 17,
+                    // categoryId: '1',
+                    name: 'Painting',
+  
+                    subName: 'sub Name',
+                    slug: 'painting',
+                    // duration: 3,
+                  ),
+
+                );
               },
             ),
           ],

@@ -5,9 +5,16 @@ import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_styles.dart';
 import '../../../../core/widgets/cus_text_button.dart';
+import '../../../tabs/home_tab/data/models/home_tab_model.dart';
 
 class ServicePosterDetails extends StatelessWidget {
-  const ServicePosterDetails({super.key});
+  final CategoryModel categoryModel;
+  final bool availability;
+  const ServicePosterDetails({
+    super.key,
+    required this.categoryModel,
+    required this.availability,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +25,23 @@ class ServicePosterDetails extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                tr("ServicesListViewView.external_painting"),
+                categoryModel.name??'null',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              Spacer(),
-              Icon(Icons.star, color: Colors.amber),
-              Text(tr("ServicesListViewView.rating"),
-                  style: TextStyle(fontSize: 16)),
+              if (availability) ...[
+                const Spacer(),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                  decoration: BoxDecoration(
+                    color: Colors.green.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    tr("ServicesListViewView.available"),
+                    style: TextStyle(color: Colors.green, fontSize: 12),
+                  ),
+                ),
+              ],
             ],
           ),
         ),
@@ -40,8 +57,18 @@ class ServicePosterDetails extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-                child: Image.asset("assets/images/ibox_decor.jpg",
-                    height: 120, width: double.infinity, fit: BoxFit.cover),
+                child: Image.network(
+                  categoryModel.imageUrl??'null',
+                  height: 120,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => Image.asset(
+                    "assets/images/placeholder.jpg",
+                    height: 120,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(12.0),
@@ -49,41 +76,56 @@ class ServicePosterDetails extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      tr("ServicesListViewView.gold_warranty"),
+                      categoryModel.subName??'null',
                       style: TextStyle(
-                          color: Colors.green, fontWeight: FontWeight.bold),
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     SizedBox(height: 5),
                     Text(
-                      tr("ServicesListViewView.paint_wall"),
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      tr("ServicesListViewView.paint_service_description"),
+                      categoryModel.description??'null',
                       style: TextStyle(color: Colors.grey),
                     ),
                     SizedBox(height: 10),
-                    Text(
-                      tr("ServicesListViewView.price_includes_tax"),
-                      style: TextStyle(color: Colors.grey),
-                    ),
                     Row(
                       children: [
-                        Text(
-                          tr("ServicesListViewView.price"),
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              tr("ServicesListViewView.price"),
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                            Text(
+                              "\$${categoryModel.price?.toStringAsFixed(2)}",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                        Spacer(),
-                        Text(
-                          tr("ServicesListViewView.installments"),
-                          style: TextStyle(color: Colors.grey),
-                        ),
+                        SizedBox(width: 20),
+                        // Column(
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   children: [
+                        //     Text(
+                        //       tr("ServicesListViewView.duration"),
+                        //       style: TextStyle(color: Colors.grey),
+                        //     ),
+                        //     Text(
+                        //       "${categoryModel.duration?.toString()} ${tr("ServicesListViewView.hours")}",
+                        //       style: TextStyle(
+                        //         fontSize: 16,
+                        //         fontWeight: FontWeight.bold,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 15),
                     Row(
                       children: [
                         Expanded(
@@ -91,7 +133,6 @@ class ServicePosterDetails extends StatelessWidget {
                             backgroundColor: AppColors.buttonPrimary,
                             borderRadius: 8,
                             buttonText: tr("ServicesListViewView.order_now"),
-                            // textStyle: TextStyle(color: Colors.white),
                             onPressed: () {},
                           ),
                         ),
