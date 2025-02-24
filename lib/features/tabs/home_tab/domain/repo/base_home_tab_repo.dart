@@ -7,5 +7,5 @@ import '../../data/models/home_tab_model.dart';
 abstract class BaseHomeTabRepo {
   Future<Either<Failure, HomeTabModel>> getHomeTabData(); // or getHomeCategories()
 
-  Future<Either<Failure, ServicesBasedOnCategoryModel>> getServicesBasedOnCategory();
+  Future<Either<Failure, ServicesBasedOnCategoryModel>> getServicesBasedOnCategory({required String categoryId, required String type});
 }

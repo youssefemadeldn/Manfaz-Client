@@ -55,13 +55,13 @@ class HomeTabRemoteDataSourceImpl implements BaseHomeTabRemoteDataSource {
         errorMessage: e.toString(),
       ));
     }
-  }
+  }   
 
   @override
-  Future<Either<Failure, ServicesBasedOnCategoryModel>> getServicesBasedOnCategory() async{
+  Future<Either<Failure, ServicesBasedOnCategoryModel>> getServicesBasedOnCategory({required String categoryId, required String type}) async{
     try {
     var response   = await apiManager.getData(ApiConstant.epGetServicesBasedOnCategory,
-      queryParameters: {'lang': currentLanguage},
+      queryParameters: {'lang': currentLanguage, 'categoryId': categoryId, 'type': type},
        );
 
       ServicesBasedOnCategoryModel servicesBasedOnCategoryModel = ServicesBasedOnCategoryModel.fromJson(response.data);

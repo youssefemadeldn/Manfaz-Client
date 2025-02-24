@@ -7,6 +7,5 @@ import '../../models/services_based_on_category_model.dart';
 abstract class BaseHomeTabRemoteDataSource {
   Future<Either<Failure, HomeTabModel>> getHomeTabData();
 
-  Future<Either<Failure, ServicesBasedOnCategoryModel>>
-      getServicesBasedOnCategory();
+  Future<Either<Failure, ServicesBasedOnCategoryModel>> getServicesBasedOnCategory({required String categoryId, required String type});
 }

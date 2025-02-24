@@ -17,7 +17,9 @@ class HomeTabRepoImpl implements BaseHomeTabRepo {
   }
 
   @override
-  Future<Either<Failure, ServicesBasedOnCategoryModel>> getServicesBasedOnCategory() {
-    return baseHomeTabRemoteDataSource.getServicesBasedOnCategory();
+  Future<Either<Failure, ServicesBasedOnCategoryModel>> getServicesBasedOnCategory(
+      {required String categoryId, required String type}) {
+    return baseHomeTabRemoteDataSource.getServicesBasedOnCategory(
+        categoryId: categoryId, type: type);
   }
 }

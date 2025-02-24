@@ -31,10 +31,11 @@ class HomeTabCubit extends Cubit<HomeTabState> {
     );
   }
 
-  Future<void> emitGetAllServicesStates() async {
+  Future<void> emitGetAllServicesStates(String categoryId, String type) async {
     emit(ServiceBottomSheetLoadingState());
     final Either<Failure, ServicesBasedOnCategoryModel> eitherResponse =
-        await getServicesBasedOnCategoryUseCase.call();
+        await getServicesBasedOnCategoryUseCase.call(
+            categoryId: categoryId, type: type);
     eitherResponse.fold(
       (failure) => emit(ServiceBottomSheetErrorState(failure: failure)),
       (getServicesModel) => emit(ServiceBottomSheetSuccessState(servicesBasedOnCategoryModel: getServicesModel)),

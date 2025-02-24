@@ -11,6 +11,8 @@ class GetServicesBasedOnCategoryUseCase {
 
   GetServicesBasedOnCategoryUseCase(this.baseHomeTabRepo);
 
-  Future<Either<Failure, ServicesBasedOnCategoryModel>> call() =>
-      baseHomeTabRepo.getServicesBasedOnCategory();
+  Future<Either<Failure, ServicesBasedOnCategoryModel>> call(
+          {required String categoryId, required String type}) =>
+      baseHomeTabRepo.getServicesBasedOnCategory(
+          categoryId: categoryId, type: type);
 }
