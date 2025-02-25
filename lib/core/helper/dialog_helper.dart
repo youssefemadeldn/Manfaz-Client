@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:manfaz/core/theme/app_colors.dart';
 
 class DialogHelper {
   // Static method to show a dialog with customizable parameters
@@ -31,7 +32,9 @@ class DialogHelper {
               },
               child: Text(
                 cancelText ?? 'dialog.cancel'.tr(),
-                style: leftActionStyle ?? const TextStyle(),
+                style: leftActionStyle ??  TextStyle(
+                  color: AppColors.primary,
+                ),
               ),
             ),
             TextButton(
@@ -41,7 +44,9 @@ class DialogHelper {
               },
               child: Text(
                 confirmText ?? 'dialog.ok'.tr(),
-                style: rightActionStyle ?? const TextStyle(),
+                style: rightActionStyle ??  TextStyle(
+                  color: AppColors.primary,
+                ),
               ),
             ),
           ],

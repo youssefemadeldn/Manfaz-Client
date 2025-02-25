@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import '../../../tabs/home_tab/data/models/services_based_on_category_model.dart';
@@ -27,7 +26,7 @@ class ChooseYourServiceCardItem extends StatelessWidget {
               // ],
             ),
             child: Center(
-                child: Image.network(serviceModel.imageUrl??'null', height: 40)),
+                child: Image.network(serviceModel.iconUrl??'null', height: 40)),
           ),
           SizedBox(height: 5),
           Text(serviceModel.name??'null',

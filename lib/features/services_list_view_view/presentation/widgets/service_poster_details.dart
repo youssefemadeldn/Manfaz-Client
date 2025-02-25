@@ -54,10 +54,12 @@ class ServicePosterDetails extends StatelessWidget {
           child: Column(
             children: [
               ClipRRect(
+                
                 borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+
                 child: Image.network(
                   serviceModel.imageUrl??'null',
-                  height: 120,
+                  height: 200,
                   width: double.infinity,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) => Image.asset(

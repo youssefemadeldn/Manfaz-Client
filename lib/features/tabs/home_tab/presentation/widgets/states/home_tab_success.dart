@@ -10,6 +10,7 @@ import '../../../../../../core/helper/bottom_sheet_helper.dart';
 import '../../../../../../core/routes/routes.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_styles.dart';
+import '../../../data/models/services_based_on_category_model.dart';
 import '../../controller/home_tab_cubit/home_tab_cubit.dart';
 import '../home_bottom_sheet_child_widget.dart';
 import '../items/service_card_item.dart';
@@ -17,7 +18,7 @@ import '../items/delivery_card_item.dart';
 
 class HomeTabSuccess extends StatelessWidget {
   final List<CategoryModel> categoriesDeliveryList;
-  final List<CategoryModel> categoriesServiceList;
+  final List<ServiceModel> categoriesServiceList;
   const HomeTabSuccess(
       {super.key,
       required this.categoriesDeliveryList,
@@ -125,7 +126,11 @@ class HomeTabSuccess extends StatelessWidget {
           ),
           itemCount: categoriesServiceList.length,
           itemBuilder: (context, index) => ServiceCardItem(
-            categoryModel: categoriesServiceList[index],
+            serviceModel: ServiceModel(
+              id: categoriesServiceList[index].id!,
+              name: categoriesServiceList[index].name,
+              iconUrl: categoriesServiceList[index].imageUrl,
+            ),
             onTap: () {
               BottomSheetHelper.show(
                 context: context,

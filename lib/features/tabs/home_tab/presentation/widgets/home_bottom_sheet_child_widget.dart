@@ -5,6 +5,7 @@ import 'package:manfaz/features/tabs/home_tab/data/models/home_tab_model.dart';
 import 'package:manfaz/features/tabs/home_tab/presentation/widgets/items/service_card_item.dart';
 import '../../../../../core/routes/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
+import '../../data/models/services_based_on_category_model.dart';
 import '../controller/home_tab_cubit/home_tab_cubit.dart';
 import 'states/home_tab_error.dart';
 import 'un_available_services.dart';
@@ -40,10 +41,10 @@ class HomeBottomSheetChildWidget extends StatelessWidget {
                 ),
                 itemBuilder: (context, index) {
                   return ServiceCardItem(
-                    categoryModel: CategoryModel(
-                      id: servicesList![index].categoryId!,
+                    serviceModel: ServiceModel(
+                      id: servicesList![index].id!,
                       name: servicesList[index].name,
-                      imageUrl: servicesList[index].imageUrl,
+                      iconUrl: servicesList[index].iconUrl,
                     ),
                     onTap: () {
                       Navigator.pushNamed(

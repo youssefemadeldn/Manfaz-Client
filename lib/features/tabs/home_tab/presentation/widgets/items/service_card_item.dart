@@ -5,14 +5,15 @@ import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 
 import '../../../data/models/home_tab_model.dart';
+import '../../../data/models/services_based_on_category_model.dart';
 
 class ServiceCardItem extends StatelessWidget {
-  final CategoryModel categoryModel;
+  final ServiceModel serviceModel;
   final void Function() onTap;
 
   const ServiceCardItem({
     super.key,
-    required this.categoryModel,
+    required this.serviceModel,
     required this.onTap,
   });
 
@@ -39,7 +40,7 @@ class ServiceCardItem extends StatelessWidget {
                 ),
               ),
               child: CachedNetworkImage(
-                imageUrl: categoryModel.imageUrl ?? '',
+                imageUrl: serviceModel.iconUrl ?? '',
                 placeholder: (context, url) => CircularProgressIndicator(
                   color: AppColors.primary,
                 ),
@@ -56,7 +57,7 @@ class ServiceCardItem extends StatelessWidget {
             height: 4.h,
           ),
           Text(
-            categoryModel.name ?? 'null',
+            serviceModel.name ?? 'null',
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             maxLines: 1, // Ensure text fits in one line

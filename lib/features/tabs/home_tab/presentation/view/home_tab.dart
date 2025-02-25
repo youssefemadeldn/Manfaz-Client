@@ -5,6 +5,7 @@ import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/features/tabs/home_tab/data/models/home_tab_model.dart';
 import 'package:manfaz/features/tabs/home_tab/presentation/controller/home_tab_cubit/home_tab_cubit.dart';
 import '../../../../../core/di/di.dart';
+import '../../data/models/services_based_on_category_model.dart';
 import '../widgets/home_search_bar_widget.dart';
 import '../widgets/states/home_tab_error.dart';
 import '../widgets/states/home_tab_shimmer_loading.dart';
@@ -63,6 +64,8 @@ class HomeTab extends StatelessWidget {
                         .toList();
                     var serviceList = allList
                         ?.where((element) => element.type == 'service')
+                        .map( (allList) =>
+                            ServiceModel.fromJson(allList.toJson()))
                         .toList();
 
                     return HomeTabSuccess(

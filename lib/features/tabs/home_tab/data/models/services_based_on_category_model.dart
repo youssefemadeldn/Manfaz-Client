@@ -4,7 +4,8 @@ class ServicesBasedOnCategoryModel {
   int? code;
   List<ServiceModel>? data;
 
-  ServicesBasedOnCategoryModel({this.status, this.message, this.code, this.data});
+  ServicesBasedOnCategoryModel(
+      {this.status, this.message, this.code, this.data});
 
   ServicesBasedOnCategoryModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -41,6 +42,13 @@ class ServiceModel {
   int? duration;
   bool? availability;
   String? imageUrl;
+  String? iconUrl;
+  int? rating;
+  int? ratingCount;
+  Null? warranty;
+  bool? installmentAvailable;
+  Null? installmentMonths;
+  Null? monthlyInstallment;
   String? createdAt;
   String? updatedAt;
 
@@ -55,10 +63,17 @@ class ServiceModel {
       this.duration,
       this.availability,
       this.imageUrl,
+      this.iconUrl,
+      this.rating,
+      this.ratingCount,
+      this.warranty,
+      this.installmentAvailable,
+      this.installmentMonths,
+      this.monthlyInstallment,
       this.createdAt,
       this.updatedAt});
 
-  ServiceModel.fromJson(Map<String, dynamic> json) {
+   ServiceModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     slug = json['slug'];
@@ -69,6 +84,13 @@ class ServiceModel {
     duration = json['duration'];
     availability = json['availability'];
     imageUrl = json['imageUrl'];
+    iconUrl = json['iconUrl'];
+    rating = json['rating'];
+    ratingCount = json['ratingCount'];
+    warranty = json['warranty'];
+    installmentAvailable = json['installmentAvailable'];
+    installmentMonths = json['installmentMonths'];
+    monthlyInstallment = json['monthlyInstallment'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
@@ -85,6 +107,13 @@ class ServiceModel {
     data['duration'] = this.duration;
     data['availability'] = this.availability;
     data['imageUrl'] = this.imageUrl;
+    data['iconUrl'] = this.iconUrl;
+    data['rating'] = this.rating;
+    data['ratingCount'] = this.ratingCount;
+    data['warranty'] = this.warranty;
+    data['installmentAvailable'] = this.installmentAvailable;
+    data['installmentMonths'] = this.installmentMonths;
+    data['monthlyInstallment'] = this.monthlyInstallment;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     return data;

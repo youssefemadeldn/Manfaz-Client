@@ -38,15 +38,15 @@ class ServicesListViewView extends StatelessWidget {
         child: ListView(
           physics: const BouncingScrollPhysics(),
           children: [
-            Container(
-              padding: EdgeInsets.only(bottom: 12),
-              height: 200,
-              child: Center(
-                child: Image.asset(
-                  'assets/images/resized_services.png',
-                ),
-              ),
-            ),
+            // Container(
+            //   padding: EdgeInsets.only(bottom: 12),
+            //   height: 200,
+            //   child: Center(
+            //     child: Image.asset(
+            //       'assets/images/resized_services.png',
+            //     ),
+            //   ),
+            // ),
             ChooseYourService(
               servicesList: servicesList,
             ),
