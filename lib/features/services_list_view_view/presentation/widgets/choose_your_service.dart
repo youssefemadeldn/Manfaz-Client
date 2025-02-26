@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/features/services_list_view_view/presentation/widgets/choose_your_service_card_item.dart';
 
 import '../../../tabs/home_tab/data/models/services_based_on_category_model.dart';
@@ -23,8 +24,8 @@ class ChooseYourService extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            tr('ServicesListViewView.choose_your_service'),
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            tr('ServicesListViewView.title'),
+            style: AppStyles.header3,
           ),
           SizedBox(height: 10),
 

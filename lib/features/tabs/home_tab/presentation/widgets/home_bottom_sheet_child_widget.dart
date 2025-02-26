@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:manfaz/features/tabs/home_tab/data/models/home_tab_model.dart';
 import 'package:manfaz/features/tabs/home_tab/presentation/widgets/items/service_card_item.dart';
 import '../../../../../core/routes/routes.dart';
 import '../../../../../core/theme/app_colors.dart';

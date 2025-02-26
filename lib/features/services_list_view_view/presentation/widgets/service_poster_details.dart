@@ -23,8 +23,8 @@ class ServicePosterDetails extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                serviceModel.name??'null',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                serviceModel.name ?? 'null',
+                style: AppStyles.header2,
               ),
               if (serviceModel.availability!) ...[
                 const Spacer(),
@@ -54,11 +54,9 @@ class ServicePosterDetails extends StatelessWidget {
           child: Column(
             children: [
               ClipRRect(
-                
                 borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-
                 child: Image.network(
-                  serviceModel.imageUrl??'null',
+                  serviceModel.imageUrl ?? 'null',
                   height: 200,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -76,7 +74,7 @@ class ServicePosterDetails extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      serviceModel.name??'null',
+                      serviceModel.name ?? 'null',
                       style: TextStyle(
                         color: Colors.green,
                         fontWeight: FontWeight.bold,
@@ -84,8 +82,12 @@ class ServicePosterDetails extends StatelessWidget {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      serviceModel.description??'null',
-                      style: TextStyle(color: Colors.grey),
+                      serviceModel.description ?? 'null',
+                      style: AppStyles.bodyText1.copyWith(
+                      color: AppColors.textSecondary,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                      ),
                     ),
                     SizedBox(height: 10),
                     Row(
@@ -95,13 +97,12 @@ class ServicePosterDetails extends StatelessWidget {
                           children: [
                             Text(
                               tr("ServicesListViewView.price"),
-                              style: TextStyle(color: Colors.grey),
+                              style: AppStyles.bodyText1,
                             ),
                             Text(
                               "\$${serviceModel.price?.toStringAsFixed(2)}",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                              style: AppStyles.priceTag.copyWith(
+                                color: AppColors.textPrimary
                               ),
                             ),
                           ],

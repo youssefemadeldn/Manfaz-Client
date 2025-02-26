@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
+import '../../../../core/theme/app_styles.dart';
 import '../../../tabs/home_tab/data/models/services_based_on_category_model.dart';
 
 class ChooseYourServiceCardItem extends StatelessWidget {
@@ -30,7 +31,7 @@ class ChooseYourServiceCardItem extends StatelessWidget {
           ),
           SizedBox(height: 5),
           Text(serviceModel.name??'null',
-              textAlign: TextAlign.center, style: TextStyle(fontSize: 14)),
+              textAlign: TextAlign.center, style: AppStyles.bodyText1.copyWith(fontSize: 14) ),
         ],
       ),
     );

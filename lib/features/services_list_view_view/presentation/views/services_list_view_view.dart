@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:manfaz/core/theme/app_styles.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../tabs/home_tab/data/models/services_based_on_category_model.dart';
 import '../widgets/choose_your_service.dart';
@@ -13,10 +14,13 @@ class ServicesListViewView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: AppColors.white,
         elevation: 0,
-        title: Text(tr('ServicesListViewView.paints'),
-            style: TextStyle(color: Colors.black)),
+        title: Text(
+          tr('ServicesListViewView.choose_your_service'),
+          style: AppStyles.appBarTitle,
+        ),
         leading: IconButton(
           icon: IconButton(
             onPressed: () {
@@ -26,12 +30,12 @@ class ServicesListViewView extends StatelessWidget {
           ),
           onPressed: () {},
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search, color: Colors.black),
-            onPressed: () {},
-          )
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.search, color: Colors.black),
+        //     onPressed: () {},
+        //   )
+        // ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -57,7 +61,7 @@ class ServicesListViewView extends StatelessWidget {
               itemCount: servicesList.length,
               itemBuilder: (context, index) {
                 final service = servicesList[index];
-                return ServicePosterDetails( 
+                return ServicePosterDetails(
                   serviceModel: service,
                 );
               },

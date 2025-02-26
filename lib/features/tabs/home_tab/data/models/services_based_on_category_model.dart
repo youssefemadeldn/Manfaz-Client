@@ -45,10 +45,10 @@ class ServiceModel {
   String? iconUrl;
   int? rating;
   int? ratingCount;
-  Null? warranty;
+  int? warranty;
   bool? installmentAvailable;
-  Null? installmentMonths;
-  Null? monthlyInstallment;
+  int? installmentMonths;
+  double? monthlyInstallment;
   String? createdAt;
   String? updatedAt;
 

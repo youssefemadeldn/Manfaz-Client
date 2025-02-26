@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
-
-import '../../../data/models/home_tab_model.dart';
 import '../../../data/models/services_based_on_category_model.dart';
 
 class ServiceCardItem extends StatelessWidget {
