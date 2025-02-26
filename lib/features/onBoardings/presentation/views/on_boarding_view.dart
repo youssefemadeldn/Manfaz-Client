@@ -21,19 +21,19 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   final List<OnBoardingPage> _pages = [
     OnBoardingPage(
       image: 'assets/images/onBoarding/Online Groceries-pana.png',
-      title: 'Welcome to Manfaz',
-      description: 'Your one-stop solution for all service needs',
+      titleKey: 'onboarding.welcome_title',
+      descriptionKey: 'onboarding.welcome_description',
     ),
     OnBoardingPage(
       image: 'assets/images/onBoarding/Natural Resource Depletion-amico.png',
-      title: 'Choose Your Language',
-      description: 'Select your preferred language to get started',
+      titleKey: 'onboarding.language_title',
+      descriptionKey: 'onboarding.language_description',
       isLanguagePage: true,
     ),
     OnBoardingPage(
       image: 'assets/images/onBoarding/Take Away-pana.png',
-      title: 'Get Started',
-      description: 'Find and book the services you need with ease',
+      titleKey: 'onboarding.get_started_title',
+      descriptionKey: 'onboarding.get_started_description',
     ),
   ];
 
@@ -97,7 +97,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                               ),
                             ),
                             child: Text(
-                              'Previous',
+                              'onboarding.previous'.tr(),
                               style: AppStyles.subtitle2.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
@@ -129,7 +129,9 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                             ),
                           ),
                           child: Text(
-                            _currentPage < _pages.length - 1 ? 'Next' : 'Get Started',
+                            _currentPage < _pages.length - 1 
+                              ? 'onboarding.next'.tr() 
+                              : 'onboarding.get_started'.tr(),
                             style: AppStyles.subtitle2.copyWith(
                               color: AppColors.primaryDark,
                               fontWeight: FontWeight.w600,
@@ -171,7 +173,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           ),
           SizedBox(height: 30.h),
           Text(
-            page.title,
+            page.titleKey.tr(),
             style: AppStyles.header1.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -180,7 +182,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           ),
           SizedBox(height: 10.h),
           Text(
-            page.description,
+            page.descriptionKey.tr(),
             style: AppStyles.subtitle1.copyWith(
               color: Colors.white.withOpacity(0.9),
               height: 1.5,
@@ -267,14 +269,14 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 
 class OnBoardingPage {
   final String image;
-  final String title;
-  final String description;
+  final String titleKey;
+  final String descriptionKey;
   final bool isLanguagePage;
 
   OnBoardingPage({
     required this.image,
-    required this.title,
-    required this.description,
+    required this.titleKey,
+    required this.descriptionKey,
     this.isLanguagePage = false,
   });
 }

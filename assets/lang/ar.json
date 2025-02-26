@@ -1,9 +1,15 @@
 {
-  "on_boarding_title": "منفذ - منصة خدماتك الشاملة",
-  "on_boarding_description": "اكتشف أفضل مزودي الخدمات في المملكة العربية السعودية، وابدأ في تحقيق أفكارك بكل سهولة واحترافية.",
-  "start_now": "ابدء الان",
-  "select_language": "اختر اللغة",
-  "welcome": "مرحبًا بك في منفذ",
+  "onboarding": {
+    "welcome_title": "مرحباً بك في منفذ",
+    "welcome_description": "وجهتك الشاملة لجميع احتياجات الخدمة",
+    "language_title": "اختر لغتك",
+    "language_description": "حدد لغتك المفضلة للبدء",
+    "get_started_title": "هيا نبدأ",
+    "get_started_description": "ابحث واحجز الخدمات التي تحتاجها بكل سهولة",
+    "previous": "السابق",
+    "next": "التالي",
+    "get_started": "ابدأ الآن"
+  },
   "login_description": "قم بتسجيل الدخول إلى حسابك لمتابعة رحلتك.",
   "email": "البريد الإلكتروني",
   "password": "كلمة المرور",

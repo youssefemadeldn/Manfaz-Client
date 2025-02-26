@@ -129,6 +129,7 @@ class LoginView extends StatelessWidget {
           indicatorColor: AppColors.primary,
         );
       case LoginSuccess():
+        context.read<LoginCubit>().close();
         DialogHelper.hideLoadingDialog(context);
         Navigator.pushReplacementNamed(
           context,
