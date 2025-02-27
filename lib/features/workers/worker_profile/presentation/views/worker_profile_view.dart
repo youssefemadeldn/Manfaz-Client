@@ -5,6 +5,7 @@ import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/core/widgets/cus_text_button.dart';
 
 import '../../../../../core/routes/routes.dart';
+import '../../../../../core/widgets/ArrowBackIosButton.dart';
 import '../widgets/action_dealing_with_workers.dart';
 import '../widgets/rate_job_time_experience.dart';
 
@@ -15,6 +16,7 @@ class WorkerProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: ArrowBackIosButton(),
         actions: [
           CircleAvatar(
             backgroundColor: AppColors.primary,

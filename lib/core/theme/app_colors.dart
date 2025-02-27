@@ -111,6 +111,8 @@ class AppColors {
   static const Color buttonSecondary = secondary; // Amber buttons
   static const Color buttonText = white; // White text for buttons
 
+  //  Icon
+  static const Color icon = textPrimary;
   // State Colors
   static const Color error = Colors.red;
   static const Color success = accentGreen;

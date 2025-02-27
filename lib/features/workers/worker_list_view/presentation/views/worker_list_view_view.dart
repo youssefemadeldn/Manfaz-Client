@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../../core/theme/app_styles.dart';
+import '../../../../../core/widgets/ArrowBackIosButton.dart';
 import '../widgets/worker_card_item.dart';
 
 class WorkerListViewView extends StatelessWidget {
@@ -14,17 +15,7 @@ class WorkerListViewView extends StatelessWidget {
           'Workers',
           style: AppStyles.header1,
         ),
-        leading: IconButton(
-          icon: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        leading: ArrowBackIosButton(),
       ),
       body: SafeArea(
           child: Column(
@@ -40,3 +31,4 @@ class WorkerListViewView extends StatelessWidget {
     );
   }
 }
+
