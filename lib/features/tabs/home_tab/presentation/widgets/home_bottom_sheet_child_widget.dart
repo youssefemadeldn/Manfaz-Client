@@ -5,7 +5,7 @@ import 'package:manfaz/features/tabs/home_tab/presentation/widgets/items/service
 import '../../../../../core/routes/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../data/models/services_based_on_category_model.dart';
-import '../controller/home_tab_cubit/home_tab_cubit.dart';
+import '../controller/services_cubit/services_cubit.dart';
 import 'states/home_tab_error.dart';
 import 'un_available_services.dart';
 
@@ -19,15 +19,15 @@ class HomeBottomSheetChildWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(10.r),
       width: double.infinity,
-      child: BlocBuilder<HomeTabCubit, HomeTabState>(
+      child: BlocBuilder<ServicesCubit, ServicesState>(
         builder: (context, state) {
-          if (state is ServiceBottomSheetLoadingState) {
+          if (state is ServicesLoadingState) {
             return const Center(
               child: CircularProgressIndicator(
                 color: AppColors.primary,
               ),
             );
-          } else if (state is ServiceBottomSheetSuccessState) {
+          } else if (state is ServicesSuccessState) {
             var servicesList = state.servicesBasedOnCategoryModel.data;
             if (servicesList?.isEmpty ?? true) {
               return const UnAvailableServices();
@@ -54,7 +54,7 @@ class HomeBottomSheetChildWidget extends StatelessWidget {
                     },
                   );
                 });
-          } else if (state is ServiceBottomSheetErrorState) {
+          } else if (state is ServicesErrorState) {
             return ErrorMessageWidget(
               errorMessage: state.failure.errorMessage,
             );

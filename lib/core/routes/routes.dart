@@ -9,8 +9,8 @@ class Routes {
   static const String loginView = '/loginView';
   static const String registerView = '/registerView';
   //
-  static const String peopleListViewView = '/peopleListViewView';
-  static const String freelancerProfileView = '/freelancerProfileView';
+  static const String workerListViewView = '/workerListViewView';
+  static const String workerProfileView = '/workerProfileView';
   static const String sendAnOfferView = '/sendAnOfferView';
   // language
   static const String languageSwitcherScreen = '/languageSwitcherScreen';

@@ -45,6 +45,8 @@ import '../../features/tabs/home_tab/domain/use_cases/home_tab_use_case.dart'
     as _i59;
 import '../../features/tabs/home_tab/presentation/controller/home_tab_cubit/home_tab_cubit.dart'
     as _i600;
+import '../../features/tabs/home_tab/presentation/controller/services_cubit/services_cubit.dart'
+    as _i256;
 import '../network/api_manager.dart' as _i119;
 import 'di.dart' as _i913;
 
@@ -77,21 +79,21 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i191.LoginUseCase(gh<_i375.BaseLoginRepo>()));
     gh.factory<_i950.BaseRegisterRepo>(() => _i612.RegisterRepoImpl(
         registerRemoteDataSource: gh<_i579.BaseRegisterRemoteDataSource>()));
-    gh.factory<_i59.HomeTabUseCase>(
-        () => _i59.HomeTabUseCase(gh<_i364.BaseHomeTabRepo>()));
     gh.factory<_i586.GetServicesBasedOnCategoryUseCase>(() =>
         _i586.GetServicesBasedOnCategoryUseCase(gh<_i364.BaseHomeTabRepo>()));
+    gh.factory<_i59.HomeTabUseCase>(
+        () => _i59.HomeTabUseCase(gh<_i364.BaseHomeTabRepo>()));
+    gh.factory<_i256.ServicesCubit>(() => _i256.ServicesCubit(
+        getServicesBasedOnCategoryUseCase:
+            gh<_i586.GetServicesBasedOnCategoryUseCase>()));
     gh.factory<_i51.RegisterUseCase>(
         () => _i51.RegisterUseCase(registerRepo: gh<_i950.BaseRegisterRepo>()));
     gh.factory<_i868.LoginCubit>(
         () => _i868.LoginCubit(loginUseCase: gh<_i191.LoginUseCase>()));
     gh.factory<_i274.RegisterCubit>(
         () => _i274.RegisterCubit(registerUseCase: gh<_i51.RegisterUseCase>()));
-    gh.factory<_i600.HomeTabCubit>(() => _i600.HomeTabCubit(
-          homeTabUseCase: gh<_i59.HomeTabUseCase>(),
-          getServicesBasedOnCategoryUseCase:
-              gh<_i586.GetServicesBasedOnCategoryUseCase>(),
-        ));
+    gh.factory<_i600.HomeTabCubit>(
+        () => _i600.HomeTabCubit(homeTabUseCase: gh<_i59.HomeTabUseCase>()));
     return this;
   }
 }

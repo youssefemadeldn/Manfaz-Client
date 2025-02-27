@@ -8,12 +8,12 @@ import 'package:manfaz/features/login/presentation/view/otp_verification_view.da
 import 'package:manfaz/features/login/presentation/view/success_verification_view.dart';
 import 'package:manfaz/features/onBoardings/presentation/views/on_boarding_view.dart';
 import '../../features/delivery_list_view_view/presentation/view/delivery_list_view_view.dart';
-import '../../features/freelancer_profile/presentation/views/freelancer_profile_view.dart';
+import '../../features/workers/worker_profile/presentation/views/worker_profile_view.dart';
 import '../../features/google_maps/presentation/controller/google_maps_cubit/google_maps_cubit.dart';
 import '../../features/google_maps/presentation/views/get_user_location_view.dart';
 import '../../features/services_list_view_view/presentation/views/services_list_view_view.dart';
 import '../../features/login/presentation/controller/login_cubit/login_cubit.dart';
-import '../../features/people_list_view/presentation/views/people_list_view_view.dart';
+import '../../features/workers/worker_list_view/presentation/views/worker_list_view_view.dart';
 import '../../features/register/presentation/controller/register_cubit/register_cubit.dart';
 import '../../features/register/presentation/views/register_view.dart';
 import '../../features/send_an_offer/presentation/views/send_an_offer_view.dart';
@@ -50,11 +50,11 @@ class AppRouter {
       case Routes.cusBottomNavigationBar:
         return CupertinoPageRoute(builder: (_) => CusBottomNavigationBar());
       //
-      case Routes.peopleListViewView:
-        return CupertinoPageRoute(builder: (_) => PeopleListViewView());
+      case Routes.workerListViewView:
+        return CupertinoPageRoute(builder: (_) => WorkerListViewView());
       //
-      case Routes.freelancerProfileView:
-        return CupertinoPageRoute(builder: (_) => FreelancerProfileView());
+      case Routes.workerProfileView:
+        return CupertinoPageRoute(builder: (_) => WorkerProfileView());
       //
       case Routes.sendAnOfferView:
         return CupertinoPageRoute(builder: (context) => SendAnOfferView());

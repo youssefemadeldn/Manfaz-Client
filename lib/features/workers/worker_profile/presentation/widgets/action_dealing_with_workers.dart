@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 
-class ActionDealingWithFreelancers extends StatelessWidget {
+class ActionDealingWithWorkers extends StatelessWidget {
   final String text;
   final Icon icon;
-  const ActionDealingWithFreelancers({
+  const ActionDealingWithWorkers({
     super.key,
     required this.text,
     required this.icon,

@@ -4,12 +4,12 @@ import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/core/widgets/cus_text_button.dart';
 
-import '../../../../core/routes/routes.dart';
-import '../widgets/action_dealing_with_freelancers.dart';
+import '../../../../../core/routes/routes.dart';
+import '../widgets/action_dealing_with_workers.dart';
 import '../widgets/rate_job_time_experience.dart';
 
-class FreelancerProfileView extends StatelessWidget {
-  const FreelancerProfileView({super.key});
+class WorkerProfileView extends StatelessWidget {
+  const WorkerProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class FreelancerProfileView extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
-                  ActionDealingWithFreelancers(
+                  ActionDealingWithWorkers(
                     text: 'Freelancer works only with 100% prepayment.',
                     icon: Icon(
                       Icons.monetization_on,
@@ -88,7 +88,7 @@ class FreelancerProfileView extends StatelessWidget {
                   SizedBox(
                     height: 10.h,
                   ),
-                  ActionDealingWithFreelancers(
+                  ActionDealingWithWorkers(
                     text: 'Communicate and clarify details before hiring',
                     icon: Icon(
                       Icons.chat,
@@ -98,7 +98,7 @@ class FreelancerProfileView extends StatelessWidget {
                   SizedBox(
                     height: 10.h,
                   ),
-                  ActionDealingWithFreelancers(
+                  ActionDealingWithWorkers(
                     text: ' Directly start the project with the freelancer',
                     icon: Icon(
                       Icons.handshake,

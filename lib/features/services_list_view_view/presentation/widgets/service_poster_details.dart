@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../core/routes/routes.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_styles.dart';
 import '../../../../core/widgets/cus_text_button.dart';
@@ -55,18 +57,24 @@ class ServicePosterDetails extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-                child: Image.network(
-                  serviceModel.imageUrl ?? 'null',
-                  height: 200,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => Image.asset(
-                    "assets/images/placeholder.jpg",
-                    height: 120,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+                child: CachedNetworkImage(
+                  imageUrl: serviceModel.imageUrl!,
+                  placeholder: (context, url) => SizedBox(
+                    height: 200.h,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.primary,
+                      ),
+                    ),
                   ),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
+                // Image.network(
+                //   serviceModel.imageUrl ?? 'null',
+                //   height: 200,
+                //   width: double.infinity,
+                //   fit: BoxFit.cover,
+                // ),
               ),
               Padding(
                 padding: const EdgeInsets.all(12.0),
@@ -84,9 +92,9 @@ class ServicePosterDetails extends StatelessWidget {
                     Text(
                       serviceModel.description ?? 'null',
                       style: AppStyles.bodyText1.copyWith(
-                      color: AppColors.textSecondary,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
+                        color: AppColors.textSecondary,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
                       ),
                     ),
                     SizedBox(height: 10),
@@ -101,9 +109,8 @@ class ServicePosterDetails extends StatelessWidget {
                             ),
                             Text(
                               "\$${serviceModel.price?.toStringAsFixed(2)}",
-                              style: AppStyles.priceTag.copyWith(
-                                color: AppColors.textPrimary
-                              ),
+                              style: AppStyles.priceTag
+                                  .copyWith(color: AppColors.textPrimary),
                             ),
                           ],
                         ),
@@ -133,8 +140,11 @@ class ServicePosterDetails extends StatelessWidget {
                           child: CusTextButton(
                             backgroundColor: AppColors.buttonPrimary,
                             borderRadius: 8,
-                            buttonText: tr("ServicesListViewView.order_now"),
-                            onPressed: () {},
+                            buttonText: tr("ServicesListViewView.find_talents"),
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, Routes.workerListViewView);
+                            },
                           ),
                         ),
                         SizedBox(width: 10),

@@ -2,16 +2,16 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:manfaz/core/di/di.dart';
 import 'package:manfaz/features/tabs/home_tab/data/models/home_tab_model.dart';
 import 'package:manfaz/features/tabs/home_tab/presentation/widgets/quick_action_item.dart';
 
+import '../../../../../../core/di/di.dart';
 import '../../../../../../core/helper/bottom_sheet_helper.dart';
 import '../../../../../../core/routes/routes.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_styles.dart';
 import '../../../data/models/services_based_on_category_model.dart';
-import '../../controller/home_tab_cubit/home_tab_cubit.dart';
+import '../../controller/services_cubit/services_cubit.dart';
 import '../home_bottom_sheet_child_widget.dart';
 import '../items/service_card_item.dart';
 import '../items/delivery_card_item.dart';
@@ -136,7 +136,10 @@ class HomeTabSuccess extends StatelessWidget {
                 context: context,
                 maxHeight: 280.h,
                 child: BlocProvider(
-                  create: (context) => getIt<HomeTabCubit>()..emitGetAllServicesStates(categoriesServiceList[index].id!, categoriesServiceList[index].type!),
+                  create: (context) => getIt<ServicesCubit>()..emitGetAllServicesStates(
+                        categoriesServiceList[index].id!,
+                        categoriesServiceList[index].type!,
+                        ),
                   child: HomeBottomSheetChildWidget(),
                 ),
               );
