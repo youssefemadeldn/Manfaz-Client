@@ -5,6 +5,7 @@ import 'package:manfaz/features/workers/worker_list_view/presentation/widgets/sk
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
+import 'available_now_status.dart';
 
 class WorkerCardItem extends StatelessWidget {
   const WorkerCardItem({
@@ -128,34 +129,7 @@ class WorkerCardItem extends StatelessWidget {
                             ),
                           ),
                           SizedBox(width: 12.w),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 8.w,
-                              vertical: 4.h,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.accentGreen.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(8.r),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.circle,
-                                  color: AppColors.accentGreen,
-                                  size: 8.w,
-                                ),
-                                SizedBox(width: 4.w),
-                                Text(
-                                  'Available Now',
-                                  style: AppStyles.caption.copyWith(
-                                    color: AppColors.accentGreen,
-                                    fontSize: 12.sp,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          AvailableNowStatus(),
                         ],
                       ),
                     ],

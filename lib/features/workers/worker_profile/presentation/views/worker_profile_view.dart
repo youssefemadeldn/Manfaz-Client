@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
+import 'package:manfaz/core/widgets/ArrowBackIosButton.dart';
 import 'package:manfaz/core/widgets/cus_text_button.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
-import '../../../../../core/routes/routes.dart';
-import '../../../../../core/widgets/ArrowBackIosButton.dart';
-import '../widgets/action_dealing_with_workers.dart';
-import '../widgets/rate_job_time_experience.dart';
+import '../../../worker_list_view/presentation/widgets/available_now_status.dart';
 
 class WorkerProfileView extends StatelessWidget {
   const WorkerProfileView({super.key});
@@ -15,138 +14,551 @@ class WorkerProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: ArrowBackIosButton(),
-        actions: [
-          CircleAvatar(
-            backgroundColor: AppColors.primary,
-            radius: 20.r,
-            child: Icon(
-              Icons.favorite,
-              color: AppColors.secondary,
+      body: CustomScrollView(
+        slivers: [
+          // App Bar with Profile Image
+          SliverAppBar(
+            expandedHeight: 300.h,
+            pinned: true,
+            leading: ArrowBackIosButton(),
+            flexibleSpace: FlexibleSpaceBar(
+              background: Stack(
+                fit: StackFit.expand,
+                children: [
+                  // Profile Image
+                  Image.network(
+                    'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_640.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                  // Gradient Overlay
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.transparent,
+                          Colors.black.withOpacity(0.7),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Profile Info
+                  Positioned(
+                    bottom: 20.h,
+                    left: 20.w,
+                    right: 20.w,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'John Doe',
+                              style: AppStyles.header2.copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(width: 8.w),
+                            Icon(
+                              Icons.verified,
+                              color: AppColors.secondary,
+                              size: 24.w,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 4.h),
+                        Text(
+                          'Senior UX Designer',
+                          style: AppStyles.subtitle1.copyWith(
+                            color: Colors.white.withOpacity(0.9),
+                          ),
+                        ),
+                        SizedBox(height: 8.h),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              color: Colors.white,
+                              size: 16.w,
+                            ),
+                            SizedBox(width: 4.w),
+                            Text(
+                              'New York, USA',
+                              style: AppStyles.caption.copyWith(
+                                color: Colors.white.withOpacity(0.9),
+                              ),
+                            ),
+                            SizedBox(width: 16.w),
+                            AvailableNowStatus(),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            width: 15.w,
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 30.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                backgroundImage: NetworkImage(
-                  'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_640.jpg',
+            actions: [
+              IconButton(
+                icon: Icon(
+                  Icons.favorite_border,
+                  color: Colors.white,
                 ),
-                radius: 80.r,
-                backgroundColor: AppColors.primary,
+                onPressed: () {},
               ),
-              SizedBox(
-                height: 20.h,
-              ),
-              Text(
-                'John Doe',
-                style: AppStyles.bodyText1,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Text(
-                'UX Designer',
-                style: AppStyles.bodyText2,
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              RateJobTimeExperience(),
-              SizedBox(
-                height: 20.h,
-              ),
-              // about me details
-              Text(
-                'Hi there! I’m John Doe, a passionate UI/UX designer with a knack for turning ideas into beautiful, user-friendly experiences. I thrive on creating designs that don’t just look good but also work effortlessly. With every project, my goal is to bridge the gap between creativity and functionality, making every interaction meaningful and engaging.',
-                style: AppStyles.caption,
-                // maxLines: 3,
-                // overflow: TextOverflow.ellipsis,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-
-              ListView(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  ActionDealingWithWorkers(
-                    text: 'Freelancer works only with 100% prepayment.',
-                    icon: Icon(
-                      Icons.monetization_on,
-                      color: AppColors.lightGrey,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  ActionDealingWithWorkers(
-                    text: 'Communicate and clarify details before hiring',
-                    icon: Icon(
-                      Icons.chat,
-                      color: AppColors.lightGrey,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  ActionDealingWithWorkers(
-                    text: ' Directly start the project with the freelancer',
-                    icon: Icon(
-                      Icons.handshake,
-                      color: AppColors.lightGrey,
-                    ),
-                  ),
-                ],
-              ),
-              Spacer(),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CusTextButton(
-                    buttonText: 'Hire',
-                    textStyle: AppStyles.buttonText,
-                    onPressed: () {
-                      Navigator.pushNamed(context, Routes.sendAnOfferView);
-                    },
-                    buttonWidth: 100.w,
-                    buttonHeight: 30.h,
-                    backgroundColor: AppColors.primary,
-                    verticalPadding: 5.h,
-                    borderSideColor: Colors.transparent,
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  CusTextButton(
-                    buttonText: 'Contact',
-                    textStyle: AppStyles.buttonText,
-                    onPressed: () {},
-                    buttonWidth: 100.w,
-                    buttonHeight: 30.h,
-                    backgroundColor: AppColors.secondary,
-                    verticalPadding: 5.h,
-                    borderSideColor: Colors.transparent,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20.h,
+              IconButton(
+                icon: Icon(
+                  Icons.share,
+                  color: Colors.white,
+                ),
+                onPressed: () {},
               ),
             ],
           ),
+          // Profile Content
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.all(20.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Stats Row
+                  Container(
+                    padding: EdgeInsets.all(16.w),
+                    decoration: BoxDecoration(
+                      color: AppColors.surface,
+                      borderRadius: BorderRadius.circular(12.r),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withOpacity(0.05),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        _buildStatItem(
+                          '95%',
+                          'Job Success',
+                          AppColors.accentGreen,
+                        ),
+                        _buildDivider(),
+                        _buildStatItem(
+                          '\$4K+',
+                          'Earned',
+                          AppColors.secondary,
+                        ),
+                        _buildDivider(),
+                        _buildStatItem(
+                          '120+',
+                          'Jobs Done',
+                          AppColors.primary,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 24.h),
+                  // About Section
+                  Text(
+                    'About',
+                    style: AppStyles.header3,
+                  ),
+                  SizedBox(height: 12.h),
+                  Text(
+                    'Senior UX Designer with 5+ years of experience in creating intuitive digital experiences. Specialized in user research, wireframing, and prototyping. Passionate about solving complex design challenges and delivering user-centered solutions.',
+                    style: AppStyles.bodyText2,
+                  ),
+                  SizedBox(height: 24.h),
+                  // Skills Section
+                  Text(
+                    'Skills',
+                    style: AppStyles.header3,
+                  ),
+                  SizedBox(height: 12.h),
+                  _buildSkillsGrid(),
+                  SizedBox(height: 24.h),
+                  // Experience Section
+                  Text(
+                    'Experience',
+                    style: AppStyles.header3,
+                  ),
+                  SizedBox(height: 12.h),
+                  _buildExperienceList(),
+                  SizedBox(height: 24.h),
+                  // Education Section
+                  Text(
+                    'Education',
+                    style: AppStyles.header3,
+                  ),
+                  SizedBox(height: 12.h),
+                  _buildEducationList(),
+                  SizedBox(height: 24.h),
+                  // Reviews Section
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Reviews',
+                        style: AppStyles.header3,
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'View All',
+                          style: AppStyles.header3.copyWith(
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 12.h),
+                  _buildReviewsList(),
+                  SizedBox(height: 32.h),
+                  // Contact Button
+                  SizedBox(
+                    width: double.infinity,
+                    child: CusTextButton(
+                      buttonText: 'Contact Worker',
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatItem(String value, String label, Color color) {
+    return Column(
+      children: [
+        Text(
+          value,
+          style: AppStyles.header3.copyWith(
+            color: color,
+            fontWeight: FontWeight.w600,
+          ),
         ),
+        SizedBox(height: 4.h),
+        Text(
+          label,
+          style: AppStyles.caption.copyWith(
+            color: AppColors.textSecondary,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDivider() {
+    return Container(
+      height: 40.h,
+      width: 1,
+      color: AppColors.divider,
+    );
+  }
+
+  Widget _buildSkillsGrid() {
+    return Wrap(
+      spacing: 8.w,
+      runSpacing: 8.h,
+      children: [
+        _buildSkillChip('UI/UX Design', 0.9),
+        _buildSkillChip('Wireframing', 0.85),
+        _buildSkillChip('Prototyping', 0.8),
+        _buildSkillChip('User Research', 0.95),
+        _buildSkillChip('Figma', 0.9),
+        _buildSkillChip('Adobe XD', 0.85),
+      ],
+    );
+  }
+
+  Widget _buildSkillChip(String skill, double level) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+      decoration: BoxDecoration(
+        color: AppColors.primary.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(20.r),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            skill,
+            style: AppStyles.caption.copyWith(
+              color: AppColors.primary,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(width: 8.w),
+          CircularPercentIndicator(
+            radius: 8.r,
+            lineWidth: 2.0,
+            percent: level,
+            progressColor: AppColors.primary,
+            backgroundColor: AppColors.primary.withOpacity(0.2),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildExperienceList() {
+    return Column(
+      children: [
+        _buildExperienceItem(
+          'Senior UX Designer',
+          'Tech Corp Inc.',
+          '2020 - Present',
+          'Led the UX team in redesigning the company\'s flagship product, resulting in a 40% increase in user engagement.',
+        ),
+        SizedBox(height: 16.h),
+        _buildExperienceItem(
+          'UX Designer',
+          'Design Studio',
+          '2018 - 2020',
+          'Collaborated with cross-functional teams to deliver user-centered design solutions for various clients.',
+        ),
+      ],
+    );
+  }
+
+  Widget _buildExperienceItem(
+    String position,
+    String company,
+    String period,
+    String description,
+  ) {
+    return Container(
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(
+          color: AppColors.primary.withOpacity(0.1),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            position,
+            style: AppStyles.subtitle1.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          SizedBox(height: 4.h),
+          Row(
+            children: [
+              Text(
+                company,
+                style: AppStyles.bodyText2.copyWith(
+                  color: AppColors.primary,
+                ),
+              ),
+              Text(
+                ' • ',
+                style: AppStyles.bodyText2,
+              ),
+              Text(
+                period,
+                style: AppStyles.bodyText2,
+              ),
+            ],
+          ),
+          SizedBox(height: 8.h),
+          Text(
+            description,
+            style: AppStyles.bodyText2,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEducationList() {
+    return Column(
+      children: [
+        _buildEducationItem(
+          'Master of Design',
+          'Design University',
+          '2016 - 2018',
+          'Specialized in User Experience Design',
+        ),
+        SizedBox(height: 16.h),
+        _buildEducationItem(
+          'Bachelor of Arts',
+          'Creative College',
+          '2012 - 2016',
+          'Major in Digital Design',
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEducationItem(
+    String degree,
+    String institution,
+    String period,
+    String description,
+  ) {
+    return Container(
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(
+          color: AppColors.secondary.withOpacity(0.1),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            degree,
+            style: AppStyles.subtitle1.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          SizedBox(height: 4.h),
+          Row(
+            children: [
+              Text(
+                institution,
+                style: AppStyles.bodyText2.copyWith(
+                  color: AppColors.secondary,
+                ),
+              ),
+              Text(
+                ' • ',
+                style: AppStyles.bodyText2,
+              ),
+              Text(
+                period,
+                style: AppStyles.bodyText2,
+              ),
+            ],
+          ),
+          SizedBox(height: 8.h),
+          Text(
+            description,
+            style: AppStyles.bodyText2,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildReviewsList() {
+    return Column(
+      children: [
+        _buildReviewItem(
+          'Sarah Johnson',
+          'https://randomuser.me/api/portraits/women/1.jpg',
+          4.8,
+          'Exceptional work! John delivered the project ahead of schedule and exceeded our expectations.',
+          'Mobile App Redesign',
+          '\$2,500',
+        ),
+        SizedBox(height: 16.h),
+        _buildReviewItem(
+          'Michael Chen',
+          'https://randomuser.me/api/portraits/men/1.jpg',
+          5.0,
+          'Outstanding attention to detail and great communication throughout the project.',
+          'Website UX Audit',
+          '\$1,800',
+        ),
+      ],
+    );
+  }
+
+  Widget _buildReviewItem(
+    String clientName,
+    String clientImage,
+    double rating,
+    String comment,
+    String projectTitle,
+    String amount,
+  ) {
+    return Container(
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(
+          color: AppColors.divider,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+                radius: 20.r,
+                backgroundImage: NetworkImage(clientImage),
+              ),
+              SizedBox(width: 12.w),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      clientName,
+                      style: AppStyles.subtitle2.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                          size: 16.w,
+                        ),
+                        SizedBox(width: 4.w),
+                        Text(
+                          rating.toString(),
+                          style: AppStyles.caption.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    amount,
+                    style: AppStyles.subtitle2.copyWith(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    projectTitle,
+                    style: AppStyles.caption,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(height: 12.h),
+          Text(
+            comment,
+            style: AppStyles.bodyText2,
+          ),
+        ],
       ),
     );
   }
