@@ -89,8 +89,7 @@ class AppRouter {
                 ));
 
       case Routes.deliveryListViewView:
-        return CupertinoPageRoute(
-            builder: (context) => DeliveryListViewView());
+        return CupertinoPageRoute(builder: (context) => DeliveryListViewView());
 
       default:
         return CupertinoPageRoute(
