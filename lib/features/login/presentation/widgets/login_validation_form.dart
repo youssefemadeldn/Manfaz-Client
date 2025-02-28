@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +10,7 @@ import '../../../../core/helper/regex_helper.dart';
 import '../../../../core/theme/app_styles.dart';
 import '../../../../core/widgets/cus_text_button.dart';
 import '../../../../core/widgets/cus_text_form_field.dart';
+import '../controller/login_cubit/login_state.dart';
 
 class LoginValidationForm extends StatefulWidget {
   const LoginValidationForm({super.key});
@@ -84,16 +86,26 @@ class _LoginValidationFormState extends State<LoginValidationForm> {
             ],
           ),
           SizedBox(height: 20.h),
-          CusTextButton(
-            buttonText: 'login.login'.tr(),
-            textStyle: AppStyles.buttonText,
-            onPressed: () {
-              if (formKey.currentState!.validate()) {
-                context.read<LoginCubit>().emitLoginState();
+          BlocBuilder<LoginCubit, LoginState>(
+            builder: (context, state) {
+              if (state is LoginLoading) {
+                return CupertinoActivityIndicator(
+                  animating: true,
+                  radius: 15.r,
+                );
               }
+              return CusTextButton(
+                buttonText: 'login.login'.tr(),
+                textStyle: AppStyles.buttonText,
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    context.read<LoginCubit>().emitLoginState();
+                  }
+                },
+                backgroundColor: AppColors.primary,
+                borderSideColor: AppColors.primary,
+              );
             },
-            backgroundColor: AppColors.primary,
-            borderSideColor: AppColors.primary,
           ),
         ],
       ),

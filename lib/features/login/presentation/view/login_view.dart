@@ -136,11 +136,11 @@ class _LoginViewState extends State<LoginView> {
 
   void loginListenerMethod(context, state) {
     switch (state) {
-      case LoginLoading():
-        setState(() {
-          _isLoading = true;
-          _showSuccess = false;
-        });
+      // case LoginLoading():
+      //   setState(() {
+      //     _isLoading = true;
+      //     _showSuccess = false;
+      //   });
       case LoginSuccess():
         setState(() {
           _isLoading = false;
