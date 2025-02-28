@@ -27,11 +27,27 @@ class AppRouter {
         return CupertinoPageRoute(builder: (_) => const OnBoardingView());
 
       case Routes.loginView:
-        return CupertinoPageRoute(
-          builder: (_) => BlocProvider(
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider(
             create: (context) => getIt<LoginCubit>(),
-            child:  LoginView(),
+            child: LoginView(),
           ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(1.0, 0.0),
+                  end: Offset.zero,
+                ).animate(CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.easeOutCubic,
+                )),
+                child: child,
+              ),
+            );
+          },
+          transitionDuration: const Duration(milliseconds: 400),
         );
       //
       case Routes.registerView:
