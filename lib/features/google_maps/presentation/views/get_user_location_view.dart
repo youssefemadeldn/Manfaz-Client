@@ -54,6 +54,7 @@ class GetUserLocationView extends StatelessWidget {
                     viewModel.getUserLocation();
                   },
                   initialCameraPosition: viewModel.initialCameraPosition,
+                  onTap: viewModel.onMapTapped,
                 ),
               ),
 

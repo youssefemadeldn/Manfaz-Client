@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:manfaz/core/helper/google_maps/geocoding_helper.dart';
 import 'package:manfaz/core/helper/google_maps/location_helper.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:meta/meta.dart';
 
 part 'google_maps_state.dart';
@@ -12,6 +12,7 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
   late CameraPosition initialCameraPosition;
   GoogleMapController? cubitController;
   late LocationHelper locationHelper;
+  late GeocodingHelper geocodingHelper;
   late LocationData locationData;
   PermissionStatus permissionGranted = PermissionStatus.granted;
   String currentAddress = '';
@@ -26,6 +27,7 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
 
   void init() {
     locationHelper = LocationHelper();
+    geocodingHelper = GeocodingHelper();
     initialCameraPosition = CameraPosition(
       target: LatLng(24.72087070791564, 46.67037450156113),
       zoom: 13,
@@ -33,50 +35,46 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
   }
 
   Future<void> getUserLocation() async {
-    // emit(GoogleMapsLoadingState());
     try {
       locationData = await locationHelper.getCurrentLocation() ??
           LocationData.fromMap(
               {'latitude': 24.72087070791564, 'longitude': 46.67037450156113});
-      if (locationData != null) {
-        // Update camera position
-        final newPosition = setNewCameraPosition(locationData);
-        await cubitController?.animateCamera(
-          CameraUpdate.newCameraPosition(newPosition),
-        );
 
-        // Get address from coordinates
-        await getAddressFromLatLng(locationData);
+      // Update camera position
+      final newPosition = setNewCameraPosition(locationData);
+      await cubitController?.animateCamera(
+        CameraUpdate.newCameraPosition(newPosition),
+      );
 
-        // Set marker at user's location
-        setMarker(locationData);
-        emit(GoogleMapsSuccessState());
-      } else {
-        emit(GoogleMapsErrorState('Could not get location'));
-      }
+      // Get address from coordinates
+      currentAddress =
+          await geocodingHelper.getAddressFromLocation(locationData);
+
+      // Set marker at user's location
+      setMarker(locationData);
+      emit(GoogleMapsSuccessState());
     } catch (e) {
       emit(GoogleMapsErrorState(e.toString()));
     }
   }
 
-  Future<void> getAddressFromLatLng(LocationData location) async {
+  Future<void> onMapTapped(LatLng position) async {
     try {
-      List<Placemark> placeMarks = await placemarkFromCoordinates(
-        location.latitude!,
-        location.longitude!,
-      );
+      // Create LocationData from tapped position
+      locationData = LocationData.fromMap({
+        'latitude': position.latitude,
+        'longitude': position.longitude,
+      });
 
-      if (placeMarks.isNotEmpty) {
-        Placemark place = placeMarks[0];
-        currentAddress =
-            '${place.street}, ${place.subLocality}, ${place.locality}';
-        if (currentAddress.trim().isEmpty) {
-          currentAddress =
-              '${place.locality}, ${place.administrativeArea}, ${place.country}';
-        }
-      }
+      // Get address for tapped location
+      currentAddress =
+          await geocodingHelper.getAddressFromLocation(locationData);
+
+      // Set marker at tapped location
+      setMarker(locationData);
+      emit(GoogleMapsSuccessState());
     } catch (e) {
-      currentAddress = e.toString();
+      emit(GoogleMapsErrorState(e.toString()));
     }
   }
 
@@ -103,7 +101,7 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
       markerId: MarkerId('current_location'),
       position: LatLng(currentLocation.latitude!, currentLocation.longitude!),
       infoWindow: InfoWindow(
-        title: 'Your Location',
+        title: 'Selected Location',
         snippet: currentAddress,
       ),
     );
