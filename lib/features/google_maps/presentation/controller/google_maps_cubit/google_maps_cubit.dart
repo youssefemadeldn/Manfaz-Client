@@ -63,38 +63,6 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
     polylines.add(polyline);
   }
 
-  Future<void> updateLocation() async {
-    locationHelper.location.changeSettings(// distanceFilter: 2
-        );
-    await locationHelper.enableServiceLocation();
-    bool hasPermission = await locationHelper.checkPermission();
-    if (!hasPermission) {
-      debugPrint("Location permission denied. Cannot update location.");
-      return;
-    }
-
-    var currentLocation = await locationHelper.location.getLocation();
-    var newCameraPosition = setNewCameraPosition(currentLocation);
-    setMarker(currentLocation);
-    if (cubitController != null) {
-      cubitController!
-          .animateCamera(CameraUpdate.newCameraPosition(newCameraPosition));
-    } else {
-      debugPrint("GoogleMapController is null, cannot update location.");
-    }
-
-    locationHelper.getLocationStream((LocationData loc) {
-      cubitController?.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: LatLng(loc.latitude!, loc.longitude!),
-            zoom: 13,
-          ),
-        ),
-      );
-    });
-  }
-
   CameraPosition setNewCameraPosition(LocationData currentLocation) {
     var newCameraPosition = CameraPosition(
       target: LatLng(currentLocation.latitude!, currentLocation.longitude!),
