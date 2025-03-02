@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_places_flutter/model/prediction.dart';
 import 'package:location/location.dart';
 import 'package:manfaz/core/helper/google_maps/geocoding_helper.dart';
 import 'package:manfaz/core/helper/google_maps/location_helper.dart';
@@ -16,6 +17,8 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
   late LocationData locationData;
   PermissionStatus permissionGranted = PermissionStatus.granted;
   String currentAddress = '';
+  static const String apiKey =
+      'AIzaSyALEA-N5NgRqQEIRQUJwMRoUy0i-UM0rc8'; // Replace with your API key
 
   Set<Marker> markers = {};
   Set<Polyline> polylines = {};
@@ -73,6 +76,33 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
       // Set marker at tapped location
       setMarker(locationData);
       emit(GoogleMapsSuccessState());
+    } catch (e) {
+      emit(GoogleMapsErrorState(e.toString()));
+    }
+  }
+
+  Future<void> onPlaceSelected(Prediction place) async {
+    try {
+      if (place.lat != null && place.lng != null) {
+        // Create LocationData from selected place
+        locationData = LocationData.fromMap({
+          'latitude': double.parse(place.lat!),
+          'longitude': double.parse(place.lng!),
+        });
+
+        // Update camera position
+        final newPosition = setNewCameraPosition(locationData);
+        await cubitController?.animateCamera(
+          CameraUpdate.newCameraPosition(newPosition),
+        );
+
+        // Update address
+        currentAddress = place.description ?? '';
+
+        // Set marker at selected location
+        setMarker(locationData);
+        emit(GoogleMapsSuccessState());
+      }
     } catch (e) {
       emit(GoogleMapsErrorState(e.toString()));
     }

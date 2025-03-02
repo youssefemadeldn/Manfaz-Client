@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_places_flutter/google_places_flutter.dart';
+import 'package:google_places_flutter/model/prediction.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/core/widgets/cus_text_button.dart';
@@ -75,19 +77,38 @@ class GetUserLocationView extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search the map',
-                      hintStyle: AppStyles.bodyText2.copyWith(
-                        color: Colors.grey[600],
-                        fontSize: 14.sp,
+                  child: Theme(
+                    data: Theme.of(context).copyWith(
+                      inputDecorationTheme: InputDecorationTheme(
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 16.w,
+                          vertical: 12.h,
+                        ),
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintStyle: AppStyles.bodyText2.copyWith(
+                          color: Colors.grey[600],
+                          fontSize: 14.sp,
+                        ),
                       ),
-                      prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(
-                          horizontal: 16.w, vertical: 12.h),
-                      fillColor: Colors.white,
-                      filled: true,
+                    ),
+                    child: GooglePlaceAutoCompleteTextField(
+                      textEditingController: TextEditingController(),
+                      googleAPIKey: GoogleMapsCubit.apiKey,
+                      inputDecoration: InputDecoration(
+                        hintText: 'Search the map',
+                        prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
+                      ),
+                      debounceTime: 800,
+                      countries: const ['sa'],
+                      isLatLngRequired: true,
+                      getPlaceDetailWithLatLng: (Prediction prediction) {
+                        viewModel.onPlaceSelected(prediction);
+                      },
+                      itemClick: (Prediction prediction) {
+                        viewModel.onPlaceSelected(prediction);
+                      },
                     ),
                   ),
                 ),
