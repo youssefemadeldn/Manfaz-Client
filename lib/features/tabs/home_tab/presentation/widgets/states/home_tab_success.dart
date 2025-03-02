@@ -136,10 +136,11 @@ class HomeTabSuccess extends StatelessWidget {
                 context: context,
                 maxHeight: 280.h,
                 child: BlocProvider(
-                  create: (context) => getIt<ServicesCubit>()..emitGetAllServicesStates(
-                        categoriesServiceList[index].id!,
-                        categoriesServiceList[index].type!,
-                        ),
+                  create: (context) => getIt<ServicesCubit>()
+                    ..emitGetAllServicesStates(
+                      categoriesServiceList[index].id!,
+                      categoriesServiceList[index].type!,
+                    ),
                   child: HomeBottomSheetChildWidget(),
                 ),
               );

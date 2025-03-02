@@ -58,16 +58,16 @@ class GetUserLocationView extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10.w),
                   child: CustomButton(
-                    child: Text(
-                      'get_user_location_view.choose'.tr(),
-                      style: AppStyles.buttonText,
-                    ),
                     onPressed: () async {
                       await viewModel.updateLocation();
                     },
                     backgroundColor: AppColors.buttonPrimary,
                     borderSideColor: AppColors.primary,
                     borderRadius: 30.r,
+                    child: Text(
+                      'get_user_location_view.choose'.tr(),
+                      style: AppStyles.buttonText,
+                    ),
                   ),
                 ),
               ),

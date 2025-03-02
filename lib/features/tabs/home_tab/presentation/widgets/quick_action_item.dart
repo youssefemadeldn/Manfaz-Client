@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/theme/app_styles.dart';
 
 class QuickActionItem extends StatelessWidget {
-  final IconData icon; // Add the icon property 
-  final String label; // Add the label property 
-  final Color color; // Add the color property 
+  final IconData icon; // Add the icon property
+  final String label; // Add the label property
+  final Color color; // Add the color property
   final void Function()? onTap; // Add the onTap property
   const QuickActionItem({
     super.key,
@@ -24,7 +24,7 @@ class QuickActionItem extends StatelessWidget {
         // width: 150.w,
         // height: 250.h,
         padding: EdgeInsets.symmetric(
-        horizontal: 10.w,
+          horizontal: 10.w,
         ),
         decoration: BoxDecoration(
           color: color.withOpacity(0.1),
