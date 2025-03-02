@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:manfaz/core/routes/routes.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class HomeSearchBarWidget extends StatelessWidget {
   const HomeSearchBarWidget({super.key});
@@ -13,94 +12,131 @@ class HomeSearchBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 15.h, left: 15.w, right: 15.w),
+      padding:
+          EdgeInsets.only(top: 15.h, left: 20.w, right: 20.w, bottom: 20.h),
       width: double.maxFinite,
       decoration: BoxDecoration(
-        color: AppColors.primary,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(5.r),
-          bottomRight: Radius.circular(5.r),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            AppColors.primary,
+            AppColors.primary.withOpacity(0.95),
+          ],
         ),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(24.r),
+          bottomRight: Radius.circular(24.r),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withOpacity(0.2),
+            blurRadius: 10,
+            offset: const Offset(0, 5),
+          ),
+        ],
       ),
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Location Section
+            InkWell(
+              onTap: () => Navigator.popAndPushNamed(
+                  context, Routes.getUserLocationView),
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
+                decoration: BoxDecoration(
+                  color: AppColors.white.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.location_on,
+                      color: AppColors.white,
+                      size: 20.sp,
+                    ),
+                    SizedBox(width: 8.w),
+                    Text(
+                      tr('home.city_country'),
+                      style: AppStyles.bodyText2.copyWith(
+                        color: AppColors.white,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(width: 4.w),
+                    SvgPicture.asset(
+                      'assets/svg/arrow_down.svg',
+                      color: AppColors.white,
+                      width: 12.w,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            SizedBox(height: 16.h),
+
+            // Greeting Text
             Text(
-              tr('home.location'),
-              style: AppStyles.bodyText1.copyWith(
+              tr('home.greeting'),
+              style: AppStyles.header1.copyWith(
                 color: AppColors.white,
+                fontSize: 24.sp,
                 fontWeight: FontWeight.bold,
+                height: 1.2,
               ),
             ),
-            Row(
-              children: [
-                Icon(
-                  Icons.location_on,
-                  color: AppColors.white,
-                ),
-                SizedBox(
-                  width: 5.w,
-                ),
-                SizedBox(
-                  width: 1.w,
-                ),
-                Text(
-                  tr('home.city_country'),
-                  style: AppStyles.bodyText2.copyWith(
-                    color: AppColors.white,
+
+            SizedBox(height: 20.h),
+
+            // Search TextField
+            Container(
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(16.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 15,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
+              child: TextField(
+                decoration: InputDecoration(
+                  fillColor: Colors.transparent,
+                  filled: true,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.r),
+                    borderSide: BorderSide.none,
+                  ),
+                  prefixIcon: Container(
+                    padding: EdgeInsets.all(12.w),
+                    child: Icon(
+                      Icons.search,
+                      color: AppColors.primary,
+                      size: 24.sp,
+                    ),
+                  ),
+                  hintText: tr('home.search_hint'),
+                  hintStyle: AppStyles.bodyText2.copyWith(
+                    color: AppColors.darkGrey.withOpacity(0.7),
                     fontSize: 14.sp,
-                    fontWeight: FontWeight.bold,
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 20.w,
+                    vertical: 16.h,
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.popAndPushNamed(
-                        context, Routes.getUserLocationView);
-                  },
-                  icon: SvgPicture.asset(
-                    'assets/svg/arrow_down.svg',
-                    color: AppColors.white,
-                  ),
-                  color: AppColors.white,
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  tr('home.greeting'),
-                  style: AppStyles.header1.copyWith(
-                    color: AppColors.white,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            // Search Text Field
-            TextField(
-              decoration: InputDecoration(
-                fillColor: AppColors.white,
-                filled: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30.r),
-                  borderSide: BorderSide.none,
-                ),
-                prefixIcon: Icon(
-                  Icons.search,
+                style: AppStyles.bodyText2.copyWith(
                   color: AppColors.darkGrey,
-                  size: 30.h,
-                  weight: 400,
+                  fontSize: 14.sp,
                 ),
-                hintText: tr('home.search_hint'),
-                hintStyle: AppStyles.bodyText2,
               ),
-            ),
-            SizedBox(
-              height: 20.h,
             ),
           ],
         ),
