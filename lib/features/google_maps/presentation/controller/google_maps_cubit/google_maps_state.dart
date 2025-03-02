@@ -1,8 +1,17 @@
 part of 'google_maps_cubit.dart';
 
 @immutable
-sealed class GoogleMapsState {}
+abstract class GoogleMapsState {}
 
-final class GoogleMapsInitialState extends GoogleMapsState {}
+class GoogleMapsInitialState extends GoogleMapsState {}
 
-final class GoogleMapsNewMarkerState extends GoogleMapsState {}
+class GoogleMapsLoadingState extends GoogleMapsState {}
+
+class GoogleMapsSuccessState extends GoogleMapsState {}
+
+class GoogleMapsErrorState extends GoogleMapsState {
+  final String error;
+  GoogleMapsErrorState(this.error);
+}
+
+class GoogleMapsNewMarkerState extends GoogleMapsState {}
