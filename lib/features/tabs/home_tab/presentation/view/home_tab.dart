@@ -10,14 +10,22 @@ import '../widgets/home_search_bar_widget.dart';
 import '../widgets/states/home_tab_error.dart';
 import '../widgets/states/home_tab_shimmer_loading.dart';
 import '/features/tabs/home_tab/presentation/widgets/states/home_tab_success.dart';
+import '../controller/address_cubit/address_cubit.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<HomeTabCubit>()..emitHomeTabStates(context),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt<HomeTabCubit>()..emitHomeTabStates(context),
+        ),
+        BlocProvider(
+          create: (context) => getIt<AddressCubit>(),
+        ),
+      ],
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -64,7 +72,7 @@ class HomeTab extends StatelessWidget {
                         .toList();
                     var serviceList = allList
                         ?.where((element) => element.type == 'service')
-                        .map( (allList) =>
+                        .map((allList) =>
                             ServiceModel.fromJson(allList.toJson()))
                         .toList();
 
@@ -72,7 +80,8 @@ class HomeTab extends StatelessWidget {
                         categoriesDeliveryList: deliverList!,
                         categoriesServiceList: serviceList!);
                   } else if (state is HomeTabErrorState) {
-                    return ErrorMessageWidget(errorMessage: state.failure.errorMessage);
+                    return ErrorMessageWidget(
+                        errorMessage: state.failure.errorMessage);
                   } else if (state is HomeTabLoadingState) {
                     return HomeTabShimmerLoading();
                   }

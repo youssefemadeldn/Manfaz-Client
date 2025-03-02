@@ -5,6 +5,7 @@ import 'package:google_places_flutter/model/prediction.dart';
 import 'package:location/location.dart';
 import 'package:manfaz/core/helper/google_maps/geocoding_helper.dart';
 import 'package:manfaz/core/helper/google_maps/location_helper.dart';
+import 'package:manfaz/core/cache/shared_pref_utils.dart';
 import 'package:meta/meta.dart';
 
 part 'google_maps_state.dart';
@@ -52,6 +53,9 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
       // Get address from coordinates
       currentAddress =
           await geocodingHelper.getAddressFromLocation(locationData);
+          
+      // Cache the current address
+      await SharedPrefUtils.saveData(key: 'current_address', data: currentAddress);
 
       // Set marker at user's location
       setMarker(locationData);
@@ -72,6 +76,9 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
       // Get address for tapped location
       currentAddress =
           await geocodingHelper.getAddressFromLocation(locationData);
+          
+      // Cache the current address
+      await SharedPrefUtils.saveData(key: 'current_address', data: currentAddress);
 
       // Set marker at tapped location
       setMarker(locationData);
@@ -98,6 +105,9 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
 
         // Update address
         currentAddress = place.description ?? '';
+
+        // Cache the current address
+        await SharedPrefUtils.saveData(key: 'current_address', data: currentAddress);
 
         // Set marker at selected location
         setMarker(locationData);

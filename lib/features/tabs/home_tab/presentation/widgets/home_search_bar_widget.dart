@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:manfaz/core/routes/routes.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
+import '../controller/address_cubit/address_cubit.dart';
 
 class HomeSearchBarWidget extends StatelessWidget {
   const HomeSearchBarWidget({super.key});
@@ -42,8 +44,11 @@ class HomeSearchBarWidget extends StatelessWidget {
           children: [
             // Location Section
             InkWell(
-              onTap: () => Navigator.popAndPushNamed(
-                  context, Routes.getUserLocationView),
+              onTap: () {
+                Navigator.popAndPushNamed(context, Routes.getUserLocationView);
+                // Reload address when returning from location selection
+                context.read<AddressCubit>().loadCachedAddress();
+              },
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
                 decoration: BoxDecoration(
@@ -59,13 +64,28 @@ class HomeSearchBarWidget extends StatelessWidget {
                       size: 20.sp,
                     ),
                     SizedBox(width: 8.w),
-                    Text(
-                      tr('home.city_country'),
-                      style: AppStyles.bodyText2.copyWith(
-                        color: AppColors.white,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
+                    BlocBuilder<AddressCubit, AddressState>(
+                      builder: (context, state) {
+                        if (state is AddressLoaded &&
+                            state.address.isNotEmpty) {
+                          return Text(
+                            state.address.split(',').last,
+                            style: AppStyles.bodyText2.copyWith(
+                              color: AppColors.white,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          );
+                        }
+                        return Text(
+                          'get location',
+                          style: AppStyles.bodyText2.copyWith(
+                            color: AppColors.white,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        );
+                      },
                     ),
                     SizedBox(width: 4.w),
                     SvgPicture.asset(

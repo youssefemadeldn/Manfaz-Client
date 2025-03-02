@@ -7,6 +7,7 @@ import 'package:google_places_flutter/model/prediction.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/core/widgets/cus_text_button.dart';
+import '../../../../core/routes/routes.dart';
 import '../controller/google_maps_cubit/google_maps_cubit.dart';
 
 class GetUserLocationView extends StatelessWidget {
@@ -30,12 +31,22 @@ class GetUserLocationView extends StatelessWidget {
               ),
             ),
             leading: IconButton(
-              icon: Icon(Icons.close, color: Colors.black54),
-              onPressed: () => Navigator.pop(context),
+              icon: Icon(
+                Icons.close,
+                color: AppColors.icon,
+              ),
+              onPressed: () => Navigator.pushReplacementNamed(
+                context,
+                Routes.cusBottomNavigationBar,
+              ),
             ),
             actions: [
               IconButton(
-                icon: Icon(Icons.my_location, color: Colors.black54),
+                icon: Icon(
+                  Icons.my_location,
+                  color: AppColors.icon,
+                  size: 24.sp,
+                ),
                 onPressed: () => viewModel.getUserLocation(),
               ),
             ],

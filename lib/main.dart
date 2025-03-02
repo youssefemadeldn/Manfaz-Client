@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/routes/app_router.dart';
 import 'package:manfaz/core/routes/routes.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
+import 'core/cache/shared_pref_utils.dart';
 import 'core/di/di.dart';
 import 'my_bloc_observer.dart';
 
@@ -12,6 +13,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
   await EasyLocalization.ensureInitialized();
+  await SharedPrefUtils.init();
   Bloc.observer = MyBlocObserver();
   runApp(EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],

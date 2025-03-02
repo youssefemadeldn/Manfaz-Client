@@ -43,6 +43,8 @@ import '../../features/tabs/home_tab/domain/use_cases/get_services_based_on_cate
     as _i586;
 import '../../features/tabs/home_tab/domain/use_cases/home_tab_use_case.dart'
     as _i59;
+import '../../features/tabs/home_tab/presentation/controller/address_cubit/address_cubit.dart'
+    as _i681;
 import '../../features/tabs/home_tab/presentation/controller/home_tab_cubit/home_tab_cubit.dart'
     as _i600;
 import '../../features/tabs/home_tab/presentation/controller/services_cubit/services_cubit.dart'
@@ -62,6 +64,7 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final registerModule = _$RegisterModule();
+    gh.factory<_i681.AddressCubit>(() => _i681.AddressCubit());
     gh.singleton<_i409.GlobalKey<_i409.NavigatorState>>(
         () => registerModule.navigatorKey);
     gh.singleton<_i119.ApiManager>(() => _i119.ApiManager());
