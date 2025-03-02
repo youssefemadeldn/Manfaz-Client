@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/core/widgets/ArrowBackIosButton.dart';
@@ -219,12 +220,31 @@ class WorkerProfileView extends StatelessWidget {
                   _buildReviewsList(),
                   SizedBox(height: 32.h),
                   // Contact Button
-                  SizedBox(
-                    width: double.infinity,
-                    child: CusTextButton(
-                      buttonText: 'Contact Worker',
-                      onPressed: () {},
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomButton(
+                        buttonWidth: 150.w,
+                        onPressed: () {},
+                        borderSideColor: AppColors.primary,
+                        backgroundColor: AppColors.primary,
+                        child: Text(
+                          'Order Now',
+                          style: AppStyles.buttonText,
+                        ),
+                      ),
+                      SizedBox(width: 16.w),
+                      CustomButton(
+                        buttonWidth: double.minPositive,
+                        onPressed: () {},
+                        borderSideColor: AppColors.primary,
+                        backgroundColor: AppColors.primary,
+                        child: SvgPicture.asset(
+                          'assets/images/worker_profile/cart.svg',
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

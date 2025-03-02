@@ -166,9 +166,11 @@ class _RegisterViewState extends State<RegisterView> {
                         ),
                       ),
                       SizedBox(height: 20.h),
-                      CusTextButton(
-                        buttonText: 'register.sign_up'.tr(),
-                        textStyle: AppStyles.buttonText,
+                      CustomButton(
+                        child: Text(
+                          'register.sign_up'.tr(),
+                          style: AppStyles.buttonText,
+                        ),
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             await BlocProvider.of<RegisterCubit>(context)

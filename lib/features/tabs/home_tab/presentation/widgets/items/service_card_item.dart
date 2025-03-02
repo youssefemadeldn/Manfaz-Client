@@ -41,6 +41,7 @@ class ServiceCardItem extends StatelessWidget {
                 imageUrl: serviceModel.iconUrl ?? '',
                 placeholder: (context, url) => CircularProgressIndicator(
                   color: AppColors.primary,
+                  value: 0.5,
                 ),
                 errorWidget: (context, url, error) => Icon(Icons.error),
               ),

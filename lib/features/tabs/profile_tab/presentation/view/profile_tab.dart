@@ -161,13 +161,16 @@ class ProfileTab extends StatelessWidget {
                                 flex: 2,
                                 child: SizedBox(
                                   height: 40.h,
-                                  child: CusTextButton(
-                                    buttonText: "profile_tab.add".tr(),
+                                  child: CustomButton(
                                     onPressed: () {},
                                     backgroundColor: AppColors.primary,
                                     borderRadius: 8,
                                     horizontalPadding: 8,
                                     verticalPadding: 0,
+                                    child: Text(
+                                      "profile_tab.add".tr(),
+                                      style: AppStyles.buttonText,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -202,11 +205,11 @@ class ProfileTab extends StatelessWidget {
                     title: "profile_tab.orders".tr(),
                     trailing: Text(
                       "profile_tab.orders_count".tr(),
-                      style: AppStyles.listTileTitle
-                          .copyWith(color: AppColors.primary,
-                          fontSize: 14.sp,
-                        fontWeight: FontWeight.w700,  
-                          ),
+                      style: AppStyles.listTileTitle.copyWith(
+                        color: AppColors.primary,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                   Divider(height: 1, color: AppColors.divider),
@@ -215,11 +218,11 @@ class ProfileTab extends StatelessWidget {
                     title: "profile_tab.saved_addresses".tr(),
                     trailing: Text(
                       "profile_tab.less_than".tr(args: ['1']),
-                      style: AppStyles.listTileSubtitle
-                          .copyWith(color: AppColors.primary,
-                          fontSize: 14.sp,
-                        fontWeight: FontWeight.w700,  
-                          ),
+                      style: AppStyles.listTileSubtitle.copyWith(
+                        color: AppColors.primary,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                   Divider(height: 1, color: AppColors.divider),
@@ -228,11 +231,11 @@ class ProfileTab extends StatelessWidget {
                     title: "profile_tab.ratings".tr(),
                     trailing: Text(
                       "profile_tab.less_than".tr(args: ['0']),
-                      style: AppStyles.listTileSubtitle
-                          .copyWith(color: AppColors.primary,
-                          fontSize: 14.sp,
-                        fontWeight: FontWeight.w700,  
-                          ),
+                      style: AppStyles.listTileSubtitle.copyWith(
+                        color: AppColors.primary,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                   Divider(height: 1, color: AppColors.divider),
@@ -244,7 +247,7 @@ class ProfileTab extends StatelessWidget {
                       style: AppStyles.listTileSubtitle.copyWith(
                         color: AppColors.primary,
                         fontSize: 14.sp,
-                        fontWeight: FontWeight.w700,  
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
@@ -257,14 +260,17 @@ class ProfileTab extends StatelessWidget {
             // Add Coupon Button
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: CusTextButton(
-                buttonText: "profile_tab.add_coupon".tr(),
+              child: CustomButton(
                 onPressed: () {},
                 backgroundColor: AppColors.primary,
                 borderRadius: 8,
                 horizontalPadding: 16,
                 verticalPadding: 12,
                 buttonWidth: double.infinity,
+                child: Text(
+                  "profile_tab.add_coupon".tr(),
+                  style: AppStyles.buttonText,
+                ),
               ),
             ),
 

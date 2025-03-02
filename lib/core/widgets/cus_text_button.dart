@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 
-class CusTextButton extends StatelessWidget {
+class CustomButton extends StatelessWidget {
   final double? borderRadius;
   final Color? backgroundColor;
   final Color? borderSideColor;
@@ -10,11 +10,12 @@ class CusTextButton extends StatelessWidget {
   final double? verticalPadding;
   final double? buttonWidth;
   final double? buttonHeight;
-  final String buttonText;
+
   final TextStyle? textStyle;
   final VoidCallback onPressed;
+  final Widget child;
   // final Function(int index) onClick;
-  const CusTextButton({
+  const CustomButton({
     super.key,
     this.borderRadius,
     this.backgroundColor,
@@ -22,10 +23,10 @@ class CusTextButton extends StatelessWidget {
     this.verticalPadding,
     this.buttonHeight,
     this.buttonWidth,
-    required this.buttonText,
-     this.textStyle,
+    this.textStyle,
     required this.onPressed,
     this.borderSideColor,
+    required this.child,
   });
 
   @override
@@ -34,8 +35,8 @@ class CusTextButton extends StatelessWidget {
       style: ButtonStyle(
         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
-            side:
-                BorderSide(color: borderSideColor ?? AppColors.primary, width: 1),
+            side: BorderSide(
+                color: borderSideColor ?? AppColors.primary, width: 1),
             borderRadius: BorderRadius.circular(borderRadius ?? 16.0),
           ),
         ),
@@ -49,20 +50,23 @@ class CusTextButton extends StatelessWidget {
           ),
         ),
         fixedSize: WidgetStateProperty.all(
-          Size(buttonWidth?.w ?? double.maxFinite, buttonHeight ?? double.infinity),
+          Size(buttonWidth?.w ?? double.maxFinite,
+              buttonHeight ?? double.infinity),
         ),
       ),
       onPressed: onPressed,
-      child: Text(
-        buttonText,
-        style: textStyle??TextStyle(
-    fontSize: 15.sp,
-    fontWeight: FontWeight.bold,
-    color: AppColors.white,
-    height: 1.2,
-    letterSpacing: 0.3,
-  ),
-      ),
+      child: child,
+      // Text(
+      //   buttonText,
+      //   style: textStyle ??
+      //       TextStyle(
+      //         fontSize: 15.sp,
+      //         fontWeight: FontWeight.bold,
+      //         color: AppColors.white,
+      //         height: 1.2,
+      //         letterSpacing: 0.3,
+      //       ),
+      // ),
     );
   }
 }

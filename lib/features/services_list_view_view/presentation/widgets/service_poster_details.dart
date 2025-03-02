@@ -137,10 +137,13 @@ class ServicePosterDetails extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: CusTextButton(
+                          child: CustomButton(
                             backgroundColor: AppColors.buttonPrimary,
                             borderRadius: 8,
-                            buttonText: tr("ServicesListViewView.find_talents"),
+                            child: Text(
+                              tr("ServicesListViewView.find_talents"),
+                              style: AppStyles.buttonText,
+                            ),
                             onPressed: () {
                               Navigator.pushNamed(
                                   context, Routes.workerListViewView);
@@ -149,13 +152,15 @@ class ServicePosterDetails extends StatelessWidget {
                         ),
                         SizedBox(width: 10),
                         Expanded(
-                          child: CusTextButton(
+                          child: CustomButton(
                             backgroundColor: Colors.white,
                             borderRadius: 8,
                             borderSideColor: AppColors.buttonPrimary,
-                            buttonText: tr("ServicesListViewView.view_details"),
-                            textStyle: AppStyles.buttonText.copyWith(
-                              color: AppColors.buttonPrimary,
+                            child: Text(
+                              tr("ServicesListViewView.view_details"),
+                              style: AppStyles.buttonText.copyWith(
+                                color: AppColors.buttonPrimary,
+                              ),
                             ),
                             onPressed: () {},
                           ),

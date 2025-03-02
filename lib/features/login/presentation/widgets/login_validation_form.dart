@@ -94,9 +94,7 @@ class _LoginValidationFormState extends State<LoginValidationForm> {
                   radius: 15.r,
                 );
               }
-              return CusTextButton(
-                buttonText: 'login.login'.tr(),
-                textStyle: AppStyles.buttonText,
+              return CustomButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     context.read<LoginCubit>().emitLoginState();
@@ -104,6 +102,10 @@ class _LoginValidationFormState extends State<LoginValidationForm> {
                 },
                 backgroundColor: AppColors.primary,
                 borderSideColor: AppColors.primary,
+                child: Text(
+                  'login.login'.tr(),
+                  style: AppStyles.buttonText,
+                ),
               );
             },
           ),
