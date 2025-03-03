@@ -6,7 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
-import '../controller/address_cubit/address_cubit.dart';
+import '../controller/search_bar_cubit/search_bar_cubit.dart';
 
 class HomeSearchBarWidget extends StatelessWidget {
   const HomeSearchBarWidget({super.key});
@@ -47,7 +47,7 @@ class HomeSearchBarWidget extends StatelessWidget {
               onTap: () {
                 Navigator.popAndPushNamed(context, Routes.getUserLocationView);
                 // Reload address when returning from location selection
-                context.read<AddressCubit>().loadCachedAddress();
+                context.read<SearchBarCubit>().loadCachedAddress();
               },
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
@@ -64,9 +64,9 @@ class HomeSearchBarWidget extends StatelessWidget {
                       size: 20.sp,
                     ),
                     SizedBox(width: 8.w),
-                    BlocBuilder<AddressCubit, AddressState>(
+                    BlocBuilder<SearchBarCubit, SearchBarState>(
                       builder: (context, state) {
-                        if (state is AddressLoaded &&
+                        if (state is SearchBarLoaded &&
                             state.address.isNotEmpty) {
                           return Text(
                             state.address.split(',').last,
@@ -102,7 +102,7 @@ class HomeSearchBarWidget extends StatelessWidget {
 
             // Greeting Text
             Text(
-              tr('home.greeting'),
+              context.read<SearchBarCubit>().userName,
               style: AppStyles.header1.copyWith(
                 color: AppColors.white,
                 fontSize: 24.sp,

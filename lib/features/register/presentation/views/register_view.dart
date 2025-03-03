@@ -9,6 +9,7 @@ import 'package:manfaz/core/widgets/cus_text_form_field.dart';
 
 import '../../../../core/helper/dialog_helper.dart';
 import '../../../../core/helper/regex_helper.dart';
+import '../../../../core/routes/routes.dart';
 import '../../../../core/theme/app_styles.dart';
 import '../controller/register_cubit/register_cubit.dart';
 
@@ -54,7 +55,8 @@ class _RegisterViewState extends State<RegisterView> {
                           size: 25.r,
                         ),
                         onConfirm: () {
-                          // Navigator.pushNamed(context, Routes.otpVerificationView);
+                          Navigator.pushNamed(
+                              context, Routes.otpVerificationView);
                         },
                       );
                     case RegisterError():
@@ -167,10 +169,6 @@ class _RegisterViewState extends State<RegisterView> {
                       ),
                       SizedBox(height: 20.h),
                       CustomButton(
-                        child: Text(
-                          'register.sign_up'.tr(),
-                          style: AppStyles.buttonText,
-                        ),
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             await BlocProvider.of<RegisterCubit>(context)
@@ -179,6 +177,10 @@ class _RegisterViewState extends State<RegisterView> {
                         },
                         backgroundColor: AppColors.primary,
                         borderSideColor: AppColors.primary,
+                        child: Text(
+                          'register.sign_up'.tr(),
+                          style: AppStyles.buttonText,
+                        ),
                       ),
                       SizedBox(height: 20.h),
                       Row(

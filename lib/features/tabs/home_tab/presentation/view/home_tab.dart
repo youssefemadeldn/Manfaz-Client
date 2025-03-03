@@ -10,7 +10,7 @@ import '../widgets/home_search_bar_widget.dart';
 import '../widgets/states/home_tab_error.dart';
 import '../widgets/states/home_tab_shimmer_loading.dart';
 import '/features/tabs/home_tab/presentation/widgets/states/home_tab_success.dart';
-import '../controller/address_cubit/address_cubit.dart';
+import '../controller/search_bar_cubit/search_bar_cubit.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
@@ -20,10 +20,11 @@ class HomeTab extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => getIt<HomeTabCubit>()..emitHomeTabStates(context),
+          create: (context) =>
+              getIt<HomeTabCubit>()..emitHomeTabStates(context),
         ),
         BlocProvider(
-          create: (context) => getIt<AddressCubit>(),
+          create: (context) => getIt<SearchBarCubit>(),
         ),
       ],
       child: SingleChildScrollView(

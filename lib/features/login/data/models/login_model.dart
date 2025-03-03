@@ -1,19 +1,25 @@
 class LoginModel {
+  bool? status;
   String? message;
-  User? user;
+  int? code;
+  User? data;
 
-  LoginModel({this.message, this.user});
+  LoginModel({this.status, this.message, this.code, this.data});
 
   LoginModel.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
     message = json['message'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    code = json['code'];
+    data = json['data'] != null ? new User.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
     data['message'] = this.message;
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
+    data['code'] = this.code;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
@@ -24,16 +30,36 @@ class User {
   String? name;
   String? email;
   String? phone;
+  String? password;
+  String? imageUrl;
+  String? role;
   int? verificationCode;
+  String? createdAt;
+  String? updatedAt;
 
-  User({this.id, this.name, this.email, this.phone, this.verificationCode});
+  User(
+      {this.id,
+      this.name,
+      this.email,
+      this.phone,
+      this.password,
+      this.imageUrl,
+      this.role,
+      this.verificationCode,
+      this.createdAt,
+      this.updatedAt});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     email = json['email'];
     phone = json['phone'];
+    password = json['password'];
+    imageUrl = json['imageUrl'];
+    role = json['role'];
     verificationCode = json['verificationCode'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
@@ -42,7 +68,12 @@ class User {
     data['name'] = this.name;
     data['email'] = this.email;
     data['phone'] = this.phone;
+    data['password'] = this.password;
+    data['imageUrl'] = this.imageUrl;
+    data['role'] = this.role;
     data['verificationCode'] = this.verificationCode;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
     return data;
   }
 }
