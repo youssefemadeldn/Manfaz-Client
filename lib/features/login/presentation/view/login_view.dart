@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:manfaz/core/helper/dialog_helper.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
@@ -67,68 +66,38 @@ class _LoginViewState extends State<LoginView> {
                       SizedBox(height: 30.h),
                       // form
                       LoginValidationForm(),
-                      SizedBox(height: 20.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'no_account'.tr(),
-                            style: AppStyles.bodyText2,
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, Routes.registerView);
-                            },
-                            child: Text(
-                              'sign_up_now'.tr(),
-                              style: AppStyles.buttonText.copyWith(
-                                color: AppColors.primary,
-                                fontSize: 13.sp,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 20.h),
-                      Text(
-                        'or_sign_in_with'.tr(),
-                        style: AppStyles.bodyText2,
-                      ),
-                      SizedBox(height: 20.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: SvgPicture.asset(
-                              'assets/svg/google.svg',
-                              height: 24.h,
-                            ),
-                          ),
-                          // SizedBox(width: 20.w),
-                          // IconButton(
-                          //   onPressed: () {},
-                          //   icon: SvgPicture.asset(
-                          //     'assets/icons/facebook.svg',
-                          //     height: 24.h,
-                          //   ),
-                          // ),
-                          // SizedBox(width: 20.w),
-                          // IconButton(
-                          //   onPressed: () {},
-                          //   icon: SvgPicture.asset(
-                          //     'assets/icons/apple.svg',
-                          //     height: 24.h,
-                          //   ),
-                          // ),
-                        ],
-                      ),
                     ],
                   ),
                 ),
               ),
             ),
           ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        alignment: Alignment.center,
+        height: 50.h,
+        child: GestureDetector(
+          onTap: () => Navigator.pushNamed(context, Routes.registerView),
+          child: Text.rich(
+            TextSpan(
+              text: 'no_account'.tr(),
+              style: AppStyles.bodyText2.copyWith(
+                color: AppColors.darkGrey,
+                fontWeight: FontWeight.w600,
+              ),
+              children: [
+                TextSpan(
+                  text: 'sign_up_now'.tr(),
+                  style: AppStyles.smallText.copyWith(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 11.sp,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

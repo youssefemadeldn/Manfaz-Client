@@ -21,6 +21,13 @@ class LoginValidationForm extends StatefulWidget {
 
 class _LoginValidationFormState extends State<LoginValidationForm> {
   final formKey = GlobalKey<FormState>();
+  String? userType;
+
+  final List<Map<String, String>> userTypes = [
+    {'value': 'worker', 'label': 'Worker'},
+    {'value': 'user', 'label': 'User'},
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -39,6 +46,55 @@ class _LoginValidationFormState extends State<LoginValidationForm> {
                 return 'login.email_validation'.tr();
               }
               return null;
+            },
+          ),
+          SizedBox(height: 15.h),
+          DropdownButtonFormField<String>(
+            value: userType,
+            isExpanded: true,
+            dropdownColor: AppColors.background,
+            icon: Icon(Icons.arrow_drop_down, color: AppColors.grey),
+            decoration: InputDecoration(
+              fillColor: AppColors.background,
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: AppColors.grey),
+                gapPadding: 10,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: AppColors.grey),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: AppColors.primary),
+              ),
+              contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 18.h),
+            ),
+            hint: Text('Select Type', style: AppStyles.caption),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please select user type';
+              }
+              return null;
+            },
+            items: userTypes.map((type) {
+              return DropdownMenuItem(
+                value: type['value'],
+                child: Text(
+                  type['label']!,
+                  style: AppStyles.bodyText3.copyWith(
+                    color: AppColors.black,
+                    fontSize: 16.sp,
+                  ),
+                ),
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              setState(() {
+                userType = newValue;
+              });
             },
           ),
           SizedBox(height: 15.h),
