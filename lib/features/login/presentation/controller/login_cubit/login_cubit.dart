@@ -11,6 +11,7 @@ class LoginCubit extends Cubit<LoginState> {
   var emailController =
       TextEditingController(text: 'youssefemad63.ye@gmail.com');
   var passwordController = TextEditingController(text: '01154516292');
+  String userType = '';
 
   LoginCubit({required this.loginUseCase}) : super(LoginInitial());
 
@@ -19,6 +20,7 @@ class LoginCubit extends Cubit<LoginState> {
     var either = await loginUseCase.call(
       email: emailController.text,
       password: passwordController.text,
+      role: userType,
     );
 
     either.fold(

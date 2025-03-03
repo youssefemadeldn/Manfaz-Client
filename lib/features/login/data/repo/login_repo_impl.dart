@@ -15,10 +15,12 @@ class LoginRepoImpl implements BaseLoginRepo {
   Future<Either<Failure, LoginModel>> login({
     required String email,
     required String password,
+    required String role,
   }) async {
     return await baseLoginRemoteDataSource.login(
       email: email,
       password: password,
+      role: role,
     );
   }
 }

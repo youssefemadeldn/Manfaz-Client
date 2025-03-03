@@ -94,6 +94,7 @@ class _LoginValidationFormState extends State<LoginValidationForm> {
             onChanged: (String? newValue) {
               setState(() {
                 userType = newValue;
+                context.read<LoginCubit>().userType = newValue!;
               });
             },
           ),

@@ -20,6 +20,7 @@ class LoginRemoteDataSourceImpl implements BaseLoginRemoteDataSource {
   Future<Either<Failure, LoginModel>> login({
     required String email,
     required String password,
+    required String role,
   }) async {
     try {
       var response = await apiManager.postData(
@@ -27,6 +28,7 @@ class LoginRemoteDataSourceImpl implements BaseLoginRemoteDataSource {
         body: {
           "email": email,
           "password": password,
+          "role": role,
         },
       );
 

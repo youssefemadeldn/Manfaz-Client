@@ -13,10 +13,12 @@ class LoginUseCase {
   Future<Either<Failure, LoginModel>> call({
     required String email,
     required String password,
+    required String role,
   }) async {
     return await baseLoginRepo.login(
       email: email,
       password: password,
+      role: role,
     );
   }
 }
