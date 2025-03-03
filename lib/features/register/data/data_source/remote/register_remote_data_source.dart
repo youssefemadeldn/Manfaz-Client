@@ -16,13 +16,20 @@ class RegisterRemoteDataSource implements BaseRegisterRemoteDataSource {
   ApiManager apiManager = getIt<ApiManager>();
   
   @override
-  Future<Either<Failure, RegisterModel>> register({required String name, required String email, required String password, required String phone}) async{
+  Future<Either<Failure, RegisterModel>> register({
+    required String name,
+    required String email,
+    required String password,
+    required String phone,
+    required String role,
+  }) async{
     try {
     var response =   await apiManager.postData(ApiConstant.epSignUp, body: {
       "name": name,
       "email": email,
       "phone": phone,
       "password": password,
+      "role": role,
     });
       // 
       RegisterModel registerModel =

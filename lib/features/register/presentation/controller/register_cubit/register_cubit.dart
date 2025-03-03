@@ -15,15 +15,17 @@ class RegisterCubit extends Cubit<RegisterState> {
   var emailController = TextEditingController(text: 'Jo90@gmail.com');
   var passwordController = TextEditingController(text: 'Jo12345678');
   var phoneController = TextEditingController(text: '01271944961');
+  var userType = '';
   RegisterCubit({required this.registerUseCase}) : super(RegisterInitial());
 
-  emitRegisterState() async {
+  Future<void> emitRegisterState() async {
     emit(RegisterLoading());
     var either = await registerUseCase.call(
-        name: nameController.text,
-        email: emailController.text,
-        password: passwordController.text,
+      name: nameController.text,
+      email: emailController.text,
+      password: passwordController.text,
       phone: phoneController.text,
+      role: "user",
     );
 
     either.fold((l) => emit(RegisterError(failure: l)),

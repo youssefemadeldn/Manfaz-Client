@@ -158,6 +158,14 @@ class _RegisterViewState extends State<RegisterView> {
                           }
                           return null;
                         },
+                        
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            userType = newValue;
+                            BlocProvider.of<RegisterCubit>(context).userType =
+                                newValue!;
+                          });
+                        },
                         items: userTypes.map((type) {
                           return DropdownMenuItem(
                             value: type['value'],
@@ -170,11 +178,6 @@ class _RegisterViewState extends State<RegisterView> {
                             ),
                           );
                         }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            userType = newValue;
-                          });
-                        },
                       ),
                       SizedBox(height: 15.h),
                       CusTextFormField(

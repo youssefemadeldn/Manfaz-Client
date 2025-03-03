@@ -15,8 +15,14 @@ class RegisterUseCase {
     required String email,
     required String password,
     required String phone,
+    required String role,
   }) async {
     return await registerRepo.register(
-        name: name, email: email, password: password, phone: phone);
+      name: name,
+      email: email,
+      password: password,
+      phone: phone,
+      role: role,
+    );
   }
 }

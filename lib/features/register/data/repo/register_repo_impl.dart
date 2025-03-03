@@ -10,9 +10,15 @@ class RegisterRepoImpl implements BaseRegisterRepo {
   final BaseRegisterRemoteDataSource registerRemoteDataSource;
   RegisterRepoImpl({required this.registerRemoteDataSource});
   @override
-  Future<Either<Failure, RegisterModel>> register({required String name, required String email, required String password, required String phone}) async{
+  Future<Either<Failure, RegisterModel>> register({
+    required String name,
+    required String email,
+    required String password,
+    required String phone,
+    required String role,
+  }) async{
     var result = await registerRemoteDataSource.register(
-        name: name, email: email, password: password, phone: phone);
+        name: name, email: email, password: password, phone: phone, role: role);
     return result.fold((failure)=> left(failure), (registerModel) => right(registerModel));
   }
 }
