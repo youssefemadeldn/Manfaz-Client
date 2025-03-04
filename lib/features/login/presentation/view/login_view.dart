@@ -132,6 +132,23 @@ class _LoginViewState extends State<LoginView> {
           title: Text(state.failure.failureTitle),
           content: Text(state.failure.errorMessage),
         );
+      case LoginOTPNotVerifiedError():
+        setState(() {
+          _isLoading = false;
+          _showSuccess = false;
+        });
+        DialogHelper.showCustomDialog(
+          context: context,
+          title: Text(state.failure.failureTitle),
+          content: Text(state.failure.errorMessage),
+          onConfirm: () {
+            Navigator.pushNamed(
+              context,
+              Routes.otpVerificationView,
+            );
+          },
+        );
+
       case LoginInitial():
         break;
     }

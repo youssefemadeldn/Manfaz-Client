@@ -13,7 +13,7 @@ class OtpVerificationCubit extends Cubit<OtpVerificationState> {
   final ResendVerificationCodeUseCase resendVerificationCodeUseCase;
   Timer? _timer;
   String? _currentPin;
-  static const int _initialTime = 10; // 3 minutes in seconds
+  static const int _initialTime = 120; // 3 minutes in seconds
 
   String? get currentPin => _currentPin;
 
