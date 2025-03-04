@@ -20,3 +20,9 @@ final class LoginError extends LoginState {
 
   LoginError({required this.failure});
 }
+
+final class LoginOTPNotVerifiedError extends LoginState {
+  final Failure failure;
+
+  LoginOTPNotVerifiedError({required this.failure});
+}

@@ -13,14 +13,12 @@ class OtpVerificationCubit extends Cubit<OtpVerificationState> {
   final ResendVerificationCodeUseCase resendVerificationCodeUseCase;
   Timer? _timer;
   String? _currentPin;
-  static const int _initialTime = 120; // seconds
-  int _currentTime = _initialTime;
-  bool _canResend = false;
+  static const int _initialTime = 10; // 3 minutes in seconds
 
   String? get currentPin => _currentPin;
 
   OtpVerificationCubit(this.resendVerificationCodeUseCase)
-      : super(const OtpVerificationInitial()) {
+      : super(OtpVerificationInitial()) {
     startTimer();
   }
 
@@ -29,20 +27,20 @@ class OtpVerificationCubit extends Cubit<OtpVerificationState> {
   }
 
   void startTimer() {
-    _currentTime = _initialTime;
-    _canResend = false;
-    emit(OtpTimerTick(remainingTime: _currentTime, canResend: _canResend));
-
+    emit(OtpTimerTick(remainingTime: _initialTime, canResend: false));
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_currentTime > 0) {
-        _currentTime--;
-        _canResend = _currentTime == 0;
-        emit(OtpTimerTick(remainingTime: _currentTime, canResend: _canResend));
-      } else {
-        timer.cancel();
-        _canResend = true;
-        emit(OtpTimerTick(remainingTime: 0, canResend: true));
+      final currentState = state;
+      if (currentState is OtpTimerTick) {
+        if (currentState.remainingTime > 0) {
+          emit(OtpTimerTick(
+            remainingTime: currentState.remainingTime - 1,
+            canResend: false,
+          ));
+        } else {
+          timer.cancel();
+          emit(OtpTimerTick(remainingTime: 0, canResend: true));
+        }
       }
     });
   }
@@ -55,14 +53,11 @@ class OtpVerificationCubit extends Cubit<OtpVerificationState> {
           failureTitle: 'Validation Error',
           errorMessage: 'Please enter a valid 4-digit code.',
         ),
-        remainingTime: _currentTime,
-        canResend: _canResend,
       ));
       return;
     }
 
-    emit(OtpVerificationLoading(
-        remainingTime: _currentTime, canResend: _canResend));
+    emit(OtpVerificationLoading());
     try {
       final savedOtp = await SharedPrefUtils.getData('verificationCode');
 
@@ -73,8 +68,6 @@ class OtpVerificationCubit extends Cubit<OtpVerificationState> {
             errorMessage:
                 'No verification code found. Please request a new code.',
           ),
-          remainingTime: _currentTime,
-          canResend: _canResend,
         ));
         return;
       }
@@ -82,15 +75,13 @@ class OtpVerificationCubit extends Cubit<OtpVerificationState> {
       if (pinToVerify == savedOtp.toString()) {
         // Clear the verification code after successful verification
         await SharedPrefUtils.removeData('verificationCode');
-        emit(const OtpVerificationSuccess());
+        emit(OtpVerificationSuccess());
       } else {
         emit(OtpVerificationError(
           failure: ServerFailure(
             failureTitle: 'Verification Failed',
             errorMessage: 'Invalid verification code. Please try again.',
           ),
-          remainingTime: _currentTime,
-          canResend: _canResend,
         ));
       }
     } catch (e) {
@@ -99,16 +90,14 @@ class OtpVerificationCubit extends Cubit<OtpVerificationState> {
           failureTitle: 'Server Failure',
           errorMessage: 'Failed to verify OTP. Please try again.',
         ),
-        remainingTime: _currentTime,
-        canResend: _canResend,
       ));
     }
   }
 
   Future<void> resendOtp() async {
-    if (_canResend) {
-      emit(OtpVerificationLoading(
-          remainingTime: _currentTime, canResend: _canResend));
+    final currentState = state;
+    if (currentState is OtpTimerTick && currentState.canResend) {
+      emit(OtpVerificationLoading());
       try {
         final userId = await SharedPrefUtils.getData('userId');
         if (userId == null) {
@@ -117,8 +106,6 @@ class OtpVerificationCubit extends Cubit<OtpVerificationState> {
               failureTitle: 'Error',
               errorMessage: 'User ID not found. Please try again.',
             ),
-            remainingTime: _currentTime,
-            canResend: _canResend,
           ));
           return;
         }
@@ -126,13 +113,10 @@ class OtpVerificationCubit extends Cubit<OtpVerificationState> {
         final result = await resendVerificationCodeUseCase(userId: userId);
 
         result.fold(
-          (failure) => emit(OtpVerificationError(
-            failure: failure,
-            remainingTime: _currentTime,
-            canResend: _canResend,
-          )),
+          (failure) => emit(OtpVerificationError(failure: failure)),
           (resendModel) {
             startTimer();
+            emit(OtpTimerTick(remainingTime: _initialTime, canResend: false));
           },
         );
       } catch (e) {
@@ -142,8 +126,6 @@ class OtpVerificationCubit extends Cubit<OtpVerificationState> {
             errorMessage:
                 'Failed to resend verification code. Please try again.',
           ),
-          remainingTime: _currentTime,
-          canResend: _canResend,
         ));
       }
     }

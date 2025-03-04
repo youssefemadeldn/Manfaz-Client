@@ -137,7 +137,7 @@
     "loading": "Loading..."
   },
   "verification": {
-    "title": "Verify Your Phone",
+    "title": "Verify Your Account",
     "description": "We've sent a verification code to your account. Please enter it below to complete verification.",
     "resend_code": "Resend Code",
     "verify": "Verify",

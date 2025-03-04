@@ -32,6 +32,8 @@ class User {
   String? phone;
   String? password;
   String? imageUrl;
+  String? token;
+  bool? isVerified;
   String? role;
   int? verificationCode;
   String? createdAt;
@@ -44,6 +46,8 @@ class User {
       this.phone,
       this.password,
       this.imageUrl,
+      this.token,
+      this.isVerified,
       this.role,
       this.verificationCode,
       this.createdAt,
@@ -56,6 +60,8 @@ class User {
     phone = json['phone'];
     password = json['password'];
     imageUrl = json['imageUrl'];
+    token = json['token'];
+    isVerified = json['isVerified'];
     role = json['role'];
     verificationCode = json['verificationCode'];
     createdAt = json['createdAt'];
@@ -70,6 +76,8 @@ class User {
     data['phone'] = this.phone;
     data['password'] = this.password;
     data['imageUrl'] = this.imageUrl;
+    data['token'] = this.token;
+    data['isVerified'] = this.isVerified;
     data['role'] = this.role;
     data['verificationCode'] = this.verificationCode;
     data['createdAt'] = this.createdAt;

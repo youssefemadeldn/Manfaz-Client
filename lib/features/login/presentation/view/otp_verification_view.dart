@@ -278,12 +278,12 @@ class OtpVerificationView extends StatelessWidget {
 
                       // Timer Section
                       SizedBox(height: 30.h),
-                      if (state.remainingTime != null) ...[
+                      if (state is OtpTimerTick) ...[
                         AnimatedOpacity(
                           opacity: !state.canResend ? 1.0 : 0.0,
                           duration: const Duration(milliseconds: 300),
                           child: Text(
-                            cubit.formatTime(state.remainingTime!),
+                            cubit.formatTime(state.remainingTime),
                             style: AppStyles.bodyText1.copyWith(
                               color: AppColors.primary,
                               fontWeight: FontWeight.w600,
@@ -295,12 +295,11 @@ class OtpVerificationView extends StatelessWidget {
                         // Resend Code Section
                         SizedBox(height: 16.h),
                         TextButton(
-                          onPressed:
-                              state.canResend ? () => cubit.resendOtp() : null,
+                          onPressed: state.canResend ? cubit.resendOtp : null,
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.symmetric(
-                              horizontal: 24.w,
-                              vertical: 12.h,
+                              horizontal: 20.w,
+                              vertical: 10.h,
                             ),
                           ),
                           child: Text(
@@ -309,6 +308,9 @@ class OtpVerificationView extends StatelessWidget {
                               color: state.canResend
                                   ? AppColors.primary
                                   : AppColors.textSecondary,
+                              decoration: state.canResend
+                                  ? TextDecoration.underline
+                                  : TextDecoration.none,
                               fontSize: 16.sp,
                             ),
                           ),
