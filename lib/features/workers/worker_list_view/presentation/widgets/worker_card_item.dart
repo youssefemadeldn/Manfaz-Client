@@ -97,19 +97,19 @@ class WorkerCardItem extends StatelessWidget {
                               ],
                             ),
                           ),
-                          // Favorite Button
-                          Container(
-                            decoration: BoxDecoration(
-                              color: AppColors.secondaryMuted,
-                              borderRadius: BorderRadius.circular(12.r),
-                            ),
-                            padding: EdgeInsets.all(8.w),
-                            child: Icon(
-                              Icons.favorite_border,
-                              color: AppColors.secondary,
-                              size: 20.w,
-                            ),
-                          ),
+                          // // Favorite Button
+                          // Container(
+                          //   decoration: BoxDecoration(
+                          //     color: AppColors.secondaryMuted,
+                          //     borderRadius: BorderRadius.circular(12.r),
+                          //   ),
+                          //   padding: EdgeInsets.all(8.w),
+                          //   child: Icon(
+                          //     Icons.favorite_border,
+                          //     color: AppColors.secondary,
+                          //     size: 20.w,
+                          //   ),
+                          // ),
                         ],
                       ),
                       SizedBox(height: 12.h),

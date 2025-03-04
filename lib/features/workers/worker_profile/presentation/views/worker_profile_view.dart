@@ -101,13 +101,13 @@ class WorkerProfileView extends StatelessWidget {
               ),
             ),
             actions: [
-              IconButton(
-                icon: Icon(
-                  Icons.favorite_border,
-                  color: Colors.white,
-                ),
-                onPressed: () {},
-              ),
+              // IconButton(
+              //   icon: Icon(
+              //     Icons.favorite_border,
+              //     color: Colors.white,
+              //   ),
+              //   onPressed: () {},
+              // ),
               IconButton(
                 icon: Icon(
                   Icons.share,
