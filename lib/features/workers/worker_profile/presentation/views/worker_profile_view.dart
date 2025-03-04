@@ -189,14 +189,14 @@ class WorkerProfileView extends StatelessWidget {
                   SizedBox(height: 12.h),
                   _buildExperienceList(),
                   SizedBox(height: 24.h),
-                  // Education Section
-                  Text(
-                    'Education',
-                    style: AppStyles.header3,
-                  ),
-                  SizedBox(height: 12.h),
-                  _buildEducationList(),
-                  SizedBox(height: 24.h),
+                  // // Education Section
+                  // Text(
+                  //   'Education',
+                  //   style: AppStyles.header3,
+                  // ),
+                  // SizedBox(height: 12.h),
+                  // _buildEducationList(),
+                  // SizedBox(height: 24.h),
                   // Reviews Section
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -380,79 +380,6 @@ class WorkerProfileView extends StatelessWidget {
                 company,
                 style: AppStyles.bodyText2.copyWith(
                   color: AppColors.primary,
-                ),
-              ),
-              Text(
-                ' • ',
-                style: AppStyles.bodyText2,
-              ),
-              Text(
-                period,
-                style: AppStyles.bodyText2,
-              ),
-            ],
-          ),
-          SizedBox(height: 8.h),
-          Text(
-            description,
-            style: AppStyles.bodyText2,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildEducationList() {
-    return Column(
-      children: [
-        _buildEducationItem(
-          'Master of Design',
-          'Design University',
-          '2016 - 2018',
-          'Specialized in User Experience Design',
-        ),
-        SizedBox(height: 16.h),
-        _buildEducationItem(
-          'Bachelor of Arts',
-          'Creative College',
-          '2012 - 2016',
-          'Major in Digital Design',
-        ),
-      ],
-    );
-  }
-
-  Widget _buildEducationItem(
-    String degree,
-    String institution,
-    String period,
-    String description,
-  ) {
-    return Container(
-      padding: EdgeInsets.all(16.w),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(
-          color: AppColors.secondary.withOpacity(0.1),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            degree,
-            style: AppStyles.subtitle1.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          SizedBox(height: 4.h),
-          Row(
-            children: [
-              Text(
-                institution,
-                style: AppStyles.bodyText2.copyWith(
-                  color: AppColors.secondary,
                 ),
               ),
               Text(
