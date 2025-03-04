@@ -1,21 +1,39 @@
 part of 'otp_verification_cubit.dart';
 
 @immutable
-sealed class OtpVerificationState {}
+sealed class OtpVerificationState {
+  final int? remainingTime;
+  final bool canResend;
 
-final class OtpVerificationInitial extends OtpVerificationState {}
+  const OtpVerificationState({
+    this.remainingTime,
+    this.canResend = false,
+  });
+}
 
-final class OtpVerificationLoading extends OtpVerificationState {}
+final class OtpVerificationInitial extends OtpVerificationState {
+  const OtpVerificationInitial() : super(remainingTime: null);
+}
 
-final class OtpVerificationSuccess extends OtpVerificationState {}
+final class OtpVerificationLoading extends OtpVerificationState {
+  const OtpVerificationLoading({required int remainingTime, required bool canResend}) 
+      : super(remainingTime: remainingTime, canResend: canResend);
+}
+
+final class OtpVerificationSuccess extends OtpVerificationState {
+  const OtpVerificationSuccess() : super(remainingTime: null);
+}
 
 final class OtpVerificationError extends OtpVerificationState {
   final Failure failure;
-  OtpVerificationError({required this.failure});
+  const OtpVerificationError({
+    required this.failure,
+    required int remainingTime,
+    required bool canResend,
+  }) : super(remainingTime: remainingTime, canResend: canResend);
 }
 
 final class OtpTimerTick extends OtpVerificationState {
-  final int remainingTime;
-  final bool canResend;
-  OtpTimerTick({required this.remainingTime, required this.canResend});
+  const OtpTimerTick({required int remainingTime, required bool canResend})
+      : super(remainingTime: remainingTime, canResend: canResend);
 }

@@ -14,11 +14,21 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import '../../features/login/data/data_source/remote/base_login_remote_data_source.dart'
     as _i940;
+import '../../features/login/data/data_source/remote/base_resend_verification_code_remote_data_source.dart'
+    as _i63;
 import '../../features/login/data/data_source/remote/login_remote_data_source_impl.dart'
     as _i892;
+import '../../features/login/data/data_source/remote/resend_verification_code_remote_data_source_impl.dart'
+    as _i804;
 import '../../features/login/data/repo/login_repo_impl.dart' as _i176;
+import '../../features/login/data/repo/resend_verification_code_repo_impl.dart'
+    as _i618;
 import '../../features/login/domain/repo/base_login_repo.dart' as _i375;
+import '../../features/login/domain/repo/base_resend_verification_code_repo.dart'
+    as _i994;
 import '../../features/login/domain/use_cases/login_use_case.dart' as _i191;
+import '../../features/login/domain/use_cases/resend_verification_code_use_case.dart'
+    as _i24;
 import '../../features/login/presentation/controller/login_cubit/login_cubit.dart'
     as _i868;
 import '../../features/login/presentation/controller/otp_verification/otp_verification_cubit.dart'
@@ -66,7 +76,6 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final registerModule = _$RegisterModule();
-    gh.factory<_i163.OtpVerificationCubit>(() => _i163.OtpVerificationCubit());
     gh.factory<_i320.SearchBarCubit>(() => _i320.SearchBarCubit());
     gh.singleton<_i409.GlobalKey<_i409.NavigatorState>>(
         () => registerModule.navigatorKey);
@@ -75,12 +84,20 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i834.HomeTabRemoteDataSourceImpl());
     gh.factory<_i940.BaseLoginRemoteDataSource>(
         () => _i892.LoginRemoteDataSourceImpl());
+    gh.factory<_i63.BaseResendVerificationCodeRemoteDataSource>(
+        () => _i804.ResendVerificationCodeRemoteDataSourceImpl());
     gh.factory<_i579.BaseRegisterRemoteDataSource>(
         () => _i448.RegisterRemoteDataSource());
     gh.factory<_i364.BaseHomeTabRepo>(
         () => _i107.HomeTabRepoImpl(gh<_i710.BaseHomeTabRemoteDataSource>()));
+    gh.factory<_i994.BaseResendVerificationCodeRepo>(() =>
+        _i618.ResendVerificationCodeRepoImpl(
+            gh<_i63.BaseResendVerificationCodeRemoteDataSource>()));
     gh.factory<_i375.BaseLoginRepo>(
         () => _i176.LoginRepoImpl(gh<_i940.BaseLoginRemoteDataSource>()));
+    gh.factory<_i24.ResendVerificationCodeUseCase>(() =>
+        _i24.ResendVerificationCodeUseCase(
+            gh<_i994.BaseResendVerificationCodeRepo>()));
     gh.factory<_i191.LoginUseCase>(
         () => _i191.LoginUseCase(gh<_i375.BaseLoginRepo>()));
     gh.factory<_i950.BaseRegisterRepo>(() => _i612.RegisterRepoImpl(
@@ -96,6 +113,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i51.RegisterUseCase(registerRepo: gh<_i950.BaseRegisterRepo>()));
     gh.factory<_i868.LoginCubit>(
         () => _i868.LoginCubit(loginUseCase: gh<_i191.LoginUseCase>()));
+    gh.factory<_i163.OtpVerificationCubit>(() =>
+        _i163.OtpVerificationCubit(gh<_i24.ResendVerificationCodeUseCase>()));
     gh.factory<_i274.RegisterCubit>(
         () => _i274.RegisterCubit(registerUseCase: gh<_i51.RegisterUseCase>()));
     gh.factory<_i600.HomeTabCubit>(

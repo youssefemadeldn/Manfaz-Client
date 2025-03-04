@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:manfaz/core/di/di.dart';
 import 'package:manfaz/core/routes/routes.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/features/login/presentation/controller/otp_verification/otp_verification_cubit.dart';
 import 'package:pinput/pinput.dart';
 import 'package:easy_localization/easy_localization.dart';
+
+import '../../domain/use_cases/resend_verification_code_use_case.dart';
 
 class OtpVerificationView extends StatelessWidget {
   const OtpVerificationView({super.key});
@@ -179,7 +182,9 @@ class OtpVerificationView extends StatelessWidget {
     );
 
     return BlocProvider(
-      create: (context) => OtpVerificationCubit(),
+      create: (context) => OtpVerificationCubit(
+        getIt<ResendVerificationCodeUseCase>(),
+      ),
       child: BlocConsumer<OtpVerificationCubit, OtpVerificationState>(
         listener: (context, state) {
           if (state is OtpVerificationSuccess) {
@@ -273,12 +278,12 @@ class OtpVerificationView extends StatelessWidget {
 
                       // Timer Section
                       SizedBox(height: 30.h),
-                      if (state is OtpTimerTick) ...[
+                      if (state.remainingTime != null) ...[
                         AnimatedOpacity(
                           opacity: !state.canResend ? 1.0 : 0.0,
                           duration: const Duration(milliseconds: 300),
                           child: Text(
-                            cubit.formatTime(state.remainingTime),
+                            cubit.formatTime(state.remainingTime!),
                             style: AppStyles.bodyText1.copyWith(
                               color: AppColors.primary,
                               fontWeight: FontWeight.w600,
@@ -290,11 +295,12 @@ class OtpVerificationView extends StatelessWidget {
                         // Resend Code Section
                         SizedBox(height: 16.h),
                         TextButton(
-                          onPressed: state.canResend ? cubit.resendOtp : null,
+                          onPressed:
+                              state.canResend ? () => cubit.resendOtp() : null,
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.symmetric(
-                              horizontal: 20.w,
-                              vertical: 10.h,
+                              horizontal: 24.w,
+                              vertical: 12.h,
                             ),
                           ),
                           child: Text(
@@ -303,9 +309,6 @@ class OtpVerificationView extends StatelessWidget {
                               color: state.canResend
                                   ? AppColors.primary
                                   : AppColors.textSecondary,
-                              decoration: state.canResend
-                                  ? TextDecoration.underline
-                                  : TextDecoration.none,
                               fontSize: 16.sp,
                             ),
                           ),
@@ -319,38 +322,38 @@ class OtpVerificationView extends StatelessWidget {
                         height: 55.h,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15.r),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.primary.withOpacity(0.3),
-                              spreadRadius: 1,
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
                         ),
-                        child: ElevatedButton(
-                          onPressed: state is OtpVerificationLoading
-                              ? null
-                              : () => cubit.verifyOtp(),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.r),
-                            ),
-                            elevation: 0,
-                          ),
-                          child: state is OtpVerificationLoading
-                              ? CircularProgressIndicator(
-                                  color: AppColors.white,
+                        child: BlocBuilder<OtpVerificationCubit,
+                            OtpVerificationState>(
+                          builder: (context, state) {
+                            if (state is OtpVerificationLoading) {
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  color: AppColors.primary,
                                   strokeWidth: 3,
-                                )
-                              : Text(
-                                  'verification.verify'.tr(),
-                                  style: AppStyles.bodyTextBold.copyWith(
-                                    color: AppColors.white,
-                                    fontSize: 18.sp,
-                                  ),
                                 ),
+                              );
+                            }
+                            return ElevatedButton(
+                              onPressed: () => context
+                                  .read<OtpVerificationCubit>()
+                                  .verifyOtp(),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primary,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.r),
+                                ),
+                                elevation: 0,
+                              ),
+                              child: Text(
+                                'verification.verify'.tr(),
+                                style: AppStyles.bodyTextBold.copyWith(
+                                  color: AppColors.white,
+                                  fontSize: 18.sp,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ),
 

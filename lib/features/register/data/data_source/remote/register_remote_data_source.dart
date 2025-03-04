@@ -37,9 +37,12 @@ class RegisterRemoteDataSource implements BaseRegisterRemoteDataSource {
 
       if (NetworkHelper.isValidResponse(code: response.statusCode)) {
         // Success Case:
-        await SharedPrefUtils.saveData(
-            key: 'verificationCode',
-            data: registerModel.data?.verificationCode);
+        await Future.wait([
+          SharedPrefUtils.saveData(
+              key: 'verificationCode',
+              data: registerModel.data?.verificationCode),
+          SharedPrefUtils.saveData(key: 'userId', data: registerModel.data?.id),
+        ]);
         return right(registerModel);
       } else {
         // Server Error Case:
