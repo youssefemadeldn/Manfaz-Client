@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -47,28 +48,27 @@ class _RegisterViewState extends State<RegisterView> {
               child: BlocListener<RegisterCubit, RegisterState>(
                 listener: (context, state) {
                   switch (state) {
-                    case RegisterLoading():
-                      DialogHelper.showLoadingDialog(
-                          context: context, indicatorColor: AppColors.primary);
+                    // case RegisterLoading():
+                    //   DialogHelper.showLoadingDialog(
+                    //       context: context, indicatorColor: AppColors.primary);
 
                     case RegisterSuccess():
-                      DialogHelper.hideLoadingDialog(context);
-                      DialogHelper.showCustomDialog(
-                        context: context,
-                        content: Text('register.register_success'.tr()),
-                        contentStyle: AppStyles.dialogContentDark,
-                        leftActionStyle: AppStyles.dialogActionBlue,
-                        rightActionStyle: AppStyles.dialogActionBlue,
-                        title: Icon(
-                          Icons.check_circle,
-                          color: AppColors.green,
-                          size: 25.r,
-                        ),
-                        onConfirm: () {
-                          Navigator.pushNamed(
-                              context, Routes.otpVerificationView);
-                        },
-                      );
+                      // DialogHelper.hideLoadingDialog(context);
+                      // DialogHelper.showCustomDialog(
+                      //   context: context,
+                      //   content: Text('register.register_success'.tr()),
+                      //   contentStyle: AppStyles.dialogContentDark,
+                      //   leftActionStyle: AppStyles.dialogActionBlue,
+                      //   rightActionStyle: AppStyles.dialogActionBlue,
+                      //   title: Icon(
+                      //     Icons.check_circle,
+                      //     color: AppColors.green,
+                      //     size: 25.r,
+                      //   ),
+                      //   onConfirm: () {
+                      //   },
+                      // );
+                      Navigator.pushNamed(context, Routes.otpVerificationView);
                     case RegisterError():
                       DialogHelper.hideLoadingDialog(context);
                       DialogHelper.showCustomDialog(
@@ -158,7 +158,6 @@ class _RegisterViewState extends State<RegisterView> {
                           }
                           return null;
                         },
-                        
                         onChanged: (String? newValue) {
                           setState(() {
                             userType = newValue;
@@ -232,19 +231,29 @@ class _RegisterViewState extends State<RegisterView> {
                         ),
                       ),
                       SizedBox(height: 20.h),
-                      CustomButton(
-                        onPressed: () async {
-                          if (formKey.currentState!.validate()) {
-                            await BlocProvider.of<RegisterCubit>(context)
-                                .emitRegisterState();
+                      BlocBuilder<RegisterCubit, RegisterState>(
+                        builder: (context, state) {
+                          if (state is RegisterLoading) {
+                            return CupertinoActivityIndicator(
+                              animating: true,
+                              radius: 15.r,
+                            );
                           }
+                          return CustomButton(
+                            onPressed: () async {
+                              if (formKey.currentState!.validate()) {
+                                await BlocProvider.of<RegisterCubit>(context)
+                                    .emitRegisterState();
+                              }
+                            },
+                            backgroundColor: AppColors.primary,
+                            borderSideColor: AppColors.primary,
+                            child: Text(
+                              'register.sign_up'.tr(),
+                              style: AppStyles.buttonText,
+                            ),
+                          );
                         },
-                        backgroundColor: AppColors.primary,
-                        borderSideColor: AppColors.primary,
-                        child: Text(
-                          'register.sign_up'.tr(),
-                          style: AppStyles.buttonText,
-                        ),
                       ),
                       SizedBox(height: 20.h),
                       // SizedBox(height: 15.h),

@@ -11,10 +11,11 @@ part 'register_state.dart';
 @injectable
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterUseCase registerUseCase;
-  var nameController = TextEditingController(text: 'youssef');
-  var emailController = TextEditingController(text: 'Jo90@gmail.com');
-  var passwordController = TextEditingController(text: 'Jo12345678');
-  var phoneController = TextEditingController(text: '01271944961');
+  var nameController = TextEditingController(text: 'youssef emad eldin');
+  var emailController =
+      TextEditingController(text: 'youssefemad63.ye@gmail.com');
+  var passwordController = TextEditingController(text: '01154516292');
+  var phoneController = TextEditingController(text: '01154516292');
   var userType = '';
   RegisterCubit({required this.registerUseCase}) : super(RegisterInitial());
 
@@ -25,7 +26,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       email: emailController.text,
       password: passwordController.text,
       phone: phoneController.text,
-      role: "user",
+      role: userType,
     );
 
     either.fold((l) => emit(RegisterError(failure: l)),

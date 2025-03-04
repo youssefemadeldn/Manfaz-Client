@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
-import 'package:manfaz/features/login/presentation/controller/login_cubit/login_cubit.dart';
 
 import '../../../../core/helper/regex_helper.dart';
 import '../../../../core/theme/app_styles.dart';
 import '../../../../core/widgets/cus_text_button.dart';
 import '../../../../core/widgets/cus_text_form_field.dart';
+import '../controller/login_cubit/login_cubit.dart';
 import '../controller/login_cubit/login_state.dart';
 
 class LoginValidationForm extends StatefulWidget {
@@ -70,7 +70,8 @@ class _LoginValidationFormState extends State<LoginValidationForm> {
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide(color: AppColors.primary),
               ),
-              contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 18.h),
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 16.w, vertical: 18.h),
             ),
             hint: Text('Select Type', style: AppStyles.caption),
             validator: (value) {
@@ -114,6 +115,7 @@ class _LoginValidationFormState extends State<LoginValidationForm> {
             },
             isObscureText: context.read<LoginCubit>().isPasswordVisible,
             suffixIcon: IconButton(
+              color: AppColors.grey,
               onPressed: () {
                 setState(() {
                   context.read<LoginCubit>().isPasswordVisible =

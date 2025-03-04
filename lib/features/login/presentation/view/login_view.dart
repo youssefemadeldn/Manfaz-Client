@@ -27,16 +27,17 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: LoadingOverlay(
-        isLoading: _isLoading,
-        showSuccess: _showSuccess,
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 50.h),
-                child: BlocListener<LoginCubit, LoginState>(
-                  listener: loginListenerMethod,
+      body: BlocListener<LoginCubit, LoginState>(
+        listener: loginListenerMethod,
+        child: LoadingOverlay(
+          isLoading: _isLoading,
+          showSuccess: _showSuccess,
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 50.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -70,8 +71,8 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Container(
@@ -112,7 +113,7 @@ class _LoginViewState extends State<LoginView> {
       //   });
       case LoginSuccess():
         setState(() {
-          _isLoading = false;
+          // _isLoading = false;
           _showSuccess = true;
         });
         Future.delayed(const Duration(milliseconds: 1500), () {

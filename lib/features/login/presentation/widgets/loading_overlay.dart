@@ -21,7 +21,7 @@ class LoadingOverlay extends StatelessWidget {
         child,
         if (isLoading || showSuccess)
           Container(
-            color: Colors.black54,
+            // color: Colors.black54,
             child: Center(
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 300),
