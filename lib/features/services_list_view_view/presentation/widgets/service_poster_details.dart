@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/routes/routes.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -115,24 +116,104 @@ class ServicePosterDetails extends StatelessWidget {
                           ],
                         ),
                         SizedBox(width: 20),
-                        // Column(
-                        //   crossAxisAlignment: CrossAxisAlignment.start,
-                        //   children: [
-                        //     Text(
-                        //       tr("ServicesListViewView.duration"),
-                        //       style: TextStyle(color: Colors.grey),
-                        //     ),
-                        //     Text(
-                        //       "${categoryModel.duration?.toString()} ${tr("ServicesListViewView.hours")}",
-                        //       style: TextStyle(
-                        //         fontSize: 16,
-                        //         fontWeight: FontWeight.bold,
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              tr("ServicesListViewView.duration"),
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                            Text(
+                              "${serviceModel.duration?.toString()} ${tr("ServicesListViewView.hours")}",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Spacer(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.star, color: Colors.amber, size: 20),
+                                Text(
+                                  " ${serviceModel.rating}/5",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              "(${serviceModel.ratingCount} ${'reviews'})",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
+                    if (serviceModel.warranty != null && serviceModel.warranty! > 0) ...[
+                      SizedBox(height: 10),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.verified_user_outlined, 
+                                 color: AppColors.primary, size: 16),
+                            SizedBox(width: 4),
+                            Text(
+                              "${serviceModel.warranty} ${tr("ServicesListViewView.months_warranty")}",
+                              style: TextStyle(
+                                color: AppColors.primary,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                    if (serviceModel.installmentAvailable == !true) ...[
+                      SizedBox(height: 10),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                        decoration: BoxDecoration(
+                          color: Colors.blue.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/images/service_poster_details/payment.svg',
+                              color: Colors.blue,
+                              width: 16,
+                            ),
+                            SizedBox(width: 4),
+                            Text(
+                              "${'installment available'} - ${serviceModel.monthlyInstallment?.toStringAsFixed(2)}/mo",
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                     SizedBox(height: 15),
                     Row(
                       children: [
@@ -150,21 +231,21 @@ class ServicePosterDetails extends StatelessWidget {
                             },
                           ),
                         ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: CustomButton(
-                            backgroundColor: Colors.white,
-                            borderRadius: 8,
-                            borderSideColor: AppColors.buttonPrimary,
-                            child: Text(
-                              tr("ServicesListViewView.view_details"),
-                              style: AppStyles.buttonText.copyWith(
-                                color: AppColors.buttonPrimary,
-                              ),
-                            ),
-                            onPressed: () {},
-                          ),
-                        ),
+                        // SizedBox(width: 10),
+                        // Expanded(
+                        //   child: CustomButton(
+                        //     backgroundColor: Colors.white,
+                        //     borderRadius: 8,
+                        //     borderSideColor: AppColors.buttonPrimary,
+                        //     child: Text(
+                        //       tr("ServicesListViewView.view_details"),
+                        //       style: AppStyles.buttonText.copyWith(
+                        //         color: AppColors.buttonPrimary,
+                        //       ),
+                        //     ),
+                        //     onPressed: () {},
+                        //   ),
+                        // ),
                       ],
                     ),
                   ],

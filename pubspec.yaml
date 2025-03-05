@@ -94,6 +94,7 @@ flutter:
     - assets/lang/
     - assets/map_styles/
     - assets/images/worker_profile/
+    - assets/images/service_poster_details/ 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see

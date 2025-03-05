@@ -8,9 +8,9 @@ import 'package:manfaz/core/helper/google_maps/location_helper.dart';
 import 'package:manfaz/core/cache/shared_pref_utils.dart';
 import 'package:meta/meta.dart';
 
-part 'google_maps_state.dart';
+part 'get_user_location_state.dart';
 
-class GoogleMapsCubit extends Cubit<GoogleMapsState> {
+class GetUserLocationCubit extends Cubit<GetUserLocationState> {
   late CameraPosition initialCameraPosition;
   GoogleMapController? cubitController;
   late LocationHelper locationHelper;
@@ -25,7 +25,7 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
   Set<Polyline> polylines = {};
   Set<Polygon> polygons = {};
 
-  GoogleMapsCubit() : super(GoogleMapsInitialState()) {
+  GetUserLocationCubit() : super(GetUserLocationInitialState()) {
     init();
   }
 
@@ -53,15 +53,16 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
       // Get address from coordinates
       currentAddress =
           await geocodingHelper.getAddressFromLocation(locationData);
-          
+
       // Cache the current address
-      await SharedPrefUtils.saveData(key: 'current_address', data: currentAddress);
+      await SharedPrefUtils.saveData(
+          key: 'current_address', data: currentAddress);
 
       // Set marker at user's location
       setMarker(locationData);
-      emit(GoogleMapsSuccessState());
+      emit(GetUserLocationSuccessState());
     } catch (e) {
-      emit(GoogleMapsErrorState(e.toString()));
+      emit(GetUserLocationErrorState(e.toString()));
     }
   }
 
@@ -76,15 +77,16 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
       // Get address for tapped location
       currentAddress =
           await geocodingHelper.getAddressFromLocation(locationData);
-          
+
       // Cache the current address
-      await SharedPrefUtils.saveData(key: 'current_address', data: currentAddress);
+      await SharedPrefUtils.saveData(
+          key: 'current_address', data: currentAddress);
 
       // Set marker at tapped location
       setMarker(locationData);
-      emit(GoogleMapsSuccessState());
+      emit(GetUserLocationSuccessState());
     } catch (e) {
-      emit(GoogleMapsErrorState(e.toString()));
+      emit(GetUserLocationErrorState(e.toString()));
     }
   }
 
@@ -107,14 +109,15 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
         currentAddress = place.description ?? '';
 
         // Cache the current address
-        await SharedPrefUtils.saveData(key: 'current_address', data: currentAddress);
+        await SharedPrefUtils.saveData(
+            key: 'current_address', data: currentAddress);
 
         // Set marker at selected location
         setMarker(locationData);
-        emit(GoogleMapsSuccessState());
+        emit(GetUserLocationSuccessState());
       }
     } catch (e) {
-      emit(GoogleMapsErrorState(e.toString()));
+      emit(GetUserLocationErrorState(e.toString()));
     }
   }
 
@@ -146,6 +149,6 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
       ),
     );
     markers.add(myLocationMarker);
-    emit(GoogleMapsNewMarkerState());
+    emit(NewMarkerState());
   }
 }

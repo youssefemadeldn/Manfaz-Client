@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/cache/shared_pref_utils.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
+import '../../../../google_maps/get_location_from_to/presentation/views/get_location_from_to_view.dart';
+import '../../../../google_maps/get_location_from_to/presentation/controller/google_maps_cubit/get_location_from_to_cubit.dart';
 
 class DeliveryServiceFromToView extends StatelessWidget {
   const DeliveryServiceFromToView({super.key});
@@ -17,7 +21,7 @@ class DeliveryServiceFromToView extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             slivers: [
               SliverAppBar(
-                expandedHeight: 280.h,
+                expandedHeight: 300.h,
                 pinned: true,
                 backgroundColor: AppColors.primary,
                 leading: IconButton(
@@ -27,29 +31,30 @@ class DeliveryServiceFromToView extends StatelessWidget {
                       color: Colors.white.withOpacity(0.2),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 20),
+                    child: const Icon(Icons.arrow_back_ios,
+                        color: Colors.white, size: 20),
                   ),
                   onPressed: () => Navigator.pop(context),
                 ).animate().fadeIn(delay: 300.ms).slideX(),
                 actions: [
-                  IconButton(
-                    icon: Container(
-                      padding: EdgeInsets.all(8.w),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(Icons.share, color: Colors.white, size: 20),
-                    ),
-                    onPressed: () {},
-                  ).animate().fadeIn(delay: 400.ms).slideX(),
+                  // IconButton(
+                  //   icon: Container(
+                  //     padding: EdgeInsets.all(8.w),
+                  //     decoration: BoxDecoration(
+                  //       color: Colors.white.withOpacity(0.2),
+                  //       shape: BoxShape.circle,
+                  //     ),
+                  //     child: const Icon(Icons.share, color: Colors.white, size: 20),
+                  //   ),
+                  //   onPressed: () {},
+                  // ).animate().fadeIn(delay: 400.ms).slideX(),
                 ],
                 flexibleSpace: FlexibleSpaceBar(
                   background: Stack(
                     fit: StackFit.expand,
                     children: [
                       Image.network(
-                        'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_640.jpg',
+                        'https://img.freepik.com/free-photo/front-view-male-courier-blue-uniform-cap-with-food-box-his-hands-smiling-light-pink-wall_140725-38770.jpg?t=st=1741149242~exp=1741152842~hmac=715b1ff290235024c9c8e740d91372ce2ea1573ab5b64ad3b5e5dff8eda09452&w=1380',
                         fit: BoxFit.cover,
                       ).animate().fadeIn(duration: 800.ms),
                       Container(
@@ -59,7 +64,7 @@ class DeliveryServiceFromToView extends StatelessWidget {
                             end: Alignment.bottomCenter,
                             colors: [
                               Colors.transparent,
-                              Colors.black.withOpacity(0.8),
+                              Colors.black.withOpacity(0.6),
                             ],
                           ),
                         ),
@@ -108,7 +113,8 @@ class DeliveryServiceFromToView extends StatelessWidget {
                                       shape: BoxShape.circle,
                                       boxShadow: [
                                         BoxShadow(
-                                          color: AppColors.primary.withOpacity(0.3),
+                                          color: AppColors.primary
+                                              .withOpacity(0.3),
                                           blurRadius: 15,
                                           offset: const Offset(0, 8),
                                         ),
@@ -123,7 +129,8 @@ class DeliveryServiceFromToView extends StatelessWidget {
                                   SizedBox(width: 16.w),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Express Delivery",
@@ -131,7 +138,10 @@ class DeliveryServiceFromToView extends StatelessWidget {
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
                                           ),
-                                        ).animate().fadeIn(delay: 300.ms).slideX(),
+                                        )
+                                            .animate()
+                                            .fadeIn(delay: 300.ms)
+                                            .slideX(),
                                         SizedBox(height: 6.h),
                                         Text(
                                           "Fast and reliable delivery service at your fingertips",
@@ -139,7 +149,10 @@ class DeliveryServiceFromToView extends StatelessWidget {
                                             color: AppColors.grey,
                                             height: 1.4,
                                           ),
-                                        ).animate().fadeIn(delay: 400.ms).slideX(),
+                                        )
+                                            .animate()
+                                            .fadeIn(delay: 400.ms)
+                                            .slideX(),
                                       ],
                                     ),
                                   ),
@@ -161,7 +174,8 @@ class DeliveryServiceFromToView extends StatelessWidget {
                                 ],
                               ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   _buildStatItem(
                                     "4.9",
@@ -184,7 +198,8 @@ class DeliveryServiceFromToView extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 40.h),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 16.w, vertical: 40.h),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -200,7 +215,8 @@ class DeliveryServiceFromToView extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(16.r),
-                              border: Border.all(color: AppColors.divider.withOpacity(0.5)),
+                              border: Border.all(
+                                  color: AppColors.divider.withOpacity(0.5)),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black.withOpacity(0.03),
@@ -226,8 +242,10 @@ class DeliveryServiceFromToView extends StatelessWidget {
                                     Container(
                                       padding: EdgeInsets.all(10.w),
                                       decoration: BoxDecoration(
-                                        color: AppColors.primary.withOpacity(0.1),
-                                        borderRadius: BorderRadius.circular(12.r),
+                                        color:
+                                            AppColors.primary.withOpacity(0.1),
+                                        borderRadius:
+                                            BorderRadius.circular(12.r),
                                       ),
                                       child: Icon(
                                         Icons.camera_alt_rounded,
@@ -241,26 +259,30 @@ class DeliveryServiceFromToView extends StatelessWidget {
                                 TextField(
                                   maxLines: 3,
                                   decoration: InputDecoration(
-                                    hintText: "E.g., Please deliver my package carefully...",
+                                    hintText:
+                                        "E.g., Please deliver my package carefully...",
                                     hintStyle: AppStyles.bodyText2.copyWith(
                                       color: AppColors.grey.withOpacity(0.7),
                                     ),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12.r),
                                       borderSide: BorderSide(
-                                        color: AppColors.divider.withOpacity(0.5),
+                                        color:
+                                            AppColors.divider.withOpacity(0.5),
                                       ),
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12.r),
                                       borderSide: BorderSide(
-                                        color: AppColors.divider.withOpacity(0.5),
+                                        color:
+                                            AppColors.divider.withOpacity(0.5),
                                       ),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12.r),
                                       borderSide: BorderSide(
-                                        color: AppColors.primary.withOpacity(0.5),
+                                        color:
+                                            AppColors.primary.withOpacity(0.5),
                                         width: 2,
                                       ),
                                     ),
@@ -285,6 +307,7 @@ class DeliveryServiceFromToView extends StatelessWidget {
                             "Select pickup point",
                             Icons.location_on_rounded,
                             AppColors.primary,
+                            true,
                           ).animate().fadeIn(delay: 1000.ms).slideX(),
                           SizedBox(height: 16.h),
                           _buildLocationTile(
@@ -292,6 +315,7 @@ class DeliveryServiceFromToView extends StatelessWidget {
                             "Select destination",
                             Icons.flag_rounded,
                             AppColors.success,
+                            false,
                           ).animate().fadeIn(delay: 1100.ms).slideX(),
                           SizedBox(height: 140.h),
                         ],
@@ -329,7 +353,7 @@ class DeliveryServiceFromToView extends StatelessWidget {
                         "Delivery Cost",
                         style: AppStyles.bodyText2.copyWith(
                           color: AppColors.textPrimary,
-                          fontWeight: FontWeight.w700,  
+                          fontWeight: FontWeight.w700,
                           fontSize: 18.sp,
                         ),
                       ),
@@ -382,7 +406,8 @@ class DeliveryServiceFromToView extends StatelessWidget {
     );
   }
 
-  Widget _buildStatItem(String value, String label, IconData icon, Color color) {
+  Widget _buildStatItem(
+      String value, String label, IconData icon, Color color) {
     return Column(
       children: [
         Container(
@@ -420,60 +445,92 @@ class DeliveryServiceFromToView extends StatelessWidget {
     );
   }
 
-  Widget _buildLocationTile(String title, String subtitle, IconData icon, Color color) {
-    return Container(
-      padding: EdgeInsets.all(16.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: AppColors.divider.withOpacity(0.5)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: EdgeInsets.all(12.w),
+  Widget _buildLocationTile(String title, String subtitle, IconData icon,
+      Color color, bool isPickup) {
+    return BlocBuilder<GetLocationFromToCubit, GetLocationFromToState>(
+      builder: (context, state) {
+        return InkWell(
+          onTap: () async {
+            final cubit = context.read<GetLocationFromToCubit>();
+            final result = await Navigator.push<String>(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BlocProvider.value(
+                  value: cubit,
+                  child: GetLocationFromToView(),
+                ),
+              ),
+            );
+
+            if (result != null) {
+              if (isPickup) {
+                await SharedPrefUtils.saveData(
+                    key: 'pickup_location', data: result);
+              } else {
+                await SharedPrefUtils.saveData(
+                    key: 'dropoff_location', data: result);
+              }
+            }
+          },
+          child: Container(
+            padding: EdgeInsets.all(16.w),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: Colors.white,
               borderRadius: BorderRadius.circular(12.r),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 10,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
-            child: Icon(icon, color: color, size: 24.w),
-          ),
-          SizedBox(width: 16.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
               children: [
-                Text(
-                  title,
-                  style: AppStyles.bodyText1.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black87,
+                Container(
+                  padding: EdgeInsets.all(10.w),
+                  decoration: BoxDecoration(
+                    color: color.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(icon, color: color),
+                ),
+                SizedBox(width: 12.w),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: AppStyles.bodyText2.copyWith(
+                          color: AppColors.textPrimary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(height: 4.h),
+                      Text(
+                        isPickup
+                            ? (SharedPrefUtils.getData('pickup_location') ??
+                                subtitle)
+                            : (SharedPrefUtils.getData('dropoff_location') ??
+                                subtitle),
+                        style: AppStyles.bodyText2.copyWith(
+                          color: AppColors.grey,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 4.h),
-                Text(
-                  subtitle,
-                  style: AppStyles.bodyText2.copyWith(
-                    color: AppColors.grey,
-                  ),
+                Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: AppColors.grey,
+                  size: 16.sp,
                 ),
               ],
             ),
           ),
-          Icon(
-            Icons.arrow_forward_ios_rounded,
-            color: AppColors.grey,
-            size: 18.w,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

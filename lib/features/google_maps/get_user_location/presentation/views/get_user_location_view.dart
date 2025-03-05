@@ -7,17 +7,17 @@ import 'package:google_places_flutter/model/prediction.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/core/widgets/cus_text_button.dart';
-import '../../../../core/routes/routes.dart';
-import '../controller/google_maps_cubit/google_maps_cubit.dart';
+import '../../../../../core/routes/routes.dart';
+import '../controller/get_user_location_cubit/get_user_location_cubit.dart';
 
 class GetUserLocationView extends StatelessWidget {
   const GetUserLocationView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var viewModel = BlocProvider.of<GoogleMapsCubit>(context);
+    var viewModel = BlocProvider.of<GetUserLocationCubit>(context);
 
-    return BlocBuilder<GoogleMapsCubit, GoogleMapsState>(
+    return BlocBuilder<GetUserLocationCubit, GetUserLocationState>(
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
@@ -106,7 +106,7 @@ class GetUserLocationView extends StatelessWidget {
                     ),
                     child: GooglePlaceAutoCompleteTextField(
                       textEditingController: TextEditingController(),
-                      googleAPIKey: GoogleMapsCubit.apiKey,
+                      googleAPIKey: GetUserLocationCubit.apiKey,
                       inputDecoration: InputDecoration(
                         hintText: 'Search the map',
                         prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
@@ -125,7 +125,7 @@ class GetUserLocationView extends StatelessWidget {
                 ),
               ),
 
-              if (state is GoogleMapsLoadingState)
+              if (state is GetUserLocationLoadingState)
                 Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primary,

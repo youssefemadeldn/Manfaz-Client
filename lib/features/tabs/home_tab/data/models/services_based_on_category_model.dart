@@ -38,6 +38,7 @@ class ServiceModel {
   String? description;
   String? categoryId;
   String? type;
+  // SubType = null;
   double? price;
   int? duration;
   bool? availability;

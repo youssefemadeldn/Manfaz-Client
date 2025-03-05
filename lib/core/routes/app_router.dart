@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:manfaz/core/routes/routes.dart';
 import 'package:manfaz/features/bottom_navigation_bar/presentation/view/cus_bottom_navigation_bar.dart';
+import 'package:manfaz/features/google_maps/get_user_location/presentation/controller/get_user_location_cubit/get_user_location_cubit.dart';
+import 'package:manfaz/features/google_maps/get_user_location/presentation/views/get_user_location_view.dart';
 import 'package:manfaz/features/login/presentation/view/login_view.dart';
 import 'package:manfaz/features/login/presentation/view/otp_verification_view.dart';
 import 'package:manfaz/features/login/presentation/view/success_verification_view.dart';
@@ -10,8 +12,7 @@ import 'package:manfaz/features/onBoardings/presentation/views/on_boarding_view.
 import '../../features/delivery/delivery_list_view_view/presentation/view/delivery_list_view_view.dart';
 import '../../features/delivery/delivery_service_from_to/presentation/view/delivery_service_from_to_view.dart';
 import '../../features/workers/worker_profile/presentation/views/worker_profile_view.dart';
-import '../../features/google_maps/presentation/controller/google_maps_cubit/google_maps_cubit.dart';
-import '../../features/google_maps/presentation/views/get_user_location_view.dart';
+import '../../features/google_maps/get_location_from_to/presentation/controller/google_maps_cubit/get_location_from_to_cubit.dart';
 import '../../features/services_list_view_view/presentation/views/services_list_view_view.dart';
 import '../../features/login/presentation/controller/login_cubit/login_cubit.dart';
 import '../../features/workers/worker_list_view/presentation/views/worker_list_view_view.dart';
@@ -79,7 +80,7 @@ class AppRouter {
       case Routes.getUserLocationView:
         return CupertinoPageRoute(
             builder: (context) => BlocProvider(
-                  create: (context) => GoogleMapsCubit()..init(),
+                  create: (context) => GetUserLocationCubit()..init(),
                   child: GetUserLocationView(),
                 ));
 
@@ -94,7 +95,10 @@ class AppRouter {
 
       case Routes.deliveryServiceFromToView:
         return CupertinoPageRoute(
-            builder: (context) => DeliveryServiceFromToView());
+            builder: (context) => BlocProvider(
+                  create: (context) => GetLocationFromToCubit()..init(),
+                  child: DeliveryServiceFromToView(),
+                ));
 
       default:
         return CupertinoPageRoute(
