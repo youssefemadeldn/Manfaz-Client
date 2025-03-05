@@ -38,6 +38,7 @@ dependencies:
   easy_localization: ^3.0.7
   flutter:
     sdk: flutter
+  flutter_animate: ^4.5.2
   flutter_bloc: ^8.1.6
   flutter_localizations:
     sdk: flutter

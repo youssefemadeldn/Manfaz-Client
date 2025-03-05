@@ -13,7 +13,7 @@ class OtpVerificationCubit extends Cubit<OtpVerificationState> {
   final ResendVerificationCodeUseCase resendVerificationCodeUseCase;
   Timer? _timer;
   String? _currentPin;
-  static const int _initialTime = 120; // 3 minutes in seconds
+  static const int _initialTime = 30; // 3 minutes in seconds
 
   String? get currentPin => _currentPin;
 
@@ -56,7 +56,7 @@ class OtpVerificationCubit extends Cubit<OtpVerificationState> {
       ));
       return;
     }
-
+    await SharedPrefUtils.saveData(key: 'isUserVerified', data: true);
     emit(OtpVerificationLoading());
     try {
       final savedOtp = await SharedPrefUtils.getData('verificationCode');

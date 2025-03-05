@@ -40,25 +40,28 @@ class CategoryModel {
   int? price;
   String? imageUrl;
   String? type;
+  String? subType;
   String? status;
   int? sortOrder;
   String? createdAt;
   String? updatedAt;
 
-  CategoryModel(
-      {this.id,
-      this.name,
-      this.subName,
-      this.slug,
-      this.description,
-      this.info,
-      this.price,
-      this.imageUrl,
-      this.type,
-      this.status,
-      this.sortOrder,
-      this.createdAt,
-      this.updatedAt});
+  CategoryModel({
+    this.id,
+    this.name,
+    this.subName,
+    this.slug,
+    this.description,
+    this.info,
+    this.price,
+    this.imageUrl,
+    this.type,
+    this.status,
+    this.sortOrder,
+    this.createdAt,
+    this.updatedAt,
+    this.subType,
+  });
 
   CategoryModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -70,6 +73,7 @@ class CategoryModel {
     price = json['price'];
     imageUrl = json['imageUrl'];
     type = json['type'];
+    subType = json['subType'];
     status = json['status'];
     sortOrder = json['sortOrder'];
     createdAt = json['createdAt'];
@@ -87,6 +91,7 @@ class CategoryModel {
     data['price'] = this.price;
     data['imageUrl'] = this.imageUrl;
     data['type'] = this.type;
+    data['subType'] = this.subType;
     data['status'] = this.status;
     data['sortOrder'] = this.sortOrder;
     data['createdAt'] = this.createdAt;

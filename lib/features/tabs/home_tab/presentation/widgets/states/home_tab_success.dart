@@ -98,7 +98,10 @@ class HomeTabSuccess extends StatelessWidget {
               child: DeliveryCardItem(
                 categoryModel: categoriesDeliveryList[index],
                 onTap: () {
-                  Navigator.pushNamed(context, Routes.deliveryListViewView);
+                  Navigator.pushNamed(
+                    context,
+                    Routes.deliveryServiceFromToView,
+                  );
                 },
               ),
             ),

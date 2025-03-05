@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_styles.dart';
+import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/theme/app_styles.dart';
 import '../widgets/DistanceLocation.dart';
 import '../widgets/LogoOrganization.dart';
 
@@ -203,7 +203,8 @@ class DeliveryCardItem extends StatelessWidget {
                 ),
                 SizedBox(height: 12.h),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(100.r),
@@ -235,4 +236,3 @@ class DeliveryCardItem extends StatelessWidget {
     );
   }
 }
-
