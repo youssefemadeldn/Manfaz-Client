@@ -5,8 +5,10 @@ import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
 
 class AvailableNowStatus extends StatelessWidget {
+  final bool availableNow;
   const AvailableNowStatus({
     super.key,
+    required this.availableNow,
   });
 
   @override
@@ -17,7 +19,7 @@ class AvailableNowStatus extends StatelessWidget {
         vertical: 4.h,
       ),
       decoration: BoxDecoration(
-        color: AppColors.accentGreen.withOpacity(0.2),
+        color: availableNow? AppColors.accentGreen.withOpacity(0.2) :AppColors.red.withOpacity(0.2) ,
         borderRadius: BorderRadius.circular(8.r),
       ),
       child: Row(
@@ -30,9 +32,9 @@ class AvailableNowStatus extends StatelessWidget {
           ),
           SizedBox(width: 4.w),
           Text(
-            'Available Now',
+           availableNow? 'Available Now' : 'Not Available',
             style: AppStyles.caption.copyWith(
-              color: AppColors.accentGreen,
+              color: availableNow? AppColors.accentGreen : AppColors.red,
               fontSize: 12.sp,
             ),
           ),

@@ -9,4 +9,5 @@ class ApiConstant {
   static const String epHomeTap = 'categories';
   static const String epGetServicesBasedOnCategory = 'services';
   static const String epResendVerificationCode = 'auth/resend-verification-code';
+  static const String epWorkerList = 'workers';
 }

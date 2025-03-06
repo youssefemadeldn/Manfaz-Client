@@ -12,7 +12,7 @@ part 'home_tab_state.dart';
 
 @injectable
 class HomeTabCubit extends Cubit<HomeTabState> {
-  HomeTabUseCase homeTabUseCase;
+ final HomeTabUseCase homeTabUseCase;
 
   HomeTabCubit({required this.homeTabUseCase}) : super(HomeTabLoadingState());
 

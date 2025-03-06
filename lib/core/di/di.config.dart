@@ -12,6 +12,8 @@ import 'package:flutter/material.dart' as _i409;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../features/delivery/delivery_service_from_to/presentation/controller/cubit/delivery_service_from_to_cubit.dart'
+    as _i790;
 import '../../features/login/data/data_source/remote/base_login_remote_data_source.dart'
     as _i940;
 import '../../features/login/data/data_source/remote/base_resend_verification_code_remote_data_source.dart'
@@ -61,6 +63,18 @@ import '../../features/tabs/home_tab/presentation/controller/search_bar_cubit/se
     as _i320;
 import '../../features/tabs/home_tab/presentation/controller/services_cubit/services_cubit.dart'
     as _i256;
+import '../../features/workers/worker_list_view/data/data_source/remote/base_worker_list_remote_data_source.dart'
+    as _i852;
+import '../../features/workers/worker_list_view/data/data_source/remote/worker_list_remote_data_source_impl.dart'
+    as _i365;
+import '../../features/workers/worker_list_view/data/repo/worker_list_repo_impl.dart'
+    as _i241;
+import '../../features/workers/worker_list_view/domain/repo/base_worker_list_repo.dart'
+    as _i1003;
+import '../../features/workers/worker_list_view/domain/use_cases/worker_list_use_case.dart'
+    as _i320;
+import '../../features/workers/worker_list_view/presentation/controller/cubit/worker_list_cubit.dart'
+    as _i525;
 import '../network/api_manager.dart' as _i119;
 import 'di.dart' as _i913;
 
@@ -76,12 +90,16 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final registerModule = _$RegisterModule();
+    gh.factory<_i790.DeliveryServiceFromToCubit>(
+        () => _i790.DeliveryServiceFromToCubit());
     gh.factory<_i320.SearchBarCubit>(() => _i320.SearchBarCubit());
     gh.singleton<_i409.GlobalKey<_i409.NavigatorState>>(
         () => registerModule.navigatorKey);
     gh.singleton<_i119.ApiManager>(() => _i119.ApiManager());
     gh.factory<_i710.BaseHomeTabRemoteDataSource>(
         () => _i834.HomeTabRemoteDataSourceImpl());
+    gh.factory<_i852.BaseWorkerListRemoteDataSource>(
+        () => _i365.WorkerListRemoteDataSourceImpl());
     gh.factory<_i940.BaseLoginRemoteDataSource>(
         () => _i892.LoginRemoteDataSourceImpl());
     gh.factory<_i63.BaseResendVerificationCodeRemoteDataSource>(
@@ -93,11 +111,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i994.BaseResendVerificationCodeRepo>(() =>
         _i618.ResendVerificationCodeRepoImpl(
             gh<_i63.BaseResendVerificationCodeRemoteDataSource>()));
+    gh.factory<_i1003.BaseWorkerListRepo>(() =>
+        _i241.WorkerListRepoImpl(gh<_i852.BaseWorkerListRemoteDataSource>()));
     gh.factory<_i375.BaseLoginRepo>(
         () => _i176.LoginRepoImpl(gh<_i940.BaseLoginRemoteDataSource>()));
     gh.factory<_i24.ResendVerificationCodeUseCase>(() =>
         _i24.ResendVerificationCodeUseCase(
             gh<_i994.BaseResendVerificationCodeRepo>()));
+    gh.factory<_i320.WorkerListUseCase>(
+        () => _i320.WorkerListUseCase(gh<_i1003.BaseWorkerListRepo>()));
     gh.factory<_i191.LoginUseCase>(
         () => _i191.LoginUseCase(gh<_i375.BaseLoginRepo>()));
     gh.factory<_i950.BaseRegisterRepo>(() => _i612.RegisterRepoImpl(
@@ -117,6 +139,8 @@ extension GetItInjectableX on _i174.GetIt {
         _i163.OtpVerificationCubit(gh<_i24.ResendVerificationCodeUseCase>()));
     gh.factory<_i274.RegisterCubit>(
         () => _i274.RegisterCubit(registerUseCase: gh<_i51.RegisterUseCase>()));
+    gh.factory<_i525.WorkerListCubit>(() => _i525.WorkerListCubit(
+        workerListUseCase: gh<_i320.WorkerListUseCase>()));
     gh.factory<_i600.HomeTabCubit>(
         () => _i600.HomeTabCubit(homeTabUseCase: gh<_i59.HomeTabUseCase>()));
     return this;

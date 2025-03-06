@@ -231,21 +231,21 @@ class ServicePosterDetails extends StatelessWidget {
                             },
                           ),
                         ),
-                        // SizedBox(width: 10),
-                        // Expanded(
-                        //   child: CustomButton(
-                        //     backgroundColor: Colors.white,
-                        //     borderRadius: 8,
-                        //     borderSideColor: AppColors.buttonPrimary,
-                        //     child: Text(
-                        //       tr("ServicesListViewView.view_details"),
-                        //       style: AppStyles.buttonText.copyWith(
-                        //         color: AppColors.buttonPrimary,
-                        //       ),
-                        //     ),
-                        //     onPressed: () {},
-                        //   ),
-                        // ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: CustomButton(
+                            backgroundColor: Colors.white,
+                            borderRadius: 8,
+                            borderSideColor: AppColors.buttonPrimary,
+                            child: Text(
+                              tr("ServicesListViewView.view_details"),
+                              style: AppStyles.buttonText.copyWith(
+                                color: AppColors.buttonPrimary,
+                              ),
+                            ),
+                            onPressed: () {},
+                          ),
+                        ),
                       ],
                     ),
                   ],

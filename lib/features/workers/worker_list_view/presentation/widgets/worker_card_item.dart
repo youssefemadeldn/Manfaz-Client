@@ -5,11 +5,14 @@ import 'package:manfaz/features/workers/worker_list_view/presentation/widgets/sk
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
+import '../../data/models/worker_list_model.dart';
 import 'available_now_status.dart';
 
 class WorkerCardItem extends StatelessWidget {
+  final WorkerLite worker;
   const WorkerCardItem({
     super.key,
+    required this.worker,
   });
 
   @override
@@ -40,14 +43,13 @@ class WorkerCardItem extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: AppColors.accentGreen.withOpacity(0.5),
+                          color:worker.isAvailable! ? AppColors.accentGreen.withOpacity(0.5): AppColors.grey.withOpacity(0.5),
                           width: 2,
                         ),
                       ),
                       child: CircleAvatar(
                         backgroundImage: NetworkImage(
-                          'https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_640.jpg',
-                        ),
+                        worker.profileImage??''),
                         radius: 40.r,
                         backgroundColor: AppColors.primary,
                       ),
@@ -60,7 +62,7 @@ class WorkerCardItem extends StatelessWidget {
                         height: 24.h,
                         width: 24.w,
                         decoration: BoxDecoration(
-                          color: AppColors.accentGreen,
+                          color:worker.isAvailable!? AppColors.accentGreen:AppColors.grey  ,
                           shape: BoxShape.circle,
                           border: Border.all(
                             color: AppColors.surface,
@@ -84,14 +86,14 @@ class WorkerCardItem extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'John Doe',
+                                  worker.user?.name??'',
                                   style: AppStyles.listTileTitle.copyWith(
                                     color: AppColors.textPrimary,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
                                 Text(
-                                  'UX Designer',
+                                  worker.title??'',
                                   style: AppStyles.listTileSubtitle,
                                 ),
                               ],
@@ -122,14 +124,20 @@ class WorkerCardItem extends StatelessWidget {
                             size: 16.w,
                           ),
                           SizedBox(width: 4.w),
-                          Text(
-                            'New York, USA',
-                            style: AppStyles.caption.copyWith(
-                              color: AppColors.textSecondary,
+                          Expanded(
+                            child: Text(
+                              worker.user?.locations?[0].address??
+                              '',
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+
+                              style: AppStyles.caption.copyWith(
+                                color: AppColors.textSecondary,
+                              ),
                             ),
                           ),
                           SizedBox(width: 12.w),
-                          AvailableNowStatus(),
+                          AvailableNowStatus(availableNow: worker.isAvailable??false,),
                         ],
                       ),
                     ],
@@ -140,7 +148,7 @@ class WorkerCardItem extends StatelessWidget {
             SizedBox(height: 16.h),
             // Description
             Text(
-              'UX Designer with 5 years of experience in UI/UX design and a strong skilled in creating intuitive, user-centered digital experiences',
+              worker.description ?? '',
               style: AppStyles.bodyText1.copyWith(
                 color: AppColors.textSecondary,
                 fontWeight: FontWeight.w500,
@@ -152,13 +160,7 @@ class WorkerCardItem extends StatelessWidget {
             Wrap(
               spacing: 8.w,
               runSpacing: 8.h,
-              children: [
-                SkillChip(skill: 'Dart'),
-                SkillChip(skill: 'Flutter'),
-                SkillChip(skill: 'Firebase'),
-                SkillChip(skill: 'Mobile App Development'),
-                SkillChip(skill: '+10'),
-              ],
+              children:worker.skills!.map((e)=> SkillChip(skill: e)).toList(),
             ),
             SizedBox(height: 16.h),
             // Bottom Row with Price, Success Rate and Total Earned
@@ -184,7 +186,7 @@ class WorkerCardItem extends StatelessWidget {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: '12',
+                              text: worker.rating.toString(),
                               style: AppStyles.buttonTextPrimary.copyWith(
                                 fontSize: 16.sp,
                               ),
@@ -207,9 +209,9 @@ class WorkerCardItem extends StatelessWidget {
                     CircularPercentIndicator(
                       radius: 16.r,
                       lineWidth: 3.0,
-                      percent: 0.95,
+                      percent: worker.jobSuccessRate?.toDouble()??0,
                       center: Text(
-                        "95%",
+                        worker.jobSuccessRate.toString(),
                         style: AppStyles.caption.copyWith(
                           fontSize: 10.sp,
                           fontWeight: FontWeight.w600,
@@ -238,7 +240,7 @@ class WorkerCardItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.r),
               ),
               child: Text(
-                '\$4K+ earned',
+                '\$${worker.totalEarned}K+ earned',
                 style: AppStyles.caption.copyWith(
                   color: AppColors.secondary,
                   fontWeight: FontWeight.w600,
