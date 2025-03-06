@@ -7,16 +7,28 @@ import 'package:google_places_flutter/model/prediction.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/core/widgets/cus_text_button.dart';
+import '../../../../delivery/delivery_service_from_to/presentation/controller/cubit/delivery_service_from_to_cubit.dart';
 import '../controller/google_maps_cubit/get_location_from_to_cubit.dart';
 
 class GetLocationFromToView extends StatelessWidget {
-  const GetLocationFromToView({super.key});
+  final bool isFromLocation;
+  final DeliveryServiceFromToCubit deliveryServiceFromToCubit;
+  final GetLocationFromToCubit getLocationFromToCubit;
+  
+  const GetLocationFromToView({
+    super.key,
+    required this.isFromLocation,
+    required this.deliveryServiceFromToCubit,
+    required this.getLocationFromToCubit,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.read<GetLocationFromToCubit>();
+    final viewModel = getLocationFromToCubit;
+    viewModel.isFromLocation = isFromLocation;
 
     return BlocBuilder<GetLocationFromToCubit, GetLocationFromToState>(
+      bloc: getLocationFromToCubit,
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
@@ -175,6 +187,22 @@ class GetLocationFromToView extends StatelessWidget {
                         padding: EdgeInsets.all(16.w),
                         child: CustomButton(
                           onPressed: () {
+                            final location = viewModel.selectedLocation;
+                            if (location != null) {
+                              if (viewModel.isFromLocation) {
+                                deliveryServiceFromToCubit.updateFromLocation(
+                                  viewModel.currentAddress,
+                                  lat: location.latitude,
+                                  lng: location.longitude,
+                                );
+                              } else {
+                                deliveryServiceFromToCubit.updateToLocation(
+                                  viewModel.currentAddress,
+                                  lat: location.latitude,
+                                  lng: location.longitude,
+                                );
+                              }
+                            }
                             Navigator.pop(context, viewModel.currentAddress);
                           },
                           backgroundColor: AppColors.primary,

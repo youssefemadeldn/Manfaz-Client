@@ -18,6 +18,7 @@ class GetLocationFromToCubit extends Cubit<GetLocationFromToState> {
   late LocationData locationData;
   PermissionStatus permissionGranted = PermissionStatus.granted;
   String currentAddress = '';
+  bool isFromLocation = false;
   static const String apiKey =
       'AIzaSyALEA-N5NgRqQEIRQUJwMRoUy0i-UM0rc8'; // Replace with your API key
 
@@ -25,7 +26,11 @@ class GetLocationFromToCubit extends Cubit<GetLocationFromToState> {
   Set<Polyline> polylines = {};
   Set<Polygon> polygons = {};
 
-  GetLocationFromToCubit() : super(GetLocationFromToInitialState()) {
+  LatLng? get selectedLocation => locationData.latitude != null && locationData.longitude != null 
+      ? LatLng(locationData.latitude!, locationData.longitude!)
+      : null;
+
+  GetLocationFromToCubit({this.isFromLocation = false}) : super(GetLocationFromToInitialState()) {
     init();
   }
 

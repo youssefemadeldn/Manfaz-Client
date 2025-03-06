@@ -8,6 +8,8 @@ import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
 import '../../../../google_maps/get_location_from_to/presentation/views/get_location_from_to_view.dart';
 import '../../../../google_maps/get_location_from_to/presentation/controller/google_maps_cubit/get_location_from_to_cubit.dart';
+import '../controller/cubit/delivery_service_from_to_cubit.dart';
+
 
 class DeliveryServiceFromToView extends StatelessWidget {
   const DeliveryServiceFromToView({super.key});
@@ -317,7 +319,7 @@ class DeliveryServiceFromToView extends StatelessWidget {
                             AppColors.success,
                             false,
                           ).animate().fadeIn(delay: 1100.ms).slideX(),
-                          SizedBox(height: 140.h),
+                          SizedBox(height: MediaQuery.sizeOf(context).height * 0.15),
                         ],
                       ),
                     ),
@@ -342,62 +344,88 @@ class DeliveryServiceFromToView extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: BlocBuilder<DeliveryServiceFromToCubit, DeliveryServiceFromToState>(
+                builder: (context, state) {
+                  final cubit = context.read<DeliveryServiceFromToCubit>();
+                  final hasValidLocations = cubit.fromLat != null && cubit.toLat != null;
+                  final costDisplay = hasValidLocations && cubit.deliveryCost != null
+                      ? "${cubit.deliveryCost!.toStringAsFixed(2)} EGP"
+                      : "--,-- EGP";
+                  final distanceDisplay = hasValidLocations && cubit.distanceInKm != null
+                      ? "(${cubit.distanceInKm!.toStringAsFixed(1)} km)"
+                      : "";
+
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Delivery Cost",
+                                style: AppStyles.bodyText2.copyWith(
+                                  color: AppColors.textPrimary,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 18.sp,
+                                ),
+                              ),
+                              if (hasValidLocations && cubit.distanceInKm != null)
+                                Text(
+                                  distanceDisplay,
+                                  style: AppStyles.caption.copyWith(
+                                    color: AppColors.grey,
+                                    fontSize: 14.sp,
+                                  ),
+                                ),
+                            ],
+                          ),
+                          Text(
+                            costDisplay,
+                            style: AppStyles.header3.copyWith(
+                              color: AppColors.textPrimary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 4.h),
                       Text(
-                        "Delivery Cost",
-                        style: AppStyles.bodyText2.copyWith(
-                          color: AppColors.textPrimary,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18.sp,
+                        "Delivery cost includes a base fee of ${DeliveryServiceFromToCubit.BASE_PRICE} EGP plus ${DeliveryServiceFromToCubit.PRICE_PER_KM} EGP per kilometer. Minimum delivery cost is ${DeliveryServiceFromToCubit.MIN_PRICE} EGP.",
+                        style: AppStyles.caption.copyWith(
+                          color: Colors.grey[500],
+                          fontSize: 11.sp,
                         ),
                       ),
-                      Text(
-                        "--,-- EGP",
-                        style: AppStyles.header3.copyWith(
-                          color: AppColors.textPrimary,
-                          fontWeight: FontWeight.w600,
+                      SizedBox(height: 16.h),
+                      Container(
+                        width: double.infinity,
+                        height: 50.h,
+                        child: ElevatedButton(
+                          onPressed: hasValidLocations ? () {} : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25.r),
+                            ),
+                            elevation: 0,
+                          ),
+                          child: Text(
+                            "Place order",
+                            style: AppStyles.buttonText.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18.sp,
+                            ),
+                          ),
                         ),
                       ),
                     ],
-                  ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    "Estimated delivery cost depends on couriers offers as well as the distance between the pickup and the drop-off locations.",
-                    style: AppStyles.caption.copyWith(
-                      color: Colors.grey[500],
-                      fontSize: 11.sp,
-                    ),
-                  ),
-                  SizedBox(height: 16.h),
-                  Container(
-                    width: double.infinity,
-                    height: 50.h,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25.r),
-                        ),
-                        elevation: 0,
-                      ),
-                      child: Text(
-                        "Place order",
-                        style: AppStyles.buttonText.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18.sp,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                  );
+                },
               ),
             ),
           ).animate().fadeIn(delay: 1200.ms).slideY(begin: 1, end: 0),
@@ -447,17 +475,34 @@ class DeliveryServiceFromToView extends StatelessWidget {
 
   Widget _buildLocationTile(String title, String subtitle, IconData icon,
       Color color, bool isPickup) {
-    return BlocBuilder<GetLocationFromToCubit, GetLocationFromToState>(
+    return BlocBuilder<DeliveryServiceFromToCubit, DeliveryServiceFromToState>(
       builder: (context, state) {
+        String displayAddress = subtitle;
+        if (state is DeliveryServiceFromToLocationSelected) {
+          if (isPickup && context.read<DeliveryServiceFromToCubit>().fromAddress != null) {
+            displayAddress = context.read<DeliveryServiceFromToCubit>().fromAddress!;
+          } else if (!isPickup && context.read<DeliveryServiceFromToCubit>().toAddress != null) {
+            displayAddress = context.read<DeliveryServiceFromToCubit>().toAddress!;
+          }
+        }
+
         return InkWell(
           onTap: () async {
             final cubit = context.read<GetLocationFromToCubit>();
+            final deliveryCubit = context.read<DeliveryServiceFromToCubit>();
             final result = await Navigator.push<String>(
               context,
               MaterialPageRoute(
-                builder: (context) => BlocProvider.value(
-                  value: cubit,
-                  child: GetLocationFromToView(),
+                builder: (context) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider.value(value: cubit),
+                    BlocProvider.value(value: deliveryCubit),
+                  ],
+                  child: GetLocationFromToView(
+                    isFromLocation: isPickup,
+                    deliveryServiceFromToCubit: deliveryCubit,
+                    getLocationFromToCubit: cubit,
+                  ),
                 ),
               ),
             );
@@ -509,11 +554,7 @@ class DeliveryServiceFromToView extends StatelessWidget {
                       ),
                       SizedBox(height: 4.h),
                       Text(
-                        isPickup
-                            ? (SharedPrefUtils.getData('pickup_location') ??
-                                subtitle)
-                            : (SharedPrefUtils.getData('dropoff_location') ??
-                                subtitle),
+                        displayAddress,
                         style: AppStyles.bodyText2.copyWith(
                           color: AppColors.grey,
                         ),

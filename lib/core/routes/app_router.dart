@@ -10,6 +10,7 @@ import 'package:manfaz/features/login/presentation/view/otp_verification_view.da
 import 'package:manfaz/features/login/presentation/view/success_verification_view.dart';
 import 'package:manfaz/features/onBoardings/presentation/views/on_boarding_view.dart';
 import '../../features/delivery/delivery_list_view_view/presentation/view/delivery_list_view_view.dart';
+import '../../features/delivery/delivery_service_from_to/presentation/controller/cubit/delivery_service_from_to_cubit.dart';
 import '../../features/delivery/delivery_service_from_to/presentation/view/delivery_service_from_to_view.dart';
 import '../../features/workers/worker_profile/presentation/views/worker_profile_view.dart';
 import '../../features/google_maps/get_location_from_to/presentation/controller/google_maps_cubit/get_location_from_to_cubit.dart';
@@ -95,8 +96,15 @@ class AppRouter {
 
       case Routes.deliveryServiceFromToView:
         return CupertinoPageRoute(
-            builder: (context) => BlocProvider(
-                  create: (context) => GetLocationFromToCubit()..init(),
+            builder: (context) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                      create: (context) => GetLocationFromToCubit()..init(),
+                    ),
+                    BlocProvider(
+                      create: (context) => DeliveryServiceFromToCubit(),
+                    ),
+                  ],
                   child: DeliveryServiceFromToView(),
                 ));
 
