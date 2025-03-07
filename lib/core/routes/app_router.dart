@@ -14,7 +14,7 @@ import '../../features/delivery/delivery_service_from_to/presentation/controller
 import '../../features/delivery/delivery_service_from_to/presentation/view/delivery_service_from_to_view.dart';
 import '../../features/workers/worker_profile/presentation/views/worker_profile_view.dart';
 import '../../features/google_maps/get_location_from_to/presentation/controller/google_maps_cubit/get_location_from_to_cubit.dart';
-import '../../features/services_list_view_view/presentation/views/services_list_view_view.dart';
+import '../../features/servicses/services_list_view_view/presentation/views/services_list_view_view.dart';
 import '../../features/login/presentation/controller/login_cubit/login_cubit.dart';
 import '../../features/workers/worker_list_view/presentation/views/worker_list_view_view.dart';
 import '../../features/register/presentation/controller/register_cubit/register_cubit.dart';
@@ -87,6 +87,7 @@ class AppRouter {
       case Routes.servicesListViewView:
         return CupertinoPageRoute(
             builder: (context) => ServicesListViewView(
+              arguments: settings.arguments as Map<String, dynamic>?,
                 ));
 
       case Routes.deliveryListViewView:

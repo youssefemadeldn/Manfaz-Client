@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
-import '../../../../../core/error/failure.dart';
-import '../../../data/model/parameters_service_model.dart';
+import '../../../../../../core/error/failure.dart';
+import '../../../data/model/parameters_services_list_model.dart';
 import '../../../domain/use_cases/get_services_parameters_use_case.dart';
 
 part 'service_list_view_state.dart';

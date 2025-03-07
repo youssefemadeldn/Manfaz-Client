@@ -4,11 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../core/routes/routes.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_styles.dart';
-import '../../../../core/widgets/cus_text_button.dart';
-import '../../data/model/parameters_service_model.dart';
+import '../../../../../core/routes/routes.dart';
+import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/theme/app_styles.dart';
+import '../../../../../core/widgets/cus_text_button.dart';
+import '../../data/model/parameters_services_list_model.dart';
 
 class ServicePosterDetails extends StatelessWidget {
   final ParametersServiceModel parametersServiceModel;

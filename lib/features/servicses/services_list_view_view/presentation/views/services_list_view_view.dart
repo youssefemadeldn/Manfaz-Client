@@ -2,17 +2,20 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
-import '../../../../core/di/di.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/widgets/error_message_widget.dart';
+import '../../../../../core/di/di.dart';
+import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/widgets/error_message_widget.dart';
 import '../controller/cubit/service_list_view_cubit.dart';
 import '../widgets/choose_your_service.dart';
 import '../widgets/service_poster_details.dart';
 
 class ServicesListViewView extends StatelessWidget {
+  final Map<String, dynamic>? arguments;
   const ServicesListViewView({
     super.key,
+    required this.arguments,
   });
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,7 @@ class ServicesListViewView extends StatelessWidget {
     return BlocProvider(
       create: (context) => getIt<ServiceListViewCubit>()
         ..getServicesParametersList(
-            categoryId: '67ac9ee57d681bdd84645a4d', type: 'service'),
+            categoryId: arguments?['categoryId'] ?? '', type: arguments?['type'] ?? 'service'),
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,

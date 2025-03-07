@@ -49,6 +49,10 @@ class HomeBottomSheetChildWidget extends StatelessWidget {
                       Navigator.pushNamed(
                         context,
                         Routes.servicesListViewView,
+                        arguments: {
+                          'categoryId': servicesList[index].categoryId,
+                          'type': 'service',
+                        },
                       );
                     },
                   );

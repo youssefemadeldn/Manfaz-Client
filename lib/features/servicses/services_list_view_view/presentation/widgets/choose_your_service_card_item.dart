@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
-import '../../../../core/theme/app_styles.dart';
-import '../../data/model/parameters_service_model.dart';
+import '../../../../../core/theme/app_styles.dart';
+import '../../data/model/parameters_services_list_model.dart';
 
 class ChooseYourServiceCardItem extends StatelessWidget {
   final ParametersServiceModel parametersServiceModel;

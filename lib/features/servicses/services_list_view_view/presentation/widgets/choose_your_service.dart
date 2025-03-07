@@ -2,8 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
-import 'package:manfaz/features/services_list_view_view/presentation/widgets/choose_your_service_card_item.dart';
-import '../../data/model/parameters_service_model.dart';
+import 'package:manfaz/features/servicses/services_list_view_view/presentation/widgets/choose_your_service_card_item.dart';
+import '../../data/model/parameters_services_list_model.dart';
 
 class ChooseYourService extends StatelessWidget {
   final List<ParametersServiceModel> parametersServicesList;
