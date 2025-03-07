@@ -16,6 +16,9 @@ class ServicesListViewView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ScrollController scrollController = ScrollController();
+    final List<GlobalKey> serviceKeys = [];
+
     return BlocProvider(
       create: (context) => getIt<ServiceListViewCubit>()
         ..getServicesParametersList(
@@ -38,12 +41,6 @@ class ServicesListViewView extends StatelessWidget {
             ),
             onPressed: () {},
           ),
-          // actions: [
-          //   IconButton(
-          //     icon: Icon(Icons.search, color: Colors.black),
-          //     onPressed: () {},
-          //   )
-          // ],
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -57,23 +54,30 @@ class ServicesListViewView extends StatelessWidget {
                 );
               } else if (state is ServiceListViewSuccess) {
                 final servicesList = state.parametersServicesListModel.data;
+                serviceKeys.clear();
+                serviceKeys.addAll(List.generate(
+                  servicesList?.length ?? 0,
+                  (index) => GlobalKey(),
+                ));
+                
                 return ListView(
+                  controller: scrollController,
                   physics: const BouncingScrollPhysics(),
                   children: [
-                    // Container(
-                    //   padding: EdgeInsets.only(bottom: 12),
-                    //   height: 200,
-                    //   child: Center(
-                    //     child: Image.asset(
-                    //       'assets/images/resized_services.png',
-                    //     ),
-                    //   ),
-                    // ),
                     ChooseYourService(
                       parametersServicesList: servicesList ?? [],
+                      onServiceTap: (index) {
+                        final targetContext = serviceKeys[index].currentContext;
+                        if (targetContext != null) {
+                          Scrollable.ensureVisible(
+                            targetContext,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeInOut,
+                          );
+                        }
+                      },
                     ),
                     SizedBox(height: 20),
-
                     Column(
                       children: [
                         ListView.builder(
@@ -83,6 +87,7 @@ class ServicesListViewView extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final parametersService = servicesList?[index];
                             return ServicePosterDetails(
+                              key: serviceKeys[index],
                               parametersServiceModel: parametersService!,
                             );
                           },

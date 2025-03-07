@@ -7,8 +7,12 @@ import '../../data/model/parameters_service_model.dart';
 
 class ChooseYourService extends StatelessWidget {
   final List<ParametersServiceModel> parametersServicesList;
+  final Function(int index)? onServiceTap;
+  
   const ChooseYourService({
-    super.key, required this.parametersServicesList ,
+    super.key,
+    required this.parametersServicesList,
+    this.onServiceTap,
   });
 
   @override
@@ -37,7 +41,7 @@ class ChooseYourService extends StatelessWidget {
               itemBuilder: (context, index) {
                 return ChooseYourServiceCardItem(
                   parametersServiceModel: parametersServicesList[index],
-                  onTap: () {},
+                  onTap: () => onServiceTap?.call(index),
                 );
               },
             ),
