@@ -8,13 +8,13 @@ import '../../../../core/routes/routes.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_styles.dart';
 import '../../../../core/widgets/cus_text_button.dart';
-import '../../../tabs/home_tab/data/models/services_based_on_category_model.dart';
+import '../../data/model/parameters_service_model.dart';
 
 class ServicePosterDetails extends StatelessWidget {
-  final ServiceModel serviceModel;
+  final ParametersServiceModel parametersServiceModel;
   const ServicePosterDetails({
     super.key,
-    required this.serviceModel,
+    required this.parametersServiceModel,
   });
 
   @override
@@ -25,12 +25,15 @@ class ServicePosterDetails extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 8.w),
           child: Row(
             children: [
-              Text(
-                serviceModel.name ?? 'null',
-                style: AppStyles.header2,
+              Flexible(
+                child: Text(
+                  parametersServiceModel.name ?? 'null',
+                  style: AppStyles.header2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-              if (serviceModel.availability!) ...[
-                const Spacer(),
+              if (parametersServiceModel.availability??true) ...[
+                SizedBox(width: 8.w),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                   decoration: BoxDecoration(
@@ -59,7 +62,7 @@ class ServicePosterDetails extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
                 child: CachedNetworkImage(
-                  imageUrl: serviceModel.imageUrl!,
+                  imageUrl: parametersServiceModel.imageUrl!,
                   placeholder: (context, url) => SizedBox(
                     height: 200.h,
                     child: Center(
@@ -83,7 +86,7 @@ class ServicePosterDetails extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      serviceModel.name ?? 'null',
+                      parametersServiceModel.name ?? 'null',
                       style: TextStyle(
                         color: Colors.green,
                         fontWeight: FontWeight.bold,
@@ -91,7 +94,7 @@ class ServicePosterDetails extends StatelessWidget {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      serviceModel.description ?? 'null',
+                      parametersServiceModel.description ?? 'null',
                       style: AppStyles.bodyText1.copyWith(
                         color: AppColors.textSecondary,
                         fontWeight: FontWeight.w500,
@@ -109,7 +112,7 @@ class ServicePosterDetails extends StatelessWidget {
                               style: AppStyles.bodyText1,
                             ),
                             Text(
-                              "\$${serviceModel.price?.toStringAsFixed(2)}",
+                              "\$${parametersServiceModel.price?.toStringAsFixed(2)}",
                               style: AppStyles.priceTag
                                   .copyWith(color: AppColors.textPrimary),
                             ),
@@ -124,7 +127,7 @@ class ServicePosterDetails extends StatelessWidget {
                               style: TextStyle(color: Colors.grey),
                             ),
                             Text(
-                              "${serviceModel.duration?.toString()} ${tr("ServicesListViewView.hours")}",
+                              "${parametersServiceModel.duration?.toString()} ${tr("ServicesListViewView.hours")}",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -140,7 +143,7 @@ class ServicePosterDetails extends StatelessWidget {
                               children: [
                                 Icon(Icons.star, color: Colors.amber, size: 20),
                                 Text(
-                                  " ${serviceModel.rating}/5",
+                                  " ${parametersServiceModel.rating}/5",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14,
@@ -149,7 +152,7 @@ class ServicePosterDetails extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              "(${serviceModel.ratingCount} ${'reviews'})",
+                              "(${parametersServiceModel.ratingCount} ${'reviews'})",
                               style: TextStyle(
                                 color: Colors.grey,
                                 fontSize: 12,
@@ -159,7 +162,7 @@ class ServicePosterDetails extends StatelessWidget {
                         ),
                       ],
                     ),
-                    if (serviceModel.warranty != null && serviceModel.warranty! > 0) ...[
+                    if (parametersServiceModel.warranty != null && parametersServiceModel.warranty! > 0) ...[
                       SizedBox(height: 10),
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
@@ -174,7 +177,7 @@ class ServicePosterDetails extends StatelessWidget {
                                  color: AppColors.primary, size: 16),
                             SizedBox(width: 4),
                             Text(
-                              "${serviceModel.warranty} ${tr("ServicesListViewView.months_warranty")}",
+                              "${parametersServiceModel.warranty} ${tr("ServicesListViewView.months_warranty")}",
                               style: TextStyle(
                                 color: AppColors.primary,
                                 fontSize: 12,
@@ -185,7 +188,7 @@ class ServicePosterDetails extends StatelessWidget {
                         ),
                       ),
                     ],
-                    if (serviceModel.installmentAvailable == !true) ...[
+                    if (parametersServiceModel.installmentAvailable == !true) ...[
                       SizedBox(height: 10),
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
@@ -203,7 +206,7 @@ class ServicePosterDetails extends StatelessWidget {
                             ),
                             SizedBox(width: 4),
                             Text(
-                              "${'installment available'} - ${serviceModel.monthlyInstallment?.toStringAsFixed(2)}/mo",
+                              "${'installment available'} - ${parametersServiceModel.monthlyInstallment?.toStringAsFixed(2)}/mo",
                               style: TextStyle(
                                 color: Colors.blue,
                                 fontSize: 12,

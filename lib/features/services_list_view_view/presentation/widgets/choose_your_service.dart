@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/features/services_list_view_view/presentation/widgets/choose_your_service_card_item.dart';
-
-import '../../../tabs/home_tab/data/models/services_based_on_category_model.dart';
+import '../../data/model/parameters_service_model.dart';
 
 class ChooseYourService extends StatelessWidget {
-  final List<ServiceModel> servicesList;
+  final List<ParametersServiceModel> parametersServicesList;
   const ChooseYourService({
-    super.key, required this.servicesList,
+    super.key, required this.parametersServicesList ,
   });
 
   @override
@@ -34,10 +33,11 @@ class ChooseYourService extends StatelessWidget {
             height: 110,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: servicesList.length,
+              itemCount: parametersServicesList.length,
               itemBuilder: (context, index) {
                 return ChooseYourServiceCardItem(
-                  serviceModel: servicesList[index],
+                  parametersServiceModel: parametersServicesList[index],
+                  onTap: () {},
                 );
               },
             ),

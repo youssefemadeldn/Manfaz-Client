@@ -10,4 +10,5 @@ class ApiConstant {
   static const String epGetServicesBasedOnCategory = 'services';
   static const String epResendVerificationCode = 'auth/resend-verification-code';
   static const String epWorkerList = 'workers';
+  static const String epServiceParameters = 'service-parameters';
 }

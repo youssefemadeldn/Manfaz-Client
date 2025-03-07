@@ -20,7 +20,6 @@ import '../../features/workers/worker_list_view/presentation/views/worker_list_v
 import '../../features/register/presentation/controller/register_cubit/register_cubit.dart';
 import '../../features/register/presentation/views/register_view.dart';
 import '../../features/send_an_offer/presentation/views/send_an_offer_view.dart';
-import '../../features/tabs/home_tab/data/models/services_based_on_category_model.dart';
 import '../di/di.dart';
 
 class AppRouter {
@@ -88,7 +87,6 @@ class AppRouter {
       case Routes.servicesListViewView:
         return CupertinoPageRoute(
             builder: (context) => ServicesListViewView(
-                  servicesList: settings.arguments as List<ServiceModel>,
                 ));
 
       case Routes.deliveryListViewView:

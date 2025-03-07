@@ -49,7 +49,6 @@ class HomeBottomSheetChildWidget extends StatelessWidget {
                       Navigator.pushNamed(
                         context,
                         Routes.servicesListViewView,
-                        arguments: servicesList,
                       );
                     },
                   );

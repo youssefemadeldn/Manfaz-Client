@@ -114,7 +114,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                                 curve: Curves.easeInOut,
                               );
                             } else {
-                              Navigator.pushNamed(context, Routes.loginView);
+                              Navigator.pushReplacementNamed(context, Routes.loginView);
                             }
                           },
                           style: ElevatedButton.styleFrom(
