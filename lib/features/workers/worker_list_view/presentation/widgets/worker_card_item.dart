@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/routes/routes.dart';
+import 'package:manfaz/core/widgets/cus_text_button.dart';
 import 'package:manfaz/features/workers/worker_list_view/presentation/widgets/skill_chip.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import '../../../../../core/theme/app_colors.dart';
@@ -43,13 +45,15 @@ class WorkerCardItem extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color:worker.isAvailable! ? AppColors.accentGreen.withOpacity(0.5): AppColors.grey.withOpacity(0.5),
+                          color: worker.isAvailable!
+                              ? AppColors.accentGreen.withOpacity(0.5)
+                              : AppColors.grey.withOpacity(0.5),
                           width: 2,
                         ),
                       ),
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                        worker.profileImage??''),
+                        backgroundImage:
+                            NetworkImage(worker.profileImage ?? ''),
                         radius: 40.r,
                         backgroundColor: AppColors.primary,
                       ),
@@ -62,7 +66,9 @@ class WorkerCardItem extends StatelessWidget {
                         height: 24.h,
                         width: 24.w,
                         decoration: BoxDecoration(
-                          color:worker.isAvailable!? AppColors.accentGreen:AppColors.grey  ,
+                          color: worker.isAvailable!
+                              ? AppColors.accentGreen
+                              : AppColors.grey,
                           shape: BoxShape.circle,
                           border: Border.all(
                             color: AppColors.surface,
@@ -86,14 +92,14 @@ class WorkerCardItem extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  worker.user?.name??'',
+                                  worker.user?.name ?? '',
                                   style: AppStyles.listTileTitle.copyWith(
                                     color: AppColors.textPrimary,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
                                 Text(
-                                  worker.title??'',
+                                  worker.title ?? '',
                                   style: AppStyles.listTileSubtitle,
                                 ),
                               ],
@@ -126,18 +132,18 @@ class WorkerCardItem extends StatelessWidget {
                           SizedBox(width: 4.w),
                           Expanded(
                             child: Text(
-                              worker.user?.locations?[0].address??
-                              '',
+                              worker.user?.locations?[0].address ?? '',
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
-
                               style: AppStyles.caption.copyWith(
                                 color: AppColors.textSecondary,
                               ),
                             ),
                           ),
                           SizedBox(width: 12.w),
-                          AvailableNowStatus(availableNow: worker.isAvailable??false,),
+                          AvailableNowStatus(
+                            availableNow: worker.isAvailable ?? false,
+                          ),
                         ],
                       ),
                     ],
@@ -160,7 +166,7 @@ class WorkerCardItem extends StatelessWidget {
             Wrap(
               spacing: 8.w,
               runSpacing: 8.h,
-              children:worker.skills!.map((e)=> SkillChip(skill: e)).toList(),
+              children: worker.skills!.map((e) => SkillChip(skill: e)).toList(),
             ),
             SizedBox(height: 16.h),
             // Bottom Row with Price, Success Rate and Total Earned
@@ -209,7 +215,7 @@ class WorkerCardItem extends StatelessWidget {
                     CircularPercentIndicator(
                       radius: 16.r,
                       lineWidth: 3.0,
-                      percent: worker.jobSuccessRate?.toDouble()??0,
+                      percent: worker.jobSuccessRate?.toDouble() ?? 0,
                       center: Text(
                         worker.jobSuccessRate.toString(),
                         style: AppStyles.caption.copyWith(
@@ -233,19 +239,37 @@ class WorkerCardItem extends StatelessWidget {
             ),
             SizedBox(height: 12.h),
             // Total Earned
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-              decoration: BoxDecoration(
-                color: AppColors.secondaryMuted,
-                borderRadius: BorderRadius.circular(8.r),
-              ),
-              child: Text(
-                '\$${worker.totalEarned}K+ earned',
-                style: AppStyles.caption.copyWith(
-                  color: AppColors.secondary,
-                  fontWeight: FontWeight.w600,
+            Row(
+              children: [
+                Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                  decoration: BoxDecoration(
+                    color: AppColors.secondaryMuted,
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: Text(
+                    '\$${worker.totalEarned}K+ earned',
+                    style: AppStyles.caption.copyWith(
+                      color: AppColors.secondary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
-              ),
+                SizedBox(width: 80.w),
+                Expanded(
+                  flex: 1,
+                  child: CustomButton(
+                    borderRadius: 20.r,
+                    backgroundColor: AppColors.primary,
+                    onPressed: () {},
+                    child: Text(
+                      "Order Now",
+                      style: AppStyles.buttonText,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

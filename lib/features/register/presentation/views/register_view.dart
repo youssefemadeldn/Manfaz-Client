@@ -70,7 +70,6 @@ class _RegisterViewState extends State<RegisterView> {
                       // );
                       Navigator.pushNamed(context, Routes.otpVerificationView);
                     case RegisterError():
-                      DialogHelper.hideLoadingDialog(context);
                       DialogHelper.showCustomDialog(
                         context: context,
                         title: Text(
@@ -234,12 +233,20 @@ class _RegisterViewState extends State<RegisterView> {
                       BlocBuilder<RegisterCubit, RegisterState>(
                         builder: (context, state) {
                           if (state is RegisterLoading) {
-                            return CupertinoActivityIndicator(
-                              animating: true,
-                              radius: 15.r,
+                            return CustomButton(
+                              buttonHeight: 60.h,
+                              onPressed: () {},
+                              backgroundColor: AppColors.primary,
+                              borderSideColor: AppColors.primary,
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: AppColors.white,
+                                ),
+                              ),
                             );
                           }
                           return CustomButton(
+                            buttonHeight: 60.h,
                             onPressed: () async {
                               if (formKey.currentState!.validate()) {
                                 await BlocProvider.of<RegisterCubit>(context)

@@ -91,7 +91,9 @@ class WorkerProfileView extends StatelessWidget {
                               ),
                             ),
                             SizedBox(width: 16.w),
-                            AvailableNowStatus(availableNow: false,),
+                            AvailableNowStatus(
+                              availableNow: false,
+                            ),
                           ],
                         ),
                       ],
@@ -220,32 +222,32 @@ class WorkerProfileView extends StatelessWidget {
                   _buildReviewsList(),
                   SizedBox(height: 32.h),
                   // Contact Button
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomButton(
-                        buttonWidth: 150.w,
-                        onPressed: () {},
-                        borderSideColor: AppColors.primary,
-                        backgroundColor: AppColors.primary,
-                        child: Text(
-                          'Order Now',
-                          style: AppStyles.buttonText,
-                        ),
-                      ),
-                      SizedBox(width: 16.w),
-                      CustomButton(
-                        buttonWidth: double.minPositive,
-                        onPressed: () {},
-                        borderSideColor: AppColors.primary,
-                        backgroundColor: AppColors.primary,
-                        child: SvgPicture.asset(
-                          'assets/images/worker_profile/cart.svg',
-                          color: AppColors.white,
-                        ),
-                      ),
-                    ],
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  CustomButton(
+                    // buttonWidth: 150.w,
+                    onPressed: () {},
+                    borderSideColor: AppColors.primary,
+                    backgroundColor: AppColors.primary,
+                    child: Text(
+                      'Order Now',
+                      style: AppStyles.buttonText,
+                    ),
                   ),
+                  // SizedBox(width: 16.w),
+                  // CustomButton(
+                  //   buttonWidth: double.minPositive,
+                  //   onPressed: () {},
+                  //   borderSideColor: AppColors.primary,
+                  //   backgroundColor: AppColors.primary,
+                  //   child: SvgPicture.asset(
+                  //     'assets/images/worker_profile/cart.svg',
+                  //     color: AppColors.white,
+                  //   ),
+                  // ),
+                  // ],
+                  // ),
                 ],
               ),
             ),

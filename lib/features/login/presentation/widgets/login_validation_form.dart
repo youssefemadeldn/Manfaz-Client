@@ -50,6 +50,7 @@ class _LoginValidationFormState extends State<LoginValidationForm> {
           ),
           SizedBox(height: 15.h),
           DropdownButtonFormField<String>(
+            borderRadius: BorderRadius.circular(23.r),
             value: userType,
             isExpanded: true,
             dropdownColor: AppColors.background,
@@ -148,12 +149,20 @@ class _LoginValidationFormState extends State<LoginValidationForm> {
           BlocBuilder<LoginCubit, LoginState>(
             builder: (context, state) {
               if (state is LoginLoading) {
-                return CupertinoActivityIndicator(
-                  animating: true,
-                  radius: 15.r,
+                return CustomButton(
+                  buttonHeight: 60.h,
+                  onPressed: () {},
+                  backgroundColor: AppColors.primary,
+                  borderSideColor: AppColors.primary,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.white,
+                    ),
+                  ),
                 );
               }
               return CustomButton(
+                buttonHeight: 60.h,
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     context.read<LoginCubit>().emitLoginState();

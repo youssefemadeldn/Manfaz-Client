@@ -27,70 +27,68 @@ class HomeTab extends StatelessWidget {
           create: (context) => getIt<SearchBarCubit>(),
         ),
       ],
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Enhanced Search Bar with Location
-            Container(
-              // padding: EdgeInsets.all(16.w),
-              decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.05),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(24.r),
-                  bottomRight: Radius.circular(24.r),
+      child: Builder(
+        builder: (context) => RefreshIndicator(
+          color: AppColors.primary,
+          backgroundColor: Colors.white,
+          strokeWidth: 2.5,
+          onRefresh: () async {
+            return context.read<HomeTabCubit>().emitHomeTabStates(context);
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                // Enhanced Search Bar with Location
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withOpacity(0.05),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(24.r),
+                      bottomRight: Radius.circular(24.r),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      HomeSearchBarWidget(),
+                      SizedBox(height: 10.h),
+                    ],
+                  ),
                 ),
-              ),
-              child: Column(
-                children: [
-                  HomeSearchBarWidget(),
-                  SizedBox(height: 10.h),
-                  // Row(
-                  //   children: [
-                  //     Icon(Icons.location_on, color: AppColors.primary),
-                  //     SizedBox(width: 8.w),
-                  //     Expanded(
-                  //       child: Text(
-                  //         tr('home.delivery_location'),
-                  //         style: AppStyles.bodyText2.copyWith(
-                  //           color: AppColors.textSecondary,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                ],
-              ),
-            ),
-            // Main Services Section
-            Padding(
-              padding: EdgeInsets.all(16.w),
-              child: BlocBuilder<HomeTabCubit, HomeTabState>(
-                builder: (context, state) {
-                  if (state is HomeTabSuccessState) {
-                    List<CategoryModel>? allList = state.homeTapModel.data;
-                    var deliverList = allList
-                        ?.where((element) => element.type == 'delivery')
-                        .toList();
-                    var serviceList = allList
-                        ?.where((element) => element.type == 'service')
-                        .map((allList) =>
-                            ServiceModel.fromJson(allList.toJson()))
-                        .toList();
+                // Main Services Section
+                Padding(
+                  padding: EdgeInsets.all(16.w),
+                  child: BlocBuilder<HomeTabCubit, HomeTabState>(
+                    builder: (context, state) {
+                      print(
+                          'Current State: $state'); // Debug print to track state
+                      if (state is HomeTabSuccessState) {
+                        List<CategoryModel>? allList = state.homeTapModel.data;
+                        var deliverList = allList
+                            ?.where((element) => element.type == 'delivery')
+                            .toList();
+                        var serviceList = allList
+                            ?.where((element) => element.type == 'service')
+                            .map((allList) =>
+                                ServiceModel.fromJson(allList.toJson()))
+                            .toList();
 
-                    return HomeTabSuccess(
-                        categoriesDeliveryList: deliverList!,
-                        categoriesServiceList: serviceList!);
-                  } else if (state is HomeTabErrorState) {
-                    return ErrorMessageWidget(
-                        errorMessage: state.failure.errorMessage);
-                  } else if (state is HomeTabLoadingState) {
-                    return HomeTabShimmerLoading();
-                  }
-                  return Container();
-                },
-              ),
+                        return HomeTabSuccess(
+                            categoriesDeliveryList: deliverList!,
+                            categoriesServiceList: serviceList!);
+                      } else if (state is HomeTabErrorState) {
+                        return ErrorMessageWidget(
+                            errorMessage: state.failure.errorMessage);
+                      } else if (state is HomeTabLoadingState) {
+                        return HomeTabShimmerLoading();
+                      }
+                      return SizedBox.shrink();
+                    },
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

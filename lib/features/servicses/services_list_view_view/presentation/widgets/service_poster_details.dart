@@ -232,7 +232,7 @@ class ServicePosterDetails extends StatelessWidget {
                             borderRadius: 8,
                             onPressed: findTalentsOnPressed ?? () {},
                             child: Text(
-                              tr("ServicesListViewView.find_talents"),
+                              tr("ServicesListViewView.find_worker"),
                               style: AppStyles.buttonText,
                             ),
                           ),
