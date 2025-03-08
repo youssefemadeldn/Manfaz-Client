@@ -11,7 +11,8 @@ import '../../../../../../core/di/di.dart';
 import '../../../../../../core/helper/easy_localization_helper.dart';
 
 @Injectable(as: BaseServicesListViewRemoteDataSource)
-class ServicesListViewRemoteDataSourceImpl implements BaseServicesListViewRemoteDataSource {
+class ServicesListViewRemoteDataSourceImpl
+    implements BaseServicesListViewRemoteDataSource {
   ApiManager apiManager = getIt<ApiManager>();
 
   @override
@@ -20,27 +21,28 @@ class ServicesListViewRemoteDataSourceImpl implements BaseServicesListViewRemote
     required String type,
   }) async {
     // try {
-      final currentLanguage = EasyLocalizationHelper().getCurrentLocale();
-      
-      var response = await apiManager.getData(
-        ApiConstant.epServiceParameters,
-        queryParameters: {
-          'lang': currentLanguage,
-          'categoryId': categoryId,
-          'type': type,
-        },
-      );
-      
-      ParametersServicesListModel servicesListModel = ParametersServicesListModel.fromJson(response.data);
+    final currentLanguage = EasyLocalizationHelper().getCurrentLocale();
 
-      if (NetworkHelper.isValidResponse(code: servicesListModel.code)) {
-        return right(servicesListModel);
-      } else {
-        return left(ServerFailure(
-          failureTitle: 'Server Failure',
-          errorMessage: servicesListModel.message!,
-        ));
-      }
+    var response = await apiManager.getData(
+      ApiConstant.epServiceParameters,
+      queryParameters: {
+        'lang': currentLanguage,
+        'categoryId': categoryId,
+        'type': type,
+      },
+    );
+
+    ParametersServicesListModel servicesListModel =
+        ParametersServicesListModel.fromJson(response.data);
+
+    if (NetworkHelper.isValidResponse(code: servicesListModel.code)) {
+      return right(servicesListModel);
+    } else {
+      return left(ServerFailure(
+        failureTitle: 'Server Failure',
+        errorMessage: servicesListModel.message!,
+      ));
+    }
     // }
     //  catch (e) {
     //   return left(Failure(

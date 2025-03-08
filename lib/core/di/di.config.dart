@@ -45,18 +45,18 @@ import '../../features/register/domain/use_cases/register_use_case.dart'
     as _i51;
 import '../../features/register/presentation/controller/register_cubit/register_cubit.dart'
     as _i274;
-import '../../features/services_list_view_view/data/data_source/remote/base_services_list_view_remote_data_source.dart'
-    as _i762;
-import '../../features/services_list_view_view/data/data_source/remote/services_list_view_remote_data_source_impl.dart'
-    as _i1006;
-import '../../features/services_list_view_view/data/repo/services_list_view_repo_impl.dart'
-    as _i1049;
-import '../../features/services_list_view_view/domain/repo/base_services_list_view_repo.dart'
-    as _i379;
-import '../../features/services_list_view_view/domain/use_cases/get_services_parameters_use_case.dart'
-    as _i323;
-import '../../features/services_list_view_view/presentation/controller/cubit/service_list_view_cubit.dart'
-    as _i1059;
+import '../../features/servicses/services_list_view_view/data/data_source/remote/base_services_list_view_remote_data_source.dart'
+    as _i500;
+import '../../features/servicses/services_list_view_view/data/data_source/remote/services_list_view_remote_data_source_impl.dart'
+    as _i525;
+import '../../features/servicses/services_list_view_view/data/repo/services_list_view_repo_impl.dart'
+    as _i1073;
+import '../../features/servicses/services_list_view_view/domain/repo/base_services_list_view_repo.dart'
+    as _i600;
+import '../../features/servicses/services_list_view_view/domain/use_cases/get_services_parameters_use_case.dart'
+    as _i117;
+import '../../features/servicses/services_list_view_view/presentation/controller/cubit/service_list_view_cubit.dart'
+    as _i1002;
 import '../../features/tabs/home_tab/data/data_source/remote/base_home_tab_remote_data_source.dart'
     as _i710;
 import '../../features/tabs/home_tab/data/data_source/remote/home_tab_remote_data_source_impl.dart'
@@ -112,8 +112,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i834.HomeTabRemoteDataSourceImpl());
     gh.factory<_i852.BaseWorkerListRemoteDataSource>(
         () => _i365.WorkerListRemoteDataSourceImpl());
-    gh.factory<_i762.BaseServicesListViewRemoteDataSource>(
-        () => _i1006.ServicesListViewRemoteDataSourceImpl());
+    gh.factory<_i500.BaseServicesListViewRemoteDataSource>(
+        () => _i525.ServicesListViewRemoteDataSourceImpl());
     gh.factory<_i940.BaseLoginRemoteDataSource>(
         () => _i892.LoginRemoteDataSourceImpl());
     gh.factory<_i63.BaseResendVerificationCodeRemoteDataSource>(
@@ -129,27 +129,27 @@ extension GetItInjectableX on _i174.GetIt {
         _i241.WorkerListRepoImpl(gh<_i852.BaseWorkerListRemoteDataSource>()));
     gh.factory<_i375.BaseLoginRepo>(
         () => _i176.LoginRepoImpl(gh<_i940.BaseLoginRemoteDataSource>()));
+    gh.factory<_i600.BaseServicesListViewRepo>(() =>
+        _i1073.ServicesListViewRepoImpl(
+            gh<_i500.BaseServicesListViewRemoteDataSource>()));
     gh.factory<_i24.ResendVerificationCodeUseCase>(() =>
         _i24.ResendVerificationCodeUseCase(
             gh<_i994.BaseResendVerificationCodeRepo>()));
+    gh.factory<_i117.ServicesListParametersUseCase>(() =>
+        _i117.ServicesListParametersUseCase(
+            gh<_i600.BaseServicesListViewRepo>()));
     gh.factory<_i320.WorkerListUseCase>(
         () => _i320.WorkerListUseCase(gh<_i1003.BaseWorkerListRepo>()));
     gh.factory<_i191.LoginUseCase>(
         () => _i191.LoginUseCase(gh<_i375.BaseLoginRepo>()));
     gh.factory<_i950.BaseRegisterRepo>(() => _i612.RegisterRepoImpl(
         registerRemoteDataSource: gh<_i579.BaseRegisterRemoteDataSource>()));
-    gh.factory<_i379.BaseServicesListViewRepo>(() =>
-        _i1049.ServicesListViewRepoImpl(
-            gh<_i762.BaseServicesListViewRemoteDataSource>()));
-    gh.factory<_i323.ServicesListParametersUseCase>(() =>
-        _i323.ServicesListParametersUseCase(
-            gh<_i379.BaseServicesListViewRepo>()));
-    gh.factory<_i1059.ServiceListViewCubit>(() =>
-        _i1059.ServiceListViewCubit(gh<_i323.ServicesListParametersUseCase>()));
     gh.factory<_i586.GetServicesBasedOnCategoryUseCase>(() =>
         _i586.GetServicesBasedOnCategoryUseCase(gh<_i364.BaseHomeTabRepo>()));
     gh.factory<_i59.HomeTabUseCase>(
         () => _i59.HomeTabUseCase(gh<_i364.BaseHomeTabRepo>()));
+    gh.factory<_i1002.ServiceListViewCubit>(() =>
+        _i1002.ServiceListViewCubit(gh<_i117.ServicesListParametersUseCase>()));
     gh.factory<_i256.ServicesCubit>(() => _i256.ServicesCubit(
         getServicesBasedOnCategoryUseCase:
             gh<_i586.GetServicesBasedOnCategoryUseCase>()));

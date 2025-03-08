@@ -2,7 +2,7 @@ class ParametersServicesListModel {
   bool? status;
   String? message;
   int? code;
-  List<ParametersServiceModel>? data;
+  List<ParametersServiceDetailsModel>? data;
 
   ParametersServicesListModel(
       {this.status, this.message, this.code, this.data});
@@ -12,9 +12,9 @@ class ParametersServicesListModel {
     message = json['message'];
     code = json['code'];
     if (json['data'] != null) {
-      data = <ParametersServiceModel>[];
+      data = <ParametersServiceDetailsModel>[];
       json['data'].forEach((v) {
-        data!.add(new ParametersServiceModel.fromJson(v));
+        data!.add(new ParametersServiceDetailsModel.fromJson(v));
       });
     }
   }
@@ -31,172 +31,127 @@ class ParametersServicesListModel {
   }
 }
 
-class ParametersServiceModel {
+class ParametersServiceDetailsModel {
   String? id;
   String? name;
-  String? slug;
   String? description;
-  String? categoryId;
-  String? type;
-  Null? subType;
-  double? price;
-  int? duration;
-  bool? availability;
   String? imageUrl;
   String? iconUrl;
-  int? rating;
-  int? ratingCount;
+  int? price;
   int? warranty;
   bool? installmentAvailable;
   int? installmentMonths;
   double? monthlyInstallment;
+  String? serviceId;
+  String? status;
+  int? sortOrder;
+  bool? availability;
+  int? duration;
+  int? rating;
+  int? ratingCount;
+  List<Faqs>? faqs;
+  List<String>? whatIncluded;
   String? createdAt;
   String? updatedAt;
-  Category? category;
 
-  ParametersServiceModel(
+  ParametersServiceDetailsModel(
       {this.id,
       this.name,
-      this.slug,
       this.description,
-      this.categoryId,
-      this.type,
-      this.subType,
-      this.price,
-      this.duration,
-      this.availability,
       this.imageUrl,
       this.iconUrl,
-      this.rating,
-      this.ratingCount,
+      this.price,
       this.warranty,
       this.installmentAvailable,
       this.installmentMonths,
       this.monthlyInstallment,
+      this.serviceId,
+      this.status,
+      this.sortOrder,
+      this.rating,
+      this.ratingCount,
+      this.faqs,
+      this.whatIncluded,
       this.createdAt,
       this.updatedAt,
-      this.category});
+      this.availability,
+      this.duration});
 
-  ParametersServiceModel.fromJson(Map<String, dynamic> json) {
+  ParametersServiceDetailsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    slug = json['slug'];
     description = json['description'];
-    categoryId = json['categoryId'];
-    type = json['type'];
-    subType = json['subType'];
-    price = json['price']?.toDouble() ?? 0;
-    duration = json['duration'];
-    availability = json['availability'];
     imageUrl = json['imageUrl'];
     iconUrl = json['iconUrl'];
+    price = json['price'];
+    warranty = json['warranty'];
+    installmentAvailable = json['installmentAvailable'];
+    installmentMonths = json['installmentMonths'];
+    monthlyInstallment = json['monthlyInstallment']?.toDouble() ?? 0.0;
+    serviceId = json['serviceId'];
+    status = json['status'];
+    availability = json['availability'] ?? true;
+    duration = json['duration'] ?? 0;
+    sortOrder = json['sortOrder'];
     rating = json['rating'];
     ratingCount = json['ratingCount'];
-    warranty = json['warranty']?.toInt() ?? 0;
-    installmentAvailable = json['installmentAvailable'];
-    installmentMonths = json['installmentMonths']?.toInt() ?? 0;
-    monthlyInstallment = json['monthlyInstallment']?.toDouble()??0;
+    if (json['faqs'] != null) {
+      faqs = <Faqs>[];
+      json['faqs'].forEach((v) {
+        faqs!.add(new Faqs.fromJson(v));
+      });
+    }
+    if (json['whatIncluded'] != null) {
+      whatIncluded = json['whatIncluded'].cast<String>();
+    }
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    category = json['category'] != null
-        ? new Category.fromJson(json['category'])
-        : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
-    data['slug'] = this.slug;
     data['description'] = this.description;
-    data['categoryId'] = this.categoryId;
-    data['type'] = this.type;
-    data['subType'] = this.subType;
-    data['price'] = this.price;
-    data['duration'] = this.duration;
-    data['availability'] = this.availability;
     data['imageUrl'] = this.imageUrl;
     data['iconUrl'] = this.iconUrl;
-    data['rating'] = this.rating;
-    data['ratingCount'] = this.ratingCount;
+    data['price'] = this.price;
     data['warranty'] = this.warranty;
     data['installmentAvailable'] = this.installmentAvailable;
     data['installmentMonths'] = this.installmentMonths;
     data['monthlyInstallment'] = this.monthlyInstallment;
+    data['serviceId'] = this.serviceId;
+    data['status'] = this.status;
+    data['sortOrder'] = this.sortOrder;
+    data['rating'] = this.rating;
+    data['availability'] = this.availability;
+    data['duration'] = this.duration;
+    data['ratingCount'] = this.ratingCount;
+    if (this.faqs != null) {
+      data['faqs'] = this.faqs!.map((v) => v.toJson()).toList();
+    }
+    data['whatIncluded'] = this.whatIncluded;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
-    if (this.category != null) {
-      data['category'] = this.category!.toJson();
-    }
     return data;
   }
 }
 
-class Category {
-  String? id;
-  String? name;
-  String? subName;
-  String? slug;
-  String? description;
-  String? info;
-  int? price;
-  String? imageUrl;
-  String? type;
-  Null? subType;
-  String? status;
-  int? sortOrder;
-  String? createdAt;
-  String? updatedAt;
+class Faqs {
+  String? question;
+  String? answer;
 
-  Category(
-      {this.id,
-      this.name,
-      this.subName,
-      this.slug,
-      this.description,
-      this.info,
-      this.price,
-      this.imageUrl,
-      this.type,
-      this.subType,
-      this.status,
-      this.sortOrder,
-      this.createdAt,
-      this.updatedAt});
+  Faqs({this.question, this.answer});
 
-  Category.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    subName = json['subName'];
-    slug = json['slug'];
-    description = json['description'];
-    info = json['info'];
-    price = json['price'];
-    imageUrl = json['imageUrl'];
-    type = json['type'];
-    subType = json['subType'];
-    status = json['status'];
-    sortOrder = json['sortOrder'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
+  Faqs.fromJson(Map<String, dynamic> json) {
+    question = json['question'];
+    answer = json['answer'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['subName'] = this.subName;
-    data['slug'] = this.slug;
-    data['description'] = this.description;
-    data['info'] = this.info;
-    data['price'] = this.price;
-    data['imageUrl'] = this.imageUrl;
-    data['type'] = this.type;
-    data['subType'] = this.subType;
-    data['status'] = this.status;
-    data['sortOrder'] = this.sortOrder;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
+    data['question'] = this.question;
+    data['answer'] = this.answer;
     return data;
   }
 }

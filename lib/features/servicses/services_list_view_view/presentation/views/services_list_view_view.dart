@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 import '../../../../../core/di/di.dart';
+import '../../../../../core/routes/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/widgets/error_message_widget.dart';
 import '../controller/cubit/service_list_view_cubit.dart';
@@ -16,7 +17,6 @@ class ServicesListViewView extends StatelessWidget {
     required this.arguments,
   });
 
-
   @override
   Widget build(BuildContext context) {
     final ScrollController scrollController = ScrollController();
@@ -25,7 +25,8 @@ class ServicesListViewView extends StatelessWidget {
     return BlocProvider(
       create: (context) => getIt<ServiceListViewCubit>()
         ..getServicesParametersList(
-            categoryId: arguments?['categoryId'] ?? '', type: arguments?['type'] ?? 'service'),
+            categoryId: arguments?['categoryId'] ?? '',
+            type: arguments?['type'] ?? 'service'),
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -62,13 +63,13 @@ class ServicesListViewView extends StatelessWidget {
                   servicesList?.length ?? 0,
                   (index) => GlobalKey(),
                 ));
-                
+
                 return ListView(
                   controller: scrollController,
                   physics: const BouncingScrollPhysics(),
                   children: [
                     ChooseYourService(
-                      parametersServicesList: servicesList ?? [],
+                      parametersServiceDetailsModel: servicesList ?? [],
                       onServiceTap: (index) {
                         final targetContext = serviceKeys[index].currentContext;
                         if (targetContext != null) {
@@ -91,7 +92,18 @@ class ServicesListViewView extends StatelessWidget {
                             final parametersService = servicesList?[index];
                             return ServicePosterDetails(
                               key: serviceKeys[index],
-                              parametersServiceModel: parametersService!,
+                              parametersServiceDetailsModel: parametersService!,
+                              findTalentsOnPressed: () {
+                                Navigator.pushNamed(
+                                    context, Routes.workerListViewView);
+                              },
+                              detailsOnPressed: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  Routes.serviceDetailsView,
+                                  arguments: parametersService,
+                                );
+                              },
                             );
                           },
                         ),

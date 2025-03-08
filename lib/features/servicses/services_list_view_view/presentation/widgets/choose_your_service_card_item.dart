@@ -6,11 +6,11 @@ import '../../../../../core/theme/app_styles.dart';
 import '../../data/model/parameters_services_list_model.dart';
 
 class ChooseYourServiceCardItem extends StatelessWidget {
-  final ParametersServiceModel parametersServiceModel;
+  final ParametersServiceDetailsModel parametersServiceDetailsModel;
   final VoidCallback onTap;
   const ChooseYourServiceCardItem({
     super.key,
-    required this.parametersServiceModel,
+    required this.parametersServiceDetailsModel,
     required this.onTap,
   });
 
@@ -34,7 +34,7 @@ class ChooseYourServiceCardItem extends StatelessWidget {
               ),
               child: Center(
                 child: CachedNetworkImage(
-                  imageUrl: parametersServiceModel.iconUrl ?? 'null',
+                  imageUrl: parametersServiceDetailsModel.iconUrl ?? 'null',
                   placeholder: (context, url) => CircularProgressIndicator(),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
@@ -44,7 +44,7 @@ class ChooseYourServiceCardItem extends StatelessWidget {
             SizedBox(
               width: 85.w,
               child: Text(
-                (parametersServiceModel.name ?? '')
+                (parametersServiceDetailsModel.name ?? '')
                     .split(' ')
                     .take(3)
                     .join(' '),

@@ -20,4 +20,5 @@ class Routes {
   static const String servicesListViewView = '/servicesListViewView';
   static const String deliveryListViewView = '/deliverListViewView';
   static const String deliveryServiceFromToView = '/deliveryServiceFromToView';
+  static const String serviceDetailsView = '/ServiceDetailsView';
 }
