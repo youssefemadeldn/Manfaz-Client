@@ -92,7 +92,7 @@ class WorkerProfileView extends StatelessWidget {
                             ),
                             SizedBox(width: 16.w),
                             AvailableNowStatus(
-                              availableNow: false,
+                              availableNow: true,
                             ),
                           ],
                         ),
