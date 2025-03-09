@@ -150,7 +150,7 @@ class _LoginValidationFormState extends State<LoginValidationForm> {
             builder: (context, state) {
               if (state is LoginLoading) {
                 return CustomButton(
-                  buttonHeight: 60.h,
+                  buttonHeight: 70.h,
                   onPressed: () {},
                   backgroundColor: AppColors.primary,
                   borderSideColor: AppColors.primary,
@@ -162,7 +162,7 @@ class _LoginValidationFormState extends State<LoginValidationForm> {
                 );
               }
               return CustomButton(
-                buttonHeight: 60.h,
+                buttonHeight: 70.h,
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     context.read<LoginCubit>().emitLoginState();

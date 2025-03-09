@@ -10,7 +10,6 @@ import '../../../../google_maps/get_location_from_to/presentation/views/get_loca
 import '../../../../google_maps/get_location_from_to/presentation/controller/google_maps_cubit/get_location_from_to_cubit.dart';
 import '../controller/cubit/delivery_service_from_to_cubit.dart';
 
-
 class DeliveryServiceFromToView extends StatelessWidget {
   const DeliveryServiceFromToView({super.key});
 
@@ -319,7 +318,8 @@ class DeliveryServiceFromToView extends StatelessWidget {
                             AppColors.success,
                             false,
                           ).animate().fadeIn(delay: 1100.ms).slideX(),
-                          SizedBox(height: MediaQuery.sizeOf(context).height * 0.15),
+                          SizedBox(
+                              height: MediaQuery.sizeOf(context).height * 0.15),
                         ],
                       ),
                     ),
@@ -344,16 +344,20 @@ class DeliveryServiceFromToView extends StatelessWidget {
                   ),
                 ],
               ),
-              child: BlocBuilder<DeliveryServiceFromToCubit, DeliveryServiceFromToState>(
+              child: BlocBuilder<DeliveryServiceFromToCubit,
+                  DeliveryServiceFromToState>(
                 builder: (context, state) {
                   final cubit = context.read<DeliveryServiceFromToCubit>();
-                  final hasValidLocations = cubit.fromLat != null && cubit.toLat != null;
-                  final costDisplay = hasValidLocations && cubit.deliveryCost != null
-                      ? "${cubit.deliveryCost!.toStringAsFixed(2)} EGP"
-                      : "--,-- EGP";
-                  final distanceDisplay = hasValidLocations && cubit.distanceInKm != null
-                      ? "(${cubit.distanceInKm!.toStringAsFixed(1)} km)"
-                      : "";
+                  final hasValidLocations =
+                      cubit.fromLat != null && cubit.toLat != null;
+                  final costDisplay =
+                      hasValidLocations && cubit.deliveryCost != null
+                          ? "${cubit.deliveryCost!.toStringAsFixed(2)} EGP"
+                          : "--,-- EGP";
+                  final distanceDisplay =
+                      hasValidLocations && cubit.distanceInKm != null
+                          ? "(${cubit.distanceInKm!.toStringAsFixed(1)} km)"
+                          : "";
 
                   return Column(
                     mainAxisSize: MainAxisSize.min,
@@ -373,7 +377,8 @@ class DeliveryServiceFromToView extends StatelessWidget {
                                   fontSize: 18.sp,
                                 ),
                               ),
-                              if (hasValidLocations && cubit.distanceInKm != null)
+                              if (hasValidLocations &&
+                                  cubit.distanceInKm != null)
                                 Text(
                                   distanceDisplay,
                                   style: AppStyles.caption.copyWith(
@@ -479,10 +484,14 @@ class DeliveryServiceFromToView extends StatelessWidget {
       builder: (context, state) {
         String displayAddress = subtitle;
         if (state is DeliveryServiceFromToLocationSelected) {
-          if (isPickup && context.read<DeliveryServiceFromToCubit>().fromAddress != null) {
-            displayAddress = context.read<DeliveryServiceFromToCubit>().fromAddress!;
-          } else if (!isPickup && context.read<DeliveryServiceFromToCubit>().toAddress != null) {
-            displayAddress = context.read<DeliveryServiceFromToCubit>().toAddress!;
+          if (isPickup &&
+              context.read<DeliveryServiceFromToCubit>().fromAddress != null) {
+            displayAddress =
+                context.read<DeliveryServiceFromToCubit>().fromAddress!;
+          } else if (!isPickup &&
+              context.read<DeliveryServiceFromToCubit>().toAddress != null) {
+            displayAddress =
+                context.read<DeliveryServiceFromToCubit>().toAddress!;
           }
         }
 

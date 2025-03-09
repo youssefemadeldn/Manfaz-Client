@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/di/di.dart';
 import 'package:manfaz/features/tabs/home_tab/presentation/widgets/states/home_tab_error.dart';
+import '../../../../../core/routes/routes.dart';
 import '../../../../../core/theme/app_styles.dart';
 import '../../../../../core/widgets/ArrowBackIosButton.dart';
 import '../controller/cubit/worker_list_cubit.dart';
@@ -33,10 +34,10 @@ class WorkerListViewView extends StatelessWidget {
                 if (state is WorkerListLoading) {
                   return Expanded(
                     child: ListView.builder(
-
                       itemCount: 6, // Show 6 shimmer items while loading
                       itemBuilder: (context, index) => Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 8.h),
                         child: Shimmer.fromColors(
                           baseColor: Colors.grey[300]!,
                           highlightColor: Colors.grey[100]!,
@@ -69,7 +70,8 @@ class WorkerListViewView extends StatelessWidget {
                                     SizedBox(width: 16.w),
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           // Name placeholder
                                           Container(
@@ -77,7 +79,8 @@ class WorkerListViewView extends StatelessWidget {
                                             width: 150.w,
                                             decoration: BoxDecoration(
                                               color: Colors.white,
-                                              borderRadius: BorderRadius.circular(4),
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
                                             ),
                                           ),
                                           SizedBox(height: 8.h),
@@ -87,7 +90,8 @@ class WorkerListViewView extends StatelessWidget {
                                             width: 100.w,
                                             decoration: BoxDecoration(
                                               color: Colors.white,
-                                              borderRadius: BorderRadius.circular(4),
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
                                             ),
                                           ),
                                           SizedBox(height: 12.h),
@@ -108,7 +112,8 @@ class WorkerListViewView extends StatelessWidget {
                                                 width: 120.w,
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  borderRadius: BorderRadius.circular(4),
+                                                  borderRadius:
+                                                      BorderRadius.circular(4),
                                                 ),
                                               ),
                                             ],
@@ -155,7 +160,8 @@ class WorkerListViewView extends StatelessWidget {
                                 SizedBox(height: 16.h),
                                 // Bottom row placeholder
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       height: 32.h,
@@ -182,17 +188,20 @@ class WorkerListViewView extends StatelessWidget {
                       ),
                     ),
                   );
-                } 
-                else if (state is WorkerListSuccess) {
-                  var workList=  state.workerListModel.data;
+                } else if (state is WorkerListSuccess) {
+                  var workList = state.workerListModel.data;
                   return Expanded(
                     child: ListView.builder(
                       itemCount: workList!.length,
-                      itemBuilder: (context, index) => WorkerCardItem(worker: workList[index],),
+                      itemBuilder: (context, index) => WorkerCardItem(
+                          worker: workList[index],
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, Routes.createServiceOrderView);
+                          }),
                     ),
                   );
-                } else 
-                if (state is WorkerListFailure) {
+                } else if (state is WorkerListFailure) {
                   return ErrorMessageWidget(
                     errorMessage: state.failure.errorMessage,
                   );

@@ -12,6 +12,7 @@ import 'package:manfaz/features/onBoardings/presentation/views/on_boarding_view.
 import '../../features/delivery/delivery_list_view_view/presentation/view/delivery_list_view_view.dart';
 import '../../features/delivery/delivery_service_from_to/presentation/controller/cubit/delivery_service_from_to_cubit.dart';
 import '../../features/delivery/delivery_service_from_to/presentation/view/delivery_service_from_to_view.dart';
+import '../../features/order/create_service_order/presentation/views/create_service_order_view.dart';
 import '../../features/servicses/service_details_view/presentation/view/service_details_view.dart';
 import '../../features/servicses/services_list_view_view/data/model/parameters_services_list_model.dart';
 import '../../features/workers/worker_profile/presentation/views/worker_profile_view.dart';
@@ -115,6 +116,9 @@ class AppRouter {
                   parametersServiceDetailsModel:
                       settings.arguments as ParametersServiceDetailsModel,
                 ));
+
+      case Routes.createServiceOrderView:
+        return CupertinoPageRoute(builder: (_) => CreateServiceOrderView());
 
       default:
         return CupertinoPageRoute(

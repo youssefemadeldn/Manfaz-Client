@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import '../../../../../core/routes/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
 import '../../../services_list_view_view/data/model/parameters_services_list_model.dart';
@@ -572,7 +573,7 @@ class ServiceDetailsView extends StatelessWidget {
         child: FloatingActionButton.extended(
           onPressed: parametersServiceDetailsModel.availability == true
               ? () {
-                  // TODO: Implement booking logic
+                  Navigator.pushNamed(context, Routes.workerListViewView);
                 }
               : null,
           backgroundColor: parametersServiceDetailsModel.availability == true

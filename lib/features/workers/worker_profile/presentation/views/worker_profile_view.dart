@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/core/widgets/ArrowBackIosButton.dart';
 import 'package:manfaz/core/widgets/cus_text_button.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
+import '../../../../../core/routes/routes.dart';
 import '../../../worker_list_view/presentation/widgets/available_now_status.dart';
 
 class WorkerProfileView extends StatelessWidget {
@@ -226,8 +226,10 @@ class WorkerProfileView extends StatelessWidget {
                   //   mainAxisAlignment: MainAxisAlignment.center,
                   //   children: [
                   CustomButton(
-                    // buttonWidth: 150.w,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(
+                          context, Routes.createServiceOrderView);
+                    },
                     borderSideColor: AppColors.primary,
                     backgroundColor: AppColors.primary,
                     child: Text(

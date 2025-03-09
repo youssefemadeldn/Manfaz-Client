@@ -15,15 +15,17 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await SharedPrefUtils.init();
   Bloc.observer = MyBlocObserver();
+  bool? isLoggedIn = await SharedPrefUtils.getData('hasLoggedIn');
   runApp(EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],
       path: 'assets/lang', // Path to your language files
       fallbackLocale: const Locale('en'), // Default language
-      child: const ManfazApp()));
+      child: ManfazApp(isLoggedIn: isLoggedIn ?? false)));
 }
 
 class ManfazApp extends StatelessWidget {
-  const ManfazApp({super.key});
+  final bool isLoggedIn;
+  const ManfazApp({super.key, required this.isLoggedIn});
 
   // This widget is the root of your application.
   @override
@@ -37,7 +39,8 @@ class ManfazApp extends StatelessWidget {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         debugShowCheckedModeBanner: false,
-        initialRoute: Routes.loginView,
+        initialRoute:
+            isLoggedIn ? Routes.cusBottomNavigationBar : Routes.onBoarding,
         onGenerateRoute: AppRouter.generateRoute,
         theme: ThemeData(
           appBarTheme: AppBarTheme(

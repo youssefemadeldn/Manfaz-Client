@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/routes/routes.dart';
@@ -11,10 +11,12 @@ import '../../data/models/worker_list_model.dart';
 import 'available_now_status.dart';
 
 class WorkerCardItem extends StatelessWidget {
+  final VoidCallback onPressed;
   final WorkerLite worker;
   const WorkerCardItem({
     super.key,
     required this.worker,
+    required this.onPressed,
   });
 
   @override
@@ -42,6 +44,8 @@ class WorkerCardItem extends StatelessWidget {
                   children: [
                     Container(
                       padding: EdgeInsets.all(3.w),
+                      height: 80.h,
+                      width: 80.w,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
@@ -51,11 +55,16 @@ class WorkerCardItem extends StatelessWidget {
                           width: 2,
                         ),
                       ),
-                      child: CircleAvatar(
-                        backgroundImage:
-                            NetworkImage(worker.profileImage ?? ''),
-                        radius: 40.r,
-                        backgroundColor: AppColors.primary,
+                      child: CachedNetworkImage(
+                        imageUrl: worker.profileImage ?? '',
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                        imageBuilder: (context, imageProvider) => CircleAvatar(
+                          backgroundImage: imageProvider,
+                          radius: 80.r,
+                        ),
                       ),
                     ),
                     // Online Status Badge
@@ -262,7 +271,7 @@ class WorkerCardItem extends StatelessWidget {
                   child: CustomButton(
                     borderRadius: 20.r,
                     backgroundColor: AppColors.primary,
-                    onPressed: () {},
+                    onPressed: onPressed,
                     child: Text(
                       "Order Now",
                       style: AppStyles.buttonText,
