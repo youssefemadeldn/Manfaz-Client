@@ -12,39 +12,55 @@ import 'package:flutter/material.dart' as _i409;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../features/auth/login/data/data_source/remote/base_login_remote_data_source.dart'
+    as _i187;
+import '../../features/auth/login/data/data_source/remote/base_resend_verification_code_remote_data_source.dart'
+    as _i216;
+import '../../features/auth/login/data/data_source/remote/login_remote_data_source_impl.dart'
+    as _i300;
+import '../../features/auth/login/data/data_source/remote/resend_verification_code_remote_data_source_impl.dart'
+    as _i157;
+import '../../features/auth/login/data/repo/login_repo_impl.dart' as _i1001;
+import '../../features/auth/login/data/repo/resend_verification_code_repo_impl.dart'
+    as _i970;
+import '../../features/auth/login/domain/repo/base_login_repo.dart' as _i752;
+import '../../features/auth/login/domain/repo/base_resend_verification_code_repo.dart'
+    as _i385;
+import '../../features/auth/login/domain/use_cases/login_use_case.dart' as _i50;
+import '../../features/auth/login/domain/use_cases/resend_verification_code_use_case.dart'
+    as _i496;
+import '../../features/auth/login/presentation/controller/login_cubit/login_cubit.dart'
+    as _i1070;
+import '../../features/auth/login/presentation/controller/otp_verification/otp_verification_cubit.dart'
+    as _i579;
+import '../../features/auth/register/data/data_source/remote/base_register_remote_data_source.dart'
+    as _i347;
+import '../../features/auth/register/data/data_source/remote/register_remote_data_source.dart'
+    as _i258;
+import '../../features/auth/register/data/repo/register_repo_impl.dart'
+    as _i934;
+import '../../features/auth/register/domain/repo/base_register_repo.dart'
+    as _i88;
+import '../../features/auth/register/domain/use_cases/register_use_case.dart'
+    as _i118;
+import '../../features/auth/register/presentation/controller/register_cubit/register_cubit.dart'
+    as _i844;
 import '../../features/delivery/delivery_service_from_to/presentation/controller/cubit/delivery_service_from_to_cubit.dart'
     as _i790;
-import '../../features/login/data/data_source/remote/base_login_remote_data_source.dart'
-    as _i940;
-import '../../features/login/data/data_source/remote/base_resend_verification_code_remote_data_source.dart'
-    as _i63;
-import '../../features/login/data/data_source/remote/login_remote_data_source_impl.dart'
-    as _i892;
-import '../../features/login/data/data_source/remote/resend_verification_code_remote_data_source_impl.dart'
-    as _i804;
-import '../../features/login/data/repo/login_repo_impl.dart' as _i176;
-import '../../features/login/data/repo/resend_verification_code_repo_impl.dart'
-    as _i618;
-import '../../features/login/domain/repo/base_login_repo.dart' as _i375;
-import '../../features/login/domain/repo/base_resend_verification_code_repo.dart'
-    as _i994;
-import '../../features/login/domain/use_cases/login_use_case.dart' as _i191;
-import '../../features/login/domain/use_cases/resend_verification_code_use_case.dart'
-    as _i24;
-import '../../features/login/presentation/controller/login_cubit/login_cubit.dart'
-    as _i868;
-import '../../features/login/presentation/controller/otp_verification/otp_verification_cubit.dart'
-    as _i163;
-import '../../features/register/data/data_source/remote/base_register_remote_data_source.dart'
-    as _i579;
-import '../../features/register/data/data_source/remote/register_remote_data_source.dart'
-    as _i448;
-import '../../features/register/data/repo/register_repo_impl.dart' as _i612;
-import '../../features/register/domain/repo/base_register_repo.dart' as _i950;
-import '../../features/register/domain/use_cases/register_use_case.dart'
-    as _i51;
-import '../../features/register/presentation/controller/register_cubit/register_cubit.dart'
-    as _i274;
+import '../../features/order/create_service_order/data/data_source/remote/base_create_service_order_remote_data_source.dart'
+    as _i416;
+import '../../features/order/create_service_order/data/data_source/remote/create_service_order_remote_data_source_impl.dart'
+    as _i638;
+import '../../features/order/create_service_order/data/repo/create_service_order_repo_impl.dart'
+    as _i1056;
+import '../../features/order/create_service_order/domin/repo/base_create_service_order_repo.dart'
+    as _i32;
+import '../../features/order/create_service_order/domin/use_cases/create_service_order_use_case.dart'
+    as _i449;
+import '../../features/order/create_service_order/presentation/controller/create_service_order_cubit/create_service_order_cubit.dart'
+    as _i482;
+import '../../features/order/create_service_order/presentation/controller/service_order_location_picker_cubit/service_order_location_picker_cubit.dart'
+    as _i996;
 import '../../features/servicses/services_list_view_view/data/data_source/remote/base_services_list_view_remote_data_source.dart'
     as _i500;
 import '../../features/servicses/services_list_view_view/data/data_source/remote/services_list_view_remote_data_source_impl.dart'
@@ -88,6 +104,7 @@ import '../../features/workers/worker_list_view/domain/use_cases/worker_list_use
 import '../../features/workers/worker_list_view/presentation/controller/cubit/worker_list_cubit.dart'
     as _i525;
 import '../network/api_manager.dart' as _i119;
+import '../network/realtime/web_socket_service.dart' as _i489;
 import 'di.dart' as _i913;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -105,45 +122,53 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i790.DeliveryServiceFromToCubit>(
         () => _i790.DeliveryServiceFromToCubit());
     gh.factory<_i320.SearchBarCubit>(() => _i320.SearchBarCubit());
+    gh.factory<_i996.ServiceOrderLocationPickerCubit>(
+        () => _i996.ServiceOrderLocationPickerCubit());
     gh.singleton<_i409.GlobalKey<_i409.NavigatorState>>(
         () => registerModule.navigatorKey);
     gh.singleton<_i119.ApiManager>(() => _i119.ApiManager());
+    gh.singleton<_i489.WebSocketService>(() => _i489.WebSocketService());
     gh.factory<_i710.BaseHomeTabRemoteDataSource>(
         () => _i834.HomeTabRemoteDataSourceImpl());
+    gh.factory<_i347.BaseRegisterRemoteDataSource>(
+        () => _i258.RegisterRemoteDataSource());
+    gh.factory<_i187.BaseLoginRemoteDataSource>(
+        () => _i300.LoginRemoteDataSourceImpl());
     gh.factory<_i852.BaseWorkerListRemoteDataSource>(
         () => _i365.WorkerListRemoteDataSourceImpl());
     gh.factory<_i500.BaseServicesListViewRemoteDataSource>(
         () => _i525.ServicesListViewRemoteDataSourceImpl());
-    gh.factory<_i940.BaseLoginRemoteDataSource>(
-        () => _i892.LoginRemoteDataSourceImpl());
-    gh.factory<_i63.BaseResendVerificationCodeRemoteDataSource>(
-        () => _i804.ResendVerificationCodeRemoteDataSourceImpl());
-    gh.factory<_i579.BaseRegisterRemoteDataSource>(
-        () => _i448.RegisterRemoteDataSource());
+    gh.factory<_i416.BaseCreateServiceOrderRemoteDataSource>(
+        () => _i638.CreateServiceOrderRemoteDataSourceImpl());
+    gh.factory<_i216.BaseResendVerificationCodeRemoteDataSource>(
+        () => _i157.ResendVerificationCodeRemoteDataSourceImpl());
     gh.factory<_i364.BaseHomeTabRepo>(
         () => _i107.HomeTabRepoImpl(gh<_i710.BaseHomeTabRemoteDataSource>()));
-    gh.factory<_i994.BaseResendVerificationCodeRepo>(() =>
-        _i618.ResendVerificationCodeRepoImpl(
-            gh<_i63.BaseResendVerificationCodeRemoteDataSource>()));
     gh.factory<_i1003.BaseWorkerListRepo>(() =>
         _i241.WorkerListRepoImpl(gh<_i852.BaseWorkerListRemoteDataSource>()));
-    gh.factory<_i375.BaseLoginRepo>(
-        () => _i176.LoginRepoImpl(gh<_i940.BaseLoginRemoteDataSource>()));
+    gh.factory<_i385.BaseResendVerificationCodeRepo>(() =>
+        _i970.ResendVerificationCodeRepoImpl(
+            gh<_i216.BaseResendVerificationCodeRemoteDataSource>()));
     gh.factory<_i600.BaseServicesListViewRepo>(() =>
         _i1073.ServicesListViewRepoImpl(
             gh<_i500.BaseServicesListViewRemoteDataSource>()));
-    gh.factory<_i24.ResendVerificationCodeUseCase>(() =>
-        _i24.ResendVerificationCodeUseCase(
-            gh<_i994.BaseResendVerificationCodeRepo>()));
+    gh.factory<_i32.BaseCreateServiceOrderRepo>(() =>
+        _i1056.CreateServiceOrderRepoImpl(
+            gh<_i416.BaseCreateServiceOrderRemoteDataSource>()));
+    gh.factory<_i752.BaseLoginRepo>(
+        () => _i1001.LoginRepoImpl(gh<_i187.BaseLoginRemoteDataSource>()));
     gh.factory<_i117.ServicesListParametersUseCase>(() =>
         _i117.ServicesListParametersUseCase(
             gh<_i600.BaseServicesListViewRepo>()));
+    gh.factory<_i449.CreateServiceOrderUseCase>(() =>
+        _i449.CreateServiceOrderUseCase(gh<_i32.BaseCreateServiceOrderRepo>()));
     gh.factory<_i320.WorkerListUseCase>(
         () => _i320.WorkerListUseCase(gh<_i1003.BaseWorkerListRepo>()));
-    gh.factory<_i191.LoginUseCase>(
-        () => _i191.LoginUseCase(gh<_i375.BaseLoginRepo>()));
-    gh.factory<_i950.BaseRegisterRepo>(() => _i612.RegisterRepoImpl(
-        registerRemoteDataSource: gh<_i579.BaseRegisterRemoteDataSource>()));
+    gh.factory<_i88.BaseRegisterRepo>(() => _i934.RegisterRepoImpl(
+        registerRemoteDataSource: gh<_i347.BaseRegisterRemoteDataSource>()));
+    gh.factory<_i496.ResendVerificationCodeUseCase>(() =>
+        _i496.ResendVerificationCodeUseCase(
+            gh<_i385.BaseResendVerificationCodeRepo>()));
     gh.factory<_i586.GetServicesBasedOnCategoryUseCase>(() =>
         _i586.GetServicesBasedOnCategoryUseCase(gh<_i364.BaseHomeTabRepo>()));
     gh.factory<_i59.HomeTabUseCase>(
@@ -153,18 +178,23 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i256.ServicesCubit>(() => _i256.ServicesCubit(
         getServicesBasedOnCategoryUseCase:
             gh<_i586.GetServicesBasedOnCategoryUseCase>()));
-    gh.factory<_i51.RegisterUseCase>(
-        () => _i51.RegisterUseCase(registerRepo: gh<_i950.BaseRegisterRepo>()));
-    gh.factory<_i868.LoginCubit>(
-        () => _i868.LoginCubit(loginUseCase: gh<_i191.LoginUseCase>()));
-    gh.factory<_i163.OtpVerificationCubit>(() =>
-        _i163.OtpVerificationCubit(gh<_i24.ResendVerificationCodeUseCase>()));
-    gh.factory<_i274.RegisterCubit>(
-        () => _i274.RegisterCubit(registerUseCase: gh<_i51.RegisterUseCase>()));
+    gh.factory<_i50.LoginUseCase>(
+        () => _i50.LoginUseCase(gh<_i752.BaseLoginRepo>()));
+    gh.factory<_i579.OtpVerificationCubit>(() =>
+        _i579.OtpVerificationCubit(gh<_i496.ResendVerificationCodeUseCase>()));
+    gh.factory<_i482.CreateServiceOrderCubit>(() =>
+        _i482.CreateServiceOrderCubit(
+            createServiceOrderUseCase: gh<_i449.CreateServiceOrderUseCase>()));
+    gh.factory<_i118.RegisterUseCase>(
+        () => _i118.RegisterUseCase(registerRepo: gh<_i88.BaseRegisterRepo>()));
+    gh.factory<_i844.RegisterCubit>(() =>
+        _i844.RegisterCubit(registerUseCase: gh<_i118.RegisterUseCase>()));
     gh.factory<_i525.WorkerListCubit>(() => _i525.WorkerListCubit(
         workerListUseCase: gh<_i320.WorkerListUseCase>()));
     gh.factory<_i600.HomeTabCubit>(
         () => _i600.HomeTabCubit(homeTabUseCase: gh<_i59.HomeTabUseCase>()));
+    gh.factory<_i1070.LoginCubit>(
+        () => _i1070.LoginCubit(loginUseCase: gh<_i50.LoginUseCase>()));
     return this;
   }
 }

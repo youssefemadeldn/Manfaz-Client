@@ -36,9 +36,11 @@ class ApiManager {
     String endpoint, {
     Map<String, dynamic>? body,
     Map<String, dynamic>? headers,
+    Map<String, String>? queryParameters,
   }) async {
     return await dio.post(
       ApiConstant.baseUrl + endpoint,
+      queryParameters: queryParameters,
       data: body,
       options: Options(
         headers: headers,

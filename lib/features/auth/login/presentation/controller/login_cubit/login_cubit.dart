@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:manfaz/core/error/failure.dart';
 import 'package:manfaz/features/auth/login/domain/use_cases/login_use_case.dart';
 import 'package:manfaz/features/auth/login/presentation/controller/login_cubit/login_state.dart';
 

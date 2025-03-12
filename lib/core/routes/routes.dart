@@ -22,4 +22,7 @@ class Routes {
   static const String deliveryServiceFromToView = '/deliveryServiceFromToView';
   static const String serviceDetailsView = '/ServiceDetailsView';
   static const String createServiceOrderView = '/createServiceOrderView';
+  // service order location picker
+  static const String serviceOrderLocationPickerView =
+      '/serviceOrderLocationPickerView';
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-
+import 'package:manfaz/core/helper/dialog_helper.dart';
+import '../../../../../core/routes/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
+import '../controller/create_service_order_cubit/create_service_order_cubit.dart';
 
 class CreateServiceOrderView extends StatefulWidget {
   const CreateServiceOrderView({super.key});
@@ -14,12 +17,246 @@ class CreateServiceOrderView extends StatefulWidget {
 
 class _CreateServiceOrderViewState extends State<CreateServiceOrderView> {
   String? selectedPaymentMethod;
+  Map<String, dynamic>? selectedLocation;
   final List<String> paymentMethods = [
     'Cash',
     'Credit Card',
     'Tamara',
     'Tabby'
   ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              SliverToBoxAdapter(
+                child: Transform.translate(
+                  offset: Offset(0, -20.h),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.background,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(24.r),
+                        topRight: Radius.circular(24.r),
+                      ),
+                    ),
+                    child: Padding(
+                      padding:
+                          EdgeInsets.only(left: 16.w, right: 16.w, top: 80.h),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(20.w),
+                            decoration: BoxDecoration(
+                              color: AppColors.surface,
+                              borderRadius: BorderRadius.circular(16.r),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  blurRadius: 20,
+                                  offset: const Offset(0, 10),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 80.w,
+                                  height: 80.w,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        AppColors.primary,
+                                        AppColors.primary.withOpacity(0.8),
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    ),
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color:
+                                            AppColors.primary.withOpacity(0.3),
+                                        blurRadius: 15,
+                                        offset: const Offset(0, 8),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Icon(
+                                    Icons.cleaning_services_rounded,
+                                    color: Colors.white,
+                                    size: 35.w,
+                                  ),
+                                ).animate().scale(delay: 200.ms),
+                                SizedBox(width: 16.w),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Service Order",
+                                        style: AppStyles.header2.copyWith(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                          .animate()
+                                          .fadeIn(delay: 300.ms)
+                                          .slideX(),
+                                      SizedBox(height: 6.h),
+                                      Text(
+                                        "Create your service request with detailed instructions",
+                                        style: AppStyles.bodyText2.copyWith(
+                                          color: AppColors.grey,
+                                          height: 1.4,
+                                        ),
+                                      )
+                                          .animate()
+                                          .fadeIn(delay: 400.ms)
+                                          .slideX(),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 24.h),
+                          _buildSectionTitle('Location'),
+                          _buildLocationTile(
+                            'Service Location',
+                            'Select service location',
+                            Icons.location_on_rounded,
+                            AppColors.primary,
+                          ),
+                          SizedBox(height: 24.h),
+                          _buildSectionTitle('Notes'),
+                          _buildTextField('Add any notes...', 3),
+                          SizedBox(height: 32.h),
+                          _buildPriceInfo(),
+                          SizedBox(height: 32.h),
+                          _buildPaymentMethods(),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).padding.bottom + 80.h),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              padding: EdgeInsets.all(16.w),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, -5),
+                  ),
+                ],
+              ),
+              child: BlocConsumer<CreateServiceOrderCubit,
+                  CreateServiceOrderState>(
+                listener: (context, state) {
+                  if (state is CreateServiceOrderSuccess) {
+                    DialogHelper.showCustomDialog(
+                      context: context,
+                      title: Text(
+                        'Order Added',
+                        style: AppStyles.header2,
+                      ),
+                      content: Text(
+                        "Your service order has been created successfully",
+                        style: AppStyles.bodyText1,
+                      ),
+                      onConfirm: () {
+                        Navigator.pushNamed(
+                            context, Routes.cusBottomNavigationBar);
+                      },
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  if (state is CreateServiceOrderLoading) {
+                    return SizedBox(
+                        width: double.infinity,
+                        height: 50.h,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25.r),
+                            ),
+                            elevation: 0,
+                          ),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ));
+                  }
+                  return SizedBox(
+                    width: double.infinity,
+                    height: 50.h,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        context
+                            .read<CreateServiceOrderCubit>()
+                            .createServiceOrder(
+                              userId: "67c97fd167f7e1ed2e3f0151",
+                              serviceId: "67bba6a9bfafebd083f69fe2",
+                              providerId: "67c8a4d243ce89f4ea372898",
+                              notes: "يرجى استخدام مواد تنظيف صديقة للبيئة.",
+                              locationId: "67c8aea424687f1a50697c36",
+                              price: 50.0,
+                              duration: 60,
+                              status: "pending",
+                              totalAmount: 50.0,
+                              paymentStatus: "pending",
+                              type: "service",
+                              paymentMethod: "cash",
+                            );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25.r),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: Text(
+                        "Create Order",
+                        style: AppStyles.buttonText.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18.sp,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ).animate().fadeIn(delay: 1200.ms).slideY(begin: 1, end: 0),
+        ],
+      ),
+    );
+  }
 
   Widget _buildSectionTitle(String title) {
     return Padding(
@@ -35,50 +272,59 @@ class _CreateServiceOrderViewState extends State<CreateServiceOrderView> {
 
   Widget _buildLocationTile(
       String title, String hint, IconData icon, Color color) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 8.h),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-        leading: Container(
-          padding: EdgeInsets.all(10.w),
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
-            shape: BoxShape.circle,
-          ),
-          child: Icon(icon, color: color),
+    return Builder(
+      builder: (context) => Container(
+        margin: EdgeInsets.symmetric(vertical: 8.h),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
-        title: Text(
-          title,
-          style: AppStyles.bodyText2.copyWith(
-            color: AppColors.textPrimary,
-            fontWeight: FontWeight.w500,
+        child: ListTile(
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+          leading: Container(
+            padding: EdgeInsets.all(10.w),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.1),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: color),
           ),
-        ),
-        subtitle: Text(
-          hint,
-          style: AppStyles.bodyText2.copyWith(
+          title: Text(
+            title,
+            style: AppStyles.bodyText2.copyWith(
+              color: AppColors.textPrimary,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          subtitle: Text(
+            selectedLocation != null ? selectedLocation!['address'] : hint,
+            style: AppStyles.bodyText2.copyWith(
+              color: AppColors.grey,
+            ),
+          ),
+          trailing: Icon(
+            Icons.arrow_forward_ios_rounded,
             color: AppColors.grey,
+            size: 16.sp,
           ),
+          onTap: () async {
+            final result = await Navigator.pushNamed(
+                context, Routes.serviceOrderLocationPickerView);
+            if (result != null) {
+              setState(() {
+                selectedLocation = result as Map<String, dynamic>;
+              });
+            }
+          },
         ),
-        trailing: Icon(
-          Icons.arrow_forward_ios_rounded,
-          color: AppColors.grey,
-          size: 16.sp,
-        ),
-        onTap: () {
-          // TODO: Implement location selection
-        },
       ),
     ).animate().fadeIn(delay: 300.ms).slideX();
   }
@@ -97,6 +343,8 @@ class _CreateServiceOrderViewState extends State<CreateServiceOrderView> {
         ],
       ),
       child: TextField(
+        controller:
+            BlocProvider.of<CreateServiceOrderCubit>(context).notesController,
         maxLines: maxLines,
         decoration: InputDecoration(
           hintText: hint,
@@ -294,223 +542,5 @@ class _CreateServiceOrderViewState extends State<CreateServiceOrderView> {
       default:
         return Icons.payment;
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          CustomScrollView(
-            physics: const BouncingScrollPhysics(),
-            slivers: [
-              // SliverAppBar(
-              //   expandedHeight: 300.h,
-              //   pinned: true,
-              //   backgroundColor: AppColors.primary,
-              //   leading: IconButton(
-              //     icon: Container(
-              //       padding: EdgeInsets.all(8.w),
-              //       decoration: BoxDecoration(
-              //         color: AppColors.white.withOpacity(0.2),
-              //         shape: BoxShape.circle,
-              //       ),
-              //       child: const Icon(Icons.arrow_back_ios,
-              //           color: AppColors.white, size: 20),
-              //     ),
-              //     onPressed: () => Navigator.pop(context),
-              //   ).animate().fadeIn(delay: 300.ms).slideX(),
-              //   flexibleSpace: FlexibleSpaceBar(
-              //     background: Stack(
-              //       fit: StackFit.expand,
-              //       children: [
-              //         Image.network(
-              //           'https://img.freepik.com/free-photo/young-handsome-man-choosing-clothes-shop_1303-19720.jpg',
-              //           fit: BoxFit.cover,
-              //         ).animate().fadeIn(duration: 800.ms),
-              //         Container(
-              //           decoration: BoxDecoration(
-              //             gradient: LinearGradient(
-              //               begin: Alignment.topCenter,
-              //               end: Alignment.bottomCenter,
-              //               colors: [
-              //                 Colors.transparent,
-              //                 Colors.black.withOpacity(0.6),
-              //               ],
-              //             ),
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-              SliverToBoxAdapter(
-                child: Transform.translate(
-                  offset: Offset(0, -20.h),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.background,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(24.r),
-                        topRight: Radius.circular(24.r),
-                      ),
-                    ),
-                    child: Padding(
-                      padding:
-                          EdgeInsets.only(left: 16.w, right: 16.w, top: 80.h),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(20.w),
-                            decoration: BoxDecoration(
-                              color: AppColors.surface,
-                              borderRadius: BorderRadius.circular(16.r),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.05),
-                                  blurRadius: 20,
-                                  offset: const Offset(0, 10),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 80.w,
-                                  height: 80.w,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        AppColors.primary,
-                                        AppColors.primary.withOpacity(0.8),
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                    ),
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color:
-                                            AppColors.primary.withOpacity(0.3),
-                                        blurRadius: 15,
-                                        offset: const Offset(0, 8),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Icon(
-                                    Icons.cleaning_services_rounded,
-                                    color: Colors.white,
-                                    size: 35.w,
-                                  ),
-                                ).animate().scale(delay: 200.ms),
-                                SizedBox(width: 16.w),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Service Order",
-                                        style: AppStyles.header2.copyWith(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      )
-                                          .animate()
-                                          .fadeIn(delay: 300.ms)
-                                          .slideX(),
-                                      SizedBox(height: 6.h),
-                                      Text(
-                                        "Create your service request with detailed instructions",
-                                        style: AppStyles.bodyText2.copyWith(
-                                          color: AppColors.grey,
-                                          height: 1.4,
-                                        ),
-                                      )
-                                          .animate()
-                                          .fadeIn(delay: 400.ms)
-                                          .slideX(),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 24.h),
-                          _buildSectionTitle('Location'),
-                          _buildLocationTile(
-                            'Service Location',
-                            'Select service location',
-                            Icons.location_on_rounded,
-                            AppColors.primary,
-                          ),
-                          SizedBox(height: 24.h),
-                          _buildSectionTitle('Description'),
-                          _buildTextField(
-                              'Describe your service request...', 3),
-                          SizedBox(height: 24.h),
-                          _buildSectionTitle('Additional Notes'),
-                          _buildTextField('Add any additional notes...', 2),
-                          SizedBox(height: 32.h),
-                          _buildPriceInfo(),
-                          SizedBox(height: 32.h),
-                          _buildPaymentMethods(),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).padding.bottom + 80.h),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              padding: EdgeInsets.all(16.w),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, -5),
-                  ),
-                ],
-              ),
-              child: SizedBox(
-                width: double.infinity,
-                height: 50.h,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // TODO: Implement order creation
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25.r),
-                    ),
-                    elevation: 0,
-                  ),
-                  child: Text(
-                    "Create Order",
-                    style: AppStyles.buttonText.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18.sp,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ).animate().fadeIn(delay: 1200.ms).slideY(begin: 1, end: 0),
-        ],
-      ),
-    );
   }
 }
