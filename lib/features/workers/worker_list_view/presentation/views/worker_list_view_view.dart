@@ -11,7 +11,8 @@ import '../widgets/worker_card_item.dart';
 import 'package:shimmer/shimmer.dart';
 
 class WorkerListViewView extends StatelessWidget {
-  const WorkerListViewView({super.key});
+  final Map<String, dynamic>? arguments;
+  const WorkerListViewView({super.key, this.arguments});
 
   @override
   Widget build(BuildContext context) {
@@ -194,11 +195,22 @@ class WorkerListViewView extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: workList!.length,
                       itemBuilder: (context, index) => WorkerCardItem(
-                          worker: workList[index],
-                          onPressed: () {
-                            Navigator.pushNamed(
-                                context, Routes.createServiceOrderView);
-                          }),
+                        worker: workList[index],
+                        onPressed: () {
+                          final serviceData = {
+                            'workerId': workList[index].id ?? '',
+                            'serviceId': arguments?['serviceId'] ?? '',
+                            'price': arguments?['price'] ?? 0.0,
+                            'duration': arguments?['duration'] ?? 0,
+                            'totalAmount': arguments?['totalAmount'] ?? 0.0,
+                          };
+                          Navigator.pushNamed(
+                            context,
+                            Routes.createServiceOrderView,
+                            arguments: serviceData,
+                          );
+                        },
+                      ),
                     ),
                   );
                 } else if (state is WorkerListFailure) {

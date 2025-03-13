@@ -22,9 +22,11 @@ class ApiManager {
   }
 
   Future<Response> getData(String endpoint,
-      {Map<String, dynamic>? queryParameters}) async {
+      {Map<String, dynamic>? queryParameters, String? baseUrl}) async {
+    String urlBase = baseUrl ?? ApiConstant.baseUrl;
+
     return await dio.get(
-      ApiConstant.baseUrl + endpoint,
+      urlBase + endpoint,
       queryParameters: queryParameters,
       options: Options(
         validateStatus: (status) => true,
@@ -37,9 +39,12 @@ class ApiManager {
     Map<String, dynamic>? body,
     Map<String, dynamic>? headers,
     Map<String, String>? queryParameters,
+    String? baseUrl,
   }) async {
+    String urlBase = baseUrl ?? ApiConstant.baseUrl;
+
     return await dio.post(
-      ApiConstant.baseUrl + endpoint,
+      urlBase + endpoint,
       queryParameters: queryParameters,
       data: body,
       options: Options(
@@ -53,9 +58,12 @@ class ApiManager {
     String endpoint, {
     Map<String, dynamic>? body,
     Map<String, dynamic>? headers,
+    String? baseUrl,
   }) async {
+    String urlBase = baseUrl ?? ApiConstant.baseUrl;
+
     return await dio.delete(
-      ApiConstant.baseUrl + endpoint,
+      urlBase + endpoint,
       data: body,
       options: Options(
         headers: headers,
@@ -68,9 +76,12 @@ class ApiManager {
     String endpoint, {
     Map<String, dynamic>? body,
     Map<String, dynamic>? headers,
+    String? baseUrl,
   }) async {
+    String urlBase = baseUrl ?? ApiConstant.baseUrl;
+
     return await dio.put(
-      ApiConstant.baseUrl + endpoint,
+      urlBase + endpoint,
       data: body,
       options: Options(
         headers: headers,

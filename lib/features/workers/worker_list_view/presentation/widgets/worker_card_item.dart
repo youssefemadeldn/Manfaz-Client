@@ -23,7 +23,11 @@ class WorkerCardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, Routes.workerProfileView);
+        Navigator.pushNamed(
+          context, 
+          Routes.workerProfileView,
+          arguments: worker.id.toString(),
+        );
       },
       child: Container(
         padding: EdgeInsets.all(16.w),

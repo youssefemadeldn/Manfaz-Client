@@ -247,12 +247,16 @@ class ServiceOrderLocationPickerView extends StatelessWidget {
                               padding: EdgeInsets.all(16.w),
                               child: CustomButton(
                                 onPressed: () {
-                                  Navigator.pop(context, {
-                                    'address': viewModel.currentAddress,
-                                    'latitude': viewModel.locationData.latitude,
-                                    'longitude':
-                                        viewModel.locationData.longitude,
-                                  });
+                                  Navigator.pop(
+                                    context,
+                                    {
+                                      'address': viewModel.currentAddress,
+                                      'latitude':
+                                          viewModel.locationData.latitude,
+                                      'longitude':
+                                          viewModel.locationData.longitude,
+                                    },
+                                  );
                                 },
                                 backgroundColor: AppColors.primary,
                                 borderSideColor: AppColors.primary,

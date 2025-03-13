@@ -14,7 +14,6 @@ class CreateServiceOrderUseCase {
     required String userId,
     required String serviceId,
     required String providerId,
-    required String locationId,
     required String notes,
     required double price,
     required int duration,
@@ -23,12 +22,14 @@ class CreateServiceOrderUseCase {
     required String paymentStatus,
     required String type,
     required String paymentMethod,
+    required String address,
+    required double latitude,
+    required double longitude,
   }) =>
       baseCreateServiceOrderRepo.createServiceOrder(
         userId: userId,
         serviceId: serviceId,
         providerId: providerId,
-        locationId: locationId,
         notes: notes,
         price: price,
         duration: duration,
@@ -37,5 +38,8 @@ class CreateServiceOrderUseCase {
         paymentStatus: paymentStatus,
         type: type,
         paymentMethod: paymentMethod,
+        address: address,
+        latitude: latitude,
+        longitude: longitude,
       );
 }

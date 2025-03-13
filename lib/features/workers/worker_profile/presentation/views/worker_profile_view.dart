@@ -10,7 +10,8 @@ import '../../../../../core/routes/routes.dart';
 import '../../../worker_list_view/presentation/widgets/available_now_status.dart';
 
 class WorkerProfileView extends StatelessWidget {
-  const WorkerProfileView({super.key});
+  final String workerId;
+  const WorkerProfileView({super.key, required this.workerId});
 
   @override
   Widget build(BuildContext context) {
@@ -228,7 +229,8 @@ class WorkerProfileView extends StatelessWidget {
                   CustomButton(
                     onPressed: () {
                       Navigator.pushNamed(
-                          context, Routes.createServiceOrderView);
+                          context, Routes.createServiceOrderView,
+                          arguments: workerId);
                     },
                     borderSideColor: AppColors.primary,
                     backgroundColor: AppColors.primary,

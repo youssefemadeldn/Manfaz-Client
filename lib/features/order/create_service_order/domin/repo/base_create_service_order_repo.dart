@@ -7,7 +7,6 @@ abstract class BaseCreateServiceOrderRepo {
     required String userId,
     required String serviceId,
     required String providerId,
-    required String locationId,
     required String notes,
     required double price,
     required int duration,
@@ -16,5 +15,8 @@ abstract class BaseCreateServiceOrderRepo {
     required String paymentStatus,
     required String type,
     required String paymentMethod,
+    required String address,
+    required double latitude,
+    required double longitude,
   });
 }

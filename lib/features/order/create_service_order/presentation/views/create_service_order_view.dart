@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +11,8 @@ import '../../../../../core/theme/app_styles.dart';
 import '../controller/create_service_order_cubit/create_service_order_cubit.dart';
 
 class CreateServiceOrderView extends StatefulWidget {
-  const CreateServiceOrderView({super.key});
+  final Map<String, dynamic> arguments;
+  const CreateServiceOrderView({super.key, required this.arguments});
 
   @override
   State<CreateServiceOrderView> createState() => _CreateServiceOrderViewState();
@@ -19,10 +22,10 @@ class _CreateServiceOrderViewState extends State<CreateServiceOrderView> {
   String? selectedPaymentMethod;
   Map<String, dynamic>? selectedLocation;
   final List<String> paymentMethods = [
-    'Cash',
-    'Credit Card',
-    'Tamara',
-    'Tabby'
+    'cash',
+    'credit card',
+    'tamara',
+    'tabby'
   ];
 
   @override
@@ -136,7 +139,12 @@ class _CreateServiceOrderViewState extends State<CreateServiceOrderView> {
                           ),
                           SizedBox(height: 24.h),
                           _buildSectionTitle('Notes'),
-                          _buildTextField('Add any notes...', 3),
+                          _buildTextField(
+                              'Add any notes...',
+                              3,
+                              context
+                                  .read<CreateServiceOrderCubit>()
+                                  .notesController),
                           SizedBox(height: 32.h),
                           _buildPriceInfo(),
                           SizedBox(height: 32.h),
@@ -183,10 +191,47 @@ class _CreateServiceOrderViewState extends State<CreateServiceOrderView> {
                         style: AppStyles.bodyText1,
                       ),
                       onConfirm: () {
+                        final serviceId = widget.arguments['serviceId'] as String?;
+                        final workerId = widget.arguments['workerId'] as String?;
+                        final price = widget.arguments['price'] as double?;
+                        final duration = widget.arguments['duration'] as int?;
+                        final totalAmount = widget.arguments['totalAmount'] as double?;
+                        
+                        if (serviceId == null || workerId == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Invalid service or worker data')),
+                          );
+                          return;
+                        }
+
+                        context.read<CreateServiceOrderCubit>().createServiceOrder(
+                          serviceId: serviceId,
+                          providerId: workerId,
+                          price: price ?? 0,
+                          duration: duration ?? 0,
+                          totalAmount: totalAmount ?? 0,
+                          paymentMethod: selectedPaymentMethod ?? 'cash',
+                          address: selectedLocation?['address'] ?? '',
+                          latitude: selectedLocation?['latitude'] ?? 0.0,
+                          longitude: selectedLocation?['longitude'] ?? 0.0,
+                          notes: context.read<CreateServiceOrderCubit>().notesController.text,
+                          userId: context.read<CreateServiceOrderCubit>().userId,
+                          type: 'service',
+                          status: 'pending',
+                          paymentStatus: 'pending',
+                        );
                         Navigator.pushNamed(
                             context, Routes.cusBottomNavigationBar);
                       },
                     );
+                    log(state.createServiceOrderModel.message!);
+                  } else if (state is CreateServiceOrderFailure) {
+                    DialogHelper.showCustomDialog(
+                      context: context,
+                      title: Text('Error'),
+                      content: Text(state.failure.errorMessage),
+                    );
+                    log(state.failure.errorMessage);
                   }
                 },
                 builder: (context, state) {
@@ -215,22 +260,35 @@ class _CreateServiceOrderViewState extends State<CreateServiceOrderView> {
                     height: 50.h,
                     child: ElevatedButton(
                       onPressed: () {
-                        context
-                            .read<CreateServiceOrderCubit>()
-                            .createServiceOrder(
-                              userId: "67c97fd167f7e1ed2e3f0151",
-                              serviceId: "67bba6a9bfafebd083f69fe2",
-                              providerId: "67c8a4d243ce89f4ea372898",
-                              notes: "يرجى استخدام مواد تنظيف صديقة للبيئة.",
-                              locationId: "67c8aea424687f1a50697c36",
-                              price: 50.0,
-                              duration: 60,
-                              status: "pending",
-                              totalAmount: 50.0,
-                              paymentStatus: "pending",
-                              type: "service",
-                              paymentMethod: "cash",
-                            );
+                        final serviceId = widget.arguments['serviceId'] as String?;
+                        final workerId = widget.arguments['workerId'] as String?;
+                        final price = widget.arguments['price'] as double?;
+                        final duration = widget.arguments['duration'] as int?;
+                        final totalAmount = widget.arguments['totalAmount'] as double?;
+                        
+                        if (serviceId == null || workerId == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Invalid service or worker data')),
+                          );
+                          return;
+                        }
+
+                        context.read<CreateServiceOrderCubit>().createServiceOrder(
+                          serviceId: serviceId,
+                          providerId: workerId,
+                          price: price ?? 0,
+                          duration: duration ?? 0,
+                          totalAmount: totalAmount ?? 0,
+                          paymentMethod: selectedPaymentMethod ?? 'cash',
+                          address: selectedLocation?['address'] ?? '',
+                          latitude: selectedLocation?['latitude'] ?? 0.0,
+                          longitude: selectedLocation?['longitude'] ?? 0.0,
+                          notes: context.read<CreateServiceOrderCubit>().notesController.text,
+                          userId: context.read<CreateServiceOrderCubit>().userId,
+                          type: 'service',
+                          status: 'pending',
+                          paymentStatus: 'pending',
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
@@ -329,7 +387,8 @@ class _CreateServiceOrderViewState extends State<CreateServiceOrderView> {
     ).animate().fadeIn(delay: 300.ms).slideX();
   }
 
-  Widget _buildTextField(String hint, int maxLines) {
+  Widget _buildTextField(
+      String hint, int maxLines, TextEditingController controller) {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surface,
@@ -343,8 +402,7 @@ class _CreateServiceOrderViewState extends State<CreateServiceOrderView> {
         ],
       ),
       child: TextField(
-        controller:
-            BlocProvider.of<CreateServiceOrderCubit>(context).notesController,
+        controller: controller,
         maxLines: maxLines,
         decoration: InputDecoration(
           hintText: hint,
@@ -422,10 +480,10 @@ class _CreateServiceOrderViewState extends State<CreateServiceOrderView> {
             ],
           ),
           SizedBox(height: 16.h),
-          _buildPriceRow('Service Price', '150 SAR'),
-          _buildPriceRow('Duration', '2 hours'),
+          _buildPriceRow('Service Price', widget.arguments['price'].toString() + ' SAR'),
+          _buildPriceRow('Duration', widget.arguments['duration'].toString() + ' minutes'),
           Divider(height: 32.h, thickness: 1),
-          _buildPriceRow('Total Amount', '150 SAR', isTotal: true),
+          _buildPriceRow('Total Amount', widget.arguments['totalAmount'].toString() + ' SAR', isTotal: true),
         ],
       ),
     ).animate().fadeIn(delay: 500.ms).scale();

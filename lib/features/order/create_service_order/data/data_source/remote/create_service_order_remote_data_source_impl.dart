@@ -20,7 +20,6 @@ class CreateServiceOrderRemoteDataSourceImpl
     required String userId,
     required String serviceId,
     required String providerId,
-    required String locationId,
     required String notes,
     required double price,
     required int duration,
@@ -29,18 +28,21 @@ class CreateServiceOrderRemoteDataSourceImpl
     required String paymentStatus,
     required String type,
     required String paymentMethod,
+    required String address,
+    required double latitude,
+    required double longitude,
   }) async {
     try {
       final currentLanguage = EasyLocalizationHelper().getCurrentLocale();
 
       var response = await apiManager.postData(
         ApiConstant.epOrder,
+        baseUrl: ApiConstant.baseUrl2,
         queryParameters: {'lang': currentLanguage},
         body: {
           'userId': userId,
           'serviceId': serviceId,
           'providerId': providerId,
-          'locationId': locationId,
           'notes': notes,
           'price': price,
           'duration': duration,
@@ -49,11 +51,19 @@ class CreateServiceOrderRemoteDataSourceImpl
           'paymentStatus': paymentStatus,
           'type': type,
           'paymentMethod': paymentMethod,
+          'address': address,
+          'latitude': latitude,
+          'longitude': longitude,
         },
       );
 
+      // Handle case where response.data might be a String
+      final responseData = response.data is String ? 
+          {'status': false, 'message': response.data, 'code': response.statusCode} :
+          response.data;
+
       CreateServiceOrderModel createServiceOrderModel =
-          CreateServiceOrderModel.fromJson(response.data);
+          CreateServiceOrderModel.fromJson(responseData);
 
       if (NetworkHelper.isValidResponse(code: createServiceOrderModel.code)) {
         return right(createServiceOrderModel);
@@ -68,11 +78,12 @@ class CreateServiceOrderRemoteDataSourceImpl
         failureTitle: 'Network',
         errorMessage: 'Check your internet connection',
       ));
-    } catch (e) {
-      return left(Failure(
-        failureTitle: 'Server Failure',
-        errorMessage: e.toString(),
-      ));
-    }
+    } 
+    // catch (e) {
+    //   return left(Failure(
+    //     failureTitle: 'Server Failure',
+    //     errorMessage: e.toString(),
+    //   ));
+    // }
   }
 }

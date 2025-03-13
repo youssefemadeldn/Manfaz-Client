@@ -30,8 +30,9 @@ class Data {
   String? userId;
   String? serviceId;
   String? providerId;
-  Null? deliveryDriverId;
-  String? locationId;
+  double? latitude;
+  double? longitude;
+  String? address;
   String? notes;
   int? price;
   int? duration;
@@ -42,30 +43,33 @@ class Data {
   String? updatedAt;
   String? paymentMethod;
 
-  Data(
-      {this.id,
-      this.userId,
-      this.serviceId,
-      this.providerId,
-      this.deliveryDriverId,
-      this.locationId,
-      this.notes,
-      this.price,
-      this.duration,
-      this.status,
-      this.totalAmount,
-      this.paymentStatus,
-      this.createdAt,
-      this.updatedAt,
-      this.paymentMethod});
+  Data({
+    this.id,
+    this.userId,
+    this.serviceId,
+    this.providerId,
+    this.latitude,
+    this.longitude,
+    this.address,
+    this.notes,
+    this.price,
+    this.duration,
+    this.status,
+    this.totalAmount,
+    this.paymentStatus,
+    this.createdAt,
+    this.updatedAt,
+    this.paymentMethod,
+  });
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['userId'];
     serviceId = json['serviceId'];
     providerId = json['providerId'];
-    deliveryDriverId = json['deliveryDriverId'];
-    locationId = json['locationId'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
+    address = json['address'];
     notes = json['notes'];
     price = json['price'];
     duration = json['duration'];
@@ -83,8 +87,9 @@ class Data {
     data['userId'] = this.userId;
     data['serviceId'] = this.serviceId;
     data['providerId'] = this.providerId;
-    data['deliveryDriverId'] = this.deliveryDriverId;
-    data['locationId'] = this.locationId;
+    data['latitude'] = this.latitude;
+    data['longitude'] = this.longitude;
+    data['address'] = this.address;
     data['notes'] = this.notes;
     data['price'] = this.price;
     data['duration'] = this.duration;

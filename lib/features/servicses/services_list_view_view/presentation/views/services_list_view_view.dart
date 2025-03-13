@@ -95,7 +95,15 @@ class ServicesListViewView extends StatelessWidget {
                               parametersServiceDetailsModel: parametersService!,
                               findTalentsOnPressed: () {
                                 Navigator.pushNamed(
-                                    context, Routes.workerListViewView);
+                                  context,
+                                  Routes.workerListViewView,
+                                  arguments: {
+                                    'serviceId': parametersService.id ?? '',
+                                    'price': parametersService.price?.toDouble() ?? 0.0,
+                                    'duration': parametersService.duration ?? 0,
+                                    'totalAmount': parametersService.price?.toDouble() ?? 0.0,
+                                  },
+                                );
                               },
                               detailsOnPressed: () {
                                 Navigator.pushNamed(

@@ -75,10 +75,15 @@ class AppRouter {
         return CupertinoPageRoute(builder: (_) => CusBottomNavigationBar());
       //
       case Routes.workerListViewView:
-        return CupertinoPageRoute(builder: (_) => WorkerListViewView());
+        return CupertinoPageRoute(builder: (_) => WorkerListViewView(
+          arguments: settings.arguments as Map<String, dynamic>?,
+        ));
       //
       case Routes.workerProfileView:
-        return CupertinoPageRoute(builder: (_) => WorkerProfileView());
+        return CupertinoPageRoute(
+            builder: (_) => WorkerProfileView(
+                  workerId: settings.arguments as String,
+                ));
       //
       case Routes.sendAnOfferView:
         return CupertinoPageRoute(builder: (context) => SendAnOfferView());
@@ -131,7 +136,9 @@ class AppRouter {
                 create: (context) => getIt<ServiceOrderLocationPickerCubit>(),
               ),
             ],
-            child: const CreateServiceOrderView(),
+            child: CreateServiceOrderView(
+              arguments: settings.arguments as Map<String, dynamic>,
+            ),
           ),
         );
 
