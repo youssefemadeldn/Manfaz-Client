@@ -3,33 +3,31 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:manfaz/core/helper/dialog_helper.dart';
-import '../../../../../core/routes/routes.dart';
+import 'package:manfaz/core/widgets/cus_text_button.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
+import '../../../../../core/routes/routes.dart';
+import '../../../../../core/helper/dialog_helper.dart';
+import '../../../../../core/helper/snack_bar_helper.dart';
 import '../controller/create_service_order_cubit/create_service_order_cubit.dart';
+import '../widgets/service_order_header.dart';
+import '../widgets/location_selector.dart';
+import '../widgets/notes_input.dart';
+import '../widgets/price_info_widget.dart';
+import '../widgets/payment_method_selector.dart';
+import '../widgets/submit_order_button.dart';
 
-class CreateServiceOrderView extends StatefulWidget {
+class CreateServiceOrderView extends StatelessWidget {
   final Map<String, dynamic> arguments;
   const CreateServiceOrderView({super.key, required this.arguments});
 
   @override
-  State<CreateServiceOrderView> createState() => _CreateServiceOrderViewState();
-}
-
-class _CreateServiceOrderViewState extends State<CreateServiceOrderView> {
-  String? selectedPaymentMethod;
-  Map<String, dynamic>? selectedLocation;
-  final List<String> paymentMethods = [
-    'cash',
-    'credit card',
-    'tamara',
-    'tabby'
-  ];
-
-  @override
   Widget build(BuildContext context) {
+    final price = arguments['price'] as double;
+    final duration = arguments['duration'] as int;
+    final totalAmount = arguments['totalAmount'] as double;
+    final cubit = context.read<CreateServiceOrderCubit>();
+
     return Scaffold(
       body: Stack(
         children: [
@@ -53,102 +51,44 @@ class _CreateServiceOrderViewState extends State<CreateServiceOrderView> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            padding: EdgeInsets.all(20.w),
-                            decoration: BoxDecoration(
-                              color: AppColors.surface,
-                              borderRadius: BorderRadius.circular(16.r),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.05),
-                                  blurRadius: 20,
-                                  offset: const Offset(0, 10),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 80.w,
-                                  height: 80.w,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        AppColors.primary,
-                                        AppColors.primary.withOpacity(0.8),
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                    ),
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color:
-                                            AppColors.primary.withOpacity(0.3),
-                                        blurRadius: 15,
-                                        offset: const Offset(0, 8),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Icon(
-                                    Icons.cleaning_services_rounded,
-                                    color: Colors.white,
-                                    size: 35.w,
-                                  ),
-                                ).animate().scale(delay: 200.ms),
-                                SizedBox(width: 16.w),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Service Order",
-                                        style: AppStyles.header2.copyWith(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      )
-                                          .animate()
-                                          .fadeIn(delay: 300.ms)
-                                          .slideX(),
-                                      SizedBox(height: 6.h),
-                                      Text(
-                                        "Create your service request with detailed instructions",
-                                        style: AppStyles.bodyText2.copyWith(
-                                          color: AppColors.grey,
-                                          height: 1.4,
-                                        ),
-                                      )
-                                          .animate()
-                                          .fadeIn(delay: 400.ms)
-                                          .slideX(),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                          const ServiceOrderHeader(),
+                          SizedBox(height: 24.h),
+                          BlocBuilder<CreateServiceOrderCubit,
+                              CreateServiceOrderState>(
+                            buildWhen: (previous, current) =>
+                                current is LocationSelected,
+                            builder: (context, state) {
+                              return LocationSelector(
+                                selectedLocation: cubit.selectedLocation,
+                                onLocationSelected: cubit.selectLocation,
+                              );
+                            },
                           ),
                           SizedBox(height: 24.h),
-                          _buildSectionTitle('Location'),
-                          _buildLocationTile(
-                            'Service Location',
-                            'Select service location',
-                            Icons.location_on_rounded,
-                            AppColors.primary,
+                          NotesInput(
+                            controller: cubit.notesController,
                           ),
-                          SizedBox(height: 24.h),
-                          _buildSectionTitle('Notes'),
-                          _buildTextField(
-                              'Add any notes...',
-                              3,
-                              context
-                                  .read<CreateServiceOrderCubit>()
-                                  .notesController),
                           SizedBox(height: 32.h),
-                          _buildPriceInfo(),
+                          PriceInfoWidget(
+                            price: price,
+                            duration: duration,
+                            totalAmount: totalAmount,
+                          ),
                           SizedBox(height: 32.h),
-                          _buildPaymentMethods(),
+                          BlocBuilder<CreateServiceOrderCubit,
+                              CreateServiceOrderState>(
+                            buildWhen: (previous, current) =>
+                                current is PaymentMethodSelected,
+                            builder: (context, state) {
+                              return PaymentMethodSelector(
+                                selectedPaymentMethod:
+                                    cubit.selectedPaymentMethod,
+                                paymentMethods: cubit.paymentMethods,
+                                onPaymentMethodSelected:
+                                    cubit.selectPaymentMethod,
+                              );
+                            },
+                          ),
                           SizedBox(
                               height:
                                   MediaQuery.of(context).padding.bottom + 80.h),
@@ -164,441 +104,74 @@ class _CreateServiceOrderViewState extends State<CreateServiceOrderView> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: Container(
-              padding: EdgeInsets.all(16.w),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, -5),
-                  ),
-                ],
-              ),
-              child: BlocConsumer<CreateServiceOrderCubit,
-                  CreateServiceOrderState>(
-                listener: (context, state) {
-                  if (state is CreateServiceOrderSuccess) {
-                    DialogHelper.showCustomDialog(
-                      context: context,
-                      title: Text(
-                        'Order Added',
-                        style: AppStyles.header2,
-                      ),
-                      content: Text(
-                        "Your service order has been created successfully",
-                        style: AppStyles.bodyText1,
-                      ),
-                      onConfirm: () {
-                        final serviceId = widget.arguments['serviceId'] as String?;
-                        final workerId = widget.arguments['workerId'] as String?;
-                        final price = widget.arguments['price'] as double?;
-                        final duration = widget.arguments['duration'] as int?;
-                        final totalAmount = widget.arguments['totalAmount'] as double?;
-                        
-                        if (serviceId == null || workerId == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Invalid service or worker data')),
-                          );
-                          return;
-                        }
-
-                        context.read<CreateServiceOrderCubit>().createServiceOrder(
-                          serviceId: serviceId,
-                          providerId: workerId,
-                          price: price ?? 0,
-                          duration: duration ?? 0,
-                          totalAmount: totalAmount ?? 0,
-                          paymentMethod: selectedPaymentMethod ?? 'cash',
-                          address: selectedLocation?['address'] ?? '',
-                          latitude: selectedLocation?['latitude'] ?? 0.0,
-                          longitude: selectedLocation?['longitude'] ?? 0.0,
-                          notes: context.read<CreateServiceOrderCubit>().notesController.text,
-                          userId: context.read<CreateServiceOrderCubit>().userId,
-                          type: 'service',
-                          status: 'pending',
-                          paymentStatus: 'pending',
-                        );
-                        Navigator.pushNamed(
-                            context, Routes.cusBottomNavigationBar);
-                      },
-                    );
-                    log(state.createServiceOrderModel.message!);
-                  } else if (state is CreateServiceOrderFailure) {
-                    DialogHelper.showCustomDialog(
-                      context: context,
-                      title: Text('Error'),
-                      content: Text(state.failure.errorMessage),
-                    );
-                    log(state.failure.errorMessage);
-                  }
-                },
-                builder: (context, state) {
-                  if (state is CreateServiceOrderLoading) {
-                    return SizedBox(
-                        width: double.infinity,
-                        height: 50.h,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25.r),
-                            ),
-                            elevation: 0,
-                          ),
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ));
-                  }
-                  return SizedBox(
-                    width: double.infinity,
-                    height: 50.h,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        final serviceId = widget.arguments['serviceId'] as String?;
-                        final workerId = widget.arguments['workerId'] as String?;
-                        final price = widget.arguments['price'] as double?;
-                        final duration = widget.arguments['duration'] as int?;
-                        final totalAmount = widget.arguments['totalAmount'] as double?;
-                        
-                        if (serviceId == null || workerId == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Invalid service or worker data')),
-                          );
-                          return;
-                        }
-
-                        context.read<CreateServiceOrderCubit>().createServiceOrder(
-                          serviceId: serviceId,
-                          providerId: workerId,
-                          price: price ?? 0,
-                          duration: duration ?? 0,
-                          totalAmount: totalAmount ?? 0,
-                          paymentMethod: selectedPaymentMethod ?? 'cash',
-                          address: selectedLocation?['address'] ?? '',
-                          latitude: selectedLocation?['latitude'] ?? 0.0,
-                          longitude: selectedLocation?['longitude'] ?? 0.0,
-                          notes: context.read<CreateServiceOrderCubit>().notesController.text,
-                          userId: context.read<CreateServiceOrderCubit>().userId,
-                          type: 'service',
-                          status: 'pending',
-                          paymentStatus: 'pending',
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25.r),
-                        ),
-                        elevation: 0,
-                      ),
-                      child: Text(
-                        "Create Order",
-                        style: AppStyles.buttonText.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18.sp,
-                        ),
-                      ),
+            child:
+                BlocConsumer<CreateServiceOrderCubit, CreateServiceOrderState>(
+              listener: (context, state) {
+                if (state is CreateServiceOrderSuccess) {
+                  DialogHelper.showCustomDialog(
+                    context: context,
+                    title: Text(
+                      'Order Added',
+                      style: AppStyles.header2,
                     ),
+                    content: Text(
+                      "Your service order has been created successfully",
+                      style: AppStyles.bodyText1,
+                    ),
+                    onConfirm: () {
+                      Navigator.pushNamed(
+                          context, Routes.cusBottomNavigationBar);
+                    },
                   );
-                },
-              ),
-            ),
-          ).animate().fadeIn(delay: 1200.ms).slideY(begin: 1, end: 0),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSectionTitle(String title) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 12.h, top: 8.h),
-      child: Text(
-        title,
-        style: AppStyles.header3.copyWith(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ).animate().fadeIn(delay: 200.ms);
-  }
-
-  Widget _buildLocationTile(
-      String title, String hint, IconData icon, Color color) {
-    return Builder(
-      builder: (context) => Container(
-        margin: EdgeInsets.symmetric(vertical: 8.h),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12.r),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: ListTile(
-          contentPadding:
-              EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-          leading: Container(
-            padding: EdgeInsets.all(10.w),
-            decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(icon, color: color),
-          ),
-          title: Text(
-            title,
-            style: AppStyles.bodyText2.copyWith(
-              color: AppColors.textPrimary,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          subtitle: Text(
-            selectedLocation != null ? selectedLocation!['address'] : hint,
-            style: AppStyles.bodyText2.copyWith(
-              color: AppColors.grey,
-            ),
-          ),
-          trailing: Icon(
-            Icons.arrow_forward_ios_rounded,
-            color: AppColors.grey,
-            size: 16.sp,
-          ),
-          onTap: () async {
-            final result = await Navigator.pushNamed(
-                context, Routes.serviceOrderLocationPickerView);
-            if (result != null) {
-              setState(() {
-                selectedLocation = result as Map<String, dynamic>;
-              });
-            }
-          },
-        ),
-      ),
-    ).animate().fadeIn(delay: 300.ms).slideX();
-  }
-
-  Widget _buildTextField(
-      String hint, int maxLines, TextEditingController controller) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(12.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: TextField(
-        controller: controller,
-        maxLines: maxLines,
-        decoration: InputDecoration(
-          hintText: hint,
-          hintStyle: AppStyles.bodyText2.copyWith(
-            color: AppColors.textSecondary.withOpacity(0.7),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.r),
-            borderSide: BorderSide(
-              color: AppColors.divider,
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.r),
-            borderSide: BorderSide(
-              color: AppColors.divider,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.r),
-            borderSide: BorderSide(
-              color: AppColors.primary,
-              width: 2,
-            ),
-          ),
-          filled: true,
-          fillColor: AppColors.surface,
-          contentPadding: EdgeInsets.all(16.w),
-        ),
-        style: AppStyles.bodyText2.copyWith(
-          color: AppColors.textPrimary,
-        ),
-      ),
-    ).animate().fadeIn(delay: 400.ms).slideY();
-  }
-
-  Widget _buildPriceInfo() {
-    return Container(
-      padding: EdgeInsets.all(20.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: EdgeInsets.all(10.w),
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.receipt_outlined,
-                  color: AppColors.primary,
-                  size: 24.sp,
-                ),
-              ),
-              SizedBox(width: 12.w),
-              Text(
-                'Price Details',
-                style: AppStyles.header3.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 16.h),
-          _buildPriceRow('Service Price', widget.arguments['price'].toString() + ' SAR'),
-          _buildPriceRow('Duration', widget.arguments['duration'].toString() + ' minutes'),
-          Divider(height: 32.h, thickness: 1),
-          _buildPriceRow('Total Amount', widget.arguments['totalAmount'].toString() + ' SAR', isTotal: true),
-        ],
-      ),
-    ).animate().fadeIn(delay: 500.ms).scale();
-  }
-
-  Widget _buildPriceRow(String label, String value, {bool isTotal = false}) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 6.h),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: isTotal
-                ? AppStyles.subtitle1.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.sp,
-                  )
-                : AppStyles.bodyText2.copyWith(
-                    color: AppColors.grey,
-                    fontSize: 15.sp,
-                  ),
-          ),
-          Text(
-            value,
-            style: isTotal
-                ? AppStyles.subtitle1.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.sp,
-                    color: AppColors.primary,
-                  )
-                : AppStyles.bodyText2.copyWith(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15.sp,
-                  ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPaymentMethods() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildSectionTitle('Payment Method'),
-        Wrap(
-          spacing: 12.w,
-          runSpacing: 12.h,
-          children: paymentMethods.map((method) {
-            final isSelected = selectedPaymentMethod == method;
-            return GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedPaymentMethod = method;
-                });
+                  log(state.createServiceOrderModel.message!);
+                } else if (state is CreateServiceOrderFailure) {
+                  DialogHelper.showCustomDialog(
+                    context: context,
+                    title: const Text('Error'),
+                    content: Text(state.failure.errorMessage),
+                  );
+                  log(state.failure.errorMessage);
+                }
               },
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.w,
-                  vertical: 12.h,
-                ),
-                decoration: BoxDecoration(
-                  color: isSelected ? AppColors.primary : Colors.white,
-                  borderRadius: BorderRadius.circular(12.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 10,
-                      offset: const Offset(0, 2),
+              builder: (context, state) {
+                if (state is CreateServiceOrderLoading) {
+                  return Container(
+                    padding: EdgeInsets.all(16.w),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 10,
+                          offset: const Offset(0, -5),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      _getPaymentIcon(method),
-                      color: isSelected ? Colors.white : AppColors.grey,
-                      size: 20.sp,
-                    ),
-                    SizedBox(width: 8.w),
-                    Text(
-                      method,
-                      style: AppStyles.bodyText2.copyWith(
-                        color: isSelected ? Colors.white : Colors.black87,
-                        fontWeight:
-                            isSelected ? FontWeight.w600 : FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )
-                .animate()
-                .fadeIn(delay: (600 + paymentMethods.indexOf(method) * 100).ms)
-                .scale();
-          }).toList(),
-        ),
-      ],
+                    child: CustomButton(
+                        onPressed: () {},
+                        child: CircularProgressIndicator(
+                          color: AppColors.primary,
+                        )),
+                  );
+                }
+                return SubmitOrderButton(
+                  onSubmit: () {
+                    try {
+                      cubit.handleSubmit(arguments);
+                    } catch (e) {
+                      SnackBarHelper.showErrorSnackBar(
+                        context,
+                        message: e.toString().split('Exception:').last.trim(),
+                      );
+                    }
+                  },
+                  arguments: arguments,
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
-  }
-
-  IconData _getPaymentIcon(String method) {
-    switch (method.toLowerCase()) {
-      case 'cash':
-        return Icons.money;
-      case 'credit card':
-        return Icons.credit_card;
-      case 'tamara':
-        return Icons.account_balance_wallet;
-      case 'tabby':
-        return Icons.payment;
-      default:
-        return Icons.payment;
-    }
   }
 }

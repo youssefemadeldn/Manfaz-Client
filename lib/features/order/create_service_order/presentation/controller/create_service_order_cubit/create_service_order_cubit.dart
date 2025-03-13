@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
-
 import '../../../../../../core/cache/shared_pref_utils.dart';
 import '../../../../../../core/error/failure.dart';
 import '../../../data/models/create_service_order_model.dart';
@@ -14,6 +13,16 @@ class CreateServiceOrderCubit extends Cubit<CreateServiceOrderState> {
   final CreateServiceOrderUseCase createServiceOrderUseCase;
   TextEditingController notesController = TextEditingController();
   late String userId;
+  Map<String, dynamic>? selectedLocation;
+  String? selectedPaymentMethod;
+  
+  final List<String> paymentMethods = [
+    'cash',
+    'credit card',
+    'tamara',
+    'tabby'
+  ];
+
   CreateServiceOrderCubit({required this.createServiceOrderUseCase})
       : super(CreateServiceOrderInitial()) {
     getUserId();
@@ -22,6 +31,53 @@ class CreateServiceOrderCubit extends Cubit<CreateServiceOrderState> {
   getUserId() async {
     String cachedUserId = await SharedPrefUtils.getData('userId');
     userId = cachedUserId;
+  }
+
+  void selectLocation(Map<String, dynamic> location) {
+    selectedLocation = location;
+    emit(LocationSelected(location: location));
+  }
+
+  void selectPaymentMethod(String method) {
+    selectedPaymentMethod = method;
+    emit(PaymentMethodSelected(paymentMethod: method));
+  }
+
+  void handleSubmit(Map<String, dynamic> arguments) {
+    if (selectedLocation == null) {
+      throw Exception('Please select a location');
+    }
+
+    if (selectedPaymentMethod == null) {
+      throw Exception('Please select a payment method');
+    }
+
+    final serviceId = arguments['serviceId'] as String?;
+    final workerId = arguments['workerId'] as String?;
+    final price = arguments['price'] as double?;
+    final duration = arguments['duration'] as int?;
+    final totalAmount = arguments['totalAmount'] as double?;
+
+    if (serviceId == null || workerId == null || price == null || duration == null || totalAmount == null) {
+      throw Exception('Invalid order parameters');
+    }
+
+    createServiceOrder(
+      serviceId: serviceId,
+      providerId: workerId,
+      price: price,
+      duration: duration,
+      totalAmount: totalAmount,
+      paymentMethod: selectedPaymentMethod!,
+      address: selectedLocation!['address'],
+      latitude: selectedLocation!['latitude'],
+      longitude: selectedLocation!['longitude'],
+      notes: notesController.text,
+      userId: userId,
+      type: 'service',
+      status: 'pending',
+      paymentStatus: 'pending',
+    );
   }
 
   Future<void> createServiceOrder({
@@ -64,5 +120,11 @@ class CreateServiceOrderCubit extends Cubit<CreateServiceOrderState> {
             createServiceOrderModel: createServiceOrderModel),
       ),
     );
+  }
+
+  @override
+  Future<void> close() {
+    notesController.dispose();
+    return super.close();
   }
 }
