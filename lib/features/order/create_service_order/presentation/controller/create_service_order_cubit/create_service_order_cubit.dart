@@ -18,7 +18,7 @@ class CreateServiceOrderCubit extends Cubit<CreateServiceOrderState> {
   
   final List<String> paymentMethods = [
     'cash',
-    'credit card',
+    'credit_card',
     'tamara',
     'tabby'
   ];

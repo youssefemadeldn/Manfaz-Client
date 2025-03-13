@@ -6,7 +6,7 @@ import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/features/tabs/home_tab/presentation/view/home_tab.dart';
 import 'package:manfaz/features/tabs/notification_tab/presentation/view/notification_tab.dart';
 import 'package:manfaz/features/tabs/profile_tab/presentation/view/profile_tab.dart';
-import 'package:manfaz/features/tabs/orders_tab/presentation/view/orders_tab.dart';
+import 'package:manfaz/features/order/orders_tab/presentation/view/orders_tab.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';

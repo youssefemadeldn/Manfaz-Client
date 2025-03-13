@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
-import 'package:manfaz/features/tabs/orders_tab/presentation/widgets/order_card_item.dart';
+import 'package:manfaz/features/order/orders_tab/presentation/widgets/order_card_item.dart';
 
 class OrdersTab extends StatelessWidget {
   const OrdersTab({super.key});
@@ -46,9 +46,9 @@ class OrdersTab extends StatelessWidget {
                       ),
                       tabs: [
                         Tab(text: tr('orders_tab.all')), // Localized "All"
+                        Tab(text: "Pending"), // Localized "All"
                         Tab(
-                            text: tr(
-                                'orders_tab.previous')), // Localized "Previous"
+                            text: "In Progress"), // Localized "Previous"
                         Tab(
                             text: tr(
                                 'orders_tab.completed')), // Localized "Completed"
@@ -63,9 +63,10 @@ class OrdersTab extends StatelessWidget {
                           ListView.builder(
                             itemBuilder: (context, i) => const OrderCardItem(),
                           ),
-                          Center(child: Text(tr('orders_tab.previous'))),
-                          Center(child: Text(tr('orders_tab.completed'))),
-                          Center(child: Text(tr('orders_tab.canceled'))),
+                          Center(child: Text('Pending')),
+                          Center(child: Text('In Progress')),
+                          Center(child: Text('Completed')),
+                          Center(child: Text('Canceled')),
                         ],
                       ),
                     ),
