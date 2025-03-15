@@ -5,9 +5,12 @@ import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
 import '../widgets/DistanceLocation.dart';
 import '../widgets/LogoOrganization.dart';
+import '../../data/models/store_list_model.dart';
 
-class DeliveryListViewView extends StatelessWidget {
-  const DeliveryListViewView({super.key});
+class RestaurantStoreView extends StatelessWidget {
+  final List<Stores>? stores;
+
+  const RestaurantStoreView({super.key, this.stores});
 
   @override
   Widget build(BuildContext context) {
@@ -118,14 +121,18 @@ class DeliveryListViewView extends StatelessWidget {
   Widget _buildDeliveryList(String category) {
     return ListView.builder(
       padding: EdgeInsets.all(16.r),
-      itemCount: 10,
-      itemBuilder: (context, index) => DeliveryCardItem(),
+      itemCount: stores?.length ?? 0,
+      itemBuilder: (context, index) => DeliveryCardItem(
+        store: stores?[index],
+      ),
     );
   }
 }
 
 class DeliveryCardItem extends StatelessWidget {
-  const DeliveryCardItem({super.key});
+  final Stores? store;
+
+  const DeliveryCardItem({super.key, this.store});
 
   @override
   Widget build(BuildContext context) {
@@ -148,24 +155,42 @@ class DeliveryCardItem extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
                 child: Image.network(
-                  'https://img.freepik.com/free-psd/special-delicious-food-social-media-banner-post-template_202595-499.jpg?t=st=1739083738~exp=1739087338~hmac=298a30ec11b5cc614ca4b92e74b45b4e1219dbf9782675e2c69f27e1b52f296d&w=740',
+                  store?.coverImage ?? 'https://via.placeholder.com/400x200',
                   height: 180.h,
                   width: double.infinity,
                   fit: BoxFit.cover,
                 ),
               ),
-              Positioned(
-                // top: 16.h,
-                right: 10.w,
-                // left: 50.w,
-                bottom: -60.h,
-                child: DistanceLocation(),
-              ),
+              if (store?.locations != null && store!.locations!.isNotEmpty)
+                Positioned(
+                  right: 10.w,
+                  bottom: -60.h,
+                  child: DistanceLocation(),
+                ),
               Positioned(
                 bottom: -25.h,
                 left: 16.w,
-                child: LogoOrganization(),
+                child: LogoOrganization(logoUrl: store?.logo),
               ),
+              // Status Badge
+              if (store?.status != null)
+                Positioned(
+                  top: 16.h,
+                  right: 16.w,
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                    decoration: BoxDecoration(
+                      color:
+                          store?.status == 'OPEN' ? Colors.green : Colors.red,
+                      borderRadius: BorderRadius.circular(100.r),
+                    ),
+                    child: Text(
+                      store?.status ?? '',
+                      style: AppStyles.caption.copyWith(color: Colors.white),
+                    ),
+                  ),
+                ),
             ],
           ),
           Padding(
@@ -173,20 +198,54 @@ class DeliveryCardItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Restaurant Name',
-                  style: AppStyles.subtitle1.copyWith(
-                    color: AppColors.textSecondary,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            store?.name ?? 'Restaurant Name',
+                            style: AppStyles.subtitle1.copyWith(
+                              color: AppColors.textSecondary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          if (store?.category != null)
+                            Text(
+                              store?.category?.name ?? '',
+                              style: AppStyles.caption.copyWith(
+                                color: AppColors.textHint,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                    if (store?.minOrderAmount != null)
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 8.w, vertical: 4.h),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(4.r),
+                        ),
+                        child: Text(
+                          'Min. ${store?.minOrderAmount} SAR',
+                          style: AppStyles.caption.copyWith(
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
-                SizedBox(height: 4.h),
+                SizedBox(height: 8.h),
                 Row(
                   children: [
                     Icon(Icons.star, color: Colors.amber, size: 18.sp),
                     SizedBox(width: 4.w),
                     Text(
-                      '4.5',
+                      '${store?.rating ?? 0}',
                       style: AppStyles.bodyText2.copyWith(
                         color: AppColors.textSecondary,
                         fontWeight: FontWeight.w600,
@@ -194,7 +253,7 @@ class DeliveryCardItem extends StatelessWidget {
                     ),
                     SizedBox(width: 4.w),
                     Text(
-                      '(200+ Ratings)',
+                      '(${store?.reviewsCount ?? 0}+ Ratings)',
                       style: AppStyles.bodyText2.copyWith(
                         color: AppColors.textHint,
                       ),
@@ -202,31 +261,64 @@ class DeliveryCardItem extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 12.h),
-                Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(100.r),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.delivery_dining,
-                        color: AppColors.primary,
-                        size: 20.sp,
+                Row(
+                  children: [
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(100.r),
                       ),
-                      SizedBox(width: 8.w),
-                      Text(
-                        'Delivery 5 SAR',
-                        style: AppStyles.bodyText2.copyWith(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.w600,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.delivery_dining,
+                            color: AppColors.primary,
+                            size: 20.sp,
+                          ),
+                          SizedBox(width: 8.w),
+                          Text(
+                            'Delivery ${store?.deliveryFee ?? 0} SAR',
+                            style: AppStyles.bodyText2.copyWith(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 8.w),
+                    if (store?.workingHours != null &&
+                        store!.workingHours!.isNotEmpty)
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 8.h),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(100.r),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.access_time,
+                              color: AppColors.primary,
+                              size: 20.sp,
+                            ),
+                            SizedBox(width: 8.w),
+                            Text(
+                              '${store?.workingHours?[0].openTime?.substring(0, 5)} - ${store?.workingHours?[0].closeTime?.substring(0, 5)}',
+                              style: AppStyles.bodyText2.copyWith(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                  ],
                 ),
               ],
             ),

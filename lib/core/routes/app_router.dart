@@ -102,7 +102,7 @@ class AppRouter {
                 ));
 
       case Routes.deliveryListViewView:
-        return CupertinoPageRoute(builder: (context) => DeliveryListViewView());
+        return CupertinoPageRoute(builder: (context) => RestaurantStoreView());
 
       case Routes.deliveryServiceFromToView:
         return CupertinoPageRoute(
