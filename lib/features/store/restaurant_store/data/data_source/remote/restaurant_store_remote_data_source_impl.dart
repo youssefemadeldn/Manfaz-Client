@@ -8,6 +8,7 @@ import 'package:manfaz/core/network/network_helper.dart';
 import 'package:manfaz/core/di/di.dart';
 import '../../../../../../core/helper/easy_localization_helper.dart';
 import '../../models/store_list_model.dart';
+import '../../models/store_sub_categories_list.dart';
 import 'base_restaurant_store_remote_data_source.dart';
 
 @Injectable(as: BaseRestaurantStoreRemoteDataSource)
@@ -18,7 +19,6 @@ class RestaurantStoreRemoteDataSourceImpl implements BaseRestaurantStoreRemoteDa
 
   @override
   Future<Either<Failure, StoreListModel>> getStoreList({
-    
     required int limit,
     required int page,
     required String search,
@@ -46,6 +46,53 @@ class RestaurantStoreRemoteDataSourceImpl implements BaseRestaurantStoreRemoteDa
         return left(ServerFailure(
           failureTitle: 'Server Failure',
           errorMessage: storeListModel.message!,
+        ));
+      }
+    } on DioException {
+      return left(
+        // Unexpected DioError (e.g., timeout, internet connection)
+        NetworkFailure(
+          failureTitle: 'Network',
+          errorMessage: 'Check your internet connection',
+        ));
+    } catch (e) {
+      // General unexpected error
+      return left(Failure(
+        failureTitle: 'Server Failure',
+        errorMessage: e.toString(),
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, StoreSubCategoriesList>> getStoreSubCategoriesByCategoryId({
+    required String categoryId,
+    required int limit,
+    required int page,
+    String? search,
+  }) async {
+    try {
+      var response = await apiManager.getData(
+        ApiConstant.epStoreSubCategories,
+        queryParameters: {
+          'lang': currentLanguage,
+          'limit': limit,
+          'page': page,
+          'search': search ?? '',
+          'categoryId': categoryId,
+        },
+      );
+
+      StoreSubCategoriesList storeSubCategoriesList = StoreSubCategoriesList.fromJson(response.data);
+
+      if (NetworkHelper.isValidResponse(code: storeSubCategoriesList.code)) {
+        // Success Case
+        return right(storeSubCategoriesList);
+      } else {
+        // Server Error Case
+        return left(ServerFailure(
+          failureTitle: 'Server Failure',
+          errorMessage: storeSubCategoriesList.message!,
         ));
       }
     } on DioException {

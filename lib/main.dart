@@ -34,6 +34,7 @@ class ManfazApp extends StatelessWidget {
       designSize: const Size(440, 956),
       minTextAdapt: true,
       child: MaterialApp(
+        
         navigatorKey: getIt<GlobalKey<NavigatorState>>(),
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,

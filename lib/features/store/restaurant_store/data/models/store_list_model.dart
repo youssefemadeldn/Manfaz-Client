@@ -158,7 +158,7 @@ class Stores {
     data['phone'] = this.phone;
     data['email'] = this.email;
     data['categoryId'] = this.categoryId;
-    data['rating'] = this.rating;
+    data['rating'] = rating;
     data['reviewsCount'] = this.reviewsCount;
     data['isActive'] = this.isActive;
     data['status'] = this.status;

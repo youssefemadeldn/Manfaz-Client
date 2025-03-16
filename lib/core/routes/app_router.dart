@@ -75,9 +75,10 @@ class AppRouter {
         return CupertinoPageRoute(builder: (_) => CusBottomNavigationBar());
       //
       case Routes.workerListViewView:
-        return CupertinoPageRoute(builder: (_) => WorkerListViewView(
-          arguments: settings.arguments as Map<String, dynamic>?,
-        ));
+        return CupertinoPageRoute(
+            builder: (_) => WorkerListViewView(
+                  arguments: settings.arguments as Map<String, dynamic>?,
+                ));
       //
       case Routes.workerProfileView:
         return CupertinoPageRoute(
@@ -101,8 +102,11 @@ class AppRouter {
                   arguments: settings.arguments as Map<String, dynamic>?,
                 ));
 
-      case Routes.deliveryListViewView:
-        return CupertinoPageRoute(builder: (context) => RestaurantStoreView());
+      case Routes.restaurantStoreView:
+        return CupertinoPageRoute(
+            builder: (context) => RestaurantStoreView(
+                  id: settings.arguments as String?,
+                ));
 
       case Routes.deliveryServiceFromToView:
         return CupertinoPageRoute(

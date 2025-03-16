@@ -18,7 +18,7 @@ class Routes {
   static const String getUserLocationView = '/getUserLocationView';
   // list View View
   static const String servicesListViewView = '/servicesListViewView';
-  static const String deliveryListViewView = '/deliverListViewView';
+  static const String restaurantStoreView = '/RestaurantStoreView';
   static const String deliveryServiceFromToView = '/deliveryServiceFromToView';
   static const String serviceDetailsView = '/ServiceDetailsView';
   static const String createServiceOrderView = '/createServiceOrderView';

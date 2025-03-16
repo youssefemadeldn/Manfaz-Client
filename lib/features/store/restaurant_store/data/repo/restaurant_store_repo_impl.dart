@@ -4,6 +4,7 @@ import '../../../../../core/error/failure.dart';
 import '../../domain/repo/base_restaurant_store_repo.dart';
 import '../data_source/remote/base_restaurant_store_remote_data_source.dart';
 import '../models/store_list_model.dart';
+import '../models/store_sub_categories_list.dart';
 
 @Injectable(as: BaseRestaurantStoreRepo)
 class RestaurantStoreRepoImpl implements BaseRestaurantStoreRepo {
@@ -22,6 +23,21 @@ class RestaurantStoreRepoImpl implements BaseRestaurantStoreRepo {
       page: page,
       search: search,
       categoryId: categoryId,
+    );
+  }
+
+  @override
+  Future<Either<Failure, StoreSubCategoriesList>> getStoreSubCategoriesByCategoryId({
+    required String categoryId,
+    required int limit,
+    required int page,
+    String? search,
+  }) {
+    return baseRestaurantStoreRemoteDataSource.getStoreSubCategoriesByCategoryId(
+      categoryId: categoryId,
+      limit: limit,
+      page: page,
+      search: search,
     );
   }
 }
