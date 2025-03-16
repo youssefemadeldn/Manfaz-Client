@@ -2,7 +2,7 @@ class StoreSubCategoriesList {
   bool? status;
   String? message;
   int? code;
-  List<Data>? data;
+  List<StoreSubCategory>? data;
 
   StoreSubCategoriesList({this.status, this.message, this.code, this.data});
 
@@ -11,9 +11,9 @@ class StoreSubCategoriesList {
     message = json['message'];
     code = json['code'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <StoreSubCategory>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new StoreSubCategory.fromJson(v));
       });
     }
   }
@@ -30,7 +30,7 @@ class StoreSubCategoriesList {
   }
 }
 
-class Data {
+class StoreSubCategory {
   String? id;
   String? storeId;
   String? name;
@@ -41,7 +41,7 @@ class Data {
   String? createdAt;
   String? updatedAt;
 
-  Data(
+  StoreSubCategory(
       {this.id,
       this.storeId,
       this.name,
@@ -52,7 +52,7 @@ class Data {
       this.createdAt,
       this.updatedAt});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  StoreSubCategory.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     storeId = json['storeId'];
     name = json['name'];

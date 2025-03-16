@@ -81,10 +81,14 @@ import '../../features/store/restaurant_store/data/repo/restaurant_store_repo_im
     as _i484;
 import '../../features/store/restaurant_store/domain/repo/base_restaurant_store_repo.dart'
     as _i860;
+import '../../features/store/restaurant_store/domain/use_cases/get_store_sub_categories_by_category_id.dart'
+    as _i346;
 import '../../features/store/restaurant_store/domain/use_cases/restaurant_store_use_case.dart'
     as _i842;
 import '../../features/store/restaurant_store/presentation/controller/restaurant_store_cubit/restaurant_store_cubit.dart'
     as _i554;
+import '../../features/store/restaurant_store/presentation/controller/store_sub_categories_cubit/store_sub_categories_cubit.dart'
+    as _i288;
 import '../../features/tabs/home_tab/data/data_source/remote/base_home_tab_remote_data_source.dart'
     as _i710;
 import '../../features/tabs/home_tab/data/data_source/remote/home_tab_remote_data_source_impl.dart'
@@ -201,6 +205,9 @@ extension GetItInjectableX on _i174.GetIt {
         _i579.OtpVerificationCubit(gh<_i496.ResendVerificationCodeUseCase>()));
     gh.factory<_i842.RestaurantStoreUseCase>(() =>
         _i842.RestaurantStoreUseCase(gh<_i860.BaseRestaurantStoreRepo>()));
+    gh.factory<_i346.GetStoreSubCategoriesByCategoryId>(() =>
+        _i346.GetStoreSubCategoriesByCategoryId(
+            gh<_i860.BaseRestaurantStoreRepo>()));
     gh.factory<_i482.CreateServiceOrderCubit>(() =>
         _i482.CreateServiceOrderCubit(
             createServiceOrderUseCase: gh<_i449.CreateServiceOrderUseCase>()));
@@ -210,6 +217,10 @@ extension GetItInjectableX on _i174.GetIt {
         _i844.RegisterCubit(registerUseCase: gh<_i118.RegisterUseCase>()));
     gh.factory<_i525.WorkerListCubit>(() => _i525.WorkerListCubit(
         workerListUseCase: gh<_i320.WorkerListUseCase>()));
+    gh.factory<_i288.StoreSubCategoriesCubit>(() =>
+        _i288.StoreSubCategoriesCubit(
+            getStoreSubCategoriesByCategoryId:
+                gh<_i346.GetStoreSubCategoriesByCategoryId>()));
     gh.factory<_i600.HomeTabCubit>(
         () => _i600.HomeTabCubit(homeTabUseCase: gh<_i59.HomeTabUseCase>()));
     gh.factory<_i1070.LoginCubit>(

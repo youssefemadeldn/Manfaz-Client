@@ -7,7 +7,9 @@ import 'package:manfaz/core/widgets/error_message_widget.dart';
 import '../../../../../core/di/di.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
+import '../../data/models/store_sub_categories_list.dart';
 import '../controller/restaurant_store_cubit/restaurant_store_cubit.dart';
+import '../controller/store_sub_categories_cubit/store_sub_categories_cubit.dart';
 import '../widgets/DistanceLocation.dart';
 import '../widgets/LogoOrganization.dart';
 import '../../data/models/store_list_model.dart';
@@ -20,107 +22,139 @@ class RestaurantStoreView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<RestaurantStoreCubit>()
-        ..getStoreList(limit: 10, page: 1, search: '', categoryId: id!),
-      child: DefaultTabController(
-        length: 4,
-        child: Scaffold(
-          backgroundColor: AppColors.background,
-          appBar: AppBar(
-            backgroundColor: AppColors.background,
-            elevation: 0,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios, color: AppColors.textSecondary),
-              onPressed: () => Navigator.pop(context),
-            ),
-            title: _buildSearchBar(),
-          ),
-          body: BlocBuilder<RestaurantStoreCubit, RestaurantStoreState>(
-            builder: (context, state) {
-              if (state is RestaurantStoreLoading) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.primary,
-                  ),
-                );
-              } else if (state is RestaurantStoreError) {
-                return ErrorMessageWidget(
-                    errorMessage: state.failure.errorMessage);
-              } else if (state is RestaurantStoreSuccess) {
-                stores = state.storeListModel.data?.stores ?? [];
-
-                return Column(
-                  children: [
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-                      child: ButtonsTabBar(
-                        backgroundColor: AppColors.primary,
-                        unselectedBackgroundColor: Colors.white,
-                        labelStyle: AppStyles.subtitle2.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        unselectedLabelStyle: AppStyles.subtitle2.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
-                        borderWidth: 1,
-                        borderColor: AppColors.primary,
-                        unselectedBorderColor:
-                            AppColors.primary.withOpacity(0.3),
-                        radius: 100,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
-                        height: 45.h,
-                        tabs: [
-                          Tab(
-                            icon: Padding(
-                              padding: EdgeInsets.only(right: 8.w),
-                              child: Icon(Icons.restaurant_menu),
-                            ),
-                            text: 'All',
-                          ),
-                          Tab(
-                            icon: Padding(
-                              padding: EdgeInsets.only(right: 8.w),
-                              child: Icon(Icons.lunch_dining),
-                            ),
-                            text: 'Burger',
-                          ),
-                          Tab(
-                            icon: Padding(
-                              padding: EdgeInsets.only(right: 8.w),
-                              child: Icon(Icons.coffee),
-                            ),
-                            text: 'Coffee',
-                          ),
-                          Tab(
-                            icon: Padding(
-                              padding: EdgeInsets.only(right: 8.w),
-                              child: Icon(Icons.breakfast_dining),
-                            ),
-                            text: 'Breakfast',
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: TabBarView(
-                        children: [
-                          _buildDeliveryList('All'),
-                          _buildDeliveryList('Burger'),
-                          _buildDeliveryList('Coffee'),
-                          _buildDeliveryList('Breakfast'),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              }
-              return const SizedBox.shrink();
-            },
-          ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt<RestaurantStoreCubit>()
+            ..getStoreList(limit: 10, page: 1, search: '', categoryId: id!),
         ),
+        BlocProvider(
+          create: (context) => getIt<StoreSubCategoriesCubit>()
+            ..getStoreSubCategories(
+              categoryId: id!,
+              limit: 10,
+              page: 1,
+              search: '',
+            ),
+        ),
+      ],
+      child: BlocBuilder<StoreSubCategoriesCubit, StoreSubCategoriesState>(
+        builder: (context, subCategoriesState) {
+          List<StoreSubCategory>? subCategories;
+          if (subCategoriesState is StoreSubCategoriesSuccess) {
+            subCategories =
+                subCategoriesState.storeSubCategoriesList.data ?? [];
+          }
+
+          return DefaultTabController(
+            length: subCategories?.length ?? 0,
+            child: Scaffold(
+              backgroundColor: AppColors.background,
+              appBar: AppBar(
+                backgroundColor: AppColors.background,
+                elevation: 0,
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back_ios,
+                      color: AppColors.textSecondary),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                title: _buildSearchBar(),
+              ),
+              body: BlocBuilder<RestaurantStoreCubit, RestaurantStoreState>(
+                builder: (context, state) {
+                  if (state is RestaurantStoreLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.primary,
+                      ),
+                    );
+                  } else if (state is RestaurantStoreError) {
+                    return ErrorMessageWidget(
+                        errorMessage: state.failure.errorMessage);
+                  } else if (state is RestaurantStoreSuccess) {
+                    stores = state.storeListModel.data?.stores ?? [];
+
+                    return Column(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.w, vertical: 8.h),
+                          child: BlocBuilder<StoreSubCategoriesCubit,
+                              StoreSubCategoriesState>(
+                            builder: (context, state) {
+                              if (state is StoreSubCategoriesLoading) {
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.primary,
+                                  ),
+                                );
+                              } else if (state is StoreSubCategoriesError) {
+                                return ErrorMessageWidget(
+                                    errorMessage: state.failure.errorMessage);
+                              } else if (state is StoreSubCategoriesSuccess) {
+                                final subCategoriesList =
+                                    state.storeSubCategoriesList.data ?? [];
+                                return ButtonsTabBar(
+                                    backgroundColor: AppColors.primary,
+                                    unselectedBackgroundColor: Colors.white,
+                                    labelStyle: AppStyles.subtitle2.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    unselectedLabelStyle:
+                                        AppStyles.subtitle2.copyWith(
+                                      color: AppColors.textSecondary,
+                                    ),
+                                    borderWidth: 1,
+                                    borderColor: AppColors.primary,
+                                    unselectedBorderColor:
+                                        AppColors.primary.withOpacity(0.3),
+                                    radius: 100,
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: 20.w),
+                                    height: 45.h,
+                                    tabs: subCategoriesList
+                                        .map((e) => Tab(
+                                              icon: Padding(
+                                                padding:
+                                                    EdgeInsets.only(right: 8.w),
+                                                child:
+                                                    Icon(Icons.restaurant_menu),
+                                              ),
+                                              text: e.name,
+                                            ))
+                                        .toList());
+                              }
+                              return const SizedBox.shrink();
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: BlocBuilder<StoreSubCategoriesCubit,
+                              StoreSubCategoriesState>(
+                            builder: (context, state) {
+                              if (state is StoreSubCategoriesSuccess) {
+                                final subCategoriesList =
+                                    state.storeSubCategoriesList.data ?? [];
+                                return TabBarView(
+                                  children: subCategoriesList
+                                      .map((e) => _buildDeliveryList(e.id!))
+                                      .toList(),
+                                );
+                              }
+                              return const SizedBox.shrink();
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+            ),
+          );
+        },
       ),
     );
   }

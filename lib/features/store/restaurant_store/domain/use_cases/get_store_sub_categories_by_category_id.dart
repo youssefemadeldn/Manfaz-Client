@@ -1,9 +1,11 @@
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 import 'package:manfaz/features/store/restaurant_store/data/models/store_sub_categories_list.dart';
 
 import '../../../../../core/error/failure.dart';
 import '../repo/base_restaurant_store_repo.dart';
 
+@injectable
 class GetStoreSubCategoriesByCategoryId {
   final BaseRestaurantStoreRepo baseRestaurantStoreRepo;
 
