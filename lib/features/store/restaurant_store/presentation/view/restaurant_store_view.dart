@@ -118,8 +118,6 @@ class RestaurantStoreView extends StatelessWidget {
                                               icon: Padding(
                                                 padding:
                                                     EdgeInsets.only(right: 8.w),
-                                                child:
-                                                    Icon(Icons.restaurant_menu),
                                               ),
                                               text: e.name,
                                             ))

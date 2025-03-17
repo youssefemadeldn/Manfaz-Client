@@ -22,8 +22,8 @@ class ApiManager {
   }
 
   Future<Response> getData(String endpoint,
-      {Map<String, dynamic>? queryParameters, String? baseUrl}) async {
-    String urlBase = baseUrl ?? ApiConstant.baseUrl;
+      {Map<String, dynamic>? queryParameters, String? baseUrl2}) async {
+    String urlBase = baseUrl2 ?? ApiConstant.baseUrl2;
 
     return await dio.get(
       urlBase + endpoint,
@@ -39,9 +39,9 @@ class ApiManager {
     Map<String, dynamic>? body,
     Map<String, dynamic>? headers,
     Map<String, String>? queryParameters,
-    String? baseUrl,
+    String? baseUrl2,
   }) async {
-    String urlBase = baseUrl ?? ApiConstant.baseUrl;
+    String urlBase = baseUrl2 ?? ApiConstant.baseUrl2;
 
     return await dio.post(
       urlBase + endpoint,
@@ -58,9 +58,9 @@ class ApiManager {
     String endpoint, {
     Map<String, dynamic>? body,
     Map<String, dynamic>? headers,
-    String? baseUrl,
+    String? baseUrl2,
   }) async {
-    String urlBase = baseUrl ?? ApiConstant.baseUrl;
+    String urlBase = baseUrl2 ?? ApiConstant.baseUrl2;
 
     return await dio.delete(
       urlBase + endpoint,
@@ -76,9 +76,9 @@ class ApiManager {
     String endpoint, {
     Map<String, dynamic>? body,
     Map<String, dynamic>? headers,
-    String? baseUrl,
+    String? baseUrl2,
   }) async {
-    String urlBase = baseUrl ?? ApiConstant.baseUrl;
+    String urlBase = baseUrl2 ?? ApiConstant.baseUrl2;
 
     return await dio.put(
       urlBase + endpoint,
