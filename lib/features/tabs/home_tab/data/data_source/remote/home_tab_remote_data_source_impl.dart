@@ -48,7 +48,8 @@ class HomeTabRemoteDataSourceImpl implements BaseHomeTabRemoteDataSource {
         failureTitle: 'Network',
         errorMessage: 'Check your internet connection',
       ));
-    } catch (e) {
+    } 
+    catch (e) {
       // General unexpected error
       return left(Failure(
         failureTitle: 'Server Failure',

@@ -106,7 +106,8 @@ class HomeTabSuccess extends StatelessWidget {
                   }else{
                     Navigator.pushNamed(
                       context,
-                      Routes.deliveryListViewView,
+                      Routes.restaurantStoreView,
+                      arguments: categoriesDeliveryList[index].id,
                     );
                   }
                 },

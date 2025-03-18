@@ -63,7 +63,7 @@ class HomeTab extends StatelessWidget {
                       print(
                           'Current State: $state'); // Debug print to track state
                       if (state is HomeTabSuccessState) {
-                        List<CategoryModel>? allList = state.homeTapModel.data;
+                        List<CategoryModel>? allList = state.homeTapModel.data?.categories;
                         var deliverList = allList
                             ?.where((element) => element.type == 'delivery')
                             .toList();

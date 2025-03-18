@@ -37,7 +37,6 @@ class CreateServiceOrderRemoteDataSourceImpl
 
       var response = await apiManager.postData(
         ApiConstant.epOrder,
-        baseUrl: ApiConstant.baseUrl2,
         queryParameters: {'lang': currentLanguage},
         body: {
           'userId': userId,
@@ -58,9 +57,13 @@ class CreateServiceOrderRemoteDataSourceImpl
       );
 
       // Handle case where response.data might be a String
-      final responseData = response.data is String ? 
-          {'status': false, 'message': response.data, 'code': response.statusCode} :
-          response.data;
+      final responseData = response.data is String
+          ? {
+              'status': false,
+              'message': response.data,
+              'code': response.statusCode
+            }
+          : response.data;
 
       CreateServiceOrderModel createServiceOrderModel =
           CreateServiceOrderModel.fromJson(responseData);
@@ -78,7 +81,7 @@ class CreateServiceOrderRemoteDataSourceImpl
         failureTitle: 'Network',
         errorMessage: 'Check your internet connection',
       ));
-    } 
+    }
     // catch (e) {
     //   return left(Failure(
     //     failureTitle: 'Server Failure',

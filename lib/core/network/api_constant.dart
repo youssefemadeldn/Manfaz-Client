@@ -14,4 +14,6 @@ class ApiConstant {
   static const String epWorkerList = 'workers';
   static const String epServiceParameters = 'service-parameters';
   static const String epOrder = 'orders';
+  static const String epStore = 'stores';
+  static const String epStoreSubCategories = 'stores/categories/all';
 }

@@ -10,7 +10,7 @@ import 'package:manfaz/features/auth/login/presentation/view/login_view.dart';
 import 'package:manfaz/features/auth/login/presentation/view/otp_verification_view.dart';
 import 'package:manfaz/features/auth/login/presentation/view/success_verification_view.dart';
 import 'package:manfaz/features/onBoardings/presentation/views/on_boarding_view.dart';
-import '../../features/delivery/delivery_list_view_view/presentation/view/delivery_list_view_view.dart';
+import '../../features/store/restaurant_store/presentation/view/restaurant_store_view.dart';
 import '../../features/delivery/delivery_service_from_to/presentation/controller/cubit/delivery_service_from_to_cubit.dart';
 import '../../features/delivery/delivery_service_from_to/presentation/view/delivery_service_from_to_view.dart';
 import '../../features/order/create_service_order/presentation/controller/create_service_order_cubit/create_service_order_cubit.dart';
@@ -75,9 +75,10 @@ class AppRouter {
         return CupertinoPageRoute(builder: (_) => CusBottomNavigationBar());
       //
       case Routes.workerListViewView:
-        return CupertinoPageRoute(builder: (_) => WorkerListViewView(
-          arguments: settings.arguments as Map<String, dynamic>?,
-        ));
+        return CupertinoPageRoute(
+            builder: (_) => WorkerListViewView(
+                  arguments: settings.arguments as Map<String, dynamic>?,
+                ));
       //
       case Routes.workerProfileView:
         return CupertinoPageRoute(
@@ -101,8 +102,11 @@ class AppRouter {
                   arguments: settings.arguments as Map<String, dynamic>?,
                 ));
 
-      case Routes.deliveryListViewView:
-        return CupertinoPageRoute(builder: (context) => DeliveryListViewView());
+      case Routes.restaurantStoreView:
+        return CupertinoPageRoute(
+            builder: (context) => RestaurantStoreView(
+                  id: settings.arguments as String?,
+                ));
 
       case Routes.deliveryServiceFromToView:
         return CupertinoPageRoute(
