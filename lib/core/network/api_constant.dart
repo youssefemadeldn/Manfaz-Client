@@ -1,6 +1,5 @@
 class ApiConstant {
   // Bases
-  static const String baseUrl = 'https://manfaz-production.up.railway.app/';
   static const String baseUrl2 = 'https://manfaz.fly.dev/';
   static const String userToken = '';
 

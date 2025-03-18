@@ -156,6 +156,13 @@ class CreateServiceOrderView extends StatelessWidget {
                 }
                 return SubmitOrderButton(
                   onSubmit: () {
+                    if (cubit.notesController.text.trim().isEmpty) {
+                      SnackBarHelper.showErrorSnackBar(
+                        context,
+                        message: 'Please add notes before submitting the order',
+                      );
+                      return;
+                    }
                     try {
                       cubit.handleSubmit(arguments);
                     } catch (e) {

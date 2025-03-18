@@ -26,7 +26,7 @@ class OrdersTab extends StatelessWidget {
             ),
             Expanded(
               child: DefaultTabController(
-                length: 4,
+                length: 5,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
