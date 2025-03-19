@@ -23,6 +23,7 @@ class RestaurantStoreRemoteDataSourceImpl implements BaseRestaurantStoreRemoteDa
     required int page,
     required String search,
     required String categoryId,
+    String? filterId,
   }) async {
     try {
       var response = await apiManager.getData(
@@ -33,6 +34,7 @@ class RestaurantStoreRemoteDataSourceImpl implements BaseRestaurantStoreRemoteDa
           'page': page,
           'search': search,
           'categoryId': categoryId,
+          'filter': filterId,
         },
       );
 
@@ -87,6 +89,11 @@ class RestaurantStoreRemoteDataSourceImpl implements BaseRestaurantStoreRemoteDa
 
       if (NetworkHelper.isValidResponse(code: storeSubCategoriesList.code)) {
         // Success Case
+        // get filterIds
+       storeSubCategoriesList.data?.forEach((element) {
+        // List<filterId> =  the ids in storeSubCategoriesList.data.[index];
+          element.id;
+       });
         return right(storeSubCategoriesList);
       } else {
         // Server Error Case

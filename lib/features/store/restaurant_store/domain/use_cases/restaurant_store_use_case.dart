@@ -15,10 +15,12 @@ class RestaurantStoreUseCase {
     required int page,
     required String search,
     required String categoryId,
+     String? filterId,
   }) => baseRestaurantStoreRepo.getStoreList(
     limit: limit,
     page: page,
     search: search,
     categoryId: categoryId,
+    filterId: filterId,
   );
 }

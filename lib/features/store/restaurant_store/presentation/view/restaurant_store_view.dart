@@ -18,6 +18,7 @@ import '../../data/models/store_list_model.dart';
 class RestaurantStoreView extends StatelessWidget {
   List<BaseStore>? stores;
   final String? id;
+  
 
   RestaurantStoreView({super.key, this.stores, this.id});
 
@@ -27,7 +28,8 @@ class RestaurantStoreView extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => getIt<RestaurantStoreCubit>()
-            ..getStoreList(limit: 10, page: 1, search: '', categoryId: id!),
+            ..getStoreList(limit: 10, page: 1, search: '', categoryId: id!,
+            filterId: ''),
         ),
         BlocProvider(
           create: (context) => getIt<StoreSubCategoriesCubit>()

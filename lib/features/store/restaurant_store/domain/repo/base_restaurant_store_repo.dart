@@ -9,6 +9,7 @@ abstract class BaseRestaurantStoreRepo {
     required int page,
     required String search,
     required String categoryId,
+     String? filterId,
   });
 
   Future<Either<Failure, StoreSubCategoriesList>> getStoreSubCategoriesByCategoryId({

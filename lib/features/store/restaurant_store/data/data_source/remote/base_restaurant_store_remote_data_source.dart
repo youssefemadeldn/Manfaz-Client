@@ -9,6 +9,7 @@ abstract class BaseRestaurantStoreRemoteDataSource {
     required int page,
     required String search,
     required String categoryId,
+    String? filterId,
   });
 
   Future<Either<Failure, StoreSubCategoriesList>> getStoreSubCategoriesByCategoryId({
@@ -16,5 +17,6 @@ abstract class BaseRestaurantStoreRemoteDataSource {
     required int limit,
     required int page,
     String? search,
+    
   });
 }

@@ -218,38 +218,40 @@ class GetUserLocationView extends StatelessWidget {
                             ),
                             SizedBox(height: 16.h),
 
-                            // Save Location Checkbox
-                            Padding(
-                              padding: EdgeInsets.all(16.w),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 24.w,
-                                    height: 24.h,
-                                    child: Checkbox(
-                                      activeColor: AppColors.primary,
-                                      value: true,
-                                      onChanged: (value) {},
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(4.r),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 12.w),
-                                  Text(
-                                    'Save location to use later',
-                                    style: AppStyles.bodyText2,
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // // Save Location Checkbox
+                            // Padding(
+                            //   padding: EdgeInsets.all(16.w),
+                            //   child: Row(
+                            //     children: [
+                            //       SizedBox(
+                            //         width: 24.w,
+                            //         height: 24.h,
+                            //         child: Checkbox(
+                            //           activeColor: AppColors.primary,
+                            //           value: true,
+                            //           onChanged: (value) {},
+                            //           shape: RoundedRectangleBorder(
+                            //             borderRadius:
+                            //                 BorderRadius.circular(4.r),
+                            //           ),
+                            //         ),
+                            //       ),
+                            //       SizedBox(width: 12.w),
+                            //       Text(
+                            //         'Save location to use later',
+                            //         style: AppStyles.bodyText2,
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
 
                             // Confirm Button
                             Padding(
                               padding: EdgeInsets.all(16.w),
                               child: CustomButton(
-                                onPressed: () async {},
+                                onPressed: () async {
+                                  Navigator.pushNamed(context, Routes.cusBottomNavigationBar);
+                                },
                                 backgroundColor: AppColors.primary,
                                 borderSideColor: AppColors.primary,
                                 borderRadius: 8.r,

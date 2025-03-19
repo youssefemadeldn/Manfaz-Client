@@ -18,6 +18,7 @@ class RestaurantStoreCubit extends Cubit<RestaurantStoreState> {
     required int page,
     required String search,
     required String categoryId,
+    String? filterId,
   }) async {
     emit(RestaurantStoreLoading());
     final result = await restaurantStoreUseCase(
@@ -25,6 +26,7 @@ class RestaurantStoreCubit extends Cubit<RestaurantStoreState> {
       page: page,
       search: search,
       categoryId: categoryId,
+      filterId: filterId!,
     );
     result.fold(
       (failure) => emit(RestaurantStoreError(failure: failure)),

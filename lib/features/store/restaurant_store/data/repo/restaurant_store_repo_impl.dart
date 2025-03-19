@@ -17,12 +17,14 @@ class RestaurantStoreRepoImpl implements BaseRestaurantStoreRepo {
     required int page,
     required String search,
     required String categoryId,
+    String? filterId,
   }) {
     return baseRestaurantStoreRemoteDataSource.getStoreList(
       limit: limit,
       page: page,
       search: search,
       categoryId: categoryId,
+      filterId: filterId,
     );
   }
 
