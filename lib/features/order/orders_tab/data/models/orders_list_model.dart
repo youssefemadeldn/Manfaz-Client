@@ -1,3 +1,345 @@
+class BaseUser {
+  String? id;
+  String? name;
+  String? email;
+  String? phone;
+  String? imageUrl;
+  bool? isVerified;
+  String? role;
+
+  BaseUser({
+    this.id,
+    this.name,
+    this.email,
+    this.phone,
+    this.imageUrl,
+    this.isVerified,
+    this.role,
+  });
+
+  BaseUser.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    email = json['email'];
+    phone = json['phone'];
+    imageUrl = json['imageUrl'];
+    isVerified = json['isVerified'];
+    role = json['role'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['email'] = this.email;
+    data['phone'] = this.phone;
+    data['imageUrl'] = this.imageUrl;
+    data['isVerified'] = this.isVerified;
+    data['role'] = this.role;
+    return data;
+  }
+}
+
+class CustomerUser extends BaseUser {
+  CustomerUser({
+    String? id,
+    String? name,
+    String? email,
+    String? phone,
+    String? imageUrl,
+    bool? isVerified,
+    String? role,
+  }) : super(
+          id: id,
+          name: name,
+          email: email,
+          phone: phone,
+          imageUrl: imageUrl,
+          isVerified: isVerified,
+          role: role,
+        );
+
+  CustomerUser.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+}
+
+class ProviderUser extends BaseUser {
+  String? title;
+  String? description;
+  bool? isAvailable;
+  bool? isFavorite;
+  double? hourlyRate;
+  double? jobSuccessRate;
+  double? totalEarned;
+  List<String>? skills;
+  double? rating;
+  int? reviewsCount;
+  int? totalJobsDone;
+  String? about;
+
+  ProviderUser({
+    String? id,
+    String? name,
+    String? email,
+    String? phone,
+    String? imageUrl,
+    bool? isVerified,
+    this.title,
+    this.description,
+    this.isAvailable,
+    this.isFavorite,
+    this.hourlyRate,
+    this.jobSuccessRate,
+    this.totalEarned,
+    this.skills,
+    this.rating,
+    this.reviewsCount,
+    this.totalJobsDone,
+    this.about,
+  }) : super(
+          id: id,
+          name: name,
+          email: email,
+          phone: phone,
+          imageUrl: imageUrl,
+          isVerified: isVerified,
+        );
+
+  ProviderUser.fromJson(Map<String, dynamic> json) : super.fromJson(json['user'] ?? {}) {
+    title = json['title'];
+    description = json['description'];
+    isAvailable = json['isAvailable'];
+    isFavorite = json['isFavorite'];
+    hourlyRate = json['hourlyRate']?.toDouble();
+    jobSuccessRate = json['jobSuccessRate']?.toDouble();
+    totalEarned = json['totalEarned']?.toDouble();
+    skills = json['skills']?.cast<String>();
+    rating = json['rating']?.toDouble();
+    reviewsCount = json['reviewsCount'];
+    totalJobsDone = json['totalJobsDone'];
+    about = json['about'];
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = super.toJson();
+    data['title'] = title;
+    data['description'] = description;
+    data['isAvailable'] = isAvailable;
+    data['isFavorite'] = isFavorite;
+    data['hourlyRate'] = hourlyRate;
+    data['jobSuccessRate'] = jobSuccessRate;
+    data['totalEarned'] = totalEarned;
+    data['skills'] = skills;
+    data['rating'] = rating;
+    data['reviewsCount'] = reviewsCount;
+    data['totalJobsDone'] = totalJobsDone;
+    data['about'] = about;
+    return data;
+  }
+}
+
+class DeliveryDriverUser extends BaseUser {
+  bool? isOnline;
+  double? currentLatitude;
+  double? currentLongitude;
+  String? vehicleType;
+  String? vehiclePlateNumber;
+  double? rating;
+  int? completedDeliveries;
+
+  DeliveryDriverUser({
+    String? id,
+    String? name,
+    String? email,
+    String? phone,
+    String? imageUrl,
+    bool? isVerified,
+    this.isOnline,
+    this.currentLatitude,
+    this.currentLongitude,
+    this.vehicleType,
+    this.vehiclePlateNumber,
+    this.rating,
+    this.completedDeliveries,
+  }) : super(
+          id: id,
+          name: name,
+          email: email,
+          phone: phone,
+          imageUrl: imageUrl,
+          isVerified: isVerified,
+        );
+
+  DeliveryDriverUser.fromJson(Map<String, dynamic> json) : super.fromJson(json['user'] ?? {}) {
+    isOnline = json['isOnline'];
+    currentLatitude = json['currentLatitude']?.toDouble();
+    currentLongitude = json['currentLongitude']?.toDouble();
+    vehicleType = json['vehicleType'];
+    vehiclePlateNumber = json['vehiclePlateNumber'];
+    rating = json['rating']?.toDouble();
+    completedDeliveries = json['completedDeliveries'];
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = super.toJson();
+    data['isOnline'] = isOnline;
+    data['currentLatitude'] = currentLatitude;
+    data['currentLongitude'] = currentLongitude;
+    data['vehicleType'] = vehicleType;
+    data['vehiclePlateNumber'] = vehiclePlateNumber;
+    data['rating'] = rating;
+    data['completedDeliveries'] = completedDeliveries;
+    return data;
+  }
+}
+
+class BaseCategory {
+  String? id;
+  String? name;
+  String? description;
+  String? imageUrl;
+  String? iconUrl;
+  double? price;
+  int? warranty;
+  bool? installmentAvailable;
+  int? installmentMonths;
+  double? monthlyInstallment;
+  String? serviceId;
+  String? status;
+  int? sortOrder;
+  double? rating;
+  int? ratingCount;
+  int? duration;
+  int? availability;
+  List<Faqs>? faqs;
+  List<String>? whatIncluded;
+  String? createdAt;
+  String? updatedAt;
+
+  BaseCategory({
+    this.id,
+    this.name,
+    this.description,
+    this.imageUrl,
+    this.iconUrl,
+    this.price,
+    this.warranty,
+    this.installmentAvailable,
+    this.installmentMonths,
+    this.monthlyInstallment,
+    this.serviceId,
+    this.status,
+    this.sortOrder,
+    this.rating,
+    this.ratingCount,
+    this.duration,
+    this.availability,
+    this.faqs,
+    this.whatIncluded,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  BaseCategory.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    description = json['description'];
+    imageUrl = json['imageUrl'];
+    iconUrl = json['iconUrl'];
+    price = json['price']?.toDouble();
+    warranty = json['warranty'];
+    installmentAvailable = json['installmentAvailable'];
+    installmentMonths = json['installmentMonths'];
+    monthlyInstallment = json['monthlyInstallment']?.toDouble();
+    serviceId = json['serviceId'];
+    status = json['status'];
+    sortOrder = json['sortOrder'];
+    rating = json['rating']?.toDouble();
+    ratingCount = json['ratingCount'];
+    duration = json['duration'];
+    availability = json['availability'];
+    if (json['faqs'] != null) {
+      faqs = <Faqs>[];
+      json['faqs'].forEach((v) {
+        faqs!.add(Faqs.fromJson(v));
+      });
+    }
+    whatIncluded = json['whatIncluded']?.cast<String>() ?? [];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['description'] = this.description;
+    data['imageUrl'] = this.imageUrl;
+    data['iconUrl'] = this.iconUrl;
+    data['price'] = this.price;
+    data['warranty'] = this.warranty;
+    data['installmentAvailable'] = this.installmentAvailable;
+    data['installmentMonths'] = this.installmentMonths;
+    data['monthlyInstallment'] = this.monthlyInstallment;
+    data['serviceId'] = this.serviceId;
+    data['status'] = this.status;
+    data['sortOrder'] = this.sortOrder;
+    data['rating'] = this.rating;
+    data['ratingCount'] = this.ratingCount;
+    data['duration'] = this.duration;
+    data['availability'] = this.availability;
+    if (this.faqs != null) {
+      data['faqs'] = this.faqs!.map((v) => v.toJson()).toList();
+    }
+    data['whatIncluded'] = this.whatIncluded;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    return data;
+  }
+}
+
+class Faqs {
+  String? question;
+  String? answer;
+
+  Faqs({this.question, this.answer});
+
+  Faqs.fromJson(Map<String, dynamic> json) {
+    question = json['question'];
+    answer = json['answer'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['question'] = this.question;
+    data['answer'] = this.answer;
+    return data;
+  }
+}
+
+class BaseStore {
+  String? id;
+  String? name;
+  String? logo;
+
+  BaseStore({this.id, this.name, this.logo});
+
+  BaseStore.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    logo = json['logo'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['logo'] = this.logo;
+    return data;
+  }
+}
+
 class OrdersListModel {
   bool? status;
   String? message;
@@ -60,25 +402,26 @@ class Data {
 class Order {
   String? id;
   String? userId;
-  String? status;
-  int? totalAmount;
-  String? paymentMethod;
-  String? latitude;
-  String? longitude;
   String? serviceId;
-  Service? service;
   String? providerId;
+  String? deliveryDriverId;
+  double? latitude;
+  double? longitude;
   String? address;
   String? notes;
   int? price;
   int? duration;
+  String? status;
+  int? totalAmount;
   String? paymentStatus;
   String? createdAt;
   String? updatedAt;
-  Provider? provider;
-  String? deliveryDriverId;
-  DeliveryDriver? deliveryDriver;
-  List<Stores>? store;
+  String? paymentMethod;
+  BaseCategory? service;
+  ProviderUser? provider;
+  DeliveryDriverUser? deliveryDriver;
+  List<BaseStore>? store;
+  CustomerUser? user;
 
   Order({
     this.id,
@@ -102,6 +445,7 @@ class Order {
     this.provider,
     this.deliveryDriver,
     this.store,
+    this.user,
   });
 
   Order.fromJson(Map<String, dynamic> json) {
@@ -110,8 +454,8 @@ class Order {
     serviceId = json['serviceId'];
     providerId = json['providerId'];
     deliveryDriverId = json['deliveryDriverId'];
-    latitude = json['latitude'];
-    longitude = json['longitude'];
+    latitude = json['latitude']?.toDouble();
+    longitude = json['longitude']?.toDouble();
     address = json['address'];
     notes = json['notes'];
     price = json['price'];
@@ -122,186 +466,52 @@ class Order {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     paymentMethod = json['paymentMethod'];
-    service =
-        json['service'] != null ? new Service.fromJson(json['service']) : null;
-    provider = json['provider'] != null
-        ? new Provider.fromJson(json['provider'])
-        : null;
-    deliveryDriver = json['deliveryDriver'] != null
-        ? new DeliveryDriver.fromJson(json['deliveryDriver'])
-        : null;
-    if (json['store'] != null) {  
-      store = <Stores>[];
+    service = json['service'] != null ? BaseCategory.fromJson(json['service']) : null;
+    provider = json['provider'] != null ? ProviderUser.fromJson(json['provider']) : null;
+    deliveryDriver = json['deliveryDriver'] != null ? DeliveryDriverUser.fromJson(json['deliveryDriver']) : null;
+    if (json['store'] != null) {
+      store = <BaseStore>[];
       json['store'].forEach((v) {
-        store!.add(new Stores.fromJson(v));
+        store!.add(BaseStore.fromJson(v));
       });
     }
+    user = json['user'] != null ? CustomerUser.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['userId'] = this.userId;
-    data['serviceId'] = this.serviceId;
-    data['providerId'] = this.providerId;
-    data['deliveryDriverId'] = this.deliveryDriverId;
-    data['latitude'] = this.latitude;
-    data['longitude'] = this.longitude;
-    data['address'] = this.address;
-    data['notes'] = this.notes;
-    data['price'] = this.price;
-    data['duration'] = this.duration;
-    data['status'] = this.status;
-    data['totalAmount'] = this.totalAmount;
-    data['paymentStatus'] = this.paymentStatus;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['paymentMethod'] = this.paymentMethod;
-    if (this.service != null) {
-      data['service'] = this.service!.toJson();
+    data['id'] = id;
+    data['userId'] = userId;
+    data['serviceId'] = serviceId;
+    data['providerId'] = providerId;
+    data['deliveryDriverId'] = deliveryDriverId;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
+    data['address'] = address;
+    data['notes'] = notes;
+    data['price'] = price;
+    data['duration'] = duration;
+    data['status'] = status;
+    data['totalAmount'] = totalAmount;
+    data['paymentStatus'] = paymentStatus;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['paymentMethod'] = paymentMethod;
+    if (service != null) {
+      data['service'] = service!.toJson();
     }
-    if (this.provider != null) {
-      data['provider'] = this.provider!.toJson();
+    if (provider != null) {
+      data['provider'] = provider!.toJson();
     }
-    if (this.deliveryDriver != null) {
-      data['deliveryDriver'] = this.deliveryDriver!.toJson();
+    if (deliveryDriver != null) {
+      data['deliveryDriver'] = deliveryDriver!.toJson();
     }
-    if (this.store != null) {
-      data['store'] = this.store!.map((v) => v.toJson()).toList();
+    if (store != null) {
+      data['store'] = store!.map((v) => v.toJson()).toList();
+    }
+    if (user != null) {
+      data['user'] = user!.toJson();
     }
     return data;
   }
 }
-
-class Service {
-  String? id;
-  String? name;
-
-  Service({
-    this.id,
-    this.name,
-  });
-
-  Service.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    return data;
-  }
-}
-
-class Provider {
-  String? id;
-  String? userId;
-  String? name;
-
-  Provider({
-    this.id,
-    this.userId,
-    this.name,
-  });
-
-  Provider.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    userId = json['userId'];
-    name = json['name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['userId'] = this.userId;
-    data['name'] = this.name;
-    return data;
-  }
-}
-
-class DeliveryDriver {
-  String? id;
-  String? userId;
-  String? name;
-  String? vehicleType;
-  String? license;
-  bool? availability;
-  double? rating;
-  int? reviewsCount;
-  int? completedOrders;
-  double? earnings;
-  String? createdAt;
-  String? updatedAt;
-
-  DeliveryDriver({
-    this.id,
-    this.userId,
-    this.name,
-    this.vehicleType,
-    this.license,
-    this.availability,
-    this.rating,
-    this.reviewsCount,
-    this.completedOrders,
-    this.earnings,
-    this.createdAt,
-    this.updatedAt,
-  });
-
-  DeliveryDriver.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    userId = json['userId'];
-    name = json['name'];
-    vehicleType = json['vehicleType'];
-    license = json['license'];
-    availability = json['availability'];
-    rating = json['rating']?.toDouble();
-    reviewsCount = json['reviewsCount'];
-    completedOrders = json['completedOrders'];
-    earnings = json['earnings']?.toDouble();
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['userId'] = this.userId;
-    data['name'] = this.name;
-    data['vehicleType'] = this.vehicleType;
-    data['license'] = this.license;
-    data['availability'] = this.availability;
-    data['rating'] = this.rating;
-    data['reviewsCount'] = this.reviewsCount;
-    data['completedOrders'] = this.completedOrders;
-    data['earnings'] = this.earnings;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    return data;
-  }
-}
-
-class Stores {
-  String? id;
-  String? name;
-  Stores({
-    this.id,
-    this.name,
-  });
-
-  Stores.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    return data;
-  }
-}
-// deliver driver name
-// provider name

@@ -2,7 +2,7 @@ class LoginModel {
   bool? status;
   String? message;
   int? code;
-  User? data;
+  BaseUser? data;
 
   LoginModel({this.status, this.message, this.code, this.data});
 
@@ -10,7 +10,7 @@ class LoginModel {
     status = json['status'];
     message = json['message'];
     code = json['code'];
-    data = json['data'] != null ? new User.fromJson(json['data']) : null;
+    data = json['data'] != null ? new BaseUser.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -25,7 +25,7 @@ class LoginModel {
   }
 }
 
-class User {
+class BaseUser {
   String? id;
   String? name;
   String? email;
@@ -39,7 +39,7 @@ class User {
   String? createdAt;
   String? updatedAt;
 
-  User(
+  BaseUser(
       {this.id,
       this.name,
       this.email,
@@ -53,7 +53,7 @@ class User {
       this.createdAt,
       this.updatedAt});
 
-  User.fromJson(Map<String, dynamic> json) {
+  BaseUser.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     email = json['email'];

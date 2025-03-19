@@ -25,8 +25,12 @@ class OrderProviderInfo extends StatelessWidget {
         Expanded(
           child: Text(
             isDeliveryOrder
-                ? '${tr('orders_tab.driver')}: $providerName'
-                : '${tr('orders_tab.provider')}: $providerName',
+                ? (providerName.isNotEmpty
+                    ? '${tr('orders_tab.driver')}: $providerName'
+                    : '')
+                : (providerName.isNotEmpty
+                    ? '${tr('orders_tab.provider')}: $providerName'
+                    : ''),
             style: AppStyles.bodyText2.copyWith(
               color: AppColors.darkGrey,
               fontWeight: FontWeight.w500,

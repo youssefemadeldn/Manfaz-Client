@@ -41,7 +41,7 @@ class ManfazApp extends StatelessWidget {
         locale: context.locale,
         debugShowCheckedModeBanner: false,
         initialRoute:
-            isLoggedIn ? Routes.onBoarding : Routes.onBoarding,
+            isLoggedIn ? Routes.cusBottomNavigationBar : Routes.onBoarding,
         onGenerateRoute: AppRouter.generateRoute,
         theme: ThemeData(
           appBarTheme: AppBarTheme(

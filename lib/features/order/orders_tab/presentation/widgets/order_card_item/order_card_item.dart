@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/features/order/orders_tab/data/models/orders_list_model.dart';
-import 'order_card_item/order_header.dart';
-import 'order_card_item/order_provider_info.dart';
-import 'order_card_item/order_service_details.dart';
-import 'order_card_item/order_payment_info.dart';
+import 'order_header.dart';
+import 'order_provider_info.dart';
+import 'order_service_details.dart';
+import 'order_payment_info.dart';
 
 class OrderCardItem extends StatelessWidget {
   final Order order;

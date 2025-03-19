@@ -26,7 +26,7 @@ class StoreListModel {
 }
 
 class Data {
-  List<Stores>? stores;
+  List<BaseStore>? stores;
   int? totalStores;
   int? currentPage;
   int? totalPages;
@@ -35,9 +35,9 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['stores'] != null) {
-      stores = <Stores>[];
+      stores = <BaseStore>[];
       json['stores'].forEach((v) {
-        stores!.add(new Stores.fromJson(v));
+        stores!.add(new BaseStore.fromJson(v));
       });
     }
     totalStores = json['totalStores'];
@@ -57,7 +57,7 @@ class Data {
   }
 }
 
-class Stores {
+class BaseStore {
   String? id;
   String? name;
   String? description;
@@ -78,11 +78,11 @@ class Stores {
   double? priceDriver;
   String? createdAt;
   String? updatedAt;
-  Category? category;
-  List<Locations>? locations;
-  List<WorkingHours>? workingHours;
+  BaseCategory? category;
+  List<BaseLocations>? locations;
+  List<BaseWorkingHours>? workingHours;
 
-  Stores(
+  BaseStore(
       {this.id,
       this.name,
       this.description,
@@ -107,7 +107,7 @@ class Stores {
       this.locations,
       this.workingHours});
 
-  Stores.fromJson(Map<String, dynamic> json) {
+  BaseStore.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     description = json['description'];
@@ -129,18 +129,18 @@ class Stores {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     category = json['category'] != null
-        ? new Category.fromJson(json['category'])
+        ? new BaseCategory.fromJson(json['category'])
         : null;
     if (json['locations'] != null) {
-      locations = <Locations>[];
+      locations = <BaseLocations>[];
       json['locations'].forEach((v) {
-        locations!.add(new Locations.fromJson(v));
+        locations!.add(new BaseLocations.fromJson(v));
       });
     }
     if (json['workingHours'] != null) {
-      workingHours = <WorkingHours>[];
+      workingHours = <BaseWorkingHours>[];
       json['workingHours'].forEach((v) {
-        workingHours!.add(new WorkingHours.fromJson(v));
+        workingHours!.add(new BaseWorkingHours.fromJson(v));
       });
     }
   }
@@ -180,7 +180,7 @@ class Stores {
   }
 }
 
-class Category {
+class BaseCategory {
   String? id;
   String? name;
   String? subName;
@@ -196,7 +196,7 @@ class Category {
   String? createdAt;
   String? updatedAt;
 
-  Category(
+  BaseCategory(
       {this.id,
       this.name,
       this.subName,
@@ -212,7 +212,7 @@ class Category {
       this.createdAt,
       this.updatedAt});
 
-  Category.fromJson(Map<String, dynamic> json) {
+  BaseCategory.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     subName = json['subName'];
@@ -249,7 +249,7 @@ class Category {
   }
 }
 
-class Locations {
+class BaseLocations {
   String? id;
   String? storeId;
   String? name;
@@ -261,7 +261,7 @@ class Locations {
   String? createdAt;
   String? updatedAt;
 
-  Locations(
+  BaseLocations(
       {this.id,
       this.storeId,
       this.name,
@@ -273,7 +273,7 @@ class Locations {
       this.createdAt,
       this.updatedAt});
 
-  Locations.fromJson(Map<String, dynamic> json) {
+  BaseLocations.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     storeId = json['storeId'];
     name = json['name'];
@@ -302,7 +302,7 @@ class Locations {
   }
 }
 
-class WorkingHours {
+class BaseWorkingHours {
   String? id;
   String? storeId;
   int? dayOfWeek;
@@ -317,7 +317,7 @@ class WorkingHours {
   String? createdAt;
   String? updatedAt;
 
-  WorkingHours(
+  BaseWorkingHours(
       {this.id,
       this.storeId,
       this.dayOfWeek,
@@ -332,7 +332,7 @@ class WorkingHours {
       this.createdAt,
       this.updatedAt});
 
-  WorkingHours.fromJson(Map<String, dynamic> json) {
+  BaseWorkingHours.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     storeId = json['storeId'];
     dayOfWeek = json['dayOfWeek'];

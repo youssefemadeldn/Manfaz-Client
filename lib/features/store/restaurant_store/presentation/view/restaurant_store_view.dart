@@ -16,7 +16,7 @@ import '../../data/models/store_list_model.dart';
 
 // ignore: must_be_immutable
 class RestaurantStoreView extends StatelessWidget {
-  List<Stores>? stores;
+  List<BaseStore>? stores;
   final String? id;
 
   RestaurantStoreView({super.key, this.stores, this.id});
@@ -193,7 +193,7 @@ class RestaurantStoreView extends StatelessWidget {
 }
 
 class StoreCardItem extends StatelessWidget {
-  final Stores? store;
+  final BaseStore? store;
 
   const StoreCardItem({super.key, this.store});
 

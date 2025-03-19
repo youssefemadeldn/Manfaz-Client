@@ -5,7 +5,7 @@ import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/widgets/error_message_widget.dart';
 import '../../../data/models/orders_list_model.dart';
 import '../../controller/order_tab_cubit/order_tab_cubit.dart';
-import '../order_card_item.dart';
+import '../order_card_item/order_card_item.dart';
 
 class OrdersTabContent extends StatelessWidget {
   const OrdersTabContent({super.key});
