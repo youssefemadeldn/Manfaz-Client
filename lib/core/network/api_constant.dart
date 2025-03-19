@@ -1,7 +1,6 @@
 class ApiConstant {
   // Bases
-  static const String baseUrl2 = 'https://manfaz.fly.dev/';
-  static const String userToken = '';
+  static const String baseUrl = 'https://manfaz.fly.dev/';
 
   // EntPoints
   static const String epLogin = 'auth/login';

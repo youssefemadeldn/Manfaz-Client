@@ -14,6 +14,7 @@ import '../widgets/DistanceLocation.dart';
 import '../widgets/LogoOrganization.dart';
 import '../../data/models/store_list_model.dart';
 
+// ignore: must_be_immutable
 class RestaurantStoreView extends StatelessWidget {
   List<Stores>? stores;
   final String? id;

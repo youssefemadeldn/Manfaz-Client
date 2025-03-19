@@ -110,4 +110,5 @@ class RestaurantStoreRemoteDataSourceImpl implements BaseRestaurantStoreRemoteDa
       ));
     }
   }
+
 }

@@ -23,7 +23,7 @@ class ApiManager {
 
   Future<Response> getData(String endpoint,
       {Map<String, dynamic>? queryParameters, String? baseUrl2}) async {
-    String urlBase = baseUrl2 ?? ApiConstant.baseUrl2;
+    String urlBase = baseUrl2 ?? ApiConstant.baseUrl;
 
     return await dio.get(
       urlBase + endpoint,
@@ -41,7 +41,7 @@ class ApiManager {
     Map<String, String>? queryParameters,
     String? baseUrl2,
   }) async {
-    String urlBase = baseUrl2 ?? ApiConstant.baseUrl2;
+    String urlBase = baseUrl2 ?? ApiConstant.baseUrl;
 
     return await dio.post(
       urlBase + endpoint,
@@ -60,7 +60,7 @@ class ApiManager {
     Map<String, dynamic>? headers,
     String? baseUrl2,
   }) async {
-    String urlBase = baseUrl2 ?? ApiConstant.baseUrl2;
+    String urlBase = baseUrl2 ?? ApiConstant.baseUrl;
 
     return await dio.delete(
       urlBase + endpoint,
@@ -78,7 +78,7 @@ class ApiManager {
     Map<String, dynamic>? headers,
     String? baseUrl2,
   }) async {
-    String urlBase = baseUrl2 ?? ApiConstant.baseUrl2;
+    String urlBase = baseUrl2 ?? ApiConstant.baseUrl;
 
     return await dio.put(
       urlBase + endpoint,
