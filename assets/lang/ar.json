@@ -63,11 +63,12 @@
     "profile": "الحساب"
   },
   "orders_tab": {
-    "requests": "الطلبات",
-    "all": "  الكل  ",
-    "previous": "السابق",
-    "completed": "المكتملة",
-    "canceled": "الملغية",
+    "my_orders": "طلباتي",
+    "all": "الكل",
+    "pending": "قيد الانتظار",
+    "in_progress": "قيد التنفيذ",
+    "completed": "مكتملة",
+    "canceled": "ملغية",
     "orderID": "معرف الطلب",
     "seller": "البائع",
     "title": "الوصف",

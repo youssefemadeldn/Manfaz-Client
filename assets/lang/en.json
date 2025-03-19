@@ -63,9 +63,10 @@
     "profile": "Profile"
   },
   "orders_tab": {
-    "requests": "Requests",
-    "all": "  All  ",
-    "previous": "Previous",
+    "my_orders": "My Orders",
+    "all": "All",
+    "pending": "Pending",
+    "in_progress": "In Progress",
     "completed": "Completed",
     "canceled": "Canceled",
     "orderID": "Order ID",
