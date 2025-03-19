@@ -17,6 +17,6 @@ abstract class BaseRestaurantStoreRemoteDataSource {
     required int limit,
     required int page,
     String? search,
-    
+
   });
 }

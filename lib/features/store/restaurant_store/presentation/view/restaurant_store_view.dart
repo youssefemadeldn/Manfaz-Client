@@ -16,11 +16,9 @@ import '../../data/models/store_list_model.dart';
 
 // ignore: must_be_immutable
 class RestaurantStoreView extends StatelessWidget {
-  List<BaseStore>? stores;
   final String? id;
   
-
-  RestaurantStoreView({super.key, this.stores, this.id});
+  RestaurantStoreView({super.key, this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +26,12 @@ class RestaurantStoreView extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => getIt<RestaurantStoreCubit>()
-            ..getStoreList(limit: 10, page: 1, search: '', categoryId: id!,
-            filterId: ''),
+            ..getStoreList(
+              limit: 10, 
+              page: 1, 
+              search: '', 
+              categoryId: id!,
+            ),
         ),
         BlocProvider(
           create: (context) => getIt<StoreSubCategoriesCubit>()
@@ -44,9 +46,20 @@ class RestaurantStoreView extends StatelessWidget {
       child: BlocBuilder<StoreSubCategoriesCubit, StoreSubCategoriesState>(
         builder: (context, subCategoriesState) {
           List<StoreSubCategory>? subCategories;
+          
           if (subCategoriesState is StoreSubCategoriesSuccess) {
-            subCategories =
-                subCategoriesState.storeSubCategoriesList.data ?? [];
+            subCategories = subCategoriesState.storeSubCategoriesList.data ?? [];
+            
+            // Initialize with first subcategory ID if available
+            if (subCategories.isNotEmpty) {
+              final cubit = context.read<RestaurantStoreCubit>();
+              if (cubit.currentFilterId.isEmpty) {
+                // Set the initial filter ID
+                Future.microtask(() {
+                  cubit.updateFilterId(subCategories!.first.id!);
+                });
+              }
+            }
           }
 
           return DefaultTabController(
@@ -75,8 +88,6 @@ class RestaurantStoreView extends StatelessWidget {
                     return ErrorMessageWidget(
                         errorMessage: state.failure.errorMessage);
                   } else if (state is RestaurantStoreSuccess) {
-                    stores = state.storeListModel.data?.stores ?? [];
-
                     return Column(
                       children: [
                         Container(
@@ -116,6 +127,17 @@ class RestaurantStoreView extends StatelessWidget {
                                     contentPadding:
                                         EdgeInsets.symmetric(horizontal: 20.w),
                                     height: 45.h,
+                                    onTap: (index) {
+                                      if (index < subCategoriesList.length) {
+                                        final selectedSubcategory = subCategoriesList[index];
+                                        final cubit = context.read<RestaurantStoreCubit>();
+                                        
+                                        // Only update if the filter has actually changed
+                                        if (cubit.currentFilterId != selectedSubcategory.id) {
+                                          cubit.updateFilterId(selectedSubcategory.id!);
+                                        }
+                                      }
+                                    },
                                     tabs: subCategoriesList
                                         .map((e) => Tab(
                                               icon: Padding(
@@ -138,8 +160,24 @@ class RestaurantStoreView extends StatelessWidget {
                                 final subCategoriesList =
                                     state.storeSubCategoriesList.data ?? [];
                                 return TabBarView(
+                                  physics: const NeverScrollableScrollPhysics(), // Disable swipe to ensure tab changes only happen through ButtonsTabBar
                                   children: subCategoriesList
-                                      .map((e) => _buildDeliveryList(e.id!))
+                                      .map((subcategory) => BlocBuilder<RestaurantStoreCubit, RestaurantStoreState>(
+                                        builder: (context, storeState) {
+                                          if (storeState is RestaurantStoreSuccess) {
+                                            // Only show stores if this tab's filter ID matches the current filter
+                                            if (storeState.filterId == subcategory.id) {
+                                              return _buildStoresList(storeState.storeListModel.data?.stores);
+                                            }
+                                            return const Center(
+                                              child: CircularProgressIndicator(),
+                                            );
+                                          }
+                                          return const Center(
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        },
+                                      ))
                                       .toList(),
                                 );
                               }
@@ -183,7 +221,7 @@ class RestaurantStoreView extends StatelessWidget {
     );
   }
 
-  Widget _buildDeliveryList(String category) {
+  Widget _buildStoresList(List<BaseStore>? stores) {
     return ListView.builder(
       padding: EdgeInsets.all(16.r),
       itemCount: stores?.length ?? 0,
