@@ -74,7 +74,15 @@
     "duration": "Duration",
     "amount": "Amount",
     "status": "Status",
-    "active": "Active"
+    "active": "Active",
+    "no_orders": "No orders found",
+    "provider": "Provider",
+    "service": "Service",
+    "minutes": "minutes",
+    "payment_method": "Payment Method",
+    "currency": "SAR",
+    "total_amount": "Total Amount",
+    "driver": "Driver"
   },
   "get_user_location_view": {
     "confirm_location": "Confirm Location",

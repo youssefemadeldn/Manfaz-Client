@@ -74,7 +74,15 @@
     "duration": "المدة",
     "amount": "المبلغ",
     "status": "الحالة",
-    "active": "نشط"
+    "active": "نشط",
+    "no_orders": "لا توجد طلبات",
+    "provider": "مقدم الخدمة",
+    "service": "الخدمة",
+    "minutes": "دقيقة",
+    "payment_method": "طريقة الدفع",
+    "currency": "ريال",
+    "total_amount": "المبلغ الإجمالي",
+    "driver": "السائق"
   },
   "get_user_location_view": {
     "confirm_location": "تاكيد موقعك",

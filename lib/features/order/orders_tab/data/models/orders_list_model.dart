@@ -26,18 +26,18 @@ class OrdersListModel {
 }
 
 class Data {
-  List<Orders>? orders;
+  List<Order>? orders;
   int? totalOrders;
   int? totalPages;
-  String? currentPage;
+  int? currentPage;
 
   Data({this.orders, this.totalOrders, this.totalPages, this.currentPage});
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['orders'] != null) {
-      orders = <Orders>[];
+      orders = <Order>[];
       json['orders'].forEach((v) {
-        orders!.add(new Orders.fromJson(v));
+        orders!.add(new Order.fromJson(v));
       });
     }
     totalOrders = json['totalOrders'];
@@ -57,30 +57,30 @@ class Data {
   }
 }
 
-class Orders {
+class Order {
   String? id;
   String? userId;
-  String? serviceId;
-  String? providerId;
-  String? deliveryDriverId;
+  String? status;
+  int? totalAmount;
+  String? paymentMethod;
   String? latitude;
   String? longitude;
+  String? serviceId;
+  Service? service;
+  String? providerId;
   String? address;
   String? notes;
   int? price;
   int? duration;
-  String? status;
-  int? totalAmount;
   String? paymentStatus;
   String? createdAt;
   String? updatedAt;
-  String? paymentMethod;
-  Service? service;
   Provider? provider;
+  String? deliveryDriverId;
   DeliveryDriver? deliveryDriver;
   List<Stores>? store;
 
-  Orders({
+  Order({
     this.id,
     this.userId,
     this.serviceId,
@@ -104,7 +104,7 @@ class Orders {
     this.store,
   });
 
-  Orders.fromJson(Map<String, dynamic> json) {
+  Order.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['userId'];
     serviceId = json['serviceId'];
@@ -130,7 +130,7 @@ class Orders {
     deliveryDriver = json['deliveryDriver'] != null
         ? new DeliveryDriver.fromJson(json['deliveryDriver'])
         : null;
-    if (json['store'] != null) {
+    if (json['store'] != null) {  
       store = <Stores>[];
       json['store'].forEach((v) {
         store!.add(new Stores.fromJson(v));
@@ -198,21 +198,25 @@ class Service {
 class Provider {
   String? id;
   String? userId;
+  String? name;
 
   Provider({
     this.id,
     this.userId,
+    this.name,
   });
 
   Provider.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['userId'];
+    name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['userId'] = this.userId;
+    data['name'] = this.name;
     return data;
   }
 }
@@ -220,6 +224,7 @@ class Provider {
 class DeliveryDriver {
   String? id;
   String? userId;
+  String? name;
   String? vehicleType;
   String? license;
   bool? availability;
@@ -233,6 +238,7 @@ class DeliveryDriver {
   DeliveryDriver({
     this.id,
     this.userId,
+    this.name,
     this.vehicleType,
     this.license,
     this.availability,
@@ -247,6 +253,7 @@ class DeliveryDriver {
   DeliveryDriver.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['userId'];
+    name = json['name'];
     vehicleType = json['vehicleType'];
     license = json['license'];
     availability = json['availability'];
@@ -262,6 +269,7 @@ class DeliveryDriver {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['userId'] = this.userId;
+    data['name'] = this.name;
     data['vehicleType'] = this.vehicleType;
     data['license'] = this.license;
     data['availability'] = this.availability;
