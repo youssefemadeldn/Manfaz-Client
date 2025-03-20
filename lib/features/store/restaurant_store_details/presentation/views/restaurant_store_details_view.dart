@@ -282,7 +282,8 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
                     // Categories Tabs
                     MenuCategoriesTab(
                       categories: restaurantData.categories!,
-                      controller: _tabController,
+                      tabController: _tabController,
+                      selectedIndex: _selectedCategoryIndex,
                       onCategorySelected: (index) {
                         setState(() {
                           _selectedCategoryIndex = index;
@@ -376,7 +377,9 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
         // Cart action
       },
       backgroundColor: AppColors.primary,
-      icon: Icon(Icons.shopping_cart),
+      icon: Icon(Icons.shopping_cart,
+      color: AppColors.white,
+      ),
       label: Text('Cart'),
     );
   }
