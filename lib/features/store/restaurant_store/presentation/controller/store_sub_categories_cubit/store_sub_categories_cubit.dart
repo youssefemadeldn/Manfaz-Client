@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 import '../../../../../../core/error/failure.dart';
 import '../../../data/models/store_sub_categories_list.dart';
-import '../../../domain/use_cases/get_store_sub_categories_by_category_id.dart';
+import '../../../domin/use_cases/get_store_sub_categories_by_category_id.dart';
 
 part 'store_sub_categories_state.dart';
 

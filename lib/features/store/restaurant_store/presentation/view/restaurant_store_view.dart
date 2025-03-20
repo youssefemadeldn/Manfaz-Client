@@ -243,7 +243,7 @@ class StoreCardItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         // TODO: Navigate to store details
-        Navigator.pushNamed(context, Routes.restaurantStoreDetailsView);
+        Navigator.pushNamed(context, Routes.restaurantStoreDetailsView, arguments: store?.id);
       },
       borderRadius: BorderRadius.circular(16.r),
       child: Container(

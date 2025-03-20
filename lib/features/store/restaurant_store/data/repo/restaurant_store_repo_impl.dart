@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../../core/error/failure.dart';
-import '../../domain/repo/base_restaurant_store_repo.dart';
+import '../../domin/repo/base_restaurant_store_repo.dart';
 import '../data_source/remote/base_restaurant_store_remote_data_source.dart';
 import '../models/store_list_model.dart';
 import '../models/store_sub_categories_list.dart';

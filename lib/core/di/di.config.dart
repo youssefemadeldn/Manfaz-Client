@@ -91,16 +91,28 @@ import '../../features/store/restaurant_store/data/data_source/remote/restaurant
     as _i277;
 import '../../features/store/restaurant_store/data/repo/restaurant_store_repo_impl.dart'
     as _i484;
-import '../../features/store/restaurant_store/domain/repo/base_restaurant_store_repo.dart'
-    as _i860;
-import '../../features/store/restaurant_store/domain/use_cases/get_store_sub_categories_by_category_id.dart'
-    as _i346;
-import '../../features/store/restaurant_store/domain/use_cases/restaurant_store_use_case.dart'
-    as _i842;
+import '../../features/store/restaurant_store/domin/repo/base_restaurant_store_repo.dart'
+    as _i253;
+import '../../features/store/restaurant_store/domin/use_cases/get_store_sub_categories_by_category_id.dart'
+    as _i117;
+import '../../features/store/restaurant_store/domin/use_cases/restaurant_store_use_case.dart'
+    as _i1023;
 import '../../features/store/restaurant_store/presentation/controller/restaurant_store_cubit/restaurant_store_cubit.dart'
     as _i554;
 import '../../features/store/restaurant_store/presentation/controller/store_sub_categories_cubit/store_sub_categories_cubit.dart'
     as _i288;
+import '../../features/store/restaurant_store_details/data/data_source/remote/base_restaurant_store_details_remote_data_source.dart'
+    as _i826;
+import '../../features/store/restaurant_store_details/data/data_source/remote/restaurant_store_details_remote_data_source_impl.dart'
+    as _i56;
+import '../../features/store/restaurant_store_details/data/repo/restaurant_store_details_repo_impl.dart'
+    as _i984;
+import '../../features/store/restaurant_store_details/domin/repo/base_restaurant_store_details_repo.dart'
+    as _i929;
+import '../../features/store/restaurant_store_details/domin/use_cases/get_store_details_use_case.dart'
+    as _i946;
+import '../../features/store/restaurant_store_details/presentation/controller/restaurant_store_details_cubit/restaurant_store_details_cubit.dart'
+    as _i648;
 import '../../features/tabs/home_tab/data/data_source/remote/base_home_tab_remote_data_source.dart'
     as _i710;
 import '../../features/tabs/home_tab/data/data_source/remote/home_tab_remote_data_source_impl.dart'
@@ -158,6 +170,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i489.WebSocketService>(() => _i489.WebSocketService());
     gh.factory<_i710.BaseHomeTabRemoteDataSource>(
         () => _i834.HomeTabRemoteDataSourceImpl());
+    gh.factory<_i826.BaseRestaurantStoreDetailsRemoteDataSource>(
+        () => _i56.RestaurantStoreDetailsRemoteDataSourceImpl());
     gh.factory<_i377.BaseOrdersTabRemoteDataSource>(
         () => _i542.OrdersTabRemoteDataSourceImpl());
     gh.factory<_i347.BaseRegisterRemoteDataSource>(
@@ -198,18 +212,26 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i117.ServicesListParametersUseCase>(() =>
         _i117.ServicesListParametersUseCase(
             gh<_i600.BaseServicesListViewRepo>()));
+    gh.factory<_i929.BaseRestaurantStoreDetailsRepo>(() =>
+        _i984.RestaurantStoreDetailsRepoImpl(
+            gh<_i826.BaseRestaurantStoreDetailsRemoteDataSource>()));
     gh.factory<_i449.CreateServiceOrderUseCase>(() =>
         _i449.CreateServiceOrderUseCase(gh<_i32.BaseCreateServiceOrderRepo>()));
     gh.factory<_i320.WorkerListUseCase>(
         () => _i320.WorkerListUseCase(gh<_i1003.BaseWorkerListRepo>()));
+    gh.factory<_i253.BaseRestaurantStoreRepo>(() =>
+        _i484.RestaurantStoreRepoImpl(
+            gh<_i904.BaseRestaurantStoreRemoteDataSource>()));
     gh.factory<_i88.BaseRegisterRepo>(() => _i934.RegisterRepoImpl(
         registerRemoteDataSource: gh<_i347.BaseRegisterRemoteDataSource>()));
     gh.factory<_i496.ResendVerificationCodeUseCase>(() =>
         _i496.ResendVerificationCodeUseCase(
             gh<_i385.BaseResendVerificationCodeRepo>()));
-    gh.factory<_i860.BaseRestaurantStoreRepo>(() =>
-        _i484.RestaurantStoreRepoImpl(
-            gh<_i904.BaseRestaurantStoreRemoteDataSource>()));
+    gh.factory<_i117.GetStoreSubCategoriesByCategoryId>(() =>
+        _i117.GetStoreSubCategoriesByCategoryId(
+            gh<_i253.BaseRestaurantStoreRepo>()));
+    gh.factory<_i1023.RestaurantStoreUseCase>(() =>
+        _i1023.RestaurantStoreUseCase(gh<_i253.BaseRestaurantStoreRepo>()));
     gh.factory<_i586.GetServicesBasedOnCategoryUseCase>(() =>
         _i586.GetServicesBasedOnCategoryUseCase(gh<_i364.BaseHomeTabRepo>()));
     gh.factory<_i59.HomeTabUseCase>(
@@ -223,11 +245,14 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i50.LoginUseCase(gh<_i752.BaseLoginRepo>()));
     gh.factory<_i579.OtpVerificationCubit>(() =>
         _i579.OtpVerificationCubit(gh<_i496.ResendVerificationCodeUseCase>()));
-    gh.factory<_i346.GetStoreSubCategoriesByCategoryId>(() =>
-        _i346.GetStoreSubCategoriesByCategoryId(
-            gh<_i860.BaseRestaurantStoreRepo>()));
-    gh.factory<_i842.RestaurantStoreUseCase>(() =>
-        _i842.RestaurantStoreUseCase(gh<_i860.BaseRestaurantStoreRepo>()));
+    gh.factory<_i554.RestaurantStoreCubit>(() => _i554.RestaurantStoreCubit(
+        restaurantStoreUseCase: gh<_i1023.RestaurantStoreUseCase>()));
+    gh.factory<_i946.GetStoreDetailsUseCase>(() => _i946.GetStoreDetailsUseCase(
+        gh<_i929.BaseRestaurantStoreDetailsRepo>()));
+    gh.factory<_i288.StoreSubCategoriesCubit>(() =>
+        _i288.StoreSubCategoriesCubit(
+            getStoreSubCategoriesByCategoryId:
+                gh<_i117.GetStoreSubCategoriesByCategoryId>()));
     gh.factory<_i482.CreateServiceOrderCubit>(() =>
         _i482.CreateServiceOrderCubit(
             createServiceOrderUseCase: gh<_i449.CreateServiceOrderUseCase>()));
@@ -237,16 +262,13 @@ extension GetItInjectableX on _i174.GetIt {
         _i844.RegisterCubit(registerUseCase: gh<_i118.RegisterUseCase>()));
     gh.factory<_i525.WorkerListCubit>(() => _i525.WorkerListCubit(
         workerListUseCase: gh<_i320.WorkerListUseCase>()));
-    gh.factory<_i288.StoreSubCategoriesCubit>(() =>
-        _i288.StoreSubCategoriesCubit(
-            getStoreSubCategoriesByCategoryId:
-                gh<_i346.GetStoreSubCategoriesByCategoryId>()));
+    gh.factory<_i648.RestaurantStoreDetailsCubit>(() =>
+        _i648.RestaurantStoreDetailsCubit(
+            getStoreDetailsUseCase: gh<_i946.GetStoreDetailsUseCase>()));
     gh.factory<_i600.HomeTabCubit>(
         () => _i600.HomeTabCubit(homeTabUseCase: gh<_i59.HomeTabUseCase>()));
     gh.factory<_i1070.LoginCubit>(
         () => _i1070.LoginCubit(loginUseCase: gh<_i50.LoginUseCase>()));
-    gh.factory<_i554.RestaurantStoreCubit>(() => _i554.RestaurantStoreCubit(
-        restaurantStoreUseCase: gh<_i842.RestaurantStoreUseCase>()));
     return this;
   }
 }

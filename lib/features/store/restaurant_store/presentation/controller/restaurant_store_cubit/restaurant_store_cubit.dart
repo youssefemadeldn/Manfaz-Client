@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 import '../../../../../../core/error/failure.dart';
 import '../../../data/models/store_list_model.dart';
-import '../../../domain/use_cases/restaurant_store_use_case.dart';
+import '../../../domin/use_cases/restaurant_store_use_case.dart';
 
 part 'restaurant_store_state.dart';
 

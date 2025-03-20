@@ -9,9 +9,9 @@ class GallerySection extends StatelessWidget {
   final List<String>? images;
 
   const GallerySection({
-    Key? key,
+    super.key,
     required this.images,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

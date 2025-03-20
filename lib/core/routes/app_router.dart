@@ -155,9 +155,10 @@ class AppRouter {
                   child: ServiceOrderLocationPickerView(),
                 ));
       case Routes.restaurantStoreDetailsView:
-        return CupertinoPageRoute(builder: (_) => RestaurantStoreDetailsView(
-          
-        ));
+        return CupertinoPageRoute(
+            builder: (_) => RestaurantStoreDetailsView(
+                  storeId: (settings.arguments as String?) ?? '',
+                ));
 
       default:
         return CupertinoPageRoute(
