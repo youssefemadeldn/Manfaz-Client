@@ -18,6 +18,7 @@ import '../../features/order/create_service_order/presentation/views/service_ord
 import '../../features/order/create_service_order/presentation/views/create_service_order_view.dart';
 import '../../features/servicses/service_details_view/presentation/view/service_details_view.dart';
 import '../../features/servicses/services_list_view_view/data/model/parameters_services_list_model.dart';
+import '../../features/store/restaurant_store_details/presentation/views/restaurant_store_details_view.dart';
 import '../../features/workers/worker_profile/presentation/views/worker_profile_view.dart';
 import '../../features/google_maps/get_location_from_to/presentation/controller/google_maps_cubit/get_location_from_to_cubit.dart';
 import '../../features/servicses/services_list_view_view/presentation/views/services_list_view_view.dart';
@@ -153,6 +154,10 @@ class AppRouter {
                       getIt<ServiceOrderLocationPickerCubit>()..init(),
                   child: ServiceOrderLocationPickerView(),
                 ));
+      case Routes.restaurantStoreDetailsView:
+        return CupertinoPageRoute(builder: (_) => RestaurantStoreDetailsView(
+          
+        ));
 
       default:
         return CupertinoPageRoute(

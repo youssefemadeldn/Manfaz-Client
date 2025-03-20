@@ -25,4 +25,6 @@ class Routes {
   // service order location picker
   static const String serviceOrderLocationPickerView =
       '/serviceOrderLocationPickerView';
+  static const String restaurantStoreDetailsView =
+      '/restaurantStoreDetailsView';
 }

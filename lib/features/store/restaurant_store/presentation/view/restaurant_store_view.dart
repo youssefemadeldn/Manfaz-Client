@@ -5,6 +5,7 @@ import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:manfaz/core/widgets/error_message_widget.dart';
 import '../../../../../core/di/di.dart';
+import '../../../../../core/routes/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
 import '../../data/models/store_sub_categories_list.dart';
@@ -18,7 +19,7 @@ import '../../data/models/store_list_model.dart';
 class RestaurantStoreView extends StatelessWidget {
   final String? id;
   
-  RestaurantStoreView({super.key, this.id});
+  const RestaurantStoreView({super.key, this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -242,6 +243,7 @@ class StoreCardItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         // TODO: Navigate to store details
+        Navigator.pushNamed(context, Routes.restaurantStoreDetailsView);
       },
       borderRadius: BorderRadius.circular(16.r),
       child: Container(
