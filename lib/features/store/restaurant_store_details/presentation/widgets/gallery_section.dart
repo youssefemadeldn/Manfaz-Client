@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:manfaz/core/widgets/ArrowBackIosButton.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_styles.dart';
 import 'package:shimmer/shimmer.dart';
@@ -192,7 +194,7 @@ class GallerySection extends StatelessWidget {
 
   void _openGalleryViewer(BuildContext context, List<String> images, int initialIndex) {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      CupertinoPageRoute(
         builder: (context) => GalleryViewerPage(
           images: images,
           initialIndex: initialIndex,
@@ -208,10 +210,10 @@ class GalleryViewerPage extends StatefulWidget {
   final int initialIndex;
 
   const GalleryViewerPage({
-    Key? key,
+    super.key,
     required this.images,
     required this.initialIndex,
-  }) : super(key: key);
+  });
 
   @override
   State<GalleryViewerPage> createState() => _GalleryViewerPageState();
@@ -245,6 +247,9 @@ class _GalleryViewerPageState extends State<GalleryViewerPage> {
         title: Text(
           'Gallery (${_currentIndex + 1}/${widget.images.length})',
           style: TextStyle(color: Colors.white),
+        ),
+        leading: ArrowBackIosButton(
+          iconColor: AppColors.white,
         ),
       ),
       body: Stack(
@@ -294,7 +299,7 @@ class _GalleryViewerPageState extends State<GalleryViewerPage> {
             bottom: 20,
             left: 0,
             right: 0,
-            child: Container(
+            child: SizedBox(
               height: 70.h,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,

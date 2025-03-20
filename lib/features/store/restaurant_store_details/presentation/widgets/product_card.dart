@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_styles.dart';
+import '../../../../../core/helper/snack_bar_helper.dart';
 import '../../data/models/store_details_model.dart';
 
 class ProductCard extends StatefulWidget {
@@ -257,17 +258,21 @@ class _ProductCardState extends State<ProductCard> with SingleTickerProviderStat
                                 borderRadius: BorderRadius.circular(8.r),
                                 child: InkWell(
                                   onTap: () {
-                                    // Add to cart action
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text('Added $_quantity ${widget.product.name} to cart'),
-                                        duration: Duration(seconds: 2),
-                                        behavior: SnackBarBehavior.floating,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10.r),
-                                        ),
-                                      ),
-                                    );
+                                      // Add to cart action
+                                      SnackBarHelper.showSuccessSnackBar(
+                                        context,
+                                        message: 'Added $_quantity  ${widget.product.name} to cart',
+                                      );
+                                    // ScaffoldMessenger.of(context).showSnackBar(
+                                    //   SnackBar(
+                                    //     content: Text('Added $_quantity ${widget.product.name} to cart'),
+                                    //     duration: Duration(seconds: 2),
+                                    //     behavior: SnackBarBehavior.floating,
+                                    //     shape: RoundedRectangleBorder(
+                                    //       borderRadius: BorderRadius.circular(10.r),
+                                    //     ),
+                                    //   ),
+                                    // );
                                   },
                                   borderRadius: BorderRadius.circular(8.r),
                                   child: Container(

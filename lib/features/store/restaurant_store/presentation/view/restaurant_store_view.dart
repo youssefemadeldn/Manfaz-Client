@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:manfaz/core/widgets/ArrowBackIosButton.dart';
 import 'package:manfaz/core/widgets/error_message_widget.dart';
 import '../../../../../core/di/di.dart';
 import '../../../../../core/routes/routes.dart';
@@ -49,6 +50,21 @@ class RestaurantStoreView extends StatelessWidget {
           List<StoreSubCategory>? subCategories;
           
           if (subCategoriesState is StoreSubCategoriesSuccess) {
+            if(subCategoriesState.storeSubCategoriesList.data!.isEmpty||id ==null){
+              return Scaffold(
+                backgroundColor: AppColors.background,
+                appBar: AppBar(
+                  backgroundColor: AppColors.background,
+                  elevation: 0,
+                  leading:ArrowBackIosButton()
+                ),
+                body:  Center(
+                  child: Text('No Store Found',
+                  style: AppStyles.header3,
+                  ),
+                ),
+              );
+            }
             subCategories = subCategoriesState.storeSubCategoriesList.data ?? [];
             
             // Initialize with first subcategory ID if available

@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
 class ArrowBackIosButton extends StatelessWidget {
+  final Color? iconColor;
   const ArrowBackIosButton({
     super.key,
+    this.iconColor,
   });
 
   @override
@@ -14,7 +16,7 @@ class ArrowBackIosButton extends StatelessWidget {
         onPressed: () {
           Navigator.pop(context);
         },
-        icon: Icon(Icons.arrow_back_ios, color: AppColors.icon),
+        icon: Icon(Icons.arrow_back_ios, color:iconColor ?? AppColors.icon),
       ),
       onPressed: () {
         Navigator.pop(context);

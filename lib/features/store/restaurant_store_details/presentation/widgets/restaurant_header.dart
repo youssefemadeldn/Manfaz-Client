@@ -249,12 +249,12 @@ class RestaurantHeader extends StatelessWidget {
                       height: 10.w,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: restaurantData.status?.toLowerCase() == 'open' 
+                        color: restaurantData.status?.toLowerCase() == 'active' 
                           ? AppColors.success 
                           : AppColors.error,
                         boxShadow: [
                           BoxShadow(
-                            color: (restaurantData.status?.toLowerCase() == 'open' 
+                            color: (restaurantData.status?.toLowerCase() == 'active' 
                               ? AppColors.success 
                               : AppColors.error).withOpacity(0.4),
                             blurRadius: 6,
@@ -267,7 +267,7 @@ class RestaurantHeader extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                       decoration: BoxDecoration(
-                        color: restaurantData.status?.toLowerCase() == 'open' 
+                        color: restaurantData.status?.toLowerCase() == 'active' 
                           ? AppColors.success.withOpacity(0.15) 
                           : AppColors.error.withOpacity(0.15),
                         borderRadius: BorderRadius.circular(6.r),
@@ -275,7 +275,7 @@ class RestaurantHeader extends StatelessWidget {
                       child: Text(
                         restaurantData.status ?? '',
                         style: AppStyles.caption.copyWith(
-                          color: restaurantData.status?.toLowerCase() == 'open' 
+                          color: restaurantData.status?.toLowerCase() == 'active' 
                             ? AppColors.success 
                             : AppColors.error,
                           fontWeight: FontWeight.w600,
@@ -387,7 +387,7 @@ class RestaurantHeader extends StatelessWidget {
             icon: Icons.location_on,
             text: restaurantData.address!,
             onTap: () {
-              // Open map with location
+              // active map with location
             },
           ),
           
