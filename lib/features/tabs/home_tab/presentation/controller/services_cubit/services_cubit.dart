@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../../../core/error/failure.dart';
 import '../../../data/models/services_based_on_category_model.dart';
-import '../../../domain/use_cases/get_services_based_on_category_use_case.dart';
+import '../../../domin/use_cases/get_services_based_on_category_use_case.dart';
 
 part 'services_state.dart';
 
