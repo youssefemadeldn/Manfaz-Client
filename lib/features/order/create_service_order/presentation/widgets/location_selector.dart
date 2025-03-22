@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
 import '../../../../../core/routes/routes.dart';
@@ -99,10 +100,10 @@ class LocationSelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionTitle('Location'),
+        _buildSectionTitle(tr('location_selector.location')),
         _buildLocationTile(
-          'Service Location',
-          selectedLocation != null ? selectedLocation!['address'] : 'Select service location',
+          tr('location_selector.service_location'),
+          selectedLocation != null ? selectedLocation!['address'] : tr('location_selector.select_service_location'),
           Icons.location_on_rounded,
           AppColors.primary,
           context,

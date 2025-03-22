@@ -17,6 +17,7 @@
   "or_sign_in_with": "أو سجل باستخدام",
   "no_account": "ليس لديك حساب؟",
   "sign_up_now": "سجل الآن",
+  "welcome": "مرحباً بك",
   "home": {
     "food_and_drinks": "طعام وشراب",
     "restaurant_coffee_drinks": "مطاعم - مقاهي - مشروبات",
@@ -33,7 +34,7 @@
     "daily_solutions": "حلولك اليومية",
     "quick_actions": "الإجراءات السريعة",
     "delivery": "توصيل",
-    "not_available_service": "خدمات غير موجودة",
+    "not_available_service": "لا توجد خدمات متاحة",
     "services": "خدمات",
     "popular_services": "الخدمات الشائعة",
     "all_categories": "جميع الفئات",
@@ -54,7 +55,8 @@
     "laundry": "مغسلة",
     "electronics": "إلكترونيات",
     "pharmacy": "صيدلية",
-    "more": "المزيد"
+    "more": "المزيد",
+    "get_location": "الحصول على الموقع"
   },
   "bottom_nav": {
     "home": "الرئيسية",
@@ -161,7 +163,8 @@
     "login_failed": "فشل تسجيل الدخول",
     "network_error": "خطأ في الشبكة",
     "check_internet": "تحقق من اتصال الإنترنت",
-    "invalid_credentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة"
+    "invalid_credentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+    "user_type_required": "الرجاء اختيار نوع المستخدم"
   },
   "delivery": {
     "search_hint": "البحث في الطعام والمشروبات",
@@ -175,5 +178,12 @@
       "delivery_fee": "التوصيل {{price}} ريال",
       "distance": "{{distance}} كم"
     }
+  },
+  "worker_list_view_view": {
+    "workers": "العمال"
+  },
+  "create_service_order": {
+    "service_order": "طلب الخدمة",
+    "create_request": "قم بإنشاء طلب الخدمة مع تعليمات مفصلة"
   }
 }

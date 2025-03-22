@@ -11,7 +11,7 @@ class LoginCubit extends Cubit<LoginState> {
   var emailController =
       TextEditingController(text: 'youssefemad63.ye@gmail.com');
   var passwordController = TextEditingController(text: '01154516292');
-  String userType = '';
+  String userType = 'user';
   LoginCubit({required this.loginUseCase}) : super(LoginInitial());
 
   emitLoginState() async {

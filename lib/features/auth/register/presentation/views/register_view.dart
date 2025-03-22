@@ -25,16 +25,16 @@ class _RegisterViewState extends State<RegisterView> {
   bool isPasswordVisible = true;
   String? userType;
 
-  final List<Map<String, String>> userTypes = [
-    {
-      'value': 'worker',
-      'label': 'Worker',
-    },
-    {
-      'value': 'user',
-      'label': 'User',
-    },
-  ];
+  // final List<Map<String, String>> userTypes = [
+  //   {
+  //     'value': 'worker',
+  //     'label': 'Worker',
+  //   },
+  //   {
+  //     'value': 'user',
+  //     'label': 'User',
+  //   },
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -125,58 +125,59 @@ class _RegisterViewState extends State<RegisterView> {
                             .nameController,
                       ),
                       SizedBox(height: 15.h),
-                      DropdownButtonFormField<String>(
-                        value: userType,
-                        isExpanded: true,
-                        dropdownColor: AppColors.background,
-                        icon:
-                            Icon(Icons.arrow_drop_down, color: AppColors.grey),
-                        decoration: InputDecoration(
-                          fillColor: AppColors.background,
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(color: AppColors.grey),
-                            gapPadding: 10,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(color: AppColors.grey),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(color: AppColors.primary),
-                          ),
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 16.w, vertical: 18.h),
-                        ),
-                        hint: Text('Select Type', style: AppStyles.caption),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please select user type';
-                          }
-                          return null;
-                        },
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            userType = newValue;
-                            BlocProvider.of<RegisterCubit>(context).userType =
-                                newValue!;
-                          });
-                        },
-                        items: userTypes.map((type) {
-                          return DropdownMenuItem(
-                            value: type['value'],
-                            child: Text(
-                              type['label']!,
-                              style: AppStyles.bodyText3.copyWith(
-                                color: AppColors.black,
-                                fontSize: 16.sp,
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                      ),
+                      // DropdownButtonFormField<String>(
+                      //   value: userType,
+                      //   isExpanded: true,
+                      //   dropdownColor: AppColors.background,
+                      //   icon:
+                      //       Icon(Icons.arrow_drop_down, color: AppColors.grey),
+                      //   decoration: InputDecoration(
+                      //     fillColor: AppColors.background,
+                      //     filled: true,
+                      //     border: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(8),
+                      //       borderSide: BorderSide(color: AppColors.grey),
+                      //       gapPadding: 10,
+                      //     ),
+                      //     enabledBorder: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(8),
+                      //       borderSide: BorderSide(color: AppColors.grey),
+                      //     ),
+                      //     focusedBorder: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(8),
+                      //       borderSide: BorderSide(color: AppColors.primary),
+                      //     ),
+                      //     contentPadding: EdgeInsets.symmetric(
+                      //         horizontal: 16.w, vertical: 18.h),
+                      //   ),
+                      //   hint: Text('Select Type', style: AppStyles.caption),
+                      //   validator: (value) {
+                      //     if (value == null || value.isEmpty) {
+                      //       return 'Please select user type';
+                      //     }
+                      //     return null;
+                      //   },
+                      //   onChanged: (String? newValue) {
+                      //     setState(() {
+                      //       userType = newValue;
+                      //       BlocProvider.of<RegisterCubit>(context).userType =
+                      //           newValue!;
+                      //     });
+                      //   },
+                      //   items: userTypes.map((type) {
+                      //     return DropdownMenuItem(
+                      //       value: type['value'],
+                      //       child: Text(
+                      //         type['label']!,
+                      //         style: AppStyles.bodyText3.copyWith(
+                      //           color: AppColors.black,
+                      //           fontSize: 16.sp,
+                      //         ),
+                      //       ),
+                      //     );
+                      //   }).toList(),
+                      // ),
+
                       SizedBox(height: 15.h),
                       CusTextFormField(
                         fillColor: AppColors.background,

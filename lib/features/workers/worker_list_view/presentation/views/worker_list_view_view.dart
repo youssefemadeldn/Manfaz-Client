@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,7 +23,7 @@ class WorkerListViewView extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           title: Text(
-            'Workers',
+            tr('worker_list_view_view.workers'),
             style: AppStyles.header1,
           ),
           leading: ArrowBackIosButton(),

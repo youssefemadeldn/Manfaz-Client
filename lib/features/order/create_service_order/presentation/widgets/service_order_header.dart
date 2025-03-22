@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
 
@@ -57,7 +58,7 @@ class ServiceOrderHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Service Order",
+                  tr('create_service_order.service_order'),
                   style: AppStyles.header2.copyWith(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -65,7 +66,7 @@ class ServiceOrderHeader extends StatelessWidget {
                 ).animate().fadeIn(delay: 300.ms).slideX(),
                 SizedBox(height: 6.h),
                 Text(
-                  "Create your service request with detailed instructions",
+                  tr('create_service_order.create_request'),
                   style: AppStyles.bodyText2.copyWith(
                     color: AppColors.grey,
                     height: 1.4,

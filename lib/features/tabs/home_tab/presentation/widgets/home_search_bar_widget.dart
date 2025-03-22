@@ -78,7 +78,7 @@ class HomeSearchBarWidget extends StatelessWidget {
                           );
                         }
                         return Text(
-                          'get location',
+                          tr('home.get_location'),
                           style: AppStyles.bodyText2.copyWith(
                             color: AppColors.white,
                             fontSize: 14.sp,

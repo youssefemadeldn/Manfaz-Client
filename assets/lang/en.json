@@ -17,6 +17,7 @@
   "or_sign_in_with": "Or Sign In With",
   "no_account": "Don't have an account?",
   "sign_up_now": "Sign Up now",
+  "welcome": "Welcome",
   "home": {
     "food_and_drinks": "Food & Drinks",
     "restaurant_coffee_drinks": "Restaurant - Coffee - Drinks",
@@ -33,7 +34,7 @@
     "daily_solutions": "Daily Solutions",
     "quick_actions": "Quick Actions",
     "delivery": "Delivery",
-    "not_available_service": "Not Available Service",
+    "not_available_service": "No Available Services",
     "services": "Services",
     "popular_services": "Popular Services",
     "all_categories": "All Categories",
@@ -54,7 +55,8 @@
     "laundry": "Laundry",
     "electronics": "Electronics",
     "pharmacy": "Pharmacy",
-    "more": "More"
+    "more": "More",
+    "get_location": "Get Location"
   },
   "bottom_nav": {
     "home": "Home",
@@ -140,17 +142,17 @@
     "already_have_account": "Already have an account? ",
     "login_here": "Login here"
   },
-  "dialog": {
-    "ok": "OK",
-    "cancel": "Cancel",
-    "loading": "Loading..."
-  },
   "verification": {
     "title": "Verify Your Account",
     "description": "We've sent a verification code to your account. Please enter it below to complete verification.",
     "resend_code": "Resend Code",
     "verify": "Verify",
     "change_account": "Change Account"
+  },
+  "dialog": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "loading": "Loading..."
   },
   "login": {
     "login": "Login",
@@ -161,7 +163,8 @@
     "login_failed": "Login Failed",
     "network_error": "Network Error",
     "check_internet": "Check Internet Connection",
-    "invalid_credentials": "Invalid email or password"
+    "invalid_credentials": "Invalid email or password",
+    "user_type_required": "Please select a user type"
   },
   "delivery": {
     "search_hint": "Search in Food & Beverages",
@@ -175,5 +178,12 @@
       "delivery_fee": "Delivery {{price}} SAR",
       "distance": "{{distance}} km"
     }
+  },
+  "worker_list_view_view": {
+    "workers": "Workers"
+  },
+  "create_service_order": {
+    "service_order": "Service Order",
+    "create_request": "Create your service request with detailed instructions"
   }
 }

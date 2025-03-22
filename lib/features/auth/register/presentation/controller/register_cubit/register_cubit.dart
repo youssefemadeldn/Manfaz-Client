@@ -16,7 +16,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       TextEditingController(text: 'youssefemad63.ye@gmail.com');
   var passwordController = TextEditingController(text: '01154516292');
   var phoneController = TextEditingController(text: '01154516292');
-  var userType = '';
+  var userType = 'user';
   RegisterCubit({required this.registerUseCase}) : super(RegisterInitial());
 
   Future<void> emitRegisterState() async {
