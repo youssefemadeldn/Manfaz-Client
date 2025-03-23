@@ -185,5 +185,13 @@
   "create_service_order": {
     "service_order": "Service Order",
     "create_request": "Create your service request with detailed instructions"
+  },
+  "error":{
+    "try_again_later": "Try Again Later",
+    "error": "Error"
+  },
+  "success":{
+    "order_created_successfully": "Order Created Successfully",
+    "success": "Success"
   }
 }

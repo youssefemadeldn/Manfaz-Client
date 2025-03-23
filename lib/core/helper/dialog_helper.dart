@@ -48,7 +48,7 @@ class DialogHelper {
                   child: Text(
                     cancelText ?? 'dialog.cancel'.tr(),
                     style: leftActionStyle ?? TextStyle(
-                      color: AppColors.primary.withOpacity(0.7),
+                      color: AppColors.primary,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -61,7 +61,7 @@ class DialogHelper {
                   },
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    backgroundColor: AppColors.primary.withOpacity(0.1),
+                    // backgroundColor: AppColors.primary.withOpacity(0.1),
                   ),
                   child: Text(
                     confirmText ?? 'dialog.ok'.tr(),

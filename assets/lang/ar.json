@@ -185,5 +185,13 @@
   "create_service_order": {
     "service_order": "طلب الخدمة",
     "create_request": "قم بإنشاء طلب الخدمة مع تعليمات مفصلة"
+  },
+  "error":{
+    "try_again_later": "حاول مرة أخرى",
+    "error": "خطأ"
+  },
+  "success":{
+    "order_created_successfully": "تم إنشاء الطلب بنجاح",
+    "success": "نجاح"
   }
 }

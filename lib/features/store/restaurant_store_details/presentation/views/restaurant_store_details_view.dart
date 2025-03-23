@@ -1,11 +1,14 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/di/di.dart';
 import 'package:manfaz/features/tabs/home_tab/presentation/widgets/states/home_tab_error.dart';
+import '../../../../../core/helper/dialog_helper.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
 import '../../data/models/store_details_model.dart';
+import '../controller/create_delivery_order_cubit/create_delivery_order_cubit.dart';
 import '../controller/restaurant_store_details_cubit/restaurant_store_details_cubit.dart';
 import '../widgets/restaurant_header.dart';
 import '../widgets/menu_categories_tab.dart';
@@ -49,30 +52,41 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<RestaurantStoreDetailsCubit>()
-        ..getStoreDetails(storeId: widget.storeId),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt<RestaurantStoreDetailsCubit>()
+            ..getStoreDetails(storeId: widget.storeId),
+        ),
+        BlocProvider(
+          create: (context) => getIt<CreateDeliveryOrderCubit>(),
+        ),
+      ],
       child: Scaffold(
         backgroundColor: AppColors.background,
         body: _buildContent(),
         floatingActionButton: _buildFloatingActionButton(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
   }
 
   Widget _buildContent() {
-    return BlocBuilder<RestaurantStoreDetailsCubit, RestaurantStoreDetailsState>(
+    return BlocBuilder<RestaurantStoreDetailsCubit,
+        RestaurantStoreDetailsState>(
       builder: (context, state) {
-        if(state is RestaurantStoreDetailsLoading){
-          return Center(child: CircularProgressIndicator(
+        if (state is RestaurantStoreDetailsLoading) {
+          return Center(
+            child: CircularProgressIndicator(
               color: AppColors.primary,
-          ),);
-        }else if(state is RestaurantStoreDetailsError){
+            ),
+          );
+        } else if (state is RestaurantStoreDetailsError) {
           return ErrorMessageWidget(errorMessage: state.failure.errorMessage);
-        }else if(state is RestaurantStoreDetailsSuccess){
+        } else if (state is RestaurantStoreDetailsSuccess) {
           final storeDetails = state.storeDetails;
           final restaurantData = storeDetails.data;
-          
+
           if (restaurantData == null) {
             return Center(
               child: Text(
@@ -81,7 +95,7 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
               ),
             );
           }
-          
+
           // Initialize tab controller with the number of categories
           final categoriesLength = restaurantData.categories?.length ?? 0;
           if (_tabController.length != categoriesLength) {
@@ -89,7 +103,7 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
               length: categoriesLength > 0 ? categoriesLength : 1,
               vsync: this,
             );
-            
+
             _tabController.addListener(() {
               if (!_tabController.indexIsChanging) {
                 setState(() {
@@ -180,12 +194,12 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
 
                   // Bottom Padding
                   SizedBox(
-                      height: 80.h), // Extra space for the floating action button
+                      height:
+                          80.h), // Extra space for the floating action button
                 ],
               ),
             ),
           );
-        
         }
         return SizedBox.shrink();
       },
@@ -237,20 +251,157 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
   }
 
   Widget _buildFloatingActionButton() {
-    return FloatingActionButton.extended(
-      onPressed: () {
-        // Cart action
-      },
-      backgroundColor: AppColors.primary,
-      icon: Icon(
-        Icons.shopping_cart,
-        color: AppColors.white,
-      ),
-      label: Text('Cart',
-      style: AppStyles.bodyText2.copyWith(
-        color: AppColors.white,
-        fontWeight: FontWeight.w600,
-      ),
+    return BlocProvider(
+      create: (context) => getIt<CreateDeliveryOrderCubit>(),
+      child: BlocConsumer<CreateDeliveryOrderCubit, CreateDeliveryOrderState>(
+        listener: (context, state) {
+          if (state is CreateDeliveryOrderError) {
+            // Handle error
+            DialogHelper.showCustomDialog(
+              content: Text(tr('error.try_again_later',
+              
+              ),
+              style: AppStyles.bodyText1,
+              textAlign: TextAlign.center,  
+              ),
+              context: context,
+              title: Text(tr('error.error',
+                
+              ),
+              textAlign: TextAlign.center,
+              
+              ),
+            );
+          }else if(state is CreateDeliveryOrderSuccess){
+            DialogHelper.showCustomDialog(
+              content: Text(tr('success.order_created_successfully')),
+              context: context,
+              title: Text(tr('success.success'),
+              textAlign: TextAlign.center,
+
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
+          if (state is CreateDeliveryOrderLoading) {
+            return FloatingActionButton.extended(
+              onPressed: () {},
+              label: const CircularProgressIndicator(
+                color: AppColors.primary,
+              ),
+              backgroundColor: AppColors.white,
+            );
+          } 
+          else if (state is CreateDeliveryOrderSuccess) {
+            return FloatingActionButton.extended(
+              onPressed: () {
+                // Cart action
+                context.read<CreateDeliveryOrderCubit>().createDeliveryOrder(
+                      userId: context.read<CreateDeliveryOrderCubit>().userId,
+                      address: "home",
+                      latitude: 12.23,
+                      longitude: 12.232,
+                      notes: "يرجى عدم التاخير عن .",
+                      price: 50.0,
+                      duration: 60,
+                      status: "pending",
+                      totalAmount: 50.0,
+                      paymentStatus: "pending",
+                      type: "delivery",
+                      store: [
+                        {
+                          "storeId": "67c67efe4a5626a31539a284",
+                          "products": [
+                            {
+                              "productId": "67c68755b7410128f5c96223",
+                              "quantity": 5
+                            }
+                          ]
+                        }
+                      ],
+                      paymentMethod: "cash",
+                    );
+              },
+              backgroundColor: AppColors.primary,
+              label: Row(
+                children: [
+                  Text(
+                    '',
+                    textAlign: TextAlign.center,
+                    style: AppStyles.bodyText2.copyWith(
+                      color: AppColors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    ' Place Order',
+                    textAlign: TextAlign.center,
+                    style: AppStyles.bodyText2.copyWith(
+                      color: AppColors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+          return FloatingActionButton.extended(
+            onPressed: () {
+              // Cart action
+              context.read<CreateDeliveryOrderCubit>().createDeliveryOrder(
+                    userId: context.read<CreateDeliveryOrderCubit>().userId,
+                    type: "delivery",
+                    address: "home",
+                    latitude: 12.23,
+                    longitude: 12.232,
+                    price: 50.0,
+                    duration: 60,
+                    status: "pending",
+                    totalAmount: 50.0,
+                    paymentStatus: "pending",
+                    store: [
+                      {
+                        "storeId": "67c67efe4a5626a31539a284",
+                        "products": [
+                          {
+                            "productId": "67c68755b7410128f5c96223",
+                            "quantity": 5
+                          }
+                        ]
+                      },
+                    ],
+                    notes: "يرجى عدم التاخير عن .",
+                    paymentMethod: "cash",
+                  );
+            },
+            backgroundColor: AppColors.primary,
+            // icon: Icon(
+            //   Icons.shopping_cart,
+            //   color: AppColors.white,
+            // ),
+            label: Row(
+              children: [
+                Text(
+                  '',
+                  textAlign: TextAlign.center,
+                  style: AppStyles.bodyText2.copyWith(
+                    color: AppColors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  ' Place Order',
+                  textAlign: TextAlign.center,
+                  style: AppStyles.bodyText2.copyWith(
+                    color: AppColors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

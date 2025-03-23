@@ -109,8 +109,12 @@ import '../../features/store/restaurant_store_details/data/repo/restaurant_store
     as _i984;
 import '../../features/store/restaurant_store_details/domin/repo/base_restaurant_store_details_repo.dart'
     as _i929;
+import '../../features/store/restaurant_store_details/domin/use_cases/create_delivery_order_use_case.dart'
+    as _i531;
 import '../../features/store/restaurant_store_details/domin/use_cases/get_store_details_use_case.dart'
     as _i946;
+import '../../features/store/restaurant_store_details/presentation/controller/create_delivery_order_cubit/create_delivery_order_cubit.dart'
+    as _i342;
 import '../../features/store/restaurant_store_details/presentation/controller/restaurant_store_details_cubit/restaurant_store_details_cubit.dart'
     as _i648;
 import '../../features/tabs/home_tab/data/data_source/remote/base_home_tab_remote_data_source.dart'
@@ -120,11 +124,11 @@ import '../../features/tabs/home_tab/data/data_source/remote/home_tab_remote_dat
 import '../../features/tabs/home_tab/data/repo/home_tab_repo_impl.dart'
     as _i107;
 import '../../features/tabs/home_tab/domin/repo/base_home_tab_repo.dart'
-    as _i364;
+    as _i666;
 import '../../features/tabs/home_tab/domin/use_cases/get_services_based_on_category_use_case.dart'
-    as _i586;
+    as _i50;
 import '../../features/tabs/home_tab/domin/use_cases/home_tab_use_case.dart'
-    as _i59;
+    as _i256;
 import '../../features/tabs/home_tab/presentation/controller/home_tab_cubit/home_tab_cubit.dart'
     as _i600;
 import '../../features/tabs/home_tab/presentation/controller/search_bar_cubit/search_bar_cubit.dart'
@@ -174,6 +178,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i56.RestaurantStoreDetailsRemoteDataSourceImpl());
     gh.factory<_i377.BaseOrdersTabRemoteDataSource>(
         () => _i542.OrdersTabRemoteDataSourceImpl());
+    gh.factory<_i666.BaseHomeTabRepo>(
+        () => _i107.HomeTabRepoImpl(gh<_i710.BaseHomeTabRemoteDataSource>()));
     gh.factory<_i347.BaseRegisterRemoteDataSource>(
         () => _i258.RegisterRemoteDataSource());
     gh.factory<_i187.BaseLoginRemoteDataSource>(
@@ -186,8 +192,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i638.CreateServiceOrderRemoteDataSourceImpl());
     gh.factory<_i216.BaseResendVerificationCodeRemoteDataSource>(
         () => _i157.ResendVerificationCodeRemoteDataSourceImpl());
-    gh.factory<_i364.BaseHomeTabRepo>(
-        () => _i107.HomeTabRepoImpl(gh<_i710.BaseHomeTabRemoteDataSource>()));
     gh.factory<_i198.BaseOrdersTabRepo>(() =>
         _i666.OrdersTabRepoImpl(gh<_i377.BaseOrdersTabRemoteDataSource>()));
     gh.factory<_i1003.BaseWorkerListRepo>(() =>
@@ -204,6 +208,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i600.BaseServicesListViewRepo>(() =>
         _i1073.ServicesListViewRepoImpl(
             gh<_i500.BaseServicesListViewRemoteDataSource>()));
+    gh.factory<_i50.GetServicesBasedOnCategoryUseCase>(() =>
+        _i50.GetServicesBasedOnCategoryUseCase(gh<_i666.BaseHomeTabRepo>()));
+    gh.factory<_i256.HomeTabUseCase>(
+        () => _i256.HomeTabUseCase(gh<_i666.BaseHomeTabRepo>()));
+    gh.factory<_i600.HomeTabCubit>(
+        () => _i600.HomeTabCubit(homeTabUseCase: gh<_i256.HomeTabUseCase>()));
     gh.factory<_i32.BaseCreateServiceOrderRepo>(() =>
         _i1056.CreateServiceOrderRepoImpl(
             gh<_i416.BaseCreateServiceOrderRemoteDataSource>()));
@@ -227,20 +237,16 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i496.ResendVerificationCodeUseCase>(() =>
         _i496.ResendVerificationCodeUseCase(
             gh<_i385.BaseResendVerificationCodeRepo>()));
+    gh.factory<_i256.ServicesCubit>(() => _i256.ServicesCubit(
+        getServicesBasedOnCategoryUseCase:
+            gh<_i50.GetServicesBasedOnCategoryUseCase>()));
     gh.factory<_i117.GetStoreSubCategoriesByCategoryId>(() =>
         _i117.GetStoreSubCategoriesByCategoryId(
             gh<_i253.BaseRestaurantStoreRepo>()));
     gh.factory<_i1023.RestaurantStoreUseCase>(() =>
         _i1023.RestaurantStoreUseCase(gh<_i253.BaseRestaurantStoreRepo>()));
-    gh.factory<_i586.GetServicesBasedOnCategoryUseCase>(() =>
-        _i586.GetServicesBasedOnCategoryUseCase(gh<_i364.BaseHomeTabRepo>()));
-    gh.factory<_i59.HomeTabUseCase>(
-        () => _i59.HomeTabUseCase(gh<_i364.BaseHomeTabRepo>()));
     gh.factory<_i1002.ServiceListViewCubit>(() =>
         _i1002.ServiceListViewCubit(gh<_i117.ServicesListParametersUseCase>()));
-    gh.factory<_i256.ServicesCubit>(() => _i256.ServicesCubit(
-        getServicesBasedOnCategoryUseCase:
-            gh<_i586.GetServicesBasedOnCategoryUseCase>()));
     gh.factory<_i50.LoginUseCase>(
         () => _i50.LoginUseCase(gh<_i752.BaseLoginRepo>()));
     gh.factory<_i579.OtpVerificationCubit>(() =>
@@ -249,6 +255,9 @@ extension GetItInjectableX on _i174.GetIt {
         restaurantStoreUseCase: gh<_i1023.RestaurantStoreUseCase>()));
     gh.factory<_i946.GetStoreDetailsUseCase>(() => _i946.GetStoreDetailsUseCase(
         gh<_i929.BaseRestaurantStoreDetailsRepo>()));
+    gh.factory<_i531.CreateDeliveryOrderUseCase>(() =>
+        _i531.CreateDeliveryOrderUseCase(
+            gh<_i929.BaseRestaurantStoreDetailsRepo>()));
     gh.factory<_i288.StoreSubCategoriesCubit>(() =>
         _i288.StoreSubCategoriesCubit(
             getStoreSubCategoriesByCategoryId:
@@ -265,8 +274,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i648.RestaurantStoreDetailsCubit>(() =>
         _i648.RestaurantStoreDetailsCubit(
             getStoreDetailsUseCase: gh<_i946.GetStoreDetailsUseCase>()));
-    gh.factory<_i600.HomeTabCubit>(
-        () => _i600.HomeTabCubit(homeTabUseCase: gh<_i59.HomeTabUseCase>()));
+    gh.factory<_i342.CreateDeliveryOrderCubit>(() =>
+        _i342.CreateDeliveryOrderCubit(
+            createDeliveryOrderUseCase:
+                gh<_i531.CreateDeliveryOrderUseCase>()));
     gh.factory<_i1070.LoginCubit>(
         () => _i1070.LoginCubit(loginUseCase: gh<_i50.LoginUseCase>()));
     return this;
