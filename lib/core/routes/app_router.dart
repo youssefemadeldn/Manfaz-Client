@@ -18,6 +18,8 @@ import '../../features/order/create_service_order/presentation/views/service_ord
 import '../../features/order/create_service_order/presentation/views/create_service_order_view.dart';
 import '../../features/servicses/service_details_view/presentation/view/service_details_view.dart';
 import '../../features/servicses/services_list_view_view/data/model/parameters_services_list_model.dart';
+import '../../features/store/restaurant_store_details/presentation/controller/delivery_order_location_picker_cubit/delivery_order_location_picker_cubit.dart';
+import '../../features/store/restaurant_store_details/presentation/views/delivery_order_location_picker_view.dart';
 import '../../features/store/restaurant_store_details/presentation/views/restaurant_store_details_view.dart';
 import '../../features/workers/worker_profile/presentation/views/worker_profile_view.dart';
 import '../../features/google_maps/get_location_from_to/presentation/controller/google_maps_cubit/get_location_from_to_cubit.dart';
@@ -158,6 +160,14 @@ class AppRouter {
         return CupertinoPageRoute(
             builder: (_) => RestaurantStoreDetailsView(
                   storeId: (settings.arguments as String?) ?? '',
+                ));
+
+      case Routes.deliveryOrderLocationPickerView:
+        return CupertinoPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) =>
+                      getIt<DeliveryOrderLocationPickerCubit>()..init(),
+                  child: DeliveryOrderLocationPickerView(),
                 ));
 
       default:

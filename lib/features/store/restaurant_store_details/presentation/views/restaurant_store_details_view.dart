@@ -16,6 +16,8 @@ import '../widgets/product_card.dart';
 import '../widgets/working_hours_section.dart';
 import '../widgets/location_map_section.dart';
 import '../widgets/gallery_section.dart';
+import '../../../../order/create_service_order/presentation/widgets/notes_input.dart';
+import '../../../../order/create_service_order/presentation/widgets/payment_method_selector.dart';
 
 class RestaurantStoreDetailsView extends StatefulWidget {
   final String storeId;
@@ -34,6 +36,10 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int _selectedCategoryIndex = 0;
+  final TextEditingController _notesController = TextEditingController();
+  String _selectedPaymentMethod = 'cash';
+  final List<String> _paymentMethods = ['cash', 'card'];
+  final List<Map<String, dynamic>> _selectedProducts = [];
 
   @override
   void initState() {
@@ -47,6 +53,7 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
   @override
   void dispose() {
     _tabController.dispose();
+    _notesController.dispose();
     super.dispose();
   }
 
@@ -192,10 +199,35 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
                       restaurantData.locations!.isNotEmpty)
                     LocationMapSection(locations: restaurantData.locations),
 
+                  // Divider
+                  Divider(color: AppColors.divider, thickness: 8.h),
+
+                  // Notes Input
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: NotesInput(
+                      controller: _notesController,
+                    ),
+                  ),
+
+                  SizedBox(height: 16.h),
+
+                  // Payment Method Selector
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: PaymentMethodSelector(
+                      selectedPaymentMethod: _selectedPaymentMethod,
+                      paymentMethods: _paymentMethods,
+                      onPaymentMethodSelected: (method) {
+                        setState(() {
+                          _selectedPaymentMethod = method;
+                        });
+                      },
+                    ),
+                  ),
+
                   // Bottom Padding
-                  SizedBox(
-                      height:
-                          80.h), // Extra space for the floating action button
+                  SizedBox(height: 80.h),
                 ],
               ),
             ),
@@ -243,6 +275,18 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
                   product: product,
                   onTap: () {
                     // Product details action
+                    setState(() {
+                      if (_selectedProducts.any((element) => element['id'] == product.id)) {
+                        _selectedProducts.removeWhere((element) => element['id'] == product.id);
+                      } else {
+                        _selectedProducts.add({
+                          'id': product.id,
+                          'name': product.name,
+                          'price': product.price,
+                          'quantity': 1,
+                        });
+                      }
+                    });
                   },
                 ))
             .toList(),
@@ -251,106 +295,51 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
   }
 
   Widget _buildFloatingActionButton() {
-    return BlocProvider(
-      create: (context) => getIt<CreateDeliveryOrderCubit>(),
-      child: BlocConsumer<CreateDeliveryOrderCubit, CreateDeliveryOrderState>(
-        listener: (context, state) {
-          if (state is CreateDeliveryOrderError) {
-            // Handle error
-            DialogHelper.showCustomDialog(
-              content: Text(tr('error.try_again_later',
-              
+    return BlocConsumer<CreateDeliveryOrderCubit, CreateDeliveryOrderState>(
+      listener: (context, state) {
+        if (state is CreateDeliveryOrderError) {
+          // Handle error
+          DialogHelper.showCustomDialog(
+            content: Text(tr('error.try_again_later'),
+                style: AppStyles.bodyText1,
+                textAlign: TextAlign.center,
               ),
-              style: AppStyles.bodyText1,
-              textAlign: TextAlign.center,  
+            context: context,
+            title: Text(tr('error.error'),
+                textAlign: TextAlign.center,
               ),
-              context: context,
-              title: Text(tr('error.error',
-                
+          );
+        } else if (state is CreateDeliveryOrderSuccess) {
+          DialogHelper.showCustomDialog(
+            content: Text(tr('success.order_created_successfully')),
+            context: context,
+            title: Text(tr('success.success'),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-              
-              ),
-            );
-          }else if(state is CreateDeliveryOrderSuccess){
-            DialogHelper.showCustomDialog(
-              content: Text(tr('success.order_created_successfully')),
-              context: context,
-              title: Text(tr('success.success'),
-              textAlign: TextAlign.center,
-
-              ),
-            );
-          }
-        },
-        builder: (context, state) {
-          if (state is CreateDeliveryOrderLoading) {
-            return FloatingActionButton.extended(
-              onPressed: () {},
-              label: const CircularProgressIndicator(
-                color: AppColors.primary,
-              ),
-              backgroundColor: AppColors.white,
-            );
-          } 
-          else if (state is CreateDeliveryOrderSuccess) {
-            return FloatingActionButton.extended(
-              onPressed: () {
-                // Cart action
-                context.read<CreateDeliveryOrderCubit>().createDeliveryOrder(
-                      userId: context.read<CreateDeliveryOrderCubit>().userId,
-                      address: "home",
-                      latitude: 12.23,
-                      longitude: 12.232,
-                      notes: "يرجى عدم التاخير عن .",
-                      price: 50.0,
-                      duration: 60,
-                      status: "pending",
-                      totalAmount: 50.0,
-                      paymentStatus: "pending",
-                      type: "delivery",
-                      store: [
-                        {
-                          "storeId": "67c67efe4a5626a31539a284",
-                          "products": [
-                            {
-                              "productId": "67c68755b7410128f5c96223",
-                              "quantity": 5
-                            }
-                          ]
-                        }
-                      ],
-                      paymentMethod: "cash",
-                    );
-              },
-              backgroundColor: AppColors.primary,
-              label: Row(
-                children: [
-                  Text(
-                    '',
-                    textAlign: TextAlign.center,
-                    style: AppStyles.bodyText2.copyWith(
-                      color: AppColors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    ' Place Order',
-                    textAlign: TextAlign.center,
-                    style: AppStyles.bodyText2.copyWith(
-                      color: AppColors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }
+          );
+        }
+      },
+      builder: (context, state) {
+        if (state is CreateDeliveryOrderLoading) {
+          return FloatingActionButton.extended(
+            onPressed: () {},
+            label: const CircularProgressIndicator(
+              color: AppColors.primary,
+            ),
+            backgroundColor: AppColors.white,
+          );
+        } else if (state is CreateDeliveryOrderSuccess) {
           return FloatingActionButton.extended(
             onPressed: () {
-              // Cart action
-              context.read<CreateDeliveryOrderCubit>().createDeliveryOrder(
-                    userId: context.read<CreateDeliveryOrderCubit>().userId,
+              final cubit = context.read<CreateDeliveryOrderCubit>();
+              final restaurantData = context.read<RestaurantStoreDetailsCubit>().state is RestaurantStoreDetailsSuccess
+                  ? (context.read<RestaurantStoreDetailsCubit>().state as RestaurantStoreDetailsSuccess).storeDetails.data
+                  : null;
+                  
+              if (restaurantData == null) return;
+              
+              cubit.createDeliveryOrder(
+                    userId: cubit.userId,
                     type: "delivery",
                     address: "home",
                     latitude: 12.23,
@@ -362,24 +351,15 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
                     paymentStatus: "pending",
                     store: [
                       {
-                        "storeId": "67c67efe4a5626a31539a284",
-                        "products": [
-                          {
-                            "productId": "67c68755b7410128f5c96223",
-                            "quantity": 5
-                          }
-                        ]
-                      },
+                        "storeId": restaurantData.id,
+                        "products": _selectedProducts,
+                      }
                     ],
-                    notes: "يرجى عدم التاخير عن .",
-                    paymentMethod: "cash",
+                    notes: _notesController.text,
+                    paymentMethod: _selectedPaymentMethod,
                   );
             },
             backgroundColor: AppColors.primary,
-            // icon: Icon(
-            //   Icons.shopping_cart,
-            //   color: AppColors.white,
-            // ),
             label: Row(
               children: [
                 Text(
@@ -401,8 +381,60 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
               ],
             ),
           );
-        },
-      ),
+        }
+        return FloatingActionButton.extended(
+          onPressed: () {
+            final cubit = context.read<CreateDeliveryOrderCubit>();
+            final restaurantData = context.read<RestaurantStoreDetailsCubit>().state is RestaurantStoreDetailsSuccess
+                ? (context.read<RestaurantStoreDetailsCubit>().state as RestaurantStoreDetailsSuccess).storeDetails.data
+                : null;
+                  
+            if (restaurantData == null) return;
+            
+            cubit.createDeliveryOrder(
+                  userId: cubit.userId,
+                  type: "delivery",
+                  notes: _notesController.text,
+                  paymentMethod: _selectedPaymentMethod,
+                  address: "home",
+                  latitude: 12.23,
+                  longitude: 12.232,
+                  price: 50.0,
+                  duration: 60,
+                  status: "pending",
+                  totalAmount: 50.0,
+                  paymentStatus: "pending",
+                  store: [
+                    {
+                      "storeId": restaurantData.id,
+                      "products": _selectedProducts,
+                    }
+                  ],
+                );
+          },
+          backgroundColor: AppColors.primary,
+          label: Row(
+            children: [
+              Text(
+                '',
+                textAlign: TextAlign.center,
+                style: AppStyles.bodyText2.copyWith(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Text(
+                ' Place Order',
+                textAlign: TextAlign.center,
+                style: AppStyles.bodyText2.copyWith(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
