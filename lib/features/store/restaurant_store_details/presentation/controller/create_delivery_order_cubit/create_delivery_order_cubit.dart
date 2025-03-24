@@ -13,11 +13,17 @@ part 'create_delivery_order_state.dart';
 class CreateDeliveryOrderCubit extends Cubit<CreateDeliveryOrderState> {
   final CreateDeliveryOrderUseCase createDeliveryOrderUseCase;
   late String userId;
+  Map<String, dynamic>? selectedLocation;
+
   CreateDeliveryOrderCubit({required this.createDeliveryOrderUseCase}) : super(CreateDeliveryOrderInitial()){
    getUserId();
   }
   Future<void> getUserId()async{
      userId = await SharedPrefUtils.getData('userId');
+  }
+  void selectLocation(Map<String, dynamic> location) {
+    selectedLocation = location;
+    emit(DeliveryLocationSelected(location));
   }
   Future<void> createDeliveryOrder({
     required String userId,

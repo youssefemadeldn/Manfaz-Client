@@ -115,6 +115,8 @@ import '../../features/store/restaurant_store_details/domin/use_cases/get_store_
     as _i946;
 import '../../features/store/restaurant_store_details/presentation/controller/create_delivery_order_cubit/create_delivery_order_cubit.dart'
     as _i342;
+import '../../features/store/restaurant_store_details/presentation/controller/delivery_order_location_picker_cubit/delivery_order_location_picker_cubit.dart'
+    as _i879;
 import '../../features/store/restaurant_store_details/presentation/controller/restaurant_store_details_cubit/restaurant_store_details_cubit.dart'
     as _i648;
 import '../../features/tabs/home_tab/data/data_source/remote/base_home_tab_remote_data_source.dart'
@@ -168,6 +170,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i996.ServiceOrderLocationPickerCubit>(
         () => _i996.ServiceOrderLocationPickerCubit());
     gh.factory<_i320.SearchBarCubit>(() => _i320.SearchBarCubit());
+    gh.factory<_i879.DeliveryOrderLocationPickerCubit>(
+        () => _i879.DeliveryOrderLocationPickerCubit());
     gh.singleton<_i409.GlobalKey<_i409.NavigatorState>>(
         () => registerModule.navigatorKey);
     gh.singleton<_i119.ApiManager>(() => _i119.ApiManager());

@@ -58,10 +58,6 @@ class ServiceOrderLocationPickerCubit
       currentAddress =
           await geocodingHelper.getAddressFromLocation(locationData);
 
-      // Cache the current address
-      await SharedPrefUtils.saveData(
-          key: 'current_address', data: currentAddress);
-
       // Set marker at user's location
       setMarker(locationData);
       emit(ServiceOrderLocationPickerSuccessState());

@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
+import 'package:injectable/injectable.dart';
 import 'package:location/location.dart';
 import 'package:meta/meta.dart';
 
@@ -11,6 +12,7 @@ import '../../../../../../core/helper/google_maps/location_helper.dart';
 
 part 'delivery_order_location_picker_state.dart';
 
+@injectable
 class DeliveryOrderLocationPickerCubit extends Cubit<DeliveryOrderLocationPickerState> {   late CameraPosition initialCameraPosition;
   GoogleMapController? cubitController;
   late LocationHelper locationHelper;

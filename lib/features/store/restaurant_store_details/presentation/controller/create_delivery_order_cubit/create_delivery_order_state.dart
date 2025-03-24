@@ -13,3 +13,9 @@ final class CreateDeliveryOrderError extends CreateDeliveryOrderState {
   final Failure failure;
   CreateDeliveryOrderError({required this.failure});
 }
+
+final class DeliveryLocationSelected extends CreateDeliveryOrderState {
+  final Map<String, dynamic> location;
+
+  DeliveryLocationSelected(this.location);
+}
