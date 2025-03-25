@@ -4,9 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
-import 'package:manfaz/core/widgets/cus_text_button.dart';
+import 'package:manfaz/core/widgets/custom_button.dart';
 import '../controller/delivery_order_location_picker_cubit/delivery_order_location_picker_cubit.dart';
 
 class DeliveryOrderLocationPickerView extends StatelessWidget {
@@ -24,7 +25,7 @@ class DeliveryOrderLocationPickerView extends StatelessWidget {
             backgroundColor: Colors.white,
             elevation: 0,
             title: Text(
-              'Pick Location',
+              tr('store_details.delivery.location.pick_location'),
               style: AppStyles.header1.copyWith(
                 fontSize: 18.sp,
                 color: AppColors.textPrimary,
@@ -50,27 +51,24 @@ class DeliveryOrderLocationPickerView extends StatelessWidget {
           ),
           body: Stack(
             children: [
-              // Google Map
-              Positioned.fill(
-                top: 0.h,
-                child: GoogleMap(
-                  myLocationEnabled: true,
-                  myLocationButtonEnabled: false,
-                  markers: viewModel.markers,
-                  onMapCreated: (controller) {
-                    viewModel.cubitController = controller;
-                    viewModel.initMapStyle(context);
-                    // Get user location when map is created
-                    viewModel.getUserLocation();
-                  },
-                  initialCameraPosition: viewModel.initialCameraPosition,
-                  onTap: viewModel.onMapTapped,
+              // Map
+              GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: viewModel.initialPosition,
+                  zoom: 15,
                 ),
+                onMapCreated: viewModel.onMapCreated,
+                markers: viewModel.markers,
+                onCameraMove: viewModel.onCameraMove,
+                onCameraIdle: viewModel.onCameraIdle,
+                myLocationEnabled: true,
+                myLocationButtonEnabled: false,
+                zoomControlsEnabled: false,
               ),
 
               // Search Bar
               Positioned(
-                top: 8.h,
+                top: 16.h,
                 left: 16.w,
                 right: 16.w,
                 child: Container(
@@ -79,224 +77,183 @@ class DeliveryOrderLocationPickerView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8.r),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 8,
-                        offset: Offset(0, 2),
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
                       ),
                     ],
                   ),
-                  child: Theme(
-                    data: Theme.of(context).copyWith(
-                      inputDecorationTheme: InputDecorationTheme(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 16.w,
-                          vertical: 12.h,
-                        ),
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintStyle: AppStyles.bodyText2.copyWith(
-                          color: Colors.grey[600],
-                          fontSize: 14.sp,
-                        ),
+                  child: GooglePlaceAutoCompleteTextField(
+                    textEditingController: viewModel.searchController,
+                    googleAPIKey: "YOUR_API_KEY",
+                    inputDecoration: InputDecoration(
+                      hintText: tr('store_details.delivery.location.search_map'),
+                      hintStyle: AppStyles.bodyText2.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
+                      prefixIcon: Icon(Icons.search, color: AppColors.icon),
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 12.h,
                       ),
                     ),
-                    child: GooglePlaceAutoCompleteTextField(
-                      textEditingController: TextEditingController(),
-                      googleAPIKey: DeliveryOrderLocationPickerCubit.apiKey,
-                      inputDecoration: InputDecoration(
-                        hintText: 'Search the map',
-                        prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
-                      ),
-                      debounceTime: 800,
-                      countries: const ['sa'],
-                      isLatLngRequired: true,
-                      getPlaceDetailWithLatLng: (Prediction prediction) {
-                        viewModel.onPlaceSelected(prediction);
-                      },
-                      itemClick: (Prediction prediction) {
-                        viewModel.onPlaceSelected(prediction);
-                      },
-                    ),
+                    debounceTime: 800,
+                    countries: const ["sa"],
+                    isLatLngRequired: true,
+                    getPlaceDetailWithLatLng: (Prediction prediction) {
+                      viewModel.onPlaceSelected(prediction);
+                    },
+                    itemClick: (Prediction prediction) {
+                      viewModel.searchController.text = prediction.description ?? "";
+                      viewModel.searchController.selection =
+                          TextSelection.fromPosition(TextPosition(
+                              offset: prediction.description?.length ?? 0));
+                    },
+                    seperatedBuilder: Divider(),
+                    isCrossBtnShown: true,
                   ),
                 ),
               ),
 
-              if (state is DeliveryOrderLocationPickerLoadingState)
-                Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.primary,
-                  ),
-                ),
-
-              // Location Details Card
+              // Location Details
               Positioned(
                 bottom: 0,
                 left: 0,
                 right: 0,
                 child: Container(
+                  padding: EdgeInsets.all(16.w),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(16.r)),
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(16.r),
+                    ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black12,
+                        color: Colors.black.withOpacity(0.1),
                         blurRadius: 10,
-                        offset: Offset(0, -2),
+                        offset: Offset(0, -4),
                       ),
                     ],
                   ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      // Location Name
-                      Padding(
-                        padding: EdgeInsets.all(16.w),
-                        child: Row(
+                      // Location Status
+                      if (state is LocationLoading) ...[
+                        Row(
                           children: [
-                            Icon(Icons.location_on, color: AppColors.primary),
+                            SizedBox(
+                              width: 20.w,
+                              height: 20.w,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  AppColors.primary,
+                                ),
+                              ),
+                            ),
                             SizedBox(width: 12.w),
-                            Expanded(
-                              child: Text(
-                                viewModel.currentAddress.isEmpty
-                                    ? 'Getting location...'
-                                    : viewModel.currentAddress,
-                                style: AppStyles.bodyText1.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      // Extra Details Section
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
                             Text(
-                              'Extra details',
-                              style: AppStyles.bodyText2.copyWith(
-                                color: AppColors.textPrimary,
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            SizedBox(height: 8.h),
-                            TextField(
-                              decoration: InputDecoration(
-                                hintText:
-                                    'Building / Apartment Number (Optional)',
-                                hintStyle: TextStyle(fontSize: 14.sp),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.r),
-                                  borderSide:
-                                      BorderSide(color: Colors.grey[300]!),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.r),
-                                  borderSide: BorderSide(
-                                    color: Colors.grey,
-                                    width: 1.3,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.r),
-                                  borderSide:
-                                      BorderSide(color: Colors.grey[300]!),
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 12.w, vertical: 12.h),
-                              ),
-                            ),
-                            SizedBox(height: 16.h),
-
-                            // Save Location Checkbox
-                            Padding(
-                              padding: EdgeInsets.all(16.w),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 24.w,
-                                    height: 24.h,
-                                    child: Checkbox(
-                                      activeColor: AppColors.primary,
-                                      value: true,
-                                      onChanged: (value) {},
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(4.r),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 12.w),
-                                  Text(
-                                    'Save location to use later',
-                                    style: AppStyles.bodyText2,
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            // Confirm Button
-                            Padding(
-                              padding: EdgeInsets.all(16.w),
-                              child: CustomButton(
-                                onPressed: () {
-                                  Navigator.pop(
-                                    context,
-                                    {
-                                      'address': viewModel.currentAddress,
-                                      'latitude':
-                                          viewModel.locationData.latitude,
-                                      'longitude':
-                                          viewModel.locationData.longitude,
-                                    },
-                                  );
-                                },
-                                backgroundColor: AppColors.primary,
-                                borderSideColor: AppColors.primary,
-                                borderRadius: 8.r,
-                                child: Text(
-                                  'Confirm Location',
-                                  style: AppStyles.buttonText.copyWith(
-                                    fontSize: 16.sp,
-                                  ),
-                                ),
-                              ),
+                              tr('store_details.delivery.location.getting_location'),
+                              style: AppStyles.bodyText2,
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                        SizedBox(height: 16.h),
+                      ],
 
-              // Current Location Button
-              Positioned(
-                right: 16.w,
-                bottom: 340.h,
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 5,
-                        offset: Offset(0, 2),
+                      // Selected Location
+                      if (state is LocationSelected) ...[
+                        Text(
+                          state.address,
+                          style: AppStyles.bodyText1.copyWith(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(height: 16.h),
+                      ],
+
+                      // Extra Details Input
+                      Text(
+                        tr('store_details.delivery.location.extra_details'),
+                        style: AppStyles.bodyText2.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(height: 8.h),
+                      TextField(
+                        controller: viewModel.extraDetailsController,
+                        decoration: InputDecoration(
+                          hintText: tr('store_details.delivery.location.building_hint'),
+                          hintStyle: AppStyles.bodyText2.copyWith(
+                            color: AppColors.textSecondary,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            borderSide: BorderSide(color: Colors.grey[300]!),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            borderSide: BorderSide(color: Colors.grey[300]!),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            borderSide: BorderSide(color: AppColors.primary),
+                          ),
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 12.h,
+                          ),
+                        ),
+                        onChanged: viewModel.onExtraDetailsChanged,
+                      ),
+                      SizedBox(height: 16.h),
+
+                      // Save Location Checkbox
+                      Row(
+                        children: [
+                          Checkbox(
+                            value: viewModel.saveLocation,
+                            onChanged: (value) =>
+                                viewModel.onSaveLocationChanged(value ?? false),
+                            activeColor: AppColors.primary,
+                          ),
+                          Expanded(
+                            child: Text(
+                              tr('store_details.delivery.location.save_location'),
+                              style: AppStyles.bodyText2,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 16.h),
+
+                      // Confirm Button
+                      SizedBox(
+                        width: double.infinity,
+                        child: CustomButton(
+                          onPressed: state is LocationSelected ? () {
+                            Navigator.pop(context, {
+                              'address': state.address,
+                              'latitude': state.position.latitude,
+                              'longitude': state.position.longitude,
+                              'extraDetails': viewModel.extraDetailsController.text,
+                            });
+                          } : null,
+                          backgroundColor: AppColors.primary,
+                          borderSideColor: AppColors.primary,
+                          borderRadius: 8.r,
+                          child: Text(
+                            tr('store_details.delivery.location.confirm_location'),
+                            style: AppStyles.buttonText.copyWith(
+                              fontSize: 16.sp,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
-                  ),
-                  child: IconButton(
-                    icon: Icon(Icons.layers),
-                    onPressed: () {},
-                    color: Colors.black54,
                   ),
                 ),
               ),

@@ -3,17 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
-import '../../../../../core/routes/routes.dart';
 
 class DeliveryLocationSelector extends StatelessWidget {
-  final void Function(Map<String, dynamic>) onLocationSelected;
   final Map<String, dynamic>? selectedLocation;
+  final Function(BuildContext) onLocationSelect;
 
   const DeliveryLocationSelector({
-    super.key,
-    required this.onLocationSelected,
+    Key? key,
     this.selectedLocation,
-  });
+    required this.onLocationSelect,
+  }) : super(key: key);
 
   Widget _buildSectionTitle(String title) {
     return Padding(
@@ -36,16 +35,7 @@ class DeliveryLocationSelector extends StatelessWidget {
     BuildContext context,
   ) {
     return GestureDetector(
-      onTap: () async {
-        final result = await Navigator.pushNamed(
-          context,
-          Routes.deliveryOrderLocationPickerView,
-        ) as Map<String, dynamic>?;
-        
-        if (result != null) {
-          onLocationSelected(result);
-        }
-      },
+      onTap: () => onLocationSelect(context),
       child: Container(
         margin: EdgeInsets.only(top: 8.h),
         padding: EdgeInsets.all(16.w),
@@ -100,10 +90,10 @@ class DeliveryLocationSelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionTitle(tr('location_selector.location')),
+        _buildSectionTitle(tr('store_details.delivery.location.title')),
         _buildLocationTile(
-          tr('location_selector.service_location'),
-          selectedLocation != null ? selectedLocation!['address'] : tr('location_selector.select_service_location'),
+          tr('store_details.delivery.location.service_location'),
+          selectedLocation != null ? selectedLocation!['address'] : tr('store_details.delivery.location.select_service_location'),
           Icons.location_on_rounded,
           AppColors.primary,
           context,

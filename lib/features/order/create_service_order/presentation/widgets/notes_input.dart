@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
 
@@ -29,7 +30,7 @@ class NotesInput extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionTitle('Notes'),
+        _buildSectionTitle(tr('create_service_order.notes.title')),
         Container(
           decoration: BoxDecoration(
             color: AppColors.surface,
@@ -40,7 +41,7 @@ class NotesInput extends StatelessWidget {
             controller: controller,
             maxLines: 3,
             decoration: InputDecoration(
-              hintText: 'Add any notes...',
+              hintText: tr('create_service_order.notes.placeholder'),
               hintStyle: AppStyles.bodyText2.copyWith(color: AppColors.grey),
               border: InputBorder.none,
               contentPadding: EdgeInsets.all(16.w),

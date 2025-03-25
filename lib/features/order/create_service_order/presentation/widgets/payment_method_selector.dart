@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
 
@@ -62,7 +63,7 @@ class PaymentMethodSelector extends StatelessWidget {
             SizedBox(width: 16.w),
             Expanded(
               child: Text(
-                method.toUpperCase(),
+                tr('create_service_order.payment.${method.toLowerCase()}'),
                 style: AppStyles.bodyText1.copyWith(
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                   color: isSelected ? AppColors.primary : Colors.black87,
@@ -86,7 +87,7 @@ class PaymentMethodSelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionTitle('Payment Method'),
+        _buildSectionTitle(tr('create_service_order.payment.title')),
         ...paymentMethods.map((method) => _buildPaymentMethodTile(method)),
       ],
     );

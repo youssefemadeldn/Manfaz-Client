@@ -100,10 +100,12 @@ class LocationSelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionTitle(tr('location_selector.location')),
+        _buildSectionTitle(tr('create_service_order.location.title')),
         _buildLocationTile(
-          tr('location_selector.service_location'),
-          selectedLocation != null ? selectedLocation!['address'] : tr('location_selector.select_service_location'),
+          tr('create_service_order.location.service_location_title'),
+          selectedLocation != null 
+              ? selectedLocation!['address'] 
+              : tr('create_service_order.location.select_location_hint'),
           Icons.location_on_rounded,
           AppColors.primary,
           context,

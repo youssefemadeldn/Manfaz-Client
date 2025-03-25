@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/di/di.dart';
 import 'package:manfaz/core/helper/dialog_helper.dart';
+import 'package:manfaz/core/routes/routes.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/core/widgets/error_message_widget.dart';
@@ -42,6 +43,41 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
   String _selectedPaymentMethod = '';
   final List<String> _paymentMethods = ['cash', 'card'];
   final List<Map<String, dynamic>> _selectedProducts = [];
+  double _totalPrice = 0.0;
+
+  void _updateProductQuantity(String productId, String productName, double price, int quantity) {
+    setState(() {
+      var existingProductIndex = _selectedProducts.indexWhere(
+        (product) => product['productId'] == productId,
+      );
+
+      if (existingProductIndex == -1) {
+        if (quantity > 0) {
+          _selectedProducts.add({
+            'productId': productId,
+            'quantity': quantity,
+            'name': productName,
+            'price': price,
+          });
+        }
+      } else {
+        if (quantity > 0) {
+          _selectedProducts[existingProductIndex]['quantity'] = quantity;
+        } else {
+          _selectedProducts.removeAt(existingProductIndex);
+        }
+      }
+
+      _calculateTotalPrice();
+    });
+  }
+
+  void _calculateTotalPrice() {
+    _totalPrice = _selectedProducts.fold(
+      0.0,
+      (sum, product) => sum + ((product['price'] as double) * (product['quantity'] as int)),
+    );
+  }
 
   @override
   void initState() {
@@ -124,6 +160,7 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
 
           return SafeArea(
             child: SingleChildScrollView(
+              padding: EdgeInsets.only(bottom: 80.h), // Add padding for FAB
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -145,7 +182,7 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
                                   color: AppColors.primary),
                               SizedBox(width: 8.w),
                               Text(
-                                'Menu',
+                                tr('restaurant_store_details.menu.title'),
                                 style: AppStyles.header3,
                               ),
                             ],
@@ -160,7 +197,7 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
                             selectedIndex: _selectedCategoryIndex,
                             onCategorySelected: (index) {
                               setState(() {
-                                _selectedCategoryIndex = 10;
+                                _selectedCategoryIndex = index;
                                 _tabController.animateTo(index);
                               });
                             },
@@ -212,9 +249,18 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
                         selectedLocation: context
                             .read<CreateDeliveryOrderCubit>()
                             .selectedLocation,
-                        onLocationSelected: context
-                            .read<CreateDeliveryOrderCubit>()
-                            .selectLocation,
+                        onLocationSelect: (context) async {
+                          final result = await Navigator.pushNamed(
+                            context,
+                            Routes.deliveryOrderLocationPickerView,
+                          ) as Map<String, dynamic>?;
+                          
+                          if (result != null) {
+                            context
+                                .read<CreateDeliveryOrderCubit>()
+                                .selectLocation(result);
+                          }
+                        },
                       );
                     },
                   ),
@@ -255,209 +301,80 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
   }
 
   Widget _buildProductsList(Data restaurantData) {
-    final categories = restaurantData.categories;
-    final products = restaurantData.products;
-
-    if (categories == null ||
-        products == null ||
-        categories.isEmpty ||
-        products.isEmpty) {
-      return SizedBox.shrink();
-    }
-
-    // Filter products by the selected category
-    final selectedCategoryId = categories[_selectedCategoryIndex].id;
-    final categoryProducts = products
-        .where((product) => product.categoryId == selectedCategoryId)
-        .toList();
-
-    if (categoryProducts.isEmpty) {
-      return Padding(
-        padding: EdgeInsets.all(16.w),
-        child: Center(
-          child: Text(
-            'No products available in this category',
-            style: AppStyles.bodyText2,
-          ),
-        ),
-      );
-    }
-
-    return Padding(
-      padding: EdgeInsets.all(16.w),
-      child: Column(
-        children: categoryProducts
-            .map((product) => ProductCard(
-                  product: product,
-                  onTap: () {
-                    // Product details action
-                    setState(() {
-                      if (_selectedProducts
-                          .any((element) => element['id'] == product.id)) {
-                        _selectedProducts.removeWhere(
-                            (element) => element['id'] == product.id);
-                      } else {
-                        _selectedProducts.add({
-                          'id': product.id,
-                          'name': product.name,
-                          'price': product.price,
-                          'quantity': 1,
-                        });
-                      }
-                    });
-                  },
-                ))
-            .toList(),
-      ),
+    return Column(
+      children: restaurantData.products!
+          .map((product) => ProductCard(
+                product: product,
+                onQuantityChanged: (quantity) {
+                  _updateProductQuantity(
+                    product.id ?? '',
+                    product.name ?? '',
+                    product.price?.toDouble() ?? 0.0,
+                    quantity,
+                  );
+                },
+              ))
+          .toList(),
     );
   }
 
   Widget _buildFloatingActionButton() {
     return BlocConsumer<CreateDeliveryOrderCubit, CreateDeliveryOrderState>(
       listener: (context, state) {
-        if (state is CreateDeliveryOrderError) {
-          // Handle error
-          DialogHelper.showCustomDialog(
-            content: Text(
-              'error.try_again_later'.tr(),
-              style: AppStyles.bodyText1,
-              textAlign: TextAlign.center,
-            ),
+        if (state is CreateDeliveryOrderLoading) {
+          DialogHelper.showLoadingDialog(
             context: context,
-            title: Text(
-              'error.error'.tr(),
-              textAlign: TextAlign.center,
-            ),
+            loadingMessage: tr('dialog.loading'),
           );
         } else if (state is CreateDeliveryOrderSuccess) {
-          DialogHelper.showCustomDialog(
-            content: Text('success.order_created_successfully'.tr()),
-            context: context,
-            title: Text(
-              'success.success'.tr(),
-              textAlign: TextAlign.center,
-            ),
+          SnackBarHelper.showSuccessSnackBar(
+            context,
+            message: tr('success.success'),
+          );
+          Navigator.pop(context);
+        } else if (state is CreateDeliveryOrderError) {
+          Navigator.pop(context);
+          SnackBarHelper.showErrorSnackBar(
+            context,
+            message: state.failure.errorMessage,
           );
         }
       },
       builder: (context, state) {
-        if (state is CreateDeliveryOrderLoading) {
-          return FloatingActionButton.extended(
-            onPressed: () {},
-            label: const CircularProgressIndicator(
-              color: AppColors.primary,
-            ),
-            backgroundColor: AppColors.white,
-          );
-        } else if (state is CreateDeliveryOrderSuccess) {
-          return FloatingActionButton.extended(
-            onPressed: () {
-              final cubit = context.read<CreateDeliveryOrderCubit>();
-              final restaurantData = context
-                      .read<RestaurantStoreDetailsCubit>()
-                      .state is RestaurantStoreDetailsSuccess
-                  ? (context.read<RestaurantStoreDetailsCubit>().state
-                          as RestaurantStoreDetailsSuccess)
-                      .storeDetails
-                      .data
-                  : null;
+        final cubit = context.read<CreateDeliveryOrderCubit>();
+        final restaurantData = context
+                .read<RestaurantStoreDetailsCubit>()
+                .state is RestaurantStoreDetailsSuccess
+            ? (context.read<RestaurantStoreDetailsCubit>().state
+                    as RestaurantStoreDetailsSuccess)
+                .storeDetails
+                .data
+            : null;
 
-              if (restaurantData == null) return;
+        if (restaurantData == null) return const SizedBox.shrink();
 
-              if (cubit.selectedLocation == null) {
-                SnackBarHelper.showErrorSnackBar(
-                  context,
-                  message: 'Please select a delivery location',
-                );
-                return;
-              }
-
-              if (_selectedPaymentMethod.isEmpty) {
-                SnackBarHelper.showErrorSnackBar(
-                  message: 'Please select a payment method',
-                   context,
-                );
-                return;
-              }
-              if(_notesController.text.isEmpty) {
-                SnackBarHelper.showErrorSnackBar(
-                  message: 'Please add notes',
-                   context,
-                );
-                return;
-              }
-
-              cubit.createDeliveryOrder(
-                userId: cubit.userId,
-
-                type: "delivery",
-                address: cubit.selectedLocation!['address'],
-                latitude: cubit.selectedLocation!['latitude'],
-                longitude: cubit.selectedLocation!['longitude'],
-                price: 50.0,
-                duration: 60,
-                status: "pending",
-                totalAmount: 50.0,
-                paymentStatus: "pending",
-                store: [
-                  {
-                    "storeId": restaurantData.id,
-                    "products": _selectedProducts,
-                  }
-                ],
-                notes: _notesController.text,
-                paymentMethod: _selectedPaymentMethod,
-              );
-            },
-            backgroundColor: AppColors.primary,
-            label: Row(
-              children: [
-                Text(
-                  '',
-                  textAlign: TextAlign.center,
-                  style: AppStyles.bodyText2.copyWith(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Text(
-                  ' Place Order',
-                  textAlign: TextAlign.center,
-                  style: AppStyles.bodyText2.copyWith(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
         return FloatingActionButton.extended(
           onPressed: () {
-            final cubit = context.read<CreateDeliveryOrderCubit>();
-            final restaurantData = context
-                    .read<RestaurantStoreDetailsCubit>()
-                    .state is RestaurantStoreDetailsSuccess
-                ? (context.read<RestaurantStoreDetailsCubit>().state
-                        as RestaurantStoreDetailsSuccess)
-                    .storeDetails
-                    .data
-                : null;
-
-            if (restaurantData == null) return;
-
-            if (cubit.selectedLocation == null) {
+            if (_selectedProducts.isEmpty) {
               SnackBarHelper.showErrorSnackBar(
-                message: 'Please select a delivery location',
                 context,
+                message: tr('restaurant_store_details.please_select_products'),
               );
               return;
             }
 
             if (_selectedPaymentMethod.isEmpty) {
               SnackBarHelper.showErrorSnackBar(
-                message: 'Please select a payment method',
                 context,
+                message: tr('restaurant_store_details.please_select_payment_method'),
+              );
+              return;
+            }
+
+            if (cubit.selectedLocation == null) {
+              SnackBarHelper.showErrorSnackBar(
+                context,
+                message: tr('restaurant_store_details.please_select_location'),
               );
               return;
             }
@@ -468,15 +385,18 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
               address: cubit.selectedLocation!['address'],
               latitude: cubit.selectedLocation!['latitude'],
               longitude: cubit.selectedLocation!['longitude'],
-              price: 50.0,
+              price: _totalPrice,
               duration: 60,
               status: "pending",
-              totalAmount: 50.0,
+              totalAmount: _totalPrice,
               paymentStatus: "pending",
               store: [
                 {
                   "storeId": restaurantData.id,
-                  "products": _selectedProducts,
+                  "products": _selectedProducts.map((product) => {
+                    "productId": product['productId'],
+                    "quantity": product['quantity']
+                  }).toList(),
                 }
               ],
               notes: _notesController.text,
@@ -487,20 +407,8 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
           label: Row(
             children: [
               Text(
-                '',
-                textAlign: TextAlign.center,
-                style: AppStyles.bodyText2.copyWith(
-                  color: AppColors.white,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Text(
-                ' Place Order',
-                textAlign: TextAlign.center,
-                style: AppStyles.bodyText2.copyWith(
-                  color: AppColors.white,
-                  fontWeight: FontWeight.w600,
-                ),
+                '${tr('restaurant_store_details.order.place_order')} | ${_totalPrice.toStringAsFixed(2)} ${tr('orders_tab.currency')}',
+                style: AppStyles.bodyText1.copyWith(color: Colors.white),
               ),
             ],
           ),

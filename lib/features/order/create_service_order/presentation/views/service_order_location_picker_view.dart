@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
-import 'package:manfaz/core/widgets/cus_text_button.dart';
 import '../controller/service_order_location_picker_cubit/service_order_location_picker_cubit.dart';
 
 class ServiceOrderLocationPickerView extends StatelessWidget {
@@ -24,7 +24,7 @@ class ServiceOrderLocationPickerView extends StatelessWidget {
             backgroundColor: Colors.white,
             elevation: 0,
             title: Text(
-              'Pick Location',
+              tr('create_service_order.location.select_on_map'),
               style: AppStyles.header1.copyWith(
                 fontSize: 18.sp,
                 color: AppColors.textPrimary,
@@ -105,7 +105,7 @@ class ServiceOrderLocationPickerView extends StatelessWidget {
                       textEditingController: TextEditingController(),
                       googleAPIKey: ServiceOrderLocationPickerCubit.apiKey,
                       inputDecoration: InputDecoration(
-                        hintText: 'Search the map',
+                        hintText: tr('create_service_order.location.search_map'),
                         prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
                       ),
                       debounceTime: 800,
@@ -161,7 +161,7 @@ class ServiceOrderLocationPickerView extends StatelessWidget {
                             Expanded(
                               child: Text(
                                 viewModel.currentAddress.isEmpty
-                                    ? 'Getting location...'
+                                    ? tr('create_service_order.location.getting_location')
                                     : viewModel.currentAddress,
                                 style: AppStyles.bodyText1.copyWith(
                                   fontWeight: FontWeight.w500,
@@ -179,7 +179,7 @@ class ServiceOrderLocationPickerView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Extra details',
+                              tr('create_service_order.location.extra_details'),
                               style: AppStyles.bodyText2.copyWith(
                                 color: AppColors.textPrimary,
                                 fontSize: 14.sp,
@@ -189,8 +189,7 @@ class ServiceOrderLocationPickerView extends StatelessWidget {
                             SizedBox(height: 8.h),
                             TextField(
                               decoration: InputDecoration(
-                                hintText:
-                                    'Building / Apartment Number (Optional)',
+                                hintText: tr('create_service_order.location.building_hint'),
                                 hintStyle: TextStyle(fontSize: 14.sp),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.r),
@@ -199,104 +198,52 @@ class ServiceOrderLocationPickerView extends StatelessWidget {
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.r),
-                                  borderSide: BorderSide(
-                                    color: Colors.grey,
-                                    width: 1.3,
-                                  ),
+                                  borderSide:
+                                      BorderSide(color: Colors.grey[300]!),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.r),
                                   borderSide:
-                                      BorderSide(color: Colors.grey[300]!),
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 12.w, vertical: 12.h),
-                              ),
-                            ),
-                            SizedBox(height: 16.h),
-
-                            // Save Location Checkbox
-                            Padding(
-                              padding: EdgeInsets.all(16.w),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 24.w,
-                                    height: 24.h,
-                                    child: Checkbox(
-                                      activeColor: AppColors.primary,
-                                      value: true,
-                                      onChanged: (value) {},
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(4.r),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 12.w),
-                                  Text(
-                                    'Save location to use later',
-                                    style: AppStyles.bodyText2,
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            // Confirm Button
-                            Padding(
-                              padding: EdgeInsets.all(16.w),
-                              child: CustomButton(
-                                onPressed: () {
-                                  Navigator.pop(
-                                    context,
-                                    {
-                                      'address': viewModel.currentAddress,
-                                      'latitude':
-                                          viewModel.locationData.latitude,
-                                      'longitude':
-                                          viewModel.locationData.longitude,
-                                    },
-                                  );
-                                },
-                                backgroundColor: AppColors.primary,
-                                borderSideColor: AppColors.primary,
-                                borderRadius: 8.r,
-                                child: Text(
-                                  'Confirm Location',
-                                  style: AppStyles.buttonText.copyWith(
-                                    fontSize: 16.sp,
-                                  ),
+                                      BorderSide(color: AppColors.primary),
                                 ),
                               ),
+                              onChanged: viewModel.onExtraDetailsChanged,
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
 
-              // Current Location Button
-              Positioned(
-                right: 16.w,
-                bottom: 340.h,
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 5,
-                        offset: Offset(0, 2),
+                      // Confirm Button
+                      Padding(
+                        padding: EdgeInsets.all(16.w),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (viewModel.currentAddress.isNotEmpty) {
+                              Navigator.pop(context, {
+                                'address': viewModel.currentAddress,
+                                'extraDetails': viewModel.extraDetails,
+                                'latitude': viewModel.selectedLocation?.latitude,
+                                'longitude': viewModel.selectedLocation?.longitude,
+                              });
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            minimumSize: Size(double.infinity, 48.h),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.r),
+                            ),
+                          ),
+                          child: Text(
+                            tr('create_service_order.location.confirm_location'),
+                            style: AppStyles.bodyText1.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
-                  ),
-                  child: IconButton(
-                    icon: Icon(Icons.layers),
-                    onPressed: () {},
-                    color: Colors.black54,
                   ),
                 ),
               ),

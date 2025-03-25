@@ -1,153 +1,126 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
-import 'package:injectable/injectable.dart';
 import 'package:location/location.dart';
-import 'package:meta/meta.dart';
-
-import '../../../../../../core/cache/shared_pref_utils.dart';
-import '../../../../../../core/helper/google_maps/geocoding_helper.dart';
-import '../../../../../../core/helper/google_maps/location_helper.dart';
+import 'package:manfaz/core/helper/google_maps/geocoding_helper.dart';
 
 part 'delivery_order_location_picker_state.dart';
 
-@injectable
-class DeliveryOrderLocationPickerCubit extends Cubit<DeliveryOrderLocationPickerState> {   late CameraPosition initialCameraPosition;
-  GoogleMapController? cubitController;
-  late LocationHelper locationHelper;
-  late GeocodingHelper geocodingHelper;
-  late LocationData locationData;
-  PermissionStatus permissionGranted = PermissionStatus.granted;
-  String currentAddress = '';
-  static const String apiKey =
-      'AIzaSyALEA-N5NgRqQEIRQUJwMRoUy0i-UM0rc8'; // Replace with your API key
+class DeliveryOrderLocationPickerCubit extends Cubit<DeliveryOrderLocationPickerState> {
+  DeliveryOrderLocationPickerCubit() : super(LocationInitial());
 
+  // Controllers
+  final TextEditingController searchController = TextEditingController();
+  final TextEditingController extraDetailsController = TextEditingController();
+
+  // Map state
+  late GoogleMapController mapController;
   Set<Marker> markers = {};
-  Set<Polyline> polylines = {};
-  Set<Polygon> polygons = {};
+  bool saveLocation = false;
+  LatLng initialPosition = const LatLng(24.7136, 46.6753); // Riyadh
+  LatLng? currentPosition;
+  final GeocodingHelper _geocodingHelper = GeocodingHelper();
 
-  DeliveryOrderLocationPickerCubit()
-      : super(DeliveryOrderLocationPickerInitialState()) {
-    init();
+  void onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+    getUserLocation();
   }
 
-  void init() {
-    locationHelper = LocationHelper();
-    geocodingHelper = GeocodingHelper();
-    initialCameraPosition = CameraPosition(
-      target: LatLng(24.72087070791564, 46.67037450156113),
-      zoom: 13,
+  void onCameraMove(CameraPosition position) {
+    currentPosition = position.target;
+  }
+
+  void onCameraIdle() async {
+    if (currentPosition != null) {
+      emit(LocationLoading());
+      // Get address from coordinates
+      final address = await _getAddressFromLatLng(currentPosition!);
+      emit(LocationSelected(currentPosition!, address));
+    }
+  }
+
+  void onPlaceSelected(Prediction prediction) async {
+    if (prediction.lat == null || prediction.lng == null) return;
+    
+    final position = LatLng(
+      double.parse(prediction.lat!),
+      double.parse(prediction.lng!),
     );
+    
+    // Move camera to selected location
+    mapController.animateCamera(
+      CameraUpdate.newLatLngZoom(position, 15),
+    );
+  }
+
+  void onExtraDetailsChanged(String value) {
+    // Update state if needed
+  }
+
+  void onSaveLocationChanged(bool value) {
+    saveLocation = value;
+    emit(state); // Re-emit current state to trigger rebuild
   }
 
   Future<void> getUserLocation() async {
-    try {
-      locationData = await locationHelper.getCurrentLocation() ??
-          LocationData.fromMap(
-              {'latitude': 24.72087070791564, 'longitude': 46.67037450156113});
+    emit(LocationLoading());
+    
+    final location = Location();
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
+    LocationData locationData;
 
-      // Update camera position
-      final newPosition = setNewCameraPosition(locationData);
-      await cubitController?.animateCamera(
-        CameraUpdate.newCameraPosition(newPosition),
+    try {
+      // Check if location services are enabled
+      serviceEnabled = await location.serviceEnabled();
+      if (!serviceEnabled) {
+        serviceEnabled = await location.requestService();
+        if (!serviceEnabled) {
+          emit(LocationError('Location services are disabled'));
+          return;
+        }
+      }
+
+      // Check location permission
+      permissionGranted = await location.hasPermission();
+      if (permissionGranted == PermissionStatus.denied) {
+        permissionGranted = await location.requestPermission();
+        if (permissionGranted != PermissionStatus.granted) {
+          emit(LocationError('Location permission denied'));
+          return;
+        }
+      }
+
+      // Get location
+      locationData = await location.getLocation();
+      final position = LatLng(locationData.latitude!, locationData.longitude!);
+      
+      // Move camera to user location
+      mapController.animateCamera(
+        CameraUpdate.newLatLngZoom(position, 15),
       );
 
-      // Get address from coordinates
-      currentAddress =
-          await geocodingHelper.getAddressFromLocation(locationData);
-
-      // Set marker at user's location
-      setMarker(locationData);
-      emit(DeliveryOrderLocationPickerSuccessState());
+      // Get address
+      final address = await _getAddressFromLatLng(position);
+      emit(LocationSelected(position, address));
     } catch (e) {
-      emit(DeliveryOrderLocationPickerErrorState(e.toString()));
+      emit(LocationError(e.toString()));
     }
   }
 
-  Future<void> onMapTapped(LatLng position) async {
-    try {
-      // Create LocationData from tapped position
-      locationData = LocationData.fromMap({
-        'latitude': position.latitude,
-        'longitude': position.longitude,
-      });
-
-      // Get address for tapped location
-      currentAddress =
-          await geocodingHelper.getAddressFromLocation(locationData);
-
-      // Cache the current address
-      await SharedPrefUtils.saveData(
-          key: 'current_address', data: currentAddress);
-
-      // Set marker at tapped location
-      setMarker(locationData);
-      emit(DeliveryOrderLocationPickerSuccessState());
-    } catch (e) {
-      emit(DeliveryOrderLocationPickerErrorState(e.toString()));
-    }
+  Future<String> _getAddressFromLatLng(LatLng position) async {
+    final locationData = LocationData.fromMap({
+      'latitude': position.latitude,
+      'longitude': position.longitude,
+    });
+    return await _geocodingHelper.getAddressFromLocation(locationData);
   }
 
-  Future<void> onPlaceSelected(Prediction place) async {
-    try {
-      if (place.lat != null && place.lng != null) {
-        // Create LocationData from selected place
-        locationData = LocationData.fromMap({
-          'latitude': double.parse(place.lat!),
-          'longitude': double.parse(place.lng!),
-        });
-
-        // Update camera position
-        final newPosition = setNewCameraPosition(locationData);
-        await cubitController?.animateCamera(
-          CameraUpdate.newCameraPosition(newPosition),
-        );
-
-        // Update address
-        currentAddress = place.description ?? '';
-
-        // Cache the current address
-        await SharedPrefUtils.saveData(
-            key: 'current_address', data: currentAddress);
-
-        // Set marker at selected location
-        setMarker(locationData);
-        emit(DeliveryOrderLocationPickerSuccessState());
-      }
-    } catch (e) {
-      emit(DeliveryOrderLocationPickerErrorState(e.toString()));
-    }
-  }
-
-  void initMapStyle(BuildContext context) async {
-    // Load map style String from assets
-    var nightMapStyle = await DefaultAssetBundle.of(context)
-        .loadString('assets/map_styles/night_map_style.json');
-
-    // Set map style
-    cubitController!.setMapStyle(nightMapStyle);
-  }
-
-  CameraPosition setNewCameraPosition(LocationData currentLocation) {
-    return CameraPosition(
-      target: LatLng(currentLocation.latitude!, currentLocation.longitude!),
-      zoom: 15,
-    );
-  }
-
-  void setMarker(LocationData currentLocation) {
-    markers.clear(); // Clear existing markers
-    var myLocationMarker = Marker(
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-      markerId: MarkerId('current_location'),
-      position: LatLng(currentLocation.latitude!, currentLocation.longitude!),
-      infoWindow: InfoWindow(
-        title: 'Selected Location',
-        snippet: currentAddress,
-      ),
-    );
-    markers.add(myLocationMarker);
-    emit(NewMarkerState());
+  @override
+  Future<void> close() {
+    searchController.dispose();
+    extraDetailsController.dispose();
+    return super.close();
   }
 }

@@ -1,21 +1,20 @@
 part of 'delivery_order_location_picker_cubit.dart';
 
-@immutable
-sealed class DeliveryOrderLocationPickerState {}
+abstract class DeliveryOrderLocationPickerState {}
 
-class DeliveryOrderLocationPickerInitialState
-    extends DeliveryOrderLocationPickerState {}
+class LocationInitial extends DeliveryOrderLocationPickerState {}
 
-class DeliveryOrderLocationPickerLoadingState
-    extends DeliveryOrderLocationPickerState {}
+class LocationLoading extends DeliveryOrderLocationPickerState {}
 
-class DeliveryOrderLocationPickerSuccessState
-    extends DeliveryOrderLocationPickerState {}
+class LocationSelected extends DeliveryOrderLocationPickerState {
+  final LatLng position;
+  final String address;
 
-class DeliveryOrderLocationPickerErrorState
-    extends DeliveryOrderLocationPickerState {
-  final String error;
-  DeliveryOrderLocationPickerErrorState(this.error);
+  LocationSelected(this.position, this.address);
 }
 
-class NewMarkerState extends DeliveryOrderLocationPickerState {}
+class LocationError extends DeliveryOrderLocationPickerState {
+  final String message;
+
+  LocationError(this.message);
+}

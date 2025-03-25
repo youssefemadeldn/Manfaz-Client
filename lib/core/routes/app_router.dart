@@ -165,8 +165,7 @@ class AppRouter {
       case Routes.deliveryOrderLocationPickerView:
         return CupertinoPageRoute(
             builder: (_) => BlocProvider(
-                  create: (context) =>
-                      getIt<DeliveryOrderLocationPickerCubit>()..init(),
+                  create: (context) => getIt<DeliveryOrderLocationPickerCubit>(),
                   child: DeliveryOrderLocationPickerView(),
                 ));
 

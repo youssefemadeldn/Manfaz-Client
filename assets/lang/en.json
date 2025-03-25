@@ -83,7 +83,7 @@
     "service": "Service",
     "minutes": "minutes",
     "payment_method": "Payment Method",
-    "currency": "SAR",
+    "currency": " SAR ",
     "total_amount": "Total Amount",
     "driver": "Driver"
   },
@@ -184,7 +184,46 @@
   },
   "create_service_order": {
     "service_order": "Service Order",
-    "create_request": "Create your service request with detailed instructions"
+    "create_request": "Create your service request with detailed instructions",
+    "location": {
+      "title": "Location",
+      "service_location_title": "Service Location",
+      "select_location_hint": "Select Service Location",
+      "current_location": "Current Location",
+      "select_on_map": "Pick Location",
+      "search_map": "Search the map",
+      "getting_location": "Getting location...",
+      "extra_details": "Extra details",
+      "building_hint": "Building / Apartment Number (Optional)",
+      "confirm_location": "Confirm Location",
+      "save_location": "Save location to use later"
+    },
+    "notes": {
+      "title": "Additional Notes",
+      "placeholder": "Add any special instructions or requirements...",
+      "optional": "Optional"
+    },
+    "payment": {
+      "title": "Payment Method",
+      "cash": "Cash",
+      "card": "Card",
+      "select_method": "Select Payment Method"
+    },
+    "price": {
+      "title": "Price Details",
+      "service_price": "Service Price",
+      "duration": "Duration",
+      "total": "Total Amount",
+      "hours": "hours",
+      "sar": "SAR"
+    },
+    "submit": {
+      "place_order": "Place Order",
+      "processing": "Processing...",
+      "success": "Order Added",
+      "success_message": "Your service order has been created successfully",
+      "error": "Error Placing Order"
+    }
   },
   "error":{
     "try_again_later": "Try Again Later",
@@ -193,5 +232,92 @@
   "success":{
     "order_created_successfully": "Order Created Successfully",
     "success": "Success"
+  },
+  "restaurant_store_details": {
+    "please_select_products": "Please select products",
+    "please_select_payment_method": "Please select payment method",
+    "please_select_location": "Please select location",
+    "header": {
+      "delivery_fee" : "Delivery Fee",
+      "open": "Open",
+      "closed": "Closed",
+      "reviews": "Reviews",
+      "read_more": "Read More",
+      "read_less": "Read Less",
+      "contact_info": "Contact Information",
+      "call": "Call",
+      "message": "Message"
+    },
+    "menu": {
+      "title": "Menu",
+      "categories": "Categories",
+      "menu_items": "Menu Items",
+      "add_to_cart": "Add to Cart",
+      "quantity": "Quantity"
+    },
+    "gallery": {
+      "title": "Photo Gallery",
+      "view_all": "View All Photos"
+    },
+    "location": {
+      "title": "Location",
+      "view_on_map": "View on Map",
+      "get_directions": "Get Directions"
+    },
+    "working_hours": {
+      "title": "Working Hours",
+      "open_now": "Open Now",
+      "closed": "Closed"
+    },
+    "order": {
+      "create_order": "Create Order",
+      "delivery_location": "Delivery Location",
+      "notes": "Add Notes",
+      "notes_placeholder": "Any special instructions?",
+      "payment_method": "Payment Method",
+      "cash": "Cash",
+      "card": "Card",
+      "total": "Total",
+      "place_order": "Place Order"
+    }
+  },
+  "store_details": {
+    "location": {
+      "title": "Location",
+      "map_view": "Map View",
+      "coordinates": "Lat: {}, Lng: {}"
+    },
+    "working_hours": {
+      "title": "Working Hours",
+      "open_now": "Open Now",
+      "closed": "Closed",
+      "days": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday",
+        "unknown": "Unknown"
+      },
+      "today": "Today",
+      "open_hours": "Open {start} - {end}",
+      "closed_today": "Closed Today"
+    },
+    "delivery": {
+      "location": {
+        "title": "Location",
+        "service_location": "Service Location",
+        "select_service_location": "Select Service Location",
+        "pick_location": "Pick Location",
+        "search_map": "Search the map",
+        "getting_location": "Getting location...",
+        "extra_details": "Extra details",
+        "building_hint": "Building / Apartment Number (Optional)",
+        "confirm_location": "Confirm Location",
+        "save_location": "Save location to use later"
+      }
+    }
   }
 }

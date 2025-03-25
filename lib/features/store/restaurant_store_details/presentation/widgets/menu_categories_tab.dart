@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../core/theme/app_colors.dart';
@@ -18,89 +19,6 @@ class MenuCategoriesTab extends StatelessWidget {
     required this.onCategorySelected,
   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50.h,
-      margin: EdgeInsets.only(bottom: 16.h),
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: categories.length,
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        itemBuilder: (context, index) {
-          final isSelected = index == selectedIndex;
-          return GestureDetector(
-            onTap: () => onCategorySelected(index),
-            child: AnimatedContainer(
-              duration: Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              margin: EdgeInsets.only(right: 12.w),
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              decoration: BoxDecoration(
-                color: isSelected ? AppColors.primary : Colors.white,
-                borderRadius: BorderRadius.circular(25.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: isSelected 
-                        ? AppColors.primary.withOpacity(0.3) 
-                        : Colors.black.withOpacity(0.05),
-                    blurRadius: 8,
-                    offset: Offset(0, 3),
-                    spreadRadius: isSelected ? 1 : 0,
-                  ),
-                ],
-                border: Border.all(
-                  color: isSelected 
-                      ? AppColors.primary 
-                      : AppColors.divider,
-                  width: 1,
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Category Icon
-                  Container(
-                    width: 24.w,
-                    height: 24.w,
-                    margin: EdgeInsets.only(right: 8.w),
-                    decoration: BoxDecoration(
-                      color: isSelected 
-                          ? Colors.white.withOpacity(0.2) 
-                          : AppColors.background,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      _getCategoryIcon(categories[index].name),
-                      color: isSelected 
-                          ? Colors.white 
-                          : AppColors.textSecondary,
-                      size: 14.w,
-                    ),
-                  ),
-                  
-                  // Category Name
-                  Text(
-                    categories[index].name ?? 'Category',
-                    style: isSelected
-                        ? AppStyles.bodyTextBold.copyWith(
-                            color: Colors.white,
-                            fontSize: 14.sp,
-                          )
-                        : AppStyles.bodyText2.copyWith(
-                            color: AppColors.textSecondary,
-                            fontSize: 14.sp,
-                          ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-  
   IconData _getCategoryIcon(String? categoryName) {
     if (categoryName == null) return Icons.restaurant;
     
@@ -127,5 +45,76 @@ class MenuCategoriesTab extends StatelessWidget {
     }
     
     return Icons.restaurant;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Text(
+            'restaurant_store_details.menu.categories'.tr(),
+            style: AppStyles.subtitle2,
+          ),
+        ),
+        SizedBox(height: 12.h),
+        Container(
+          height: 50.h,
+          margin: EdgeInsets.only(bottom: 16.h),
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: categories.length,
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            itemBuilder: (context, index) {
+              final category = categories[index];
+              final isSelected = selectedIndex == index;
+
+              return GestureDetector(
+                onTap: () => onCategorySelected(index),
+                child: Container(
+                  margin: EdgeInsets.only(right: 12.w),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                    decoration: BoxDecoration(
+                      color: isSelected ? AppColors.primary : Colors.white,
+                      borderRadius: BorderRadius.circular(25.r),
+                      boxShadow: [
+                        BoxShadow(
+                          color: isSelected 
+                            ? AppColors.primary.withOpacity(0.3)
+                            : Colors.black.withOpacity(0.05),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          _getCategoryIcon(category.name),
+                          color: isSelected ? Colors.white : AppColors.grey,
+                          size: 20.w,
+                        ),
+                        SizedBox(width: 8.w),
+                        Text(
+                          category.name ?? '',
+                          style: AppStyles.subtitle2.copyWith(
+                            color: isSelected ? Colors.white : AppColors.textPrimary,
+                            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
   }
 }

@@ -83,7 +83,7 @@
     "service": "الخدمة",
     "minutes": "دقيقة",
     "payment_method": "طريقة الدفع",
-    "currency": "ريال",
+    "currency": " ريال ",
     "total_amount": "المبلغ الإجمالي",
     "driver": "السائق"
   },
@@ -184,7 +184,46 @@
   },
   "create_service_order": {
     "service_order": "طلب الخدمة",
-    "create_request": "قم بإنشاء طلب الخدمة مع تعليمات مفصلة"
+    "create_request": "قم بإنشاء طلب الخدمة مع تعليمات مفصلة",
+    "location": {
+      "title": "الموقع",
+      "service_location_title": "موقع الخدمة",
+      "select_location_hint": "اختر موقع الخدمة",
+      "current_location": "الموقع الحالي",
+      "select_on_map": "اختيار الموقع",
+      "search_map": "ابحث في الخريطة",
+      "getting_location": "جاري تحديد الموقع...",
+      "extra_details": "تفاصيل إضافية",
+      "building_hint": "رقم المبنى / الشقة (اختياري)",
+      "confirm_location": "تأكيد الموقع",
+      "save_location": "حفظ الموقع للاستخدام لاحقاً"
+    },
+    "notes": {
+      "title": "ملاحظات إضافية",
+      "placeholder": "أضف أي تعليمات أو متطلبات خاصة...",
+      "optional": "اختياري"
+    },
+    "payment": {
+      "title": "طريقة الدفع",
+      "cash": "نقداً",
+      "card": "بطاقة",
+      "select_method": "اختر طريقة الدفع"
+    },
+    "price": {
+      "title": "تفاصيل السعر",
+      "service_price": "سعر الخدمة",
+      "duration": "المدة",
+      "total": "المبلغ الإجمالي",
+      "hours": "ساعات",
+      "sar": "ريال"
+    },
+    "submit": {
+      "place_order": "تأكيد الطلب",
+      "processing": "جاري المعالجة...",
+      "success": "تم إضافة الطلب",
+      "success_message": "تم إنشاء طلب الخدمة بنجاح",
+      "error": "خطأ في تقديم الطلب"
+    }
   },
   "error":{
     "try_again_later": "حاول مرة أخرى",
@@ -193,5 +232,92 @@
   "success":{
     "order_created_successfully": "تم إنشاء الطلب بنجاح",
     "success": "نجاح"
+  },
+  "restaurant_store_details": {
+    "please_select_products": "يرجى اختيار المنتجات",
+    "please_select_payment_method": "يرجى اختيار طريقة الدفع",
+    "please_select_location": "يرجى اختيار الموقع",
+    "header": {
+      "delivery_fee" : "رسوم التوصيل",
+      "open": "مفتوح",
+      "closed": "مغلق",
+      "reviews": "التقييمات",
+      "read_more": "اقرأ المزيد",
+      "read_less": "اقرأ أقل",
+      "contact_info": "معلومات الاتصال",
+      "call": "اتصال",
+      "message": "رسالة"
+    },
+    "menu": {
+      "title": "القائمة",
+      "categories": "الفئات",
+      "menu_items": "قائمة الطعام",
+      "add_to_cart": "أضف إلى السلة",
+      "quantity": "الكمية"
+    },
+    "gallery": {
+      "title": "معرض الصور",
+      "view_all": "عرض كل الصور"
+    },
+    "location": {
+      "title": "الموقع",
+      "view_on_map": "عرض على الخريطة",
+      "get_directions": "احصل على الاتجاهات"
+    },
+    "working_hours": {
+      "title": "ساعات العمل",
+      "open_now": "مفتوح الآن",
+      "closed": "مغلق"
+    },
+    "order": {
+      "create_order": "إنشاء طلب",
+      "delivery_location": "موقع التوصيل",
+      "notes": "إضافة ملاحظات",
+      "notes_placeholder": "أي تعليمات خاصة؟",
+      "payment_method": "طريقة الدفع",
+      "cash": "نقداً",
+      "card": "بطاقة",
+      "total": "المجموع",
+      "place_order": "تأكيد الطلب"
+    }
+  },
+  "store_details": {
+    "location": {
+      "title": "الموقع",
+      "map_view": "عرض الخريطة",
+      "coordinates": "خط العرض: {}, خط الطول: {}"
+    },
+    "working_hours": {
+      "title": "ساعات العمل",
+      "open_now": "مفتوح الآن",
+      "closed": "مغلق",
+      "days": {
+        "monday": "الإثنين",
+        "tuesday": "الثلاثاء",
+        "wednesday": "الأربعاء",
+        "thursday": "الخميس",
+        "friday": "الجمعة",
+        "saturday": "السبت",
+        "sunday": "الأحد",
+        "unknown": "غير معروف"
+      },
+      "today": "اليوم",
+      "open_hours": "مفتوح {start} - {end}",
+      "closed_today": "مغلق اليوم"
+    },
+    "delivery": {
+      "location": {
+        "title": "الموقع",
+        "service_location": "موقع الخدمة",
+        "select_service_location": "اختر موقع الخدمة",
+        "pick_location": "اختيار الموقع",
+        "search_map": "ابحث في الخريطة",
+        "getting_location": "جاري تحديد الموقع...",
+        "extra_details": "تفاصيل إضافية",
+        "building_hint": "رقم المبنى / الشقة (اختياري)",
+        "confirm_location": "تأكيد الموقع",
+        "save_location": "حفظ الموقع للاستخدام لاحقاً"
+      }
+    }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
 import '../../../../../core/helper/dialog_helper.dart';
@@ -36,11 +37,11 @@ class SubmitOrderButton extends StatelessWidget {
             DialogHelper.showCustomDialog(
               context: context,
               title: Text(
-                'Order Added',
+                tr('create_service_order.submit.success'),
                 style: AppStyles.header2,
               ),
               content: Text(
-                "Your service order has been created successfully",
+                tr('create_service_order.submit.success_message'),
                 style: AppStyles.bodyText1,
               ),
               onConfirm: () {
@@ -70,7 +71,7 @@ class SubmitOrderButton extends StatelessWidget {
             child: state is CreateServiceOrderLoading
                 ? const CircularProgressIndicator(color: Colors.white)
                 : Text(
-                    'Submit Order',
+                    tr('create_service_order.submit.place_order'),
                     style: AppStyles.bodyText1.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,

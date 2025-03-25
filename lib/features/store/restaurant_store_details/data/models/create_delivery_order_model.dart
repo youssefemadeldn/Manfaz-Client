@@ -44,26 +44,25 @@ class Data {
   String? updatedAt;
   String? paymentMethod;
 
-
-  Data(
-      {this.id,
-      this.userId,
-      this.serviceId,
-      this.providerId,
-      this.deliveryDriverId,
-      this.latitude,
-      this.longitude,
-      this.address,
-      this.notes,
-      this.price,
-      this.duration,
-      this.status,
-      this.totalAmount,
-      this.paymentStatus,
-      this.createdAt,
-      this.updatedAt,
-      this.paymentMethod,
-      });
+  Data({
+    this.id,
+    this.userId,
+    this.serviceId,
+    this.providerId,
+    this.deliveryDriverId,
+    this.latitude,
+    this.longitude,
+    this.address,
+    this.notes,
+    this.price,
+    this.duration,
+    this.status,
+    this.totalAmount,
+    this.paymentStatus,
+    this.createdAt,
+    this.updatedAt,
+    this.paymentMethod,
+  });
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];

@@ -21,6 +21,8 @@ class ServiceOrderLocationPickerCubit
   late LocationData locationData;
   PermissionStatus permissionGranted = PermissionStatus.granted;
   String currentAddress = '';
+  String extraDetails = '';
+  LatLng? selectedLocation;
   static const String apiKey =
       'AIzaSyALEA-N5NgRqQEIRQUJwMRoUy0i-UM0rc8'; // Replace with your API key
 
@@ -42,6 +44,10 @@ class ServiceOrderLocationPickerCubit
     );
   }
 
+  void onExtraDetailsChanged(String value) {
+    extraDetails = value;
+  }
+
   Future<void> getUserLocation() async {
     try {
       locationData = await locationHelper.getCurrentLocation() ??
@@ -60,6 +66,7 @@ class ServiceOrderLocationPickerCubit
 
       // Set marker at user's location
       setMarker(locationData);
+      selectedLocation = LatLng(locationData.latitude!, locationData.longitude!);
       emit(ServiceOrderLocationPickerSuccessState());
     } catch (e) {
       emit(ServiceOrderLocationPickerErrorState(e.toString()));
@@ -84,6 +91,7 @@ class ServiceOrderLocationPickerCubit
 
       // Set marker at tapped location
       setMarker(locationData);
+      selectedLocation = position;
       emit(ServiceOrderLocationPickerSuccessState());
     } catch (e) {
       emit(ServiceOrderLocationPickerErrorState(e.toString()));
@@ -105,15 +113,13 @@ class ServiceOrderLocationPickerCubit
           CameraUpdate.newCameraPosition(newPosition),
         );
 
-        // Update address
-        currentAddress = place.description ?? '';
+        // Get address for selected place
+        currentAddress =
+            await geocodingHelper.getAddressFromLocation(locationData);
 
-        // Cache the current address
-        await SharedPrefUtils.saveData(
-            key: 'current_address', data: currentAddress);
-
-        // Set marker at selected location
+        // Set marker at selected place
         setMarker(locationData);
+        selectedLocation = LatLng(locationData.latitude!, locationData.longitude!);
         emit(ServiceOrderLocationPickerSuccessState());
       }
     } catch (e) {
@@ -121,34 +127,40 @@ class ServiceOrderLocationPickerCubit
     }
   }
 
-  void initMapStyle(BuildContext context) async {
-    // Load map style String from assets
-    var nightMapStyle = await DefaultAssetBundle.of(context)
-        .loadString('assets/map_styles/night_map_style.json');
-
-    // Set map style
-    cubitController!.setMapStyle(nightMapStyle);
+  Future<void> initMapStyle(BuildContext context) async {
+    try {
+      bool isDark = Theme.of(context).brightness == Brightness.dark;
+      String style = await DefaultAssetBundle.of(context).loadString(
+        isDark
+            ? 'assets/map_styles/dark_map_style.json'
+            : 'assets/map_styles/light_map_style.json',
+      );
+      await cubitController?.setMapStyle(style);
+    } catch (e) {
+      print('Error loading map style: $e');
+    }
   }
 
   CameraPosition setNewCameraPosition(LocationData currentLocation) {
     return CameraPosition(
-      target: LatLng(currentLocation.latitude!, currentLocation.longitude!),
+      target: LatLng(
+        currentLocation.latitude!,
+        currentLocation.longitude!,
+      ),
       zoom: 15,
     );
   }
 
   void setMarker(LocationData currentLocation) {
-    markers.clear(); // Clear existing markers
-    var myLocationMarker = Marker(
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-      markerId: MarkerId('current_location'),
-      position: LatLng(currentLocation.latitude!, currentLocation.longitude!),
-      infoWindow: InfoWindow(
-        title: 'Selected Location',
-        snippet: currentAddress,
+    markers.clear();
+    markers.add(
+      Marker(
+        markerId: const MarkerId('currentLocation'),
+        position: LatLng(
+          currentLocation.latitude!,
+          currentLocation.longitude!,
+        ),
       ),
     );
-    markers.add(myLocationMarker);
-    emit(NewMarkerState());
   }
 }

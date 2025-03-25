@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_styles.dart';
 import '../../data/models/store_details_model.dart';
@@ -15,21 +16,21 @@ class WorkingHoursSection extends StatelessWidget {
   String _getDayName(int? dayOfWeek) {
     switch (dayOfWeek) {
       case 1:
-        return 'Monday';
+        return tr('store_details.working_hours.days.monday');
       case 2:
-        return 'Tuesday';
+        return tr('store_details.working_hours.days.tuesday');
       case 3:
-        return 'Wednesday';
+        return tr('store_details.working_hours.days.wednesday');
       case 4:
-        return 'Thursday';
+        return tr('store_details.working_hours.days.thursday');
       case 5:
-        return 'Friday';
+        return tr('store_details.working_hours.days.friday');
       case 6:
-        return 'Saturday';
+        return tr('store_details.working_hours.days.saturday');
       case 7:
-        return 'Sunday';
+        return tr('store_details.working_hours.days.sunday');
       default:
-        return 'Unknown';
+        return tr('store_details.working_hours.days.unknown');
     }
   }
 
@@ -65,7 +66,7 @@ class WorkingHoursSection extends StatelessWidget {
               ),
               SizedBox(width: 12.w),
               Text(
-                'Working Hours',
+                tr('store_details.working_hours.title'),
                 style: AppStyles.header3,
               ),
               Spacer(),
@@ -104,10 +105,10 @@ class WorkingHoursSection extends StatelessWidget {
           ),
           SizedBox(width: 6.w),
           Text(
-            isOpen ? 'Open Now' : 'Closed',
-            style: AppStyles.caption.copyWith(
+            isOpen ? tr('store_details.working_hours.open_now') : tr('store_details.working_hours.closed'),
+            style: AppStyles.bodyText2.copyWith(
               color: isOpen ? Colors.green : Colors.red,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ],
@@ -119,70 +120,55 @@ class WorkingHoursSection extends StatelessWidget {
     final bool isToday = _isToday(workingHour.dayOfWeek ?? 0);
     
     return Container(
-      margin: EdgeInsets.only(bottom: 12.h),
-      padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 14.w),
+      padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+      margin: EdgeInsets.only(bottom: 8.h),
       decoration: BoxDecoration(
-        color: isToday ? AppColors.primaryLight.withOpacity(0.1) : Colors.grey.withOpacity(0.05),
-        borderRadius: BorderRadius.circular(12.r),
-        border: isToday 
-          ? Border.all(color: AppColors.primary.withOpacity(0.3)) 
-          : Border.all(color: Colors.transparent),
+        color: isToday ? AppColors.primaryLight.withOpacity(0.1) : Colors.transparent,
+        borderRadius: BorderRadius.circular(8.r),
       ),
       child: Row(
         children: [
-          // Day Icon
-          Container(
-            width: 32.w,
-            height: 32.w,
-            margin: EdgeInsets.only(right: 12.w),
-            decoration: BoxDecoration(
-              color: isToday 
-                ? AppColors.primary.withOpacity(0.1) 
-                : Colors.grey.withOpacity(0.1),
-              shape: BoxShape.circle,
-            ),
-            child: Center(
-              child: Text(
-                _getDayName(workingHour.dayOfWeek).substring(0, 2),
-                style: AppStyles.caption.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: isToday ? AppColors.primary : AppColors.textSecondary,
-                ),
-              ),
-            ),
-          ),
-          
-          // Day
+          // Day Name
           Expanded(
             flex: 2,
-            child: Text(
-              _getDayName(workingHour.dayOfWeek),
-              style: AppStyles.bodyText2.copyWith(
-                fontWeight: isToday ? FontWeight.bold : FontWeight.normal,
-                color: isToday ? AppColors.primary : AppColors.textPrimary,
-              ),
+            child: Row(
+              children: [
+                Text(
+                  _getDayName(workingHour.dayOfWeek),
+                  style: AppStyles.bodyText2.copyWith(
+                    fontWeight: isToday ? FontWeight.w600 : FontWeight.normal,
+                  ),
+                ),
+                if (isToday) ...[
+                  SizedBox(width: 6.w),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(4.r),
+                    ),
+                    child: Text(
+                      tr('store_details.working_hours.today'),
+                      style: AppStyles.caption.copyWith(
+                        color: AppColors.primary,
+                        fontSize: 10.sp,
+                      ),
+                    ),
+                  ),
+                ],
+              ],
             ),
           ),
           
           // Hours
           Expanded(
-            flex: 2,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
-              decoration: BoxDecoration(
-                color: isToday 
-                  ? AppColors.primary.withOpacity(0.1) 
-                  : Colors.grey.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8.r),
+            flex: 3,
+            child: Text(
+              _formatHours(workingHour.openTime, workingHour.closeTime),
+              style: AppStyles.bodyText2.copyWith(
+                color: AppColors.textSecondary,
               ),
-              child: Text(
-                _formatHours(workingHour.openTime, workingHour.closeTime),
-                style: AppStyles.bodyText3.copyWith(
-                  fontWeight: isToday ? FontWeight.bold : FontWeight.normal,
-                  color: isToday ? AppColors.primary : AppColors.textSecondary,
-                ),
-                textAlign: TextAlign.center,
-              ),
+              textAlign: TextAlign.right,
             ),
           ),
         ],
@@ -191,19 +177,19 @@ class WorkingHoursSection extends StatelessWidget {
   }
 
   bool _isToday(int dayOfWeek) {
+    // Get current day (1-7, where 1 is Monday)
     final now = DateTime.now();
-    final weekday = now.weekday;
-    
-    return dayOfWeek == weekday;
+    final today = now.weekday;
+    return dayOfWeek == today;
   }
-  
+
   bool _isCurrentlyOpen() {
     final now = DateTime.now();
-    final weekday = now.weekday;
+    final today = now.weekday;
     
     // Find today's working hours
     final todayHours = workingHours.firstWhere(
-      (wh) => wh.dayOfWeek == weekday,
+      (wh) => wh.dayOfWeek == today,
       orElse: () => WorkingHours(),
     );
     
@@ -212,43 +198,31 @@ class WorkingHoursSection extends StatelessWidget {
     }
     
     // Parse hours
-    try {
-      final openTimeParts = todayHours.openTime!.split(':');
-      final closeTimeParts = todayHours.closeTime!.split(':');
-      
-      if (openTimeParts.length < 2 || closeTimeParts.length < 2) {
-        return false;
-      }
-      
-      final openHour = int.parse(openTimeParts[0]);
-      final openMinute = int.parse(openTimeParts[1]);
-      final closeHour = int.parse(closeTimeParts[0]);
-      final closeMinute = int.parse(closeTimeParts[1]);
-      
-      final openTime = TimeOfDay(hour: openHour, minute: openMinute);
-      final closeTime = TimeOfDay(hour: closeHour, minute: closeMinute);
-      final currentTime = TimeOfDay(hour: now.hour, minute: now.minute);
-      
-      // Convert to minutes for comparison
-      final openMinutes = openTime.hour * 60 + openTime.minute;
-      final closeMinutes = closeTime.hour * 60 + closeTime.minute;
-      final currentMinutes = currentTime.hour * 60 + currentTime.minute;
-      
-      return currentMinutes >= openMinutes && currentMinutes <= closeMinutes;
-    } catch (e) {
-      return false;
-    }
+    final openTime = TimeOfDay(
+      hour: int.parse(todayHours.openTime!.split(':')[0]),
+      minute: int.parse(todayHours.openTime!.split(':')[1]),
+    );
+    final closeTime = TimeOfDay(
+      hour: int.parse(todayHours.closeTime!.split(':')[0]),
+      minute: int.parse(todayHours.closeTime!.split(':')[1]),
+    );
+    
+    // Convert current time to minutes since midnight
+    final currentMinutes = now.hour * 60 + now.minute;
+    final openMinutes = openTime.hour * 60 + openTime.minute;
+    final closeMinutes = closeTime.hour * 60 + closeTime.minute;
+    
+    return currentMinutes >= openMinutes && currentMinutes <= closeMinutes;
   }
 
   String _formatHours(String? openTime, String? closeTime) {
     if (openTime == null || closeTime == null) {
-      return 'Closed';
+      return tr('store_details.working_hours.closed_today');
     }
     
-    if (openTime.isEmpty || closeTime.isEmpty) {
-      return 'Closed';
-    }
-    
-    return '$openTime - $closeTime';
+    return tr(
+      'store_details.working_hours.open_hours',
+      args: [openTime, closeTime],
+    );
   }
 }
