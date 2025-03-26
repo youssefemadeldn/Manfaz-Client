@@ -232,14 +232,6 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
 
                   // Divider
                   Divider(color: AppColors.divider, thickness: 8.h),
-
-                  // Location Map Section
-                  // if (restaurantData.locations != null &&
-                  //     restaurantData.locations!.isNotEmpty)
-                  //   LocationMapSection(locations: restaurantData.locations),
-
-                  // Divider
-                  // Divider(color: AppColors.divider, thickness: 8.h),
                   BlocBuilder<CreateDeliveryOrderCubit,
                       CreateDeliveryOrderState>(
                     buildWhen: (previous, current) =>
