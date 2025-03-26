@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -12,11 +11,13 @@ class MenuItem extends StatelessWidget {
   final String title;
   final Widget? trailing;
   final bool showTrailingArrow;
+  final VoidCallback? onTap;
   const MenuItem({
     required this.icon,
     required this.title,
     this.trailing,
     this.showTrailingArrow = false,
+    this.onTap,
     super.key,
   });
 
@@ -39,6 +40,7 @@ class MenuItem extends StatelessWidget {
       trailing: showTrailingArrow
           ? Icon(Icons.arrow_forward_ios, color: AppColors.grey, size: 16.sp)
           : trailing,
+      onTap: onTap,
     );
   }
 }

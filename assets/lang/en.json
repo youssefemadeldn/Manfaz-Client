@@ -99,21 +99,34 @@
   "profile_tab": {
     "name": "Youssef",
     "not_verified": "Not Verified",
+    "verified": "Verified",
     "wallet": "Wallet",
     "balance": "0.0 EGP",
     "add": "Add",
     "delivery_balance": "Delivery Balance",
+    "current_balance": "Current Balance",
     "new": "New",
     "orders": "Orders",
     "saved_addresses": "Saved Addresses",
     "ratings": "Service Ratings",
+    "reviews": "Reviews",
+    "earnings": "Earnings",
     "user_notes": "User Notes",
     "add_coupon": "Add Coupon",
     "customer_support": "Customer Support",
     "corporate_offers": "Corporate Offers",
     "settings": "Settings",
+    "logout": "Logout",
     "orders_count": "0 Orders",
-    "less_than": "0"
+    "less_than": "0",
+    "edit_profile": "Edit Profile",
+    "recent_transactions": "Recent Transactions",
+    "view_all": "View All",
+    "deposit": "Deposit",
+    "withdrawal": "Withdrawal",
+    "no_saved_addresses": "No saved addresses found",
+    "add_new_address": "Add New Address",
+    "default": "Default"
   },
   "ServicesListViewView": {
     "title": "Services",
@@ -324,6 +337,15 @@
         "save_location": "Save location to use later"
       }
     }
+  },
+  "settings": {
+    "title": "Settings",
+    "edit_profile": "Edit Profile",
+    "language": "Language Settings",
+    "delete_account": "Delete My Account",
+    "english": "English",
+    "arabic": "Arabic",
+    "delete_confirmation": "Are you sure you want to delete your account? This action cannot be undone."
   },
   "snackbar":{
     "success":"Success",

@@ -29,4 +29,5 @@ class Routes {
       '/restaurantStoreDetailsView';
   static const String deliveryOrderLocationPickerView =
       '/deliveryOrderLocationPickerView';
+  static const String settingsView = '/settingsView';
 }
