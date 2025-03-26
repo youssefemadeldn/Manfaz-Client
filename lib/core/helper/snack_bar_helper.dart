@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class SnackBarHelper {
@@ -63,7 +64,7 @@ class SnackBarHelper {
           ],
         ),
         action: SnackBarAction(
-          label: 'Dismiss',
+          label: 'snackbar.dismiss'.tr(),
           textColor: Colors.white,
           onPressed: () {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();

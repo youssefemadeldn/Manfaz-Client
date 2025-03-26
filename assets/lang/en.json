@@ -10,6 +10,11 @@
     "next": "Next",
     "get_started": "Get Started"
   },
+  "shared":{
+    "error_message": "something went wrong try again later",
+    "network_error": "Network Error",
+    "check_internet": "Check Internet"
+  },
   "login_description": "Log in to your account to continue your journey.",
   "email": "Email Or Phone",
   "password": "Password",
@@ -319,5 +324,12 @@
         "save_location": "Save location to use later"
       }
     }
+  },
+  "snackbar":{
+    "success":"Success",
+    "error":"Error",
+    "warning":"Warning",
+    "info":"Info",
+    "dismiss":"Dismiss"
   }
 }

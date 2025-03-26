@@ -57,10 +57,12 @@ class DeliveryOrderLocationPickerView extends StatelessWidget {
                   target: viewModel.initialPosition,
                   zoom: 15,
                 ),
-                onMapCreated: viewModel.onMapCreated,
+                onMapCreated: (controller) {
+                  viewModel.onMapCreated(controller);
+                  viewModel.initMapStyle(context);
+                },
                 markers: viewModel.markers,
-                onCameraMove: viewModel.onCameraMove,
-                onCameraIdle: viewModel.onCameraIdle,
+                onTap: viewModel.onMapTapped,
                 myLocationEnabled: true,
                 myLocationButtonEnabled: false,
                 zoomControlsEnabled: false,

@@ -27,6 +27,39 @@ class DeliveryOrderLocationPickerCubit extends Cubit<DeliveryOrderLocationPicker
     getUserLocation();
   }
 
+  Future<void> initMapStyle(BuildContext context) async {
+    try {
+      String style = await DefaultAssetBundle.of(context).loadString(
+        'assets/map_styles/night_map_style.json',
+      );
+      await mapController.setMapStyle(style);
+    } catch (e) {
+      print('Error loading map style: $e');
+    }
+  }
+
+  Future<void> onMapTapped(LatLng position) async {
+    emit(LocationLoading());
+    try {
+      // Clear previous markers
+      markers.clear();
+      // Add new marker
+      markers.add(
+        Marker(
+          markerId: const MarkerId('selectedLocation'),
+          position: position,
+        ),
+      );
+      
+      // Get address for tapped location
+      final address = await _getAddressFromLatLng(position);
+      currentPosition = position;
+      emit(LocationSelected(position, address));
+    } catch (e) {
+      emit(LocationError(e.toString()));
+    }
+  }
+
   void onCameraMove(CameraPosition position) {
     currentPosition = position.target;
   }
@@ -101,8 +134,18 @@ class DeliveryOrderLocationPickerCubit extends Cubit<DeliveryOrderLocationPicker
         CameraUpdate.newLatLngZoom(position, 15),
       );
 
+      // Clear previous markers and add new one at user's location
+      markers.clear();
+      markers.add(
+        Marker(
+          markerId: const MarkerId('currentLocation'),
+          position: position,
+        ),
+      );
+
       // Get address
       final address = await _getAddressFromLatLng(position);
+      currentPosition = position;
       emit(LocationSelected(position, address));
     } catch (e) {
       emit(LocationError(e.toString()));

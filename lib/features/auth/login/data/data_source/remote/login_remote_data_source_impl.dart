@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
@@ -37,12 +39,14 @@ class LoginRemoteDataSourceImpl implements BaseLoginRemoteDataSource {
       if (NetworkHelper.isValidResponse(code: response.statusCode)) {
         Future.wait([
           SharedPrefUtils.saveData(key: 'userId', data: loginModel.data?.id),
+          SharedPrefUtils.saveData(key: 'hasLoggedIn', data: true),
           SharedPrefUtils.saveData(
               key: 'userName',
               data: loginModel.data?.name!.split(' ').first ?? 'null'),
         ]);
         return right(loginModel);
       } else {
+        log(loginModel.message!);
         return left(
           ServerFailure(
             errorMessage: loginModel.message!,
@@ -53,15 +57,16 @@ class LoginRemoteDataSourceImpl implements BaseLoginRemoteDataSource {
     } on DioException {
       return left(
         NetworkFailure(
-          failureTitle: 'login.network_error'.tr(),
-          errorMessage: 'login.check_internet'.tr(),
+          failureTitle: 'shared.network_error'.tr(),
+          errorMessage: 'shared.check_internet'.tr(),
         ),
       );
     } catch (e) {
+      log(e.toString());
       return left(
         Failure(
-          errorMessage: e.toString(),
           failureTitle: 'login.login_failed'.tr(),
+          errorMessage: 'shared.error_message'.tr(),
         ),
       );
     }

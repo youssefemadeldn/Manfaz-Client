@@ -9,10 +9,10 @@ class DeliveryLocationSelector extends StatelessWidget {
   final Function(BuildContext) onLocationSelect;
 
   const DeliveryLocationSelector({
-    Key? key,
+    super.key,
     this.selectedLocation,
     required this.onLocationSelect,
-  }) : super(key: key);
+  });
 
   Widget _buildSectionTitle(String title) {
     return Padding(
@@ -87,18 +87,21 @@ class DeliveryLocationSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildSectionTitle(tr('store_details.delivery.location.title')),
-        _buildLocationTile(
-          tr('store_details.delivery.location.service_location'),
-          selectedLocation != null ? selectedLocation!['address'] : tr('store_details.delivery.location.select_service_location'),
-          Icons.location_on_rounded,
-          AppColors.primary,
-          context,
-        ),
-      ],
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSectionTitle(tr('store_details.delivery.location.title')),
+          _buildLocationTile(
+            tr('store_details.delivery.location.service_location'),
+            selectedLocation != null ? selectedLocation!['address'] : tr('store_details.delivery.location.select_service_location'),
+            Icons.location_on_rounded,
+            AppColors.primary,
+            context,
+          ),
+        ],
+      ),
     );
   }
 }

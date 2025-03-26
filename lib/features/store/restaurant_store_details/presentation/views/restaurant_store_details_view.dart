@@ -266,13 +266,14 @@ class _RestaurantStoreDetailsViewState extends State<RestaurantStoreDetailsView>
                   ),
                   // Notes Input
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    padding: EdgeInsets.symmetric(horizontal: 16.w,
+                    vertical: 12.h,
+                    ),
                     child: NotesInput(
                       controller: _notesController,
                     ),
                   ),
 
-                  SizedBox(height: 16.h),
 
                   // Payment Method Selector
                   Padding(

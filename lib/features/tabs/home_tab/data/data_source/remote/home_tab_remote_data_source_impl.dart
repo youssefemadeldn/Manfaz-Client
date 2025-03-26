@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:manfaz/core/error/failure.dart';
@@ -80,15 +83,16 @@ class HomeTabRemoteDataSourceImpl implements BaseHomeTabRemoteDataSource {
       return left(
           // Unexpected DioError (e.g., timeout, internet connection)
           NetworkFailure(
-        failureTitle: 'Network',
-        errorMessage: 'Check your internet connection',
+        failureTitle: 'shared.network_error'.tr(),
+        errorMessage: 'shared.check_internet'.tr(),
       ));
     } 
     catch (e) {
       // General unexpected error
+      log(e.toString());
       return left(Failure(
         failureTitle: 'Server Failure',
-        errorMessage: e.toString(),
+        errorMessage: 'shared.error_message'.tr(),
       ));
     }
   }

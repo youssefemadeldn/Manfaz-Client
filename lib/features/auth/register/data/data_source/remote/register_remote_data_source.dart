@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
@@ -46,24 +48,26 @@ class RegisterRemoteDataSource implements BaseRegisterRemoteDataSource {
         return right(registerModel);
       } else {
         // Server Error Case:
+        log(registerModel.message!);
         return left(ServerFailure(
-            errorMessage: registerModel.message!,
+            errorMessage: 'shared.error_message'.tr(),
             failureTitle: "register.registration_failed".tr()));
       }
     } on DioException {
       // Unexpected DioError (e.g., timeout, internet connection)
       return left(
         NetworkFailure(
-          failureTitle: 'register.network_error'.tr(),
-          errorMessage: 'check_internet'.tr(),
+          failureTitle: 'shared.network_error'.tr(),
+          errorMessage: 'shared.check_internet'.tr(),
         ),
       );
     } catch (e) {
       // General unexpected error
+      log(e.toString());
       return left(
         ServerFailure(
-          errorMessage: 'register.email_phone_in_use'.tr(),
           failureTitle: 'register.registration_failed'.tr(),
+          errorMessage: 'shared.error_message'.tr(),
         ),
       );
     }
