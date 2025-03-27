@@ -38,6 +38,18 @@ class SnackBarHelper {
     );
   }
 
+  static void showInfoSnackBar(
+    BuildContext context, {
+    required String message,
+  }) {
+    _showSnackBar(
+      context,
+      message: message,
+      backgroundColor: Colors.blue.shade800,
+      icon: Icons.info_outline,
+    );
+  }
+
   static void _showSnackBar(
     BuildContext context, {
     required String message,

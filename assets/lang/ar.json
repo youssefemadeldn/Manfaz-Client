@@ -345,7 +345,22 @@
     "delete_account": "حذف حسابي",
     "english": "الإنجليزية",
     "arabic": "العربية",
-    "delete_confirmation": "هل أنت متأكد أنك تريد حذف حسابك؟ لا يمكن التراجع عن هذا الإجراء."
+    "delete_confirmation": "هل أنت متأكد أنك تريد حذف حسابك؟ لا يمكن التراجع عن هذا الإجراء.",
+    "edit_profile_sheet": {
+      "title": "تعديل الملف الشخصي",
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "password": "كلمة المرور",
+      "new_password": "كلمة المرور الجديدة",
+      "current_password": "كلمة المرور الحالية",
+      "change_photo": "تغيير الصورة",
+      "save": "حفظ التغييرات",
+      "cancel": "إلغاء",
+      "name_required": "الاسم مطلوب",
+      "password_required": "كلمة المرور مطلوبة",
+      "password_length": "يجب أن تكون كلمة المرور 6 أحرف على الأقل"
+    }
   },
   "snackbar":{
     "success":"نجاح",

@@ -15,6 +15,7 @@ class CusTextFormField extends StatelessWidget {
   final Color? fillColor;
   final TextEditingController? controller;
   final Function(String?) validator;
+  final Function(String)? onChanged;
 
   const CusTextFormField({
     super.key,
@@ -29,6 +30,7 @@ class CusTextFormField extends StatelessWidget {
     this.fillColor,
     this.controller,
     required this.validator,
+     this.onChanged,
   });
 
   @override
@@ -51,6 +53,7 @@ class CusTextFormField extends StatelessWidget {
       validator: (value) {
         return validator(value);
       },
+      onChanged: onChanged,
       decoration: InputDecoration(
         isDense: true,
         contentPadding: contentPadding ??

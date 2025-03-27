@@ -345,7 +345,22 @@
     "delete_account": "Delete My Account",
     "english": "English",
     "arabic": "Arabic",
-    "delete_confirmation": "Are you sure you want to delete your account? This action cannot be undone."
+    "delete_confirmation": "Are you sure you want to delete your account? This action cannot be undone.",
+    "edit_profile_sheet": {
+      "title": "Edit Profile",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "password": "Password",
+      "new_password": "New Password",
+      "current_password": "Current Password",
+      "change_photo": "Change Photo",
+      "save": "Save Changes",
+      "cancel": "Cancel",
+      "name_required": "Name is required",
+      "password_required": "Password is required",
+      "password_length": "Password must be at least 6 characters"
+    }
   },
   "snackbar":{
     "success":"Success",

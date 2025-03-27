@@ -477,16 +477,14 @@ class ProfileTab extends StatelessWidget {
             ),
           ),
           Divider(height: 1, color: AppColors.divider),
-          GestureDetector(
-            onTap: ()async {
+          MenuItem(
+            onTap: () async {
               await SharedPrefUtils.removeData('hasLoggedIn');
               Navigator.pushReplacementNamed(context, Routes.loginView);
             },
-            child: MenuItem(
-              icon: Icons.logout,
-              title: "profile_tab.logout".tr(),
-              showTrailingArrow: true,
-            ),
+            icon: Icons.logout,
+            title: "profile_tab.logout".tr(),
+            showTrailingArrow: true,
           ),
         ],
       ),

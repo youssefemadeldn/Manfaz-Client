@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:manfaz/core/helper/bottom_sheet_helper.dart';
 
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
 import '../../../tabs/profile_tab/presentation/widgets/menu_item.dart';
+import '../widgets/edit_profile_bottom_sheet.dart';
+import '../../../tabs/profile_tab/data/models/get_user_profile_model.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -70,6 +73,20 @@ class SettingsView extends StatelessWidget {
             showTrailingArrow: true,
             onTap: () {
               // Navigate to edit profile screen
+              // Sample user data - in a real app, this would come from a state management solution
+              final userData = Data(
+                id: "1",
+                name: "Youssef",
+                email: "youssef@example.com",
+                phone: "+201234567890",
+                imageUrl: "https://ui-avatars.com/api/?name=Youssef&background=0D8ABC&color=fff",
+              );
+              
+              BottomSheetHelper.show(
+                context: context, 
+                isScrollControlled: true,
+                child: EditProfileBottomSheet(userData: userData),
+              );
             },
           ),
           Divider(height: 1, color: AppColors.divider),
