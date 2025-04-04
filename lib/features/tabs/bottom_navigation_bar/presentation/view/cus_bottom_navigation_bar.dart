@@ -9,7 +9,7 @@ import 'package:manfaz/features/order/orders_tab/presentation/view/orders_tab.da
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:manfaz/features/tabs/profile_tab/presentation/view/profile_tab_updated.dart';
+import 'package:manfaz/features/tabs/profile_tab/presentation/view/profile_tab_refactored.dart';
 
 class CusBottomNavigationBar extends StatefulWidget {
   const CusBottomNavigationBar({super.key});
