@@ -235,7 +235,7 @@ class _RegisterViewState extends State<RegisterView> {
                         builder: (context, state) {
                           if (state is RegisterLoading) {
                             return CustomButton(
-                              buttonHeight: 60.h,
+                              buttonHeight: 70.h,
                               onPressed: () {},
                               backgroundColor: AppColors.primary,
                               borderSideColor: AppColors.primary,
@@ -247,7 +247,7 @@ class _RegisterViewState extends State<RegisterView> {
                             );
                           }
                           return CustomButton(
-                            buttonHeight: 60.h,
+                            buttonHeight: 70.h,
                             onPressed: () async {
                               if (formKey.currentState!.validate()) {
                                 await BlocProvider.of<RegisterCubit>(context)

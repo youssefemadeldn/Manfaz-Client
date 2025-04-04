@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 class GetUserProfileModel {
   bool? status;
   String? message;
@@ -17,7 +15,7 @@ class GetUserProfileModel {
       if (json['data'] is Map<String, dynamic>) {
         data = Data.fromJson(json['data'] as Map<String, dynamic>);
       } else {
-        log('Warning: Expected data to be a Map but got ${json['data'].runtimeType}');
+        print('Warning: Expected data to be a Map but got ${json['data'].runtimeType}');
       }
     }
   }

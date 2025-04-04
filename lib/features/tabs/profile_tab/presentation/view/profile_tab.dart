@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:manfaz/core/cache/shared_pref_utils.dart';
+import 'package:manfaz/core/di/di.dart';
 import 'package:manfaz/core/helper/bottom_sheet_helper.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/widgets/cus_text_button.dart';
+import 'package:manfaz/core/widgets/error_message_widget.dart';
 import 'package:manfaz/features/tabs/profile_tab/data/models/get_user_profile_model.dart';
 import 'package:manfaz/features/tabs/profile_tab/presentation/widgets/saved_addresses_bottom_sheet.dart';
 
 import '../../../../../core/routes/routes.dart';
+import '../controller/profile_tab_cubit/profile_tab_cubit.dart';
 import '../widgets/menu_item.dart';
 
 class ProfileTab extends StatelessWidget {
@@ -67,46 +71,68 @@ class ProfileTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: SafeArea(
-        child: Column(
-          children: [
-            // Profile Section with Gradient
-            _buildProfileHeader(context),
+        child: BlocProvider(
+          create: (context) =>
+              getIt<ProfileTabCubit>()..getUserProfileById(),
+          child: BlocBuilder<ProfileTabCubit, ProfileTabState>(
+            builder: (context, state) {
+              if (state is ProfileTabLoading) {
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: const Center(child: CircularProgressIndicator(
+                    color: AppColors.primary,
+                  )),
+                );
+              } else if (state is ProfileTabError) {
+                return ErrorMessageWidget(errorMessage: state.failure.errorMessage);
+              }else if(state is ProfileTabSuccess){
+
+              return Column(
+                children: [
+                  // Profile Section with Gradient
+                  _buildProfileHeader(context),
+
+                  // Stats Section
+                  _buildStatsSection(context),
+
+                  // Wallet Card
+                  _buildWalletCard(context),
+
+                  // Menu Items
+                  _buildMenuItems(context),
+
+                  SizedBox(height: 20.h),
+
+                  // Add Coupon Button
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: CustomButton(
+                      onPressed: () {},
+                      backgroundColor: AppColors.primary,
+                      borderRadius: 8,
+                      horizontalPadding: 16,
+                      verticalPadding: 12,
+                      buttonWidth: double.infinity,
+                      child: Text(
+                        "profile_tab.add_coupon".tr(),
+                        style: AppStyles.buttonText,
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: 20.h),
+
+                  // Support and Corporate Section
+                  _buildSupportSection(context),
+
+                  SizedBox(height: 20.h),
+                ],
+              );
             
-            // Stats Section
-            _buildStatsSection(context),
-
-            // Wallet Card
-            _buildWalletCard(context),
-
-            // Menu Items
-            _buildMenuItems(context),
-
-            SizedBox(height: 20.h),
-
-            // Add Coupon Button
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: CustomButton(
-                onPressed: () {},
-                backgroundColor: AppColors.primary,
-                borderRadius: 8,
-                horizontalPadding: 16,
-                verticalPadding: 12,
-                buttonWidth: double.infinity,
-                child: Text(
-                  "profile_tab.add_coupon".tr(),
-                  style: AppStyles.buttonText,
-                ),
-              ),
-            ),
-
-            SizedBox(height: 20.h),
-
-            // Support and Corporate Section
-            _buildSupportSection(context),
-
-            SizedBox(height: 20.h),
-          ],
+              }
+              return const SizedBox.shrink();
+            },
+          ),
         ),
       ),
     );
@@ -132,7 +158,8 @@ class ProfileTab extends StatelessWidget {
               shape: BoxShape.circle,
               border: Border.all(color: AppColors.white, width: 2),
             ),
-            child: mockUserProfile.imageUrl != null && mockUserProfile.imageUrl!.isNotEmpty
+            child: mockUserProfile.imageUrl != null &&
+                    mockUserProfile.imageUrl!.isNotEmpty
                 ? CircleAvatar(
                     radius: 35.r,
                     backgroundColor: AppColors.lightGrey,
@@ -143,7 +170,8 @@ class ProfileTab extends StatelessWidget {
                 : CircleAvatar(
                     radius: 35.r,
                     backgroundColor: AppColors.lightGrey,
-                    child: Icon(Icons.person, color: AppColors.white, size: 45.sp),
+                    child:
+                        Icon(Icons.person, color: AppColors.white, size: 45.sp),
                   ),
           ),
           SizedBox(width: 15.w),
@@ -159,13 +187,15 @@ class ProfileTab extends StatelessWidget {
                 SizedBox(height: 5.h),
                 Text(
                   mockUserProfile.email ?? "",
-                  style: AppStyles.listTileSubtitle.copyWith(color: AppColors.white.withOpacity(0.9)),
+                  style: AppStyles.listTileSubtitle
+                      .copyWith(color: AppColors.white.withOpacity(0.9)),
                   overflow: TextOverflow.ellipsis,
                 ),
                 SizedBox(height: 5.h),
                 Text(
                   mockUserProfile.phone ?? "",
-                  style: AppStyles.listTileSubtitle.copyWith(color: AppColors.white.withOpacity(0.9)),
+                  style: AppStyles.listTileSubtitle
+                      .copyWith(color: AppColors.white.withOpacity(0.9)),
                   overflow: TextOverflow.ellipsis,
                 ),
                 SizedBox(height: 5.h),
@@ -232,7 +262,8 @@ class ProfileTab extends StatelessWidget {
     );
   }
 
-  Widget _buildStatItem(BuildContext context, String title, String value, IconData icon) {
+  Widget _buildStatItem(
+      BuildContext context, String title, String value, IconData icon) {
     return Column(
       children: [
         Icon(icon, color: AppColors.primary, size: 24.sp),
@@ -264,9 +295,11 @@ class ProfileTab extends StatelessWidget {
   }
 
   Widget _buildWalletCard(BuildContext context) {
-    final wallet = mockUserProfile.wallet?.isNotEmpty == true ? mockUserProfile.wallet!.first : null;
+    final wallet = mockUserProfile.wallet?.isNotEmpty == true
+        ? mockUserProfile.wallet!.first
+        : null;
     final balance = wallet?.balance ?? 0.0;
-    
+
     return Container(
       margin: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
@@ -356,8 +389,6 @@ class ProfileTab extends StatelessWidget {
                     ],
                   ),
                 ),
-
-        
               ],
             ),
           ),
@@ -365,6 +396,7 @@ class ProfileTab extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildMenuItems(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.w),
@@ -397,7 +429,7 @@ class ProfileTab extends StatelessWidget {
           InkWell(
             onTap: () {
               BottomSheetHelper.show(
-                context: context, 
+                context: context,
                 child: SavedAddressesBottomSheet(
                   locations: mockUserProfile.locations,
                 ),

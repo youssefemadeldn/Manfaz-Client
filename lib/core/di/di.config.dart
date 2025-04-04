@@ -85,6 +85,8 @@ import '../../features/servicses/services_list_view_view/domain/use_cases/get_se
     as _i117;
 import '../../features/servicses/services_list_view_view/presentation/controller/cubit/service_list_view_cubit.dart'
     as _i1002;
+import '../../features/settings/presentation/controller/edit_profile_bottom_sheet_cubit/edit_profile_bottom_sheet_cubit.dart'
+    as _i834;
 import '../../features/store/restaurant_store/data/data_source/remote/base_restaurant_store_remote_data_source.dart'
     as _i904;
 import '../../features/store/restaurant_store/data/data_source/remote/restaurant_store_remote_data_source_impl.dart'
@@ -115,8 +117,6 @@ import '../../features/store/restaurant_store_details/domin/use_cases/get_store_
     as _i946;
 import '../../features/store/restaurant_store_details/presentation/controller/create_delivery_order_cubit/create_delivery_order_cubit.dart'
     as _i342;
-import '../../features/store/restaurant_store_details/presentation/controller/delivery_order_location_picker_cubit/delivery_order_location_picker_cubit.dart'
-    as _i879;
 import '../../features/store/restaurant_store_details/presentation/controller/restaurant_store_details_cubit/restaurant_store_details_cubit.dart'
     as _i648;
 import '../../features/tabs/home_tab/data/data_source/remote/base_home_tab_remote_data_source.dart'
@@ -137,6 +137,18 @@ import '../../features/tabs/home_tab/presentation/controller/search_bar_cubit/se
     as _i320;
 import '../../features/tabs/home_tab/presentation/controller/services_cubit/services_cubit.dart'
     as _i256;
+import '../../features/tabs/profile_tab/data/data_source/remote/base_profile_tab_remote_data_source.dart'
+    as _i856;
+import '../../features/tabs/profile_tab/data/data_source/remote/profile_tab_remote_data_source_impl.dart'
+    as _i466;
+import '../../features/tabs/profile_tab/data/repo/profile_tab_repo_impl.dart'
+    as _i647;
+import '../../features/tabs/profile_tab/domin/repo/base_profile_tab_repo.dart'
+    as _i165;
+import '../../features/tabs/profile_tab/domin/use_cases/get_user_profile_by_id_use_case.dart'
+    as _i159;
+import '../../features/tabs/profile_tab/presentation/controller/profile_tab_cubit/profile_tab_cubit.dart'
+    as _i333;
 import '../../features/workers/worker_list_view/data/data_source/remote/base_worker_list_remote_data_source.dart'
     as _i852;
 import '../../features/workers/worker_list_view/data/data_source/remote/worker_list_remote_data_source_impl.dart'
@@ -169,9 +181,9 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i790.DeliveryServiceFromToCubit());
     gh.factory<_i996.ServiceOrderLocationPickerCubit>(
         () => _i996.ServiceOrderLocationPickerCubit());
+    gh.factory<_i834.EditProfileBottomSheetCubit>(
+        () => _i834.EditProfileBottomSheetCubit());
     gh.factory<_i320.SearchBarCubit>(() => _i320.SearchBarCubit());
-    gh.factory<_i879.DeliveryOrderLocationPickerCubit>(
-        () => _i879.DeliveryOrderLocationPickerCubit());
     gh.singleton<_i409.GlobalKey<_i409.NavigatorState>>(
         () => registerModule.navigatorKey);
     gh.singleton<_i119.ApiManager>(() => _i119.ApiManager());
@@ -190,6 +202,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i300.LoginRemoteDataSourceImpl());
     gh.factory<_i852.BaseWorkerListRemoteDataSource>(
         () => _i365.WorkerListRemoteDataSourceImpl());
+    gh.factory<_i856.BaseProfileTabRemoteDataSource>(
+        () => _i466.ProfileTabRemoteDataSourceImpl());
     gh.factory<_i500.BaseServicesListViewRemoteDataSource>(
         () => _i525.ServicesListViewRemoteDataSourceImpl());
     gh.factory<_i416.BaseCreateServiceOrderRemoteDataSource>(
@@ -198,6 +212,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i157.ResendVerificationCodeRemoteDataSourceImpl());
     gh.factory<_i198.BaseOrdersTabRepo>(() =>
         _i666.OrdersTabRepoImpl(gh<_i377.BaseOrdersTabRemoteDataSource>()));
+    gh.factory<_i165.BaseProfileTabRepo>(() =>
+        _i647.ProfileTabRepoImpl(gh<_i856.BaseProfileTabRemoteDataSource>()));
     gh.factory<_i1003.BaseWorkerListRepo>(() =>
         _i241.WorkerListRepoImpl(gh<_i852.BaseWorkerListRemoteDataSource>()));
     gh.factory<_i904.BaseRestaurantStoreRemoteDataSource>(
@@ -251,17 +267,19 @@ extension GetItInjectableX on _i174.GetIt {
         _i1023.RestaurantStoreUseCase(gh<_i253.BaseRestaurantStoreRepo>()));
     gh.factory<_i1002.ServiceListViewCubit>(() =>
         _i1002.ServiceListViewCubit(gh<_i117.ServicesListParametersUseCase>()));
+    gh.factory<_i159.GetUserProfileByIdUseCase>(
+        () => _i159.GetUserProfileByIdUseCase(gh<_i165.BaseProfileTabRepo>()));
     gh.factory<_i50.LoginUseCase>(
         () => _i50.LoginUseCase(gh<_i752.BaseLoginRepo>()));
     gh.factory<_i579.OtpVerificationCubit>(() =>
         _i579.OtpVerificationCubit(gh<_i496.ResendVerificationCodeUseCase>()));
     gh.factory<_i554.RestaurantStoreCubit>(() => _i554.RestaurantStoreCubit(
         restaurantStoreUseCase: gh<_i1023.RestaurantStoreUseCase>()));
-    gh.factory<_i946.GetStoreDetailsUseCase>(() => _i946.GetStoreDetailsUseCase(
-        gh<_i929.BaseRestaurantStoreDetailsRepo>()));
     gh.factory<_i531.CreateDeliveryOrderUseCase>(() =>
         _i531.CreateDeliveryOrderUseCase(
             gh<_i929.BaseRestaurantStoreDetailsRepo>()));
+    gh.factory<_i946.GetStoreDetailsUseCase>(() => _i946.GetStoreDetailsUseCase(
+        gh<_i929.BaseRestaurantStoreDetailsRepo>()));
     gh.factory<_i288.StoreSubCategoriesCubit>(() =>
         _i288.StoreSubCategoriesCubit(
             getStoreSubCategoriesByCategoryId:
@@ -282,6 +300,8 @@ extension GetItInjectableX on _i174.GetIt {
         _i342.CreateDeliveryOrderCubit(
             createDeliveryOrderUseCase:
                 gh<_i531.CreateDeliveryOrderUseCase>()));
+    gh.factory<_i333.ProfileTabCubit>(
+        () => _i333.ProfileTabCubit(gh<_i159.GetUserProfileByIdUseCase>()));
     gh.factory<_i1070.LoginCubit>(
         () => _i1070.LoginCubit(loginUseCase: gh<_i50.LoginUseCase>()));
     return this;

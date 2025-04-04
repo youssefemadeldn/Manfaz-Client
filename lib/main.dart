@@ -11,9 +11,9 @@ import 'my_bloc_observer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  configureDependencies();
   await EasyLocalization.ensureInitialized();
   await SharedPrefUtils.init();
+  configureDependencies();
   Bloc.observer = MyBlocObserver();
   bool? isLoggedIn = await SharedPrefUtils.getData('hasLoggedIn');
   runApp(EasyLocalization(
