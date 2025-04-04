@@ -13,17 +13,11 @@ part 'profile_tab_state.dart';
 class ProfileTabCubit extends Cubit<ProfileTabState> {
   final GetUserProfileByIdUseCase getUserProfileByIdUseCase;
   String id = '';
-  ProfileTabCubit(this.getUserProfileByIdUseCase) : super(ProfileTabInitial()){
-    getUserId();
-  }
-
-  Future<void> getUserId() async {
-    id = await SharedPrefUtils.getData('userId');
-    
-  }
+  ProfileTabCubit(this.getUserProfileByIdUseCase) : super(ProfileTabInitial());
 
   Future<void> getUserProfileById() async {
     emit(ProfileTabLoading());
+    id = await SharedPrefUtils.getData('userId');
     final result = await getUserProfileByIdUseCase(id: id);
     result.fold(
       (failure) => emit(ProfileTabError(failure: failure)),

@@ -23,80 +23,78 @@ class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: SafeArea(
-        child: BlocProvider(
-          create: (context) =>
-              getIt<ProfileTabCubit>()..getUserProfileById(),
-          child: BlocBuilder<ProfileTabCubit, ProfileTabState>(
-            builder: (context, state) {
-              if (state is ProfileTabLoading) {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  child: const Center(child: CircularProgressIndicator(
-                    color: AppColors.primary,
-                  )),
-                );
-              } else if (state is ProfileTabError) {
-                return ErrorMessageWidget(errorMessage: state.failure.errorMessage);
-              } else if(state is ProfileTabSuccess) {
-                final userProfile = state.getUserProfile.data;
-                
-                if (userProfile == null) {
-                  return ErrorMessageWidget(errorMessage: 'profile_tab.no_data'.tr());
-                }
-                
-                return Column(
-                  children: [
-                    // Profile Section with Gradient
-                    _buildProfileHeader(context, userProfile),
-
-                    // Stats Section
-                    _buildStatsSection(context, userProfile),
-
-                    // Wallet Card
-                    _buildWalletCard(context, userProfile),
-
-                    // Menu Items
-                    _buildMenuItems(context, userProfile),
-
-                    SizedBox(height: 20.h),
-
-                    // Add Coupon Button
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: CustomButton(
-                        onPressed: () {},
-                        backgroundColor: AppColors.primary,
-                        borderRadius: 8,
-                        horizontalPadding: 16,
-                        verticalPadding: 12,
-                        buttonWidth: double.infinity,
-                        child: Text(
-                          "profile_tab.add_coupon".tr(),
-                          style: AppStyles.buttonText,
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: 20.h),
-
-                    // Support Section
-                    _buildSupportSection(context),
-
-                    SizedBox(height: 20.h),
-                  ],
-                );
-              }
-              
-              // Default state (initial)
+      child: BlocProvider(
+        create: (context) =>
+            getIt<ProfileTabCubit>()..getUserProfileById(),
+        child: BlocBuilder<ProfileTabCubit, ProfileTabState>(
+          builder: (context, state) {
+            if (state is ProfileTabLoading) {
               return SizedBox(
                 height: MediaQuery.of(context).size.height,
-                child: Center(
-                  child: Text('profile_tab.loading'.tr()),
-                ),
+                child: const Center(child: CircularProgressIndicator(
+                  color: AppColors.primary,
+                )),
               );
-            },
-          ),
+            } else if (state is ProfileTabError) {
+              return ErrorMessageWidget(errorMessage: state.failure.errorMessage);
+            } else if(state is ProfileTabSuccess) {
+              final userProfile = state.getUserProfile.data;
+              
+              if (userProfile == null) {
+                return ErrorMessageWidget(errorMessage: 'profile_tab.no_data'.tr());
+              }
+              
+              return Column(
+                children: [
+                  // Profile Section with Gradient
+                  _buildProfileHeader(context, userProfile),
+                    
+                  // Stats Section
+                  _buildStatsSection(context, userProfile),
+                    
+                  // Wallet Card
+                  _buildWalletCard(context, userProfile),
+                    
+                  // Menu Items
+                  _buildMenuItems(context, userProfile),
+                    
+                  SizedBox(height: 20.h),
+                    
+                  // Add Coupon Button
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: CustomButton(
+                      onPressed: () {},
+                      backgroundColor: AppColors.primary,
+                      borderRadius: 8,
+                      horizontalPadding: 16,
+                      verticalPadding: 12,
+                      buttonWidth: double.infinity,
+                      child: Text(
+                        "profile_tab.add_coupon".tr(),
+                        style: AppStyles.buttonText,
+                      ),
+                    ),
+                  ),
+                    
+                  SizedBox(height: 20.h),
+                    
+                  // Support Section
+                  _buildSupportSection(context),
+                    
+                  SizedBox(height: 20.h),
+                ],
+              );
+            }
+            
+            // Default state (initial)
+            return SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: Center(
+                child: Text('profile_tab.loading'.tr()),
+              ),
+            );
+          },
         ),
       ),
     );
@@ -104,7 +102,7 @@ class ProfileTab extends StatelessWidget {
 
   Widget _buildProfileHeader(BuildContext context, Data userProfile) {
     return Container(
-      height: 220.h,
+      height: MediaQuery.sizeOf(context).height * 0.25,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -115,124 +113,126 @@ class ProfileTab extends StatelessWidget {
           ],
         ),
       ),
-      child: Stack(
-        children: [
-          // Background design elements
-          Positioned(
-            top: -30,
-            right: -30,
-            child: Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white.withOpacity(0.1),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: -20,
-            left: -20,
-            child: Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white.withOpacity(0.1),
-              ),
-            ),
-          ),
-          
-          // Profile content
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Profile image
-                Container(
-                  width: 80.w,
-                  height: 80.h,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 2.w,
-                    ),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(40.r),
-                    child: CachedNetworkImage(
-                      imageUrl: userProfile.imageUrl ?? '',
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => Container(
-                        color: AppColors.lightGrey,
-                        child: Icon(
-                          Icons.person,
-                          size: 40.sp,
-                          color: AppColors.grey,
-                        ),
-                      ),
-                      errorWidget: (context, url, error) => Container(
-                        color: AppColors.lightGrey,
-                        child: Icon(
-                          Icons.person,
-                          size: 40.sp,
-                          color: AppColors.grey,
-                        ),
-                      ),
-                    ),
-                  ),
+      child: SafeArea(
+        child: Stack(
+          children: [
+            // Background design elements
+            Positioned(
+              top: -30,
+              right: -30,
+              child: Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white.withOpacity(0.1),
                 ),
-                
-                SizedBox(height: 10.h),
-                
-                // Name and verification badge
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      userProfile.name ?? 'profile_tab.user'.tr(),
-                      style: AppStyles.header3.copyWith(
+              ),
+            ),
+            Positioned(
+              bottom: -20,
+              left: -20,
+              child: Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white.withOpacity(0.1),
+                ),
+              ),
+            ),
+            
+            // Profile content
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Profile image
+                  Container(
+                    width: 80.w,
+                    height: 80.h,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                        width: 2.w,
                       ),
                     ),
-                    if (userProfile.isVerified == true)
-                      Padding(
-                        padding: EdgeInsets.only(left: 5.w),
-                        child: Icon(
-                          Icons.verified,
-                          color: Colors.white,
-                          size: 18.sp,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(40.r),
+                      child: CachedNetworkImage(
+                        imageUrl: userProfile.imageUrl ?? '',
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Container(
+                          color: AppColors.lightGrey,
+                          child: Icon(
+                            Icons.person,
+                            size: 40.sp,
+                            color: AppColors.grey,
+                          ),
+                        ),
+                        errorWidget: (context, url, error) => Container(
+                          color: AppColors.lightGrey,
+                          child: Icon(
+                            Icons.person,
+                            size: 40.sp,
+                            color: AppColors.grey,
+                          ),
                         ),
                       ),
-                  ],
-                ),
-                
-                SizedBox(height: 5.h),
-                
-                // Email
-                Text(
-                  userProfile.email ?? '',
-                  style: AppStyles.bodyText2.copyWith(
-                    color: Colors.white.withOpacity(0.8),
+                    ),
                   ),
-                ),
-                
-                SizedBox(height: 5.h),
-                
-                // Phone
-                Text(
-                  userProfile.phone ?? '',
-                  style: AppStyles.bodyText2.copyWith(
-                    color: Colors.white.withOpacity(0.8),
+                  
+                  SizedBox(height: 10.h),
+                  
+                  // Name and verification badge
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        userProfile.name ?? 'profile_tab.user'.tr(),
+                        style: AppStyles.header3.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      if (userProfile.isVerified == true)
+                        Padding(
+                          padding: EdgeInsets.only(left: 5.w),
+                          child: Icon(
+                            Icons.verified,
+                            color: Colors.white,
+                            size: 18.sp,
+                          ),
+                        ),
+                    ],
                   ),
-                ),
-              ],
+                  
+                  SizedBox(height: 5.h),
+                  
+                  // Email
+                  Text(
+                    userProfile.email ?? '',
+                    style: AppStyles.bodyText2.copyWith(
+                      color: Colors.white.withOpacity(0.8),
+                    ),
+                  ),
+                  
+                  SizedBox(height: 5.h),
+                  
+                  // Phone
+                  Text(
+                    userProfile.phone ?? '',
+                    style: AppStyles.bodyText2.copyWith(
+                      color: Colors.white.withOpacity(0.8),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

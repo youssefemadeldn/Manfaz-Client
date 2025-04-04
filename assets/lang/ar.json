@@ -127,7 +127,9 @@
     "withdrawal": "سحب",
     "no_saved_addresses": "لا توجد عناوين محفوظة",
     "add_new_address": "إضافة عنوان جديد",
-    "default": "افتراضي"
+    "default": "افتراضي",
+    "no_data": "لا يوجد بيانات",
+    "add_funds": "إضافة أموال"
   },
   "ServicesListViewView": {
     "title": "الخدمات",

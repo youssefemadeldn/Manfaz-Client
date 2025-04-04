@@ -28,10 +28,9 @@ class ProfileTabRemoteDataSourceImpl implements BaseProfileTabRemoteDataSource {
     try {
       // Make request with language parameter and id as query parameter
       var response = await apiManager.getData(
-        ApiConstant.epGetUsers,
+        "${ApiConstant.epGetUsers}/$id",
         queryParameters: {
           'lang': currentLanguage,
-          'id': id,
         },
       );
 

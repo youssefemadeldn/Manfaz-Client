@@ -127,7 +127,9 @@
     "withdrawal": "Withdrawal",
     "no_saved_addresses": "No saved addresses found",
     "add_new_address": "Add New Address",
-    "default": "Default"
+    "default": "Default",
+    "no_data": "No Data",
+    "add_funds": "Add Funds"
   },
   "ServicesListViewView": {
     "title": "Services",
