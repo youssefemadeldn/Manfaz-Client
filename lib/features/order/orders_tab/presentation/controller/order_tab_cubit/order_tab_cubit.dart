@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart' as di;
 import 'package:meta/meta.dart';
 
 import '../../../../../../core/error/failure.dart';
-import '../../../../../../core/utils/order_date_formatter.dart';
+import '../../../../../../core/helper/date_formatter_helper.dart';
 import '../../../data/models/orders_list_model.dart';
 import '../../../domain/use_cases/get_orders_tab_use_case.dart';
 
@@ -40,6 +40,6 @@ class OrderTabCubit extends Cubit<OrderTabState> {
   }
 
   String formatDate(String date) {
-    return DateFormatter.formatDate(date);
+    return DateFormatterHelper.formatDate(date);
   }
 }

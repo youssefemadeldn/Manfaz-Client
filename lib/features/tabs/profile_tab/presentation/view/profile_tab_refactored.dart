@@ -7,7 +7,7 @@ import '../../../../../core/helper/bottom_sheet_helper.dart';
 import '../../../../../core/routes/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
-import '../../../../../core/utils/order_date_formatter.dart';
+import '../../../../../core/helper/date_formatter_helper.dart';
 import '../../../../../core/widgets/cus_text_button.dart';
 import '../../../../../core/widgets/error_message_widget.dart';
 import '../controller/profile_tab_cubit/profile_tab_cubit.dart';
@@ -55,7 +55,7 @@ class ProfileTab extends StatelessWidget {
                   // Wallet Card
                   WalletCardWidget(
                     userProfile: userProfile,
-                    formatDateCallback: DateFormatter.formatDate,
+                    formatDateCallback: DateFormatterHelper.formatDate,
                   ),
                     
                   // Menu Items

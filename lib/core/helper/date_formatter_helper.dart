@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 
-class DateFormatter {
+class DateFormatterHelper {
   static String formatDate(String date) {
     try {
       final DateTime parsedDate = DateTime.parse(date);

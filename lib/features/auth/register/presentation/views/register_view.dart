@@ -92,7 +92,8 @@ class _RegisterViewState extends State<RegisterView> {
                     children: [
                       SizedBox(height: 30.h),
                       Image.asset(
-                        'assets/images/manfaz_logo.png',
+                        color: AppColors.primary,
+                        'assets/images/shared/logo.png',
                         height: 150.h,
                       ),
                       SizedBox(height: 30.h),

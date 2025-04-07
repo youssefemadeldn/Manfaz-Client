@@ -43,8 +43,9 @@ class _LoginViewState extends State<LoginView> {
                     children: [
                       SizedBox(height: 30.h),
                       Image.asset(
-                        'assets/images/manfaz_logo.png',
+                        'assets/images/shared/logo.png',
                         height: 150.h,
+                        color: AppColors.primary,
                       ),
                       SizedBox(height: 30.h),
                       Text(
