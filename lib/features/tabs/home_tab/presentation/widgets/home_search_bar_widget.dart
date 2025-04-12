@@ -47,10 +47,10 @@ class HomeSearchBarWidget extends StatelessWidget {
               children: [
                 Expanded(
                   child: InkWell(
-                    onTap: () {
-                      Navigator.popAndPushNamed(context, Routes.getUserLocationView);
-                      // Reload address when returning from location selection
-                      context.read<SearchBarCubit>().loadCachedAddress();
+                    onTap: () async {
+                      await Navigator.pushNamed(context, Routes.getUserLocationView);
+                      // Refresh address from cache when returning from location selection
+                      context.read<SearchBarCubit>().refreshAddressFromCache();
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),

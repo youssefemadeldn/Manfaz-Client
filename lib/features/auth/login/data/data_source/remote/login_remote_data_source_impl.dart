@@ -37,7 +37,7 @@ class LoginRemoteDataSourceImpl implements BaseLoginRemoteDataSource {
       LoginModel loginModel = LoginModel.fromJson(response.data);
 
       if (NetworkHelper.isValidResponse(code: response.statusCode)) {
-        Future.wait([
+     await   Future.wait([
           SharedPrefUtils.saveData(key: 'userId', data: loginModel.data?.id),
           SharedPrefUtils.saveData(key: 'hasLoggedIn', data: true),
           SharedPrefUtils.saveData(

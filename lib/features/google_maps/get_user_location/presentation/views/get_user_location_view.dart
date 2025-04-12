@@ -7,6 +7,7 @@ import 'package:google_places_flutter/model/prediction.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
 import 'package:manfaz/core/widgets/cus_text_button.dart';
+import '../../../../../core/cache/shared_pref_utils.dart';
 import '../../../../../core/routes/routes.dart';
 import '../controller/get_user_location_cubit/get_user_location_cubit.dart';
 
@@ -218,39 +219,40 @@ class GetUserLocationView extends StatelessWidget {
                             ),
                             SizedBox(height: 16.h),
 
-                            // // Save Location Checkbox
-                            // Padding(
-                            //   padding: EdgeInsets.all(16.w),
-                            //   child: Row(
-                            //     children: [
-                            //       SizedBox(
-                            //         width: 24.w,
-                            //         height: 24.h,
-                            //         child: Checkbox(
-                            //           activeColor: AppColors.primary,
-                            //           value: true,
-                            //           onChanged: (value) {},
-                            //           shape: RoundedRectangleBorder(
-                            //             borderRadius:
-                            //                 BorderRadius.circular(4.r),
-                            //           ),
-                            //         ),
-                            //       ),
-                            //       SizedBox(width: 12.w),
-                            //       Text(
-                            //         'Save location to use later',
-                            //         style: AppStyles.bodyText2,
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
-
                             // Confirm Button
                             Padding(
                               padding: EdgeInsets.all(16.w),
                               child: CustomButton(
                                 onPressed: () async {
-                                  Navigator.pushNamed(context, Routes.cusBottomNavigationBar);
+                                  await Future.wait([
+                                    // Save the selected location to cache
+                                    SharedPrefUtils.saveData(
+                                      key: 'current_address',
+                                      data: viewModel.currentAddress,
+                                    ),
+
+                                    // Save the coordinates for potential future use
+                                    SharedPrefUtils.saveData(
+                                      key: 'current_latitude',
+                                      data: viewModel.locationData.latitude
+                                          .toString(),
+                                    ),
+                                    SharedPrefUtils.saveData(
+                                      key: 'current_longitude',
+                                      data: viewModel.locationData.longitude
+                                          .toString(),
+                                    ),
+
+                                    // Set a flag to indicate this is a manually selected location
+                                    SharedPrefUtils.saveData(
+                                      key: 'is_manually_selected_location',
+                                      data: true,
+                                    ),
+                                  ]);
+
+                                  // Navigate back to the home screen
+                                  Navigator.pushReplacementNamed(
+                                      context, Routes.cusBottomNavigationBar);
                                 },
                                 backgroundColor: AppColors.primary,
                                 borderSideColor: AppColors.primary,

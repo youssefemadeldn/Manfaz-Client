@@ -16,7 +16,7 @@ class SearchBarCubit extends Cubit<SearchBarState> {
   SearchBarCubit() : super(SearchBarInitial()) {
     loadCachedAddress();
     getUserName();
-    getCurrentLocation();
+    checkAndGetLocation();
   }
 
   String currentAddress = '';
@@ -30,9 +30,9 @@ class SearchBarCubit extends Cubit<SearchBarState> {
       if (cachedAddress != null) {
         currentAddress = cachedAddress.toString();
         emit(SearchBarLoaded(currentAddress));
-      } else {
-        emit(SearchBarLoaded(''));
+        return;
       }
+      emit(SearchBarLoaded(''));
     } catch (e) {
       emit(SearchBarError(e.toString()));
     }
@@ -50,6 +50,38 @@ class SearchBarCubit extends Cubit<SearchBarState> {
     }
   }
   
+  Future<void> checkAndGetLocation() async {
+    try {
+      // Check if we have a manually selected location
+      final isManuallySelected = SharedPrefUtils.getData('is_manually_selected_location');
+      
+      // If we have a manually selected location, just load it from cache
+      if (isManuallySelected != null && isManuallySelected == true) {
+        await loadCachedAddress();
+        
+        // Get coordinates if available for future use
+        final lat = SharedPrefUtils.getData('current_latitude');
+        final lng = SharedPrefUtils.getData('current_longitude');
+        
+        if (lat != null && lng != null) {
+          currentLocation = LocationData.fromMap({
+            'latitude': double.parse(lat.toString()),
+            'longitude': double.parse(lng.toString()),
+          });
+        }
+      } else {
+        // If no manually selected location, get current location
+        await getCurrentLocation();
+      }
+    } catch (e) {
+      emit(SearchBarError(e.toString()));
+      // Try to load from cache if there's an error
+      if (currentAddress.isEmpty) {
+        loadCachedAddress();
+      }
+    }
+  }
+  
   Future<void> getCurrentLocation() async {
     try {
       emit(SearchBarLoading());
@@ -64,6 +96,12 @@ class SearchBarCubit extends Cubit<SearchBarState> {
         
         // Save address to cache
         await SharedPrefUtils.saveData(key: 'current_address', data: address);
+        await SharedPrefUtils.saveData(key: 'current_latitude', data: location.latitude.toString());
+        await SharedPrefUtils.saveData(key: 'current_longitude', data: location.longitude.toString());
+        
+        // Set manually selected flag to false since this is automatic
+        await SharedPrefUtils.saveData(key: 'is_manually_selected_location', data: false);
+        
         currentAddress = address;
         
         emit(SearchBarLoaded(address));
@@ -80,5 +118,10 @@ class SearchBarCubit extends Cubit<SearchBarState> {
         loadCachedAddress();
       }
     }
+  }
+  
+  // Call this method when returning from location selection screen
+  Future<void> refreshAddressFromCache() async {
+    await loadCachedAddress();
   }
 }
