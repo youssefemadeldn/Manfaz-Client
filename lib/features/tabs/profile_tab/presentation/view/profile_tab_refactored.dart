@@ -55,7 +55,7 @@ class ProfileTab extends StatelessWidget {
                   // Wallet Card
                   WalletCardWidget(
                     userProfile: userProfile,
-                    formatDateCallback: DateFormatterHelper.formatDate,
+                    formatDateCallback: DateAndTimeHelper.formatDate,
                   ),
                     
                   // Menu Items

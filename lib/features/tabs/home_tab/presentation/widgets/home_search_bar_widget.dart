@@ -42,127 +42,9 @@ class HomeSearchBarWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Location Section
-            Row(
-              children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: () async {
-                      await Navigator.pushNamed(context, Routes.getUserLocationView);
-                      // Refresh address from cache when returning from location selection
-                      context.read<SearchBarCubit>().refreshAddressFromCache();
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
-                      decoration: BoxDecoration(
-                        color: AppColors.white.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.location_on,
-                            color: AppColors.white,
-                            size: 20.sp,
-                          ),
-                          SizedBox(width: 8.w),
-                          Expanded(
-                            child: BlocBuilder<SearchBarCubit, SearchBarState>(
-                              builder: (context, state) {
-                                if (state is SearchBarLoading) {
-                                  return Text(
-                                    tr('home.getting_location'),
-                                    style: AppStyles.bodyText2.copyWith(
-                                      color: AppColors.white,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  );
-                                } else if (state is SearchBarLoaded &&
-                                    state.address.isNotEmpty) {
-                                  return Text(
-                                    state.address.split(',').last,
-                                    style: AppStyles.bodyText2.copyWith(
-                                      color: AppColors.white,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  );
-                                } else if (state is SearchBarError) {
-                                  return Text(
-                                    tr('home.location_error'),
-                                    style: AppStyles.bodyText2.copyWith(
-                                      color: AppColors.white,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  );
-                                }
-                                return Text(
-                                  tr('home.get_location'),
-                                  style: AppStyles.bodyText2.copyWith(
-                                    color: AppColors.white,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          SizedBox(width: 4.w),
-                          SvgPicture.asset(
-                            'assets/svg/arrow_down.svg',
-                            color: AppColors.white,
-                            width: 12.w,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 8.w),
-                // Refresh location button
-                InkWell(
-                  onTap: () {
-                    context.read<SearchBarCubit>().getCurrentLocation();
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(8.h),
-                    decoration: BoxDecoration(
-                      color: AppColors.white.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    child: BlocBuilder<SearchBarCubit, SearchBarState>(
-                      builder: (context, state) {
-                        if (state is SearchBarLoading) {
-                          return SizedBox(
-                            width: 20.w,
-                            height: 20.h,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(AppColors.white),
-                            ),
-                          );
-                        }
-                        return Icon(
-                          Icons.refresh,
-                          color: AppColors.white,
-                          size: 20.sp,
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(height: 16.h),
-
             // Greeting Text
             Text(
-              context.read<SearchBarCubit>().userName,
+              context.read<SearchBarCubit>().welcomeMessageWithUserName,
               style: AppStyles.header1.copyWith(
                 color: AppColors.white,
                 fontSize: 24.sp,
@@ -173,7 +55,7 @@ class HomeSearchBarWidget extends StatelessWidget {
 
             SizedBox(height: 20.h),
 
-            // Search TextField
+            // Search TextField with Location inside
             Container(
               decoration: BoxDecoration(
                 color: AppColors.white,
@@ -200,6 +82,80 @@ class HomeSearchBarWidget extends StatelessWidget {
                       Icons.search,
                       color: AppColors.primary,
                       size: 24.sp,
+                    ),
+                  ),
+                  suffixIcon: InkWell(
+                    onTap: () async {
+                      await Navigator.pushNamed(context, Routes.getUserLocationView);
+                      // Refresh address from cache when returning from location selection
+                      context.read<SearchBarCubit>().refreshAddressFromCache();
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 2  .w),
+                      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            color: AppColors.primary,
+                            size: 24.sp,
+                          ),
+                          SizedBox(width: 4.w),
+                          BlocBuilder<SearchBarCubit, SearchBarState>(
+                            builder: (context, state) {
+                              if (state is SearchBarLoading) {
+                                return SizedBox(
+                                  width: 12.w,
+                                  height: 12.h,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                                  ),
+                                );
+                              } else if (state is SearchBarLoaded &&
+                                  state.address.isNotEmpty) {
+                                return Text(
+                                  state.address.split(',').last,
+                                  style: AppStyles.bodyText2.copyWith(
+                                    color: AppColors.primary,
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                );
+                              } else if (state is SearchBarError) {
+                                return Text(
+                                  tr('home.location_error'),
+                                  style: AppStyles.bodyText2.copyWith(
+                                    color: AppColors.primary,
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                );
+                              }
+                              return Text(
+                                tr('home.get_location'),
+                                style: AppStyles.bodyText2.copyWith(
+                                  color: AppColors.primary,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(width: 2.w),
+                          SvgPicture.asset(
+                            'assets/svg/arrow_down.svg',
+                            color: AppColors.primary,
+                            width: 10.w,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   hintText: tr('home.search_hint'),

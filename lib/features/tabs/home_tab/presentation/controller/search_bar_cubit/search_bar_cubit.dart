@@ -5,6 +5,8 @@ import 'package:location/location.dart';
 import '../../../../../../core/cache/shared_pref_utils.dart';
 import '../../../../../../core/helper/google_maps/location_helper.dart';
 import '../../../../../../core/helper/google_maps/geocoding_helper.dart';
+import '../../../../../../core/helper/date_formatter_helper.dart';
+import '../../../../../../core/helper/easy_localization_helper.dart';
 
 part 'search_bar_state.dart';
 
@@ -12,6 +14,7 @@ part 'search_bar_state.dart';
 class SearchBarCubit extends Cubit<SearchBarState> {
   final LocationHelper _locationHelper = LocationHelper();
   final GeocodingHelper _geocodingHelper = GeocodingHelper();
+  final EasyLocalizationHelper _localizationHelper = EasyLocalizationHelper();
   
   SearchBarCubit() : super(SearchBarInitial()) {
     loadCachedAddress();
@@ -20,7 +23,7 @@ class SearchBarCubit extends Cubit<SearchBarState> {
   }
 
   String currentAddress = '';
-  String userName = 'Hi, Guest';
+  String welcomeMessageWithUserName = 'Hi, Guest';
   LocationData? currentLocation;
 
   Future<void> loadCachedAddress() async {
@@ -40,11 +43,24 @@ class SearchBarCubit extends Cubit<SearchBarState> {
 
   Future<void> getUserName() async {
     try {
+      // Get current locale
+      final currentLocale = _localizationHelper.getCurrentLocale();
+      
+      // Get appropriate greeting based on time and locale
+      final greeting = DateAndTimeHelper.getGreeting(currentLocale);
+      
+      // Get user name from cache
       final name = SharedPrefUtils.getData('userName');
+      
       if (name != null) {
-        userName = 'Hi, ${name.toString()}';
-        emit(SearchBarLoaded(currentAddress)); // Emit to trigger UI update
+        // Format greeting with user name
+        welcomeMessageWithUserName = '$greeting, ${name.toString()}';
+      } else {
+        // Default greeting for guest
+        welcomeMessageWithUserName = '$greeting, Guest';
       }
+      
+      emit(SearchBarLoaded(currentAddress)); // Emit to trigger UI update
     } catch (e) {
       emit(SearchBarError(e.toString()));
     }

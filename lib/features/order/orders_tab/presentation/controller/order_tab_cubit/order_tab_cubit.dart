@@ -40,6 +40,6 @@ class OrderTabCubit extends Cubit<OrderTabState> {
   }
 
   String formatDate(String date) {
-    return DateFormatterHelper.formatDate(date);
+    return DateAndTimeHelper.formatDate(date);
   }
 }
