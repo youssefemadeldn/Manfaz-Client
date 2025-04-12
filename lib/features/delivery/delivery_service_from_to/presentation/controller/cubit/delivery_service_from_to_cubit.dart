@@ -21,8 +21,8 @@ class DeliveryServiceFromToCubit extends Cubit<DeliveryServiceFromToState> {
   double? deliveryCost;
 
   // Base pricing constants
-  static const double BASE_PRICE = 20.0; // Base price in EGP
-  static const double PRICE_PER_KM = 5.0; // Price per kilometer in EGP
+  static const double BASE_PRICE = 20.0; // Base price in 
+  static const double PRICE_PER_KM = 5.0; // Price per kilometer in 
   static const double MIN_PRICE = 30.0; // Minimum delivery price
 
   void updateFromLocation(String address, {double? lat, double? lng}) {

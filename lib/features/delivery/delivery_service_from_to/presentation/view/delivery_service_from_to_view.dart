@@ -352,8 +352,8 @@ class DeliveryServiceFromToView extends StatelessWidget {
                       cubit.fromLat != null && cubit.toLat != null;
                   final costDisplay =
                       hasValidLocations && cubit.deliveryCost != null
-                          ? "${cubit.deliveryCost!.toStringAsFixed(2)} EGP"
-                          : "--,-- EGP";
+                          ? "${cubit.deliveryCost!.toStringAsFixed(2)} SAR"
+                          : "--,-- SAR";
                   final distanceDisplay =
                       hasValidLocations && cubit.distanceInKm != null
                           ? "(${cubit.distanceInKm!.toStringAsFixed(1)} km)"
@@ -399,7 +399,7 @@ class DeliveryServiceFromToView extends StatelessWidget {
                       ),
                       SizedBox(height: 4.h),
                       Text(
-                        "Delivery cost includes a base fee of ${DeliveryServiceFromToCubit.BASE_PRICE} EGP plus ${DeliveryServiceFromToCubit.PRICE_PER_KM} EGP per kilometer. Minimum delivery cost is ${DeliveryServiceFromToCubit.MIN_PRICE} EGP.",
+                        "Delivery cost includes a base fee of ${DeliveryServiceFromToCubit.BASE_PRICE}  SAR plus ${DeliveryServiceFromToCubit.PRICE_PER_KM} SAR per kilometer. Minimum delivery cost is ${DeliveryServiceFromToCubit.MIN_PRICE} SAR.",
                         style: AppStyles.caption.copyWith(
                           color: Colors.grey[500],
                           fontSize: 11.sp,

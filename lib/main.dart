@@ -47,6 +47,7 @@ class ManfazApp extends StatelessWidget {
             backgroundColor: AppColors.background,
           ),
           scaffoldBackgroundColor: AppColors.background,
+          primaryColor: AppColors.primary,
         ),
       ),
     );
