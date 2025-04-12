@@ -62,7 +62,9 @@
     "electronics": "Electronics",
     "pharmacy": "Pharmacy",
     "more": "More",
-    "get_location": "Get Location"
+    "get_location": "Get Location",
+    "getting_location": "Getting location...",
+    "location_error": "Location error"
   },
   "bottom_nav": {
     "home": "Home",

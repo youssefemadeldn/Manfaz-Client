@@ -44,28 +44,6 @@ class HomeTabSuccess extends StatelessWidget {
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             children: [
-              //   QuickActionItem(
-              //     icon: Icons.home_repair_service,
-              //     label: tr('home.services'),
-              //     color: Colors.orange,
-              //     onTap: () {
-              //       // Handle services section
-              //     },
-              //   ),
-              //   SizedBox(
-              //     width: 20.w,
-              //   ),
-              //     QuickActionItem(
-              //   icon: Icons.delivery_dining,
-              //   label: tr('home.delivery'),
-              //   color: AppColors.primary,
-              //   onTap: () {
-              //     // Handle delivery section
-              //   },
-              // ),
-              //   SizedBox(
-              //     width: 20.w,
-              //   ),
               QuickActionItem(
                 icon: Icons.engineering,
                 label: tr('home.not_available_service'),

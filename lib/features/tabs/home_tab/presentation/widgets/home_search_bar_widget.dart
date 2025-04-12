@@ -43,59 +43,119 @@ class HomeSearchBarWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Location Section
-            InkWell(
-              onTap: () {
-                Navigator.popAndPushNamed(context, Routes.getUserLocationView);
-                // Reload address when returning from location selection
-                context.read<SearchBarCubit>().loadCachedAddress();
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
-                decoration: BoxDecoration(
-                  color: AppColors.white.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.location_on,
-                      color: AppColors.white,
-                      size: 20.sp,
+            Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.popAndPushNamed(context, Routes.getUserLocationView);
+                      // Reload address when returning from location selection
+                      context.read<SearchBarCubit>().loadCachedAddress();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
+                      decoration: BoxDecoration(
+                        color: AppColors.white.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            color: AppColors.white,
+                            size: 20.sp,
+                          ),
+                          SizedBox(width: 8.w),
+                          Expanded(
+                            child: BlocBuilder<SearchBarCubit, SearchBarState>(
+                              builder: (context, state) {
+                                if (state is SearchBarLoading) {
+                                  return Text(
+                                    tr('home.getting_location'),
+                                    style: AppStyles.bodyText2.copyWith(
+                                      color: AppColors.white,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  );
+                                } else if (state is SearchBarLoaded &&
+                                    state.address.isNotEmpty) {
+                                  return Text(
+                                    state.address.split(',').last,
+                                    style: AppStyles.bodyText2.copyWith(
+                                      color: AppColors.white,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  );
+                                } else if (state is SearchBarError) {
+                                  return Text(
+                                    tr('home.location_error'),
+                                    style: AppStyles.bodyText2.copyWith(
+                                      color: AppColors.white,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  );
+                                }
+                                return Text(
+                                  tr('home.get_location'),
+                                  style: AppStyles.bodyText2.copyWith(
+                                    color: AppColors.white,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          SizedBox(width: 4.w),
+                          SvgPicture.asset(
+                            'assets/svg/arrow_down.svg',
+                            color: AppColors.white,
+                            width: 12.w,
+                          ),
+                        ],
+                      ),
                     ),
-                    SizedBox(width: 8.w),
-                    BlocBuilder<SearchBarCubit, SearchBarState>(
+                  ),
+                ),
+                SizedBox(width: 8.w),
+                // Refresh location button
+                InkWell(
+                  onTap: () {
+                    context.read<SearchBarCubit>().getCurrentLocation();
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(8.h),
+                    decoration: BoxDecoration(
+                      color: AppColors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    child: BlocBuilder<SearchBarCubit, SearchBarState>(
                       builder: (context, state) {
-                        if (state is SearchBarLoaded &&
-                            state.address.isNotEmpty) {
-                          return Text(
-                            state.address.split(',').last,
-                            style: AppStyles.bodyText2.copyWith(
-                              color: AppColors.white,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500,
+                        if (state is SearchBarLoading) {
+                          return SizedBox(
+                            width: 20.w,
+                            height: 20.h,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor: AlwaysStoppedAnimation<Color>(AppColors.white),
                             ),
                           );
                         }
-                        return Text(
-                          tr('home.get_location'),
-                          style: AppStyles.bodyText2.copyWith(
-                            color: AppColors.white,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
+                        return Icon(
+                          Icons.refresh,
+                          color: AppColors.white,
+                          size: 20.sp,
                         );
                       },
                     ),
-                    SizedBox(width: 4.w),
-                    SvgPicture.asset(
-                      'assets/svg/arrow_down.svg',
-                      color: AppColors.white,
-                      width: 12.w,
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
 
             SizedBox(height: 16.h),

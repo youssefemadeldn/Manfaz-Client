@@ -62,7 +62,9 @@
     "electronics": "إلكترونيات",
     "pharmacy": "صيدلية",
     "more": "المزيد",
-    "get_location": "الحصول على الموقع"
+    "get_location": "الحصول على الموقع",
+    "getting_location": "جاري تحديد الموقع...",
+    "location_error": "خطأ في تحديد الموقع"
   },
   "bottom_nav": {
     "home": "الرئيسية",
