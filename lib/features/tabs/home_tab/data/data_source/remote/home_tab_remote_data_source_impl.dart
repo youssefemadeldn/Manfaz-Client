@@ -6,26 +6,28 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:manfaz/core/error/failure.dart';
+import 'package:manfaz/core/helper/easy_localization_helper.dart';
 import 'package:manfaz/core/network/api_constant.dart';
+import 'package:manfaz/core/network/api_manager.dart';
 import 'package:manfaz/core/network/network_helper.dart';
 
 import 'package:manfaz/features/tabs/home_tab/data/models/home_tab_model.dart';
 import 'package:manfaz/features/tabs/home_tab/data/models/services_based_on_category_model.dart';
 
+import '../../../../../../core/di/di.dart';
 import 'base_home_tab_remote_data_source.dart';
 
 @Injectable(as: BaseHomeTabRemoteDataSource)
-class HomeTabRemoteDataSourceImpl extends BaseHomeTabRemoteDataSource {
-  // HomeTab data to cache
-  HomeTabModel? _cachedHomeTabData;
-  ServicesBasedOnCategoryModel? _cachedServicesData;
-  String? _lastCategoryId;
-  String? _lastType;
+class HomeTabRemoteDataSourceImpl implements BaseHomeTabRemoteDataSource {
+  ApiManager apiManager = getIt<ApiManager>();
 
+    // Use provided language or default to 'en'
+    final currentLanguage = EasyLocalizationHelper().getCurrentLocale();
   @override
   Future<Either<Failure, HomeTabModel>> getHomeTabData() async {
     try {
-      // make request with language parameter - using currentLanguage getter from BaseRemoteDataSource
+
+      // make request with language parameter
       var response = await apiManager.getData(
         ApiConstant.epHomeTap,
         queryParameters: {'lang': currentLanguage},
@@ -33,8 +35,6 @@ class HomeTabRemoteDataSourceImpl extends BaseHomeTabRemoteDataSource {
       HomeTabModel homeTapModel = HomeTabModel.fromJson(response.data);
 
       if (NetworkHelper.isValidResponse(code: homeTapModel.code)) {
-        // Cache the data
-        _cachedHomeTabData = homeTapModel;
         // Success Case
         return right(homeTapModel);
       } else {
@@ -64,17 +64,12 @@ class HomeTabRemoteDataSourceImpl extends BaseHomeTabRemoteDataSource {
   @override
   Future<Either<Failure, ServicesBasedOnCategoryModel>> getServicesBasedOnCategory({required String categoryId, required String type}) async{
     try {
-      _lastCategoryId = categoryId;
-      _lastType = type;
-      
-      var response = await apiManager.getData(ApiConstant.epGetServicesBasedOnCategory,
-        queryParameters: {'lang': currentLanguage, 'categoryId': categoryId, 'type': type},
-      );
+    var response   = await apiManager.getData(ApiConstant.epGetServicesBasedOnCategory,
+      queryParameters: {'lang': currentLanguage, 'categoryId': categoryId, 'type': type},
+       );
 
       ServicesBasedOnCategoryModel servicesBasedOnCategoryModel = ServicesBasedOnCategoryModel.fromJson(response.data);
       if (NetworkHelper.isValidResponse(code: servicesBasedOnCategoryModel.code)) {
-        // Cache the data
-        _cachedServicesData = servicesBasedOnCategoryModel;
         // Success Case
         return right(servicesBasedOnCategoryModel);
       } else {
@@ -99,20 +94,6 @@ class HomeTabRemoteDataSourceImpl extends BaseHomeTabRemoteDataSource {
         failureTitle: 'Server Failure',
         errorMessage: 'shared.error_message'.tr(),
       ));
-    }
-  }
-  
-  @override
-  void onLanguageChanged() {
-    // Refresh data when language changes
-    getHomeTabData();
-    
-    // Refresh services data if we have previous parameters
-    if (_lastCategoryId != null && _lastType != null) {
-      getServicesBasedOnCategory(
-        categoryId: _lastCategoryId!,
-        type: _lastType!,
-      );
     }
   }
 }

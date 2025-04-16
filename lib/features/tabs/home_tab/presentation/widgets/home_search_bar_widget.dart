@@ -8,8 +8,8 @@ import '../../../../../core/helper/bottom_sheet_helper.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
 import '../../../profile_tab/data/models/get_user_profile_model.dart';
-import '../../../profile_tab/presentation/widgets/saved_addresses_bottom_sheet.dart';
 import '../controller/search_bar_cubit/search_bar_cubit.dart';
+import 'bottom_sheets/home_saved_addresses_bottom_sheet.dart';
 
 
 class HomeSearchBarWidget extends StatelessWidget {
@@ -93,7 +93,7 @@ class HomeSearchBarWidget extends StatelessWidget {
                     onTap: () async {
                       BottomSheetHelper.show(
                         context: context,
-                        child: SavedAddressesBottomSheet(
+                        child: HomeSavedAddressesBottomSheet(
                           addNewAddress: () async {
                             await Navigator.pushNamed(context, Routes.getUserLocationView);
                       // Refresh address from cache when returning from location selection
