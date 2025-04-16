@@ -47,6 +47,18 @@ import '../../features/auth/register/presentation/controller/register_cubit/regi
     as _i844;
 import '../../features/delivery/delivery_service_from_to/presentation/controller/cubit/delivery_service_from_to_cubit.dart'
     as _i790;
+import '../../features/google_maps/save_user_location/data/data_source/remote/base_save_location_remote_data_source.dart'
+    as _i856;
+import '../../features/google_maps/save_user_location/data/data_source/remote/save_location_remote_data_source_impl.dart'
+    as _i712;
+import '../../features/google_maps/save_user_location/data/repo/save_location_repo_impl.dart'
+    as _i410;
+import '../../features/google_maps/save_user_location/domain/repo/base_save_location_repo.dart'
+    as _i720;
+import '../../features/google_maps/save_user_location/domain/use_cases/save_user_location_use_case.dart'
+    as _i320;
+import '../../features/google_maps/save_user_location/presentation/cubit/save_location_cubit.dart'
+    as _i874;
 import '../../features/order/create_service_order/data/data_source/remote/base_create_service_order_remote_data_source.dart'
     as _i416;
 import '../../features/order/create_service_order/data/data_source/remote/create_service_order_remote_data_source_impl.dart'
@@ -190,6 +202,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i489.WebSocketService>(() => _i489.WebSocketService());
     gh.factory<_i710.BaseHomeTabRemoteDataSource>(
         () => _i834.HomeTabRemoteDataSourceImpl());
+    gh.factory<_i856.BaseSaveLocationRemoteDataSource>(
+        () => _i712.SaveLocationRemoteDataSourceImpl());
     gh.factory<_i826.BaseRestaurantStoreDetailsRemoteDataSource>(
         () => _i56.RestaurantStoreDetailsRemoteDataSourceImpl());
     gh.factory<_i377.BaseOrdersTabRemoteDataSource>(
@@ -198,6 +212,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i107.HomeTabRepoImpl(gh<_i710.BaseHomeTabRemoteDataSource>()));
     gh.factory<_i347.BaseRegisterRemoteDataSource>(
         () => _i258.RegisterRemoteDataSource());
+    gh.factory<_i720.BaseSaveLocationRepo>(() => _i410.SaveLocationRepoImpl(
+        gh<_i856.BaseSaveLocationRemoteDataSource>()));
     gh.factory<_i187.BaseLoginRemoteDataSource>(
         () => _i300.LoginRemoteDataSourceImpl());
     gh.factory<_i852.BaseWorkerListRemoteDataSource>(
@@ -208,6 +224,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i525.ServicesListViewRemoteDataSourceImpl());
     gh.factory<_i416.BaseCreateServiceOrderRemoteDataSource>(
         () => _i638.CreateServiceOrderRemoteDataSourceImpl());
+    gh.factory<_i320.SaveUserLocationUseCase>(
+        () => _i320.SaveUserLocationUseCase(gh<_i720.BaseSaveLocationRepo>()));
     gh.factory<_i216.BaseResendVerificationCodeRemoteDataSource>(
         () => _i157.ResendVerificationCodeRemoteDataSourceImpl());
     gh.factory<_i198.BaseOrdersTabRepo>(() =>
@@ -223,6 +241,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i385.BaseResendVerificationCodeRepo>(() =>
         _i970.ResendVerificationCodeRepoImpl(
             gh<_i216.BaseResendVerificationCodeRemoteDataSource>()));
+    gh.factory<_i874.SaveLocationCubit>(
+        () => _i874.SaveLocationCubit(gh<_i320.SaveUserLocationUseCase>()));
     gh.factory<_i561.OrderTabCubit>(
         () => _i561.OrderTabCubit(gh<_i289.GetOrdersTabUseCase>()));
     gh.factory<_i600.BaseServicesListViewRepo>(() =>

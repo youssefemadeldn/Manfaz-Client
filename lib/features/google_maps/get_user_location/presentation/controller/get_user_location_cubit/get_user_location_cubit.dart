@@ -15,7 +15,11 @@ class GetUserLocationCubit extends Cubit<GetUserLocationState> {
   GoogleMapController? cubitController;
   late LocationHelper locationHelper;
   late GeocodingHelper geocodingHelper;
-  late LocationData locationData;
+  // Initialize with default values to avoid LateInitializationError
+  LocationData locationData = LocationData.fromMap({
+    'latitude': 24.72087070791564,
+    'longitude': 46.67037450156113,
+  });
   PermissionStatus permissionGranted = PermissionStatus.granted;
   String currentAddress = '';
   static const String apiKey =

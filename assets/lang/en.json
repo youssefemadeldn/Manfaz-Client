@@ -374,5 +374,21 @@
     "warning":"Warning",
     "info":"Info",
     "dismiss":"Dismiss"
+  },
+  "save_location": {
+    "location_details": "Location Details",
+    "additional_name": "Give this location a name (Optional)",
+    "additional_details": "Additional details",
+    "building_hint": "Building / Apartment Number (Optional)",
+    "save_location": "Save location to use later",
+    "save": "Save Location",
+    "home": "Home",
+    "work": "Work",
+    "school": "School",
+    "hotel": "Hotel",
+    "park": "Park",
+    "club": "Club",
+    "location_saved": "Location saved successfully",
+    "location_error": "Error saving location"
   }
 }

@@ -1,14 +1,18 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
+import 'package:manfaz/core/di/di.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
-import 'package:manfaz/core/widgets/cus_text_button.dart';
+import 'package:manfaz/features/google_maps/save_user_location/presentation/cubit/save_location_cubit.dart';
+import 'package:manfaz/features/google_maps/save_user_location/presentation/widgets/location_details_card.dart';
 import '../../../../../core/cache/shared_pref_utils.dart';
 import '../../../../../core/routes/routes.dart';
+import '../../data/models/save_user_location_response_model.dart';
 import '../controller/get_user_location_cubit/get_user_location_cubit.dart';
 
 class GetUserLocationView extends StatelessWidget {
@@ -18,8 +22,14 @@ class GetUserLocationView extends StatelessWidget {
   Widget build(BuildContext context) {
     var viewModel = BlocProvider.of<GetUserLocationCubit>(context);
 
-    return BlocBuilder<GetUserLocationCubit, GetUserLocationState>(
-      builder: (context, state) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<SaveLocationCubit>(
+          create: (context) => getIt<SaveLocationCubit>(),
+        ),
+      ],
+      child: BlocBuilder<GetUserLocationCubit, GetUserLocationState>(
+        builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
@@ -138,138 +148,47 @@ class GetUserLocationView extends StatelessWidget {
                 bottom: 0,
                 left: 0,
                 right: 0,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(16.r)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 10,
-                        offset: Offset(0, -2),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // Location Name
-                      Padding(
-                        padding: EdgeInsets.all(16.w),
-                        child: Row(
-                          children: [
-                            Icon(Icons.location_on, color: AppColors.primary),
-                            SizedBox(width: 12.w),
-                            Expanded(
-                              child: Text(
-                                viewModel.currentAddress.isEmpty
-                                    ? 'Getting location...'
-                                    : viewModel.currentAddress,
-                                style: AppStyles.bodyText1.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ],
+                child: LocationDetailsCard(
+                  address: viewModel.currentAddress.isEmpty
+                      ? tr('home.getting_location')
+                      : viewModel.currentAddress,
+                  latitude: viewModel.locationData.latitude ?? 0.0,
+                  longitude: viewModel.locationData.longitude ?? 0.0,
+                  onLocationSaved: (SaveUserLocationResponseModel? response) async {
+                    if (response != null) {
+                      // Save the selected location to cache
+                      await Future.wait([
+                        SharedPrefUtils.saveData(
+                          key: 'current_address',
+                          data: viewModel.currentAddress,
                         ),
-                      ),
-
-                      // Extra Details Section
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Extra details',
-                              style: AppStyles.bodyText2.copyWith(
-                                color: AppColors.textPrimary,
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            SizedBox(height: 8.h),
-                            TextField(
-                              decoration: InputDecoration(
-                                hintText:
-                                    'Building / Apartment Number (Optional)',
-                                hintStyle: TextStyle(fontSize: 14.sp),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.r),
-                                  borderSide:
-                                      BorderSide(color: Colors.grey[300]!),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.r),
-                                  borderSide: BorderSide(
-                                    color: Colors.grey,
-                                    width: 1.3,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.r),
-                                  borderSide:
-                                      BorderSide(color: Colors.grey[300]!),
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 12.w, vertical: 12.h),
-                              ),
-                            ),
-                            SizedBox(height: 16.h),
-
-                            // Confirm Button
-                            Padding(
-                              padding: EdgeInsets.all(16.w),
-                              child: CustomButton(
-                                onPressed: () async {
-                                  await Future.wait([
-                                    // Save the selected location to cache
-                                    SharedPrefUtils.saveData(
-                                      key: 'current_address',
-                                      data: viewModel.currentAddress,
-                                    ),
-
-                                    // Save the coordinates for potential future use
-                                    SharedPrefUtils.saveData(
-                                      key: 'current_latitude',
-                                      data: viewModel.locationData.latitude
-                                          .toString(),
-                                    ),
-                                    SharedPrefUtils.saveData(
-                                      key: 'current_longitude',
-                                      data: viewModel.locationData.longitude
-                                          .toString(),
-                                    ),
-
-                                    // Set a flag to indicate this is a manually selected location
-                                    SharedPrefUtils.saveData(
-                                      key: 'is_manually_selected_location',
-                                      data: true,
-                                    ),
-                                  ]);
-
-                                  // Navigate back to the home screen
-                                  Navigator.pushReplacementNamed(
-                                      context, Routes.cusBottomNavigationBar);
-                                },
-                                backgroundColor: AppColors.primary,
-                                borderSideColor: AppColors.primary,
-                                borderRadius: 8.r,
-                                child: Text(
-                                  'Confirm Location',
-                                  style: AppStyles.buttonText.copyWith(
-                                    fontSize: 16.sp,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                        SharedPrefUtils.saveData(
+                          key: 'current_latitude',
+                          data: viewModel.locationData.latitude.toString(),
                         ),
-                      ),
-                    ],
-                  ),
+                        SharedPrefUtils.saveData(
+                          key: 'current_longitude',
+                          data: viewModel.locationData.longitude.toString(),
+                        ),
+                        SharedPrefUtils.saveData(
+                          key: 'is_manually_selected_location',
+                          data: true,
+                        ),
+                      ]);
+                      
+                      // Navigate back to the home screen
+                      Navigator.pushReplacementNamed(
+                        context, 
+                        Routes.cusBottomNavigationBar,
+                      );
+                    }
+                  },
+                  onCancel: () {
+                    Navigator.pushReplacementNamed(
+                      context, 
+                      Routes.cusBottomNavigationBar,
+                    );
+                  },
                 ),
               ),
 
@@ -300,6 +219,7 @@ class GetUserLocationView extends StatelessWidget {
           ),
         );
       },
+    ),
     );
   }
 }

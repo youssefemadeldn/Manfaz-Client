@@ -373,6 +373,21 @@
     "warning":"تحذير",
     "info":"معلومات",
     "dismiss":"إغلاق"
+  },
+  "save_location": {
+    "location_details": "تفاصيل الموقع",
+    "additional_name": "أعط هذا الموقع اسمًا (اختياري)",
+    "additional_details": "تفاصيل إضافية",
+    "building_hint": "رقم المبنى / الشقة (اختياري)",
+    "save_location": "حفظ الموقع للاستخدام لاحقاً",
+    "save": "حفظ الموقع",
+    "home": "المنزل",
+    "work": "العمل",
+    "school": "المدرسة",
+    "hotel": "فندق",
+    "park": "حديقة",
+    "club": "نادي",
+    "location_saved": "تم حفظ الموقع بنجاح",
+    "location_error": "خطأ في حفظ الموقع"
   }
-
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -24,10 +25,13 @@ class CustomButton extends StatelessWidget {
         backgroundColor: backgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(borderRadius),
-          side: BorderSide(color: borderSideColor),
+          side: BorderSide(
+              color: borderSideColor, width: 1),
         ),
         elevation: 0,
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: EdgeInsets.symmetric(
+            vertical: 12.h,
+            horizontal: 12.w),
       ),
       child: child,
     );
