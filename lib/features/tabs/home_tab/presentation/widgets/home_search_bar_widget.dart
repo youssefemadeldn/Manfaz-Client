@@ -4,12 +4,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:manfaz/core/routes/routes.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/helper/bottom_sheet_helper.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
+import '../../../profile_tab/data/models/get_user_profile_model.dart';
+import '../../../profile_tab/presentation/widgets/saved_addresses_bottom_sheet.dart';
 import '../controller/search_bar_cubit/search_bar_cubit.dart';
 
+
 class HomeSearchBarWidget extends StatelessWidget {
-  const HomeSearchBarWidget({super.key});
+  const HomeSearchBarWidget({super.key,  this.userProfile});
+  final Data ?userProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -86,9 +91,19 @@ class HomeSearchBarWidget extends StatelessWidget {
                   ),
                   suffixIcon: InkWell(
                     onTap: () async {
-                      await Navigator.pushNamed(context, Routes.getUserLocationView);
+                      BottomSheetHelper.show(
+                        context: context,
+                        child: SavedAddressesBottomSheet(
+                          addNewAddress: () async {
+                            await Navigator.pushNamed(context, Routes.getUserLocationView);
                       // Refresh address from cache when returning from location selection
+                      // ignore: use_build_context_synchronously
                       context.read<SearchBarCubit>().refreshAddressFromCache();
+                          },
+                          // locations: context.read<SearchBarCubit>().locations,
+                          locations: userProfile?.locations,
+                        ),
+                      );
                     },
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 2  .w),

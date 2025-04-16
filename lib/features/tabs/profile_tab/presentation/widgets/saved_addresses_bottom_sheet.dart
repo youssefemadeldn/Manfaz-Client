@@ -7,11 +7,13 @@ import 'package:manfaz/features/tabs/profile_tab/data/models/get_user_profile_mo
 
 class SavedAddressesBottomSheet extends StatelessWidget {
   final List<UserLocation>? locations;
+  final VoidCallback addNewAddress;
 
   const SavedAddressesBottomSheet({
-    Key? key,
+    super.key,
     required this.locations,
-  }) : super(key: key);
+    required this.addNewAddress,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -77,10 +79,7 @@ class SavedAddressesBottomSheet extends StatelessWidget {
           // Add new address button
           SizedBox(height: 16.h),
           ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              // TODO: Navigate to add new address screen
-            },
+            onPressed: addNewAddress,
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               minimumSize: Size(double.infinity, 48.h),

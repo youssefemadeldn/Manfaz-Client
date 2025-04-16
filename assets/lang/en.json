@@ -350,6 +350,7 @@
     "delete_account": "Delete My Account",
     "english": "English",
     "arabic": "Arabic",
+    "language_changing": "Changing language...",
     "delete_confirmation": "Are you sure you want to delete your account? This action cannot be undone.",
     "edit_profile_sheet": {
       "title": "Edit Profile",

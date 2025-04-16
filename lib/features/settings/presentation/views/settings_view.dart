@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:manfaz/core/helper/easy_localization_helper.dart';
 import 'package:manfaz/core/helper/bottom_sheet_helper.dart';
-
-import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/theme/app_styles.dart';
+import 'package:manfaz/core/theme/app_colors.dart';
+import 'package:manfaz/core/theme/app_styles.dart';
 import '../../../tabs/profile_tab/presentation/widgets/menu_item.dart';
 import '../widgets/edit_profile_bottom_sheet.dart';
 import '../../../tabs/profile_tab/data/models/get_user_profile_model.dart';
@@ -81,7 +81,6 @@ class SettingsView extends StatelessWidget {
                 phone: "+201234567890",
                 imageUrl: "https://ui-avatars.com/api/?name=Youssef&background=0D8ABC&color=fff",
               );
-              
               BottomSheetHelper.show(
                 context: context, 
                 isScrollControlled: true,
@@ -176,12 +175,28 @@ class SettingsView extends StatelessWidget {
     required Locale currentLocale,
   }) {
     final isSelected = locale.languageCode == currentLocale.languageCode;
+    final easyLocalizationHelper = EasyLocalizationHelper();
     
     return InkWell(
       onTap: () {
         if (!isSelected) {
-          context.setLocale(locale);
+          // Use our helper method instead of directly setting locale
+          easyLocalizationHelper.changeLocale(context, locale);
           Navigator.pop(context);
+          
+          // // Show a loading indicator while the app refreshes
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(
+          //     content: Text('settings.language_changing'.tr()),
+          //     duration: const Duration(seconds: 2),
+          //   ),
+          // );
+          
+          // // Delay navigation to allow the language change to take effect
+          // Future.delayed(const Duration(milliseconds: 300), () {
+          //   // Navigate to the home page to refresh the app
+          //   Navigator.of(context).popUntil((route) => route.isFirst);
+          // });
         }
       },
       child: Padding(

@@ -66,6 +66,10 @@ class ProfileTab extends StatelessWidget {
                         context: context,
                         child: SavedAddressesBottomSheet(
                           locations: userProfile.locations,
+                          addNewAddress: () {
+                            // TODO: Navigate to add new address screen
+                            Navigator.pop(context);
+                          },
                         ),
                       );
                     },

@@ -14,10 +14,10 @@ class MenuItemsWidget extends StatelessWidget {
   final VoidCallback? onAddressesPressed;
 
   const MenuItemsWidget({
-    Key? key,
+    super.key,
     required this.userProfile,
     this.onAddressesPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +57,10 @@ class MenuItemsWidget extends StatelessWidget {
                 BottomSheetHelper.show(
                   context: context,
                   child: SavedAddressesBottomSheet(
+                    addNewAddress: () {
+                      Navigator.pop(context);
+                      // TODO: Navigate to add new address screen
+                    },
                     locations: userProfile.locations,
                   ),
                 );

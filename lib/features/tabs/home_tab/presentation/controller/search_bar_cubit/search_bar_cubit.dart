@@ -23,7 +23,7 @@ class SearchBarCubit extends Cubit<SearchBarState> {
   }
 
   String currentAddress = '';
-  String welcomeMessageWithUserName = 'Hi, Guest';
+  String welcomeMessageWithUserName = 'Hi Guest';
   LocationData? currentLocation;
 
   Future<void> loadCachedAddress() async {
@@ -54,10 +54,10 @@ class SearchBarCubit extends Cubit<SearchBarState> {
       
       if (name != null) {
         // Format greeting with user name
-        welcomeMessageWithUserName = '$greeting, ${name.toString()}';
+        welcomeMessageWithUserName = '$greeting ${name.toString()}';
       } else {
         // Default greeting for guest
-        welcomeMessageWithUserName = '$greeting, Guest';
+        welcomeMessageWithUserName = '$greeting Guest';
       }
       
       emit(SearchBarLoaded(currentAddress)); // Emit to trigger UI update
