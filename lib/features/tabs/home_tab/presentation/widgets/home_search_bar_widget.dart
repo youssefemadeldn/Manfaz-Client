@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:manfaz/core/routes/routes.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/cache/shared_pref_utils.dart';
 import '../../../../../core/helper/bottom_sheet_helper.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_styles.dart';
@@ -91,17 +92,68 @@ class HomeSearchBarWidget extends StatelessWidget {
                   ),
                   suffixIcon: InkWell(
                     onTap: () async {
+                      // Fetch user locations before showing bottom sheet
+                      await context.read<SearchBarCubit>().getUserLocations();
+                      
+                      // ignore: use_build_context_synchronously
                       BottomSheetHelper.show(
                         context: context,
-                        child: HomeSavedAddressesBottomSheet(
-                          addNewAddress: () async {
-                            await Navigator.pushNamed(context, Routes.getUserLocationView);
-                      // Refresh address from cache when returning from location selection
-                      // ignore: use_build_context_synchronously
-                      context.read<SearchBarCubit>().refreshAddressFromCache();
+                        child: BlocBuilder<SearchBarCubit, SearchBarState>(
+                          builder: (context, state) {
+                            if (state is SearchBarLocationsLoaded) {
+                              return HomeSavedAddressesBottomSheet(
+                                addNewAddress: () async {
+                                  await Navigator.pushNamed(context, Routes.getUserLocationView);
+                                  // Refresh address from cache when returning from location selection
+                                  // ignore: use_build_context_synchronously
+                                  context.read<SearchBarCubit>().refreshAddressFromCache();
+                                  // Refresh locations list
+                                  // ignore: use_build_context_synchronously
+                                  context.read<SearchBarCubit>().getUserLocations();
+                                },
+                                locations: state.locations,
+                                onLocationSelected: (location) {
+                                  // Update the selected location
+                                  SharedPrefUtils.saveData(key: 'current_address', data: location.address);
+                                  SharedPrefUtils.saveData(key: 'current_latitude', data: location.latitude.toString());
+                                  SharedPrefUtils.saveData(key: 'current_longitude', data: location.longitude.toString());
+                                  SharedPrefUtils.saveData(key: 'is_manually_selected_location', data: true);
+                                  
+                                  // Refresh the UI
+                                  context.read<SearchBarCubit>().refreshAddressFromCache();
+                                  Navigator.pop(context);
+                                },
+                              );
+                            } else if (state is SearchBarLoading) {
+                              return Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(20.h),
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            } else if (state is SearchBarError) {
+                              return Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(20.h),
+                                  child: Text(
+                                    state.error,
+                                    style: AppStyles.listTileSubtitle,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return HomeSavedAddressesBottomSheet(
+                                addNewAddress: () async {
+                                  await Navigator.pushNamed(context, Routes.getUserLocationView);
+                                  // Refresh address from cache when returning from location selection
+                                  // ignore: use_build_context_synchronously
+                                  context.read<SearchBarCubit>().refreshAddressFromCache();
+                                },
+                                locations: [],
+                                onLocationSelected: (location) {},
+                              );
+                            }
                           },
-                          // locations: context.read<SearchBarCubit>().locations,
-                          locations: userProfile?.locations,
                         ),
                       );
                     },

@@ -15,5 +15,5 @@ class ApiConstant {
   static const String epStore = 'stores';
   static const String epStoreSubCategories = 'stores/categories/all';
   static const String epGetUsers = 'users';
-  static const String epSaveUserLocation = 'locations';
+  static const String epLocation = 'locations';
 }

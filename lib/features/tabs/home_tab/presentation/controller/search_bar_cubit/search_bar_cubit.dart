@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
@@ -7,6 +8,8 @@ import '../../../../../../core/helper/google_maps/location_helper.dart';
 import '../../../../../../core/helper/google_maps/geocoding_helper.dart';
 import '../../../../../../core/helper/date_formatter_helper.dart';
 import '../../../../../../core/helper/easy_localization_helper.dart';
+import '../../../data/models/get_user_locations_response_model.dart';
+import '../../../domain/use_cases/get_user_locations_use_case.dart';
 
 part 'search_bar_state.dart';
 
@@ -15,8 +18,9 @@ class SearchBarCubit extends Cubit<SearchBarState> {
   final LocationHelper _locationHelper = LocationHelper();
   final GeocodingHelper _geocodingHelper = GeocodingHelper();
   final EasyLocalizationHelper _localizationHelper = EasyLocalizationHelper();
+  final GetUserLocationsUseCase getUserLocationsUseCase;
   
-  SearchBarCubit() : super(SearchBarInitial()) {
+  SearchBarCubit(this.getUserLocationsUseCase) : super(SearchBarInitial()) {
     loadCachedAddress();
     getUserName();
     checkAndGetLocation();
@@ -25,6 +29,7 @@ class SearchBarCubit extends Cubit<SearchBarState> {
   String currentAddress = '';
   String welcomeMessageWithUserName = 'Hi Guest';
   LocationData? currentLocation;
+  List<Data>? userLocations;
 
   Future<void> loadCachedAddress() async {
     try {
@@ -139,5 +144,33 @@ class SearchBarCubit extends Cubit<SearchBarState> {
   // Call this method when returning from location selection screen
   Future<void> refreshAddressFromCache() async {
     await loadCachedAddress();
+  }
+
+  // Fetch user locations from the API
+  Future<void> getUserLocations() async {
+    try {
+      emit(SearchBarLoading());
+      
+      // Get user ID from shared preferences
+      final userId = SharedPrefUtils.getData('userId');
+      
+      if (userId != null) {
+        final result = await getUserLocationsUseCase(userId: userId.toString());
+        
+        result.fold(
+          (failure) {
+            emit(SearchBarError(failure.errorMessage));
+          },
+          (response) {
+            userLocations = response.data;
+            emit(SearchBarLocationsLoaded(userLocations ?? []));
+          }
+        );
+      } else {
+        emit(SearchBarError('home.user_id_not_found'.tr()));
+      }
+    } catch (e) {
+      emit(SearchBarError(e.toString()));
+    }
   }
 }

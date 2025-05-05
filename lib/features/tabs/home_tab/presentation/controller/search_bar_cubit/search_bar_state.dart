@@ -13,6 +13,12 @@ class SearchBarLoaded extends SearchBarState {
   SearchBarLoaded(this.address);
 }
 
+class SearchBarLocationsLoaded extends SearchBarState {
+  final List<Data> locations;
+
+  SearchBarLocationsLoaded(this.locations);
+}
+
 class SearchBarError extends SearchBarState {
   final String error;
 

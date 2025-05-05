@@ -64,7 +64,15 @@
     "more": "More",
     "get_location": "Get Location",
     "getting_location": "Getting location...",
-    "location_error": "Location error"
+    "location_error": "Location error",
+    "saved_addresses": "Saved Addresses",
+    "no_saved_addresses": "No saved addresses found",
+    "add_new_address": "Add New Address",
+    "default": "Default",
+    "select_location": "Select Location",
+    "edit_location": "Edit Location",
+    "user_id_not_found": "User ID not found",
+    "error_fetching_locations": "Error fetching saved locations"
   },
   "bottom_nav": {
     "home": "Home",

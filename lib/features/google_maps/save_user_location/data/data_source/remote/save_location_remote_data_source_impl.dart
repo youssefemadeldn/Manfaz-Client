@@ -49,7 +49,7 @@ class SaveLocationRemoteDataSourceImpl implements BaseSaveLocationRemoteDataSour
       log('SaveUserLocation Request: $body');
       
       final response = await apiManager.postData(
-        '${ApiConstant.epSaveUserLocation}/$userId',
+        '${ApiConstant.epLocation}/$userId',
         body: body,
         queryParameters: {
           'lang': currentLanguage,

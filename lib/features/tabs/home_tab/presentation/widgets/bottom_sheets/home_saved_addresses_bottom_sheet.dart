@@ -3,16 +3,18 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manfaz/core/theme/app_colors.dart';
 import 'package:manfaz/core/theme/app_styles.dart';
-import 'package:manfaz/features/tabs/profile_tab/data/models/get_user_profile_model.dart';
+import '../../../data/models/get_user_locations_response_model.dart';
 
 class HomeSavedAddressesBottomSheet extends StatelessWidget {
-  final List<UserLocation>? locations;
+  final List<Data> locations;
   final VoidCallback addNewAddress;
+  final Function(Data) onLocationSelected;
 
   const HomeSavedAddressesBottomSheet({
     super.key,
     required this.locations,
     required this.addNewAddress,
+    required this.onLocationSelected,
   });
 
   @override
@@ -49,12 +51,12 @@ class HomeSavedAddressesBottomSheet extends StatelessWidget {
           SizedBox(height: 16.h),
           
           // List of addresses
-          if (locations == null || locations!.isEmpty)
+          if (locations.isEmpty)
             Center(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 30.h),
                 child: Text(
-                  "profile_tab.no_saved_addresses".tr(),
+                  "home.no_saved_addresses".tr(),
                   style: AppStyles.listTileSubtitle,
                 ),
               ),
@@ -64,13 +66,13 @@ class HomeSavedAddressesBottomSheet extends StatelessWidget {
               child: ListView.separated(
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
-                itemCount: locations!.length,
+                itemCount: locations.length,
                 separatorBuilder: (context, index) => Divider(
                   height: 1,
                   color: AppColors.divider,
                 ),
                 itemBuilder: (context, index) {
-                  final location = locations![index];
+                  final location = locations[index];
                   return _buildAddressItem(context, location);
                 },
               ),
@@ -88,7 +90,7 @@ class HomeSavedAddressesBottomSheet extends StatelessWidget {
               ),
             ),
             child: Text(
-              "profile_tab.add_new_address".tr(),
+              "home.add_new_address".tr(),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16.sp,
@@ -102,7 +104,7 @@ class HomeSavedAddressesBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildAddressItem(BuildContext context, UserLocation location) {
+  Widget _buildAddressItem(BuildContext context, Data location) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 12.h),
       child: Row(
@@ -145,7 +147,7 @@ class HomeSavedAddressesBottomSheet extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4.r),
                         ),
                         child: Text(
-                          "profile_tab.default".tr(),
+                          "home.default".tr(),
                           style: TextStyle(
                             color: Colors.green,
                             fontSize: 10.sp,
@@ -173,6 +175,17 @@ class HomeSavedAddressesBottomSheet extends StatelessWidget {
           Column(
             children: [
               IconButton(
+                icon: Icon(Icons.location_on, color: AppColors.primary),
+                onPressed: () {
+                  onLocationSelected(location);
+                },
+                iconSize: 20.sp,
+                padding: EdgeInsets.zero,
+                constraints: BoxConstraints(),
+                tooltip: "home.select_location".tr(),
+              ),
+              SizedBox(height: 8.h),
+              IconButton(
                 icon: Icon(Icons.edit_outlined, color: AppColors.grey),
                 onPressed: () {
                   // TODO: Navigate to edit address screen
@@ -180,16 +193,7 @@ class HomeSavedAddressesBottomSheet extends StatelessWidget {
                 iconSize: 20.sp,
                 padding: EdgeInsets.zero,
                 constraints: BoxConstraints(),
-              ),
-              SizedBox(height: 8.h),
-              IconButton(
-                icon: Icon(Icons.delete_outline, color: Colors.red),
-                onPressed: () {
-                  // TODO: Show delete confirmation dialog
-                },
-                iconSize: 20.sp,
-                padding: EdgeInsets.zero,
-                constraints: BoxConstraints(),
+                tooltip: "home.edit_location".tr(),
               ),
             ],
           ),
