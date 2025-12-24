@@ -46,19 +46,17 @@ The application is built with Flutter following Clean Architecture principles, e
 
 ## Screenshots
 
-| Welcom View                        | Register View                      | Home View                         |
+| Onboarding                         | Choose Language                 | Get Started                         |
 |-----------------------------------|------------------------------------|-----------------------------------|
-|![login_view_361_754](https://github.com/user-attachments/assets/8497df5a-b626-414b-8ada-70cbd21c999d)| ![register_view](https://github.com/user-attachments/assets/8497df5a-b626-414b-8ada-70cbd21c999d)| ![home design361_754](https://github.com/user-attachments/assets/fd872cca-da8e-43e1-84e0-587481ac323a)
-|
+|![onboarding_view_361_754](https://github.com/user-attachments/assets/4842b1ae-397f-4a5b-91ab-d58b577e8a5a)| ![Language_view](https://github.com/user-attachments/assets/b2169654-977f-45f1-a436-c1f4655e692a)| ![get_started_design361_754](https://github.com/user-attachments/assets/b38f4610-ed7f-41ec-b7c2-2338d7a06117)|
 
-| Login View                        | Appointment Booking                | Doctor Profile                    |
+| Login View                        | Registere View                | OTP Code                    |
 |-----------------------------------|------------------------------------|-----------------------------------|
-|![login_view](https://github.com/user-attachments/assets/7c5ef537-b9e3-4a4b-a53f-6367944528a3)| ![login_view](https://github.com/user-attachments/assets/7c5ef537-b9e3-4a4b-a53f-6367944528a3)| ![login_view](https://github.com/user-attachments/assets/7c5ef537-b9e3-4a4b-a53f-6367944528a3)
-|
+|![login_view](https://github.com/user-attachments/assets/b58e2ec8-ce24-408d-afae-7990e983b823)| ![egistere_view](https://github.com/user-attachments/assets/3f873cbc-223f-46b3-ad87-571b0217cbe9)| ![otp code_view](https://github.com/user-attachments/assets/8a4c0038-2120-4a58-9711-f8c59dfe0af7)|
 
-| Home Screen                       | Appointment Booking                | Doctor Profile                    |
+| Home                              | Order Tabs                | Doctor Profile                    |
 |-----------------------------------|------------------------------------|-----------------------------------|
-|               (path/to/home.png)  | (path/to/booking.png)              | (path/to/doctor_profile.png)      |
+|![home_view](https://github.com/user-attachments/assets/2a8419a0-d453-43ff-b76b-4a733484f576)| ![order_tabs_view](https://github.com/user-attachments/assets/25796ce4-1f29-4a01-934f-f077b79cc98e)| ![otp code_view](https://github.com/user-attachments/assets/8a4c0038-2120-4a58-9711-f8c59dfe0af7)|  | (path/to/booking.png)              | (path/to/doctor_profile.png)      |
 
 ---
 
