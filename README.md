@@ -44,30 +44,23 @@ The application is built with Flutter following Clean Architecture principles, e
 
 ## 📱 Screenshots
 
-<div align="center">
-  <table>
-    <tr>
-      <td align="center"><strong>Home Screen</strong></td>
-      <td align="center"><strong>Service Selection</strong></td>
-      <td align="center"><strong>Location Picker</strong></td>
-    </tr>
-    <tr>
-      <td><img src="screenshots/home_screen.png" width="220"/></td>
-      <td><img src="screenshots/service_selection.png" width="220"/></td>
-      <td><img src="screenshots/location_picker.png" width="220"/></td>
-    </tr>
-    <tr>
-      <td align="center"><strong>Restaurant Details</strong></td>
-      <td align="center"><strong>Service Order</strong></td>
-      <td align="center"><strong>Order Tracking</strong></td>
-    </tr>
-    <tr>
-      <td><img src="screenshots/restaurant_details.png" width="220"/></td>
-      <td><img src="screenshots/service_order.png" width="220"/></td>
-      <td><img src="screenshots/order_tracking.png" width="220"/></td>
-    </tr>
-  </table>
-</div>
+## Screenshots
+
+| Welcom View                        | Register View                      | Home View                         |
+|-----------------------------------|------------------------------------|-----------------------------------|
+|![login_view_361_754](https://github.com/user-attachments/assets/8497df5a-b626-414b-8ada-70cbd21c999d)| ![register_view](https://github.com/user-attachments/assets/8497df5a-b626-414b-8ada-70cbd21c999d)| ![home design361_754](https://github.com/user-attachments/assets/fd872cca-da8e-43e1-84e0-587481ac323a)
+|
+
+| Login View                        | Appointment Booking                | Doctor Profile                    |
+|-----------------------------------|------------------------------------|-----------------------------------|
+|![login_view](https://github.com/user-attachments/assets/7c5ef537-b9e3-4a4b-a53f-6367944528a3)| ![login_view](https://github.com/user-attachments/assets/7c5ef537-b9e3-4a4b-a53f-6367944528a3)| ![login_view](https://github.com/user-attachments/assets/7c5ef537-b9e3-4a4b-a53f-6367944528a3)
+|
+
+| Home Screen                       | Appointment Booking                | Doctor Profile                    |
+|-----------------------------------|------------------------------------|-----------------------------------|
+|               (path/to/home.png)  | (path/to/booking.png)              | (path/to/doctor_profile.png)      |
+
+---
 
 > Note: Replace the placeholder paths with actual screenshots of your application.
 
