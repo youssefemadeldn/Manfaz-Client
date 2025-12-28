@@ -58,6 +58,12 @@ The application is built with Flutter following Clean Architecture principles, e
 |-----------------------------------|------------------------------------|-----------------------------------|
 |![home_view](https://github.com/user-attachments/assets/2a8419a0-d453-43ff-b76b-4a733484f576)| ![order_tabs_view](https://github.com/user-attachments/assets/25796ce4-1f29-4a01-934f-f077b79cc98e)| ![otp code_view](https://github.com/user-attachments/assets/8a4c0038-2120-4a58-9711-f8c59dfe0af7)|  | (path/to/booking.png)              | (path/to/doctor_profile.png)      |
 
+
+| Profile                              | Notification                | Doctor Profile                    |
+|-----------------------------------|------------------------------------|-----------------------------------|
+|![profile_view](https://github.com/user-attachments/assets/4ccfc527-bc0d-46b3-91ae-ee6ee5958bef)| ![notification_view](https://github.com/user-attachments/assets/42354c5f-a69f-4688-a457-a8e59716b1ba)| ![otp code_view]()|
+
+
 ---
 
 > Note: Replace the placeholder paths with actual screenshots of your application.
